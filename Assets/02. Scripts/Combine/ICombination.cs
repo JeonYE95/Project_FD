@@ -5,5 +5,5 @@ public interface ICombination
     bool CanCombine(List<string> inputUnit);
     string Combine(List<string> inputUnit);
 
-    // �ּ� �׽�Ʈ
+    // 주석 테스트 22
 }
