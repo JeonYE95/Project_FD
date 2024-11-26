@@ -10,7 +10,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                // 씬에 존재하지 않으면 새로  생성
                 instance = FindObjectOfType<T>();
 
                 if (instance == null)
@@ -26,7 +25,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        // 싱글톤 인스턴스 설정
         if (instance == null)
         {
             instance = this as T;
