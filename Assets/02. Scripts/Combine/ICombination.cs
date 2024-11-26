@@ -4,4 +4,6 @@ public interface ICombination
 {
     bool CanCombine(List<string> inputUnit);
     string Combine(List<string> inputUnit);
+
+    // 주석 테스트
 }
