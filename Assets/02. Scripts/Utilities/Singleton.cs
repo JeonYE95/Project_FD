@@ -10,7 +10,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                //그냥  주석
                 instance = FindObjectOfType<T>();
 
                 if (instance == null)
