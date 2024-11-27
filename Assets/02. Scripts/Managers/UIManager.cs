@@ -45,7 +45,7 @@ public class UIManager : SingletonDontDestory<UIManager>
         return uiObj;
     }
 
-    // UI 일괄처리 시 유용(필수 x, 추후 미사용 시 제거)
+    // UI 일괄처리 시 유용
     public T OpenUI<T>() where T : UIBase
     {
         var ui = GetUI<T>();
@@ -54,13 +54,13 @@ public class UIManager : SingletonDontDestory<UIManager>
         return ui;
     }
 
-    // public T CloseUI<T>() where T : UIBase
-    // {
-    //     var ui = GetUI<T>();
-    //     ui.Close();
+    public T CloseUI<T>() where T : UIBase
+    {
+        var ui = GetUI<T>();
+        ui.Close();
 
-    //     return ui;
-    // }
+        return ui;
+    }
 
     public bool IsExist<T>()
     {
