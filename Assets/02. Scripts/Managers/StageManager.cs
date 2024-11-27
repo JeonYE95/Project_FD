@@ -11,7 +11,7 @@ public class StageManager : Singleton<StageManager>
 
 
     [Header("스테이지 라이프 관리")]
-    private int stageHealth;
+    private int stageHealth = 3;
 
 
     [Header("웨이브 관리")]
@@ -35,8 +35,6 @@ public class StageManager : Singleton<StageManager>
     {
         waveCount = 1;
         currentWave = 1;
-
-
 
         onWaveAllClear += GameClear;
 
@@ -110,7 +108,7 @@ public class StageManager : Singleton<StageManager>
         //DB에서 불러온 최종 스테이지 값과 비교해서 로직 실행
         /*
           
-        if(currentWave == DB의 최종 스테이지 - 1)
+        if(currentWave == DB의 최종 스테이지)
         { 
              OnWaveAllClear?.Invoke();
              return;
