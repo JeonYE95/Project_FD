@@ -10,6 +10,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
+                // 씬에 존재하지 않으면 새로 생성
                 instance = FindObjectOfType<T>();
 
                 if (instance == null)
