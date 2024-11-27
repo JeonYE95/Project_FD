@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+    public float moveSpeed;
+
     Vector2 moveDirection;
+    Vector2 destinationPosition;
 
     Rigidbody2D rigidbody2D;
     BaseCharacter character;
+
 
     private void Awake()
     {
@@ -18,7 +22,7 @@ public class CharacterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        character.OnMoveEvent += Move;
+        //character.OnMoveEvent += Move;
     }
 
     // Update is called once per frame
@@ -29,12 +33,40 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyMove(moveDirection);
+
     }
 
-    private void Move(Vector2 direction)
+    public void Stop()
     {
-        moveDirection = direction;
+        rigidbody2D.velocity = Vector2.zero;
+    }
+
+    public void MoveToTarget()
+    {
+        if (character.target == null)
+        {
+            return;
+        }
+
+        Vector2 myPosition = transform.position;
+        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.target.position, character.attackRange);
+
+        moveDirection = (AdjustedTargetPosition - myPosition).normalized;
+        moveDirection = moveDirection * moveSpeed;
+    }
+
+    private Vector2 GetAdjustedTargetPosition(Vector2 myPosition, Vector2 targetPosition, float attackRange)
+    {
+        Vector2 directionToTarget = (targetPosition - myPosition).normalized;
+
+        Vector2 AdjustTargetPositon = targetPosition - directionToTarget * attackRange;
+
+        return AdjustTargetPositon;
+    }
+
+    private void MoveToDirection(Vector2 direction)
+    {
+        //rigidbody2D.velocity = direction * moveS
     }
 
     private void ApplyMove(Vector2 direction)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public enum CharacterState
 {
@@ -13,8 +14,10 @@ public enum CharacterState
 public class BaseCharacter : MonoBehaviour
 {
     public BaseCharacter targetCharacter;
-    //public GameObject targetObject;
+    public Transform target;
     public Vector2 direction;
+
+    public CharacterMovement characterMovement;
 
     public bool isGoingToTarget = false;
     public bool isPlayerCharacter = false;
@@ -31,6 +34,23 @@ public class BaseCharacter : MonoBehaviour
     public float attackRange;
     public float attackDelay;
 
+    //State Machine 도입 테스트
+    private StateMachine stateMachine;
+
+    private void Awake()
+    {
+        //상태 머신 만들기
+        stateMachine = new StateMachine(this);
+        characterMovement = GetComponent<CharacterMovement>();
+
+        CharacterInit();
+    }
+
+    public void CharacterInit()
+    {
+        characterMovement.moveSpeed = moveSpeed;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +60,9 @@ public class BaseCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleAttackDelay();
+        //HandleAttackDelay();
+
+        stateMachine.Update();
     }
 
     public void HandleAttackDelay()
@@ -101,7 +123,7 @@ public class BaseCharacter : MonoBehaviour
     public bool FindTarget()
     {
         targetCharacter = BattleManager.Instance.GetClosetTarget(this);
-        //targetObject = targetCharacter.gameObject;
+        target = targetCharacter.transform;
 
         if (targetCharacter == null)
         {
@@ -111,5 +133,16 @@ public class BaseCharacter : MonoBehaviour
         isFightWithTarget = true;
 
         return true;
+    }
+
+    //타겟이 사정거리 내에 있는지 체크
+    public bool IsTargetInRange()
+    {
+        if (targetCharacter == null)
+        {
+            return false;
+        }
+
+        return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
     }
 }
