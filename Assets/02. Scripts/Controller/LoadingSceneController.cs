@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class LoadingSceneController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   //한글 테스트
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
