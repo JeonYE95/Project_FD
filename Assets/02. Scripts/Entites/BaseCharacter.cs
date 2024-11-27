@@ -4,13 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public enum CharacterState
-{
-    Idle,
-    Move,
-    Attack
-}
-
 public class BaseCharacter : MonoBehaviour
 {
     public BaseCharacter targetCharacter;
@@ -35,7 +28,7 @@ public class BaseCharacter : MonoBehaviour
     public float attackDelay;
 
     //State Machine 도입 테스트
-    private StateMachine stateMachine;
+    public StateMachine stateMachine;
 
     private void Awake()
     {
@@ -49,6 +42,7 @@ public class BaseCharacter : MonoBehaviour
     public void CharacterInit()
     {
         characterMovement.moveSpeed = moveSpeed;
+        stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     // Start is called before the first frame update
@@ -122,13 +116,14 @@ public class BaseCharacter : MonoBehaviour
 
     public bool FindTarget()
     {
-        targetCharacter = BattleManager.Instance.GetClosetTarget(this);
-        target = targetCharacter.transform;
+        targetCharacter = BattleManager.Instance.GetClosestTarget(this);
 
         if (targetCharacter == null)
         {
             return false;
         }
+
+        target = targetCharacter.transform;
 
         isFightWithTarget = true;
 

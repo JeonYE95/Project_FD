@@ -1,14 +1,13 @@
 
+using UnityEngine; // 디버그 출력용 임시
+
 public class IdleState : BaseState
 {
-    public IdleState(StateMachine stateMachine) : base(stateMachine)
-    {
-    }
-
+    public IdleState(StateMachine stateMachine) : base(stateMachine) { }
+    
     public override void Enter()
     {
         base.Enter();
-
     }
 
     public override void Update()

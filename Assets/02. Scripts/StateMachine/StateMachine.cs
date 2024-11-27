@@ -19,6 +19,10 @@ public class StateMachine
     public StateMachine(BaseCharacter character)
     {
         this.character = character;
+
+        IdleState = new IdleState(this);
+        MoveState = new MoveState(this);
+        AttackState = new AttackState(this);
     }
 
     public void ChangeState(IState state)
