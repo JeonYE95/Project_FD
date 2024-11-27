@@ -5,36 +5,31 @@ using UnityEngine.TextCore.Text;
 
 public class StageSpawn : MonoBehaviour
 {
-    [SerializeField] private List<List<Vector2>> playerSpawnPoints;
-    [SerializeField] private List<List<Vector2>> monsterSpawnPoints;
+  
 
-
-    // private Dictionary<int, > placedCharacters = new Dictionary<int, >();
-
+    //나중에 SpawnPoint와 연결
 
 
     public int monsterSpawnCount { get; private set; }
     public int playerSpawnCount { get; private set; }
 
 
-    private void MonsterSpawnEntity(int pointGroup, int point, int monsterID)
+    private void SpawnEntity(int pointGroup, int point, int ID)
     {
        
-        //몬스터 소환
+   
 
-        Vector3 spawnPoint = monsterSpawnPoints[pointGroup][point];
+        //몬스터,캐릭터에서 죽었을 때 이벤트에 Dead 추가 
 
 
-        monsterSpawnCount++;
-    
     }
 
 
-
-    // 인터페이스로 분리 해 각각에서 처리 
+    // 상속 등으로 분리 해 각각에서 처리 - 캐릭터, 몬스터
     /*
       private void Dead(int identifier)
     {
+
         monsterSpawnCount--;
    
         if ((monsterSpawnCount == 0))

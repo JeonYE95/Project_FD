@@ -535,17 +535,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3267728a5eb894c4a8992072c5a41829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCharacterPoint:
-  - Points:
+  SpawnPoint:
+  - Name: PlayerSpawnPoint
+    Points:
     - {fileID: 5123396422637508340}
     - {fileID: 3309705746091599353}
     - {fileID: 930137470609771269}
     - {fileID: 9051408632411653403}
     - {fileID: 493943569793748793}
     - {fileID: 6500188253899547485}
-  MonsterSpawnPoints:
-  - Points:
+  - Name: EnemySpawnPoint
+    Points:
     - {fileID: 4873655109564600592}
+    - {fileID: 9138594095241844534}
+    - {fileID: 4936699834074927601}
+    - {fileID: 6723299594667105727}
+    - {fileID: 4135148176681724710}
+    - {fileID: 1641816631561944634}
 --- !u!1 &3807281337579204813
 GameObject:
   m_ObjectHideFlags: 0
