@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UIManager : SingletonDontDestory<UIManager>
 {
     private Dictionary<string, UIBase> _uiDic = new Dictionary<string, UIBase>();
+
+    // private void Start()
+    // {
+    //     if (SceneManager.GetActiveScene().buildIndex == 1)
+    //     {
+    //         OpenUI<UIStart>();
+    //     }
+    // }
 
     // 딕셔너리 체크 후 있다면 리턴, 없다면 새로 생성
     public T GetUI<T>() where T : UIBase
@@ -22,25 +31,28 @@ public class UIManager : SingletonDontDestory<UIManager>
     private T CreateUI<T>() where T : UIBase
     {
         var uiName = typeof(T).Name;
+        Debug.Log(uiName);
 
         T uiRes = Resources.Load<T>($"UI/{uiName}");
+        Debug.Log(uiRes);
         var uiObj = Instantiate(uiRes);
 
         if (IsExist<T>())
             _uiDic[uiName] = uiObj;
         else
             _uiDic.Add(uiName, uiObj); 
+
         return uiObj;
     }
 
     // UI 일괄처리 시 유용(필수 x, 추후 미사용 시 제거)
-    // public T OpenUI<T>() where T : UIBase
-    // {
-    //     var ui = GetUI<T>();
-    //     ui.Open();
+    public T OpenUI<T>() where T : UIBase
+    {
+        var ui = GetUI<T>();
+        ui.Open();
 
-    //     return ui;
-    // }
+        return ui;
+    }
 
     // public T CloseUI<T>() where T : UIBase
     // {
