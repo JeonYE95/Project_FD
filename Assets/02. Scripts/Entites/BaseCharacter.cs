@@ -52,6 +52,7 @@ public class BaseCharacter : MonoBehaviour
     {
         isLive = true;
         healthSystem.maxHP = maxHP;
+        healthSystem.currentHP = healthSystem.maxHP;
         characterMovement.moveSpeed = moveSpeed;
         stateMachine.ChangeState(stateMachine.IdleState);
 
@@ -169,7 +170,8 @@ public class BaseCharacter : MonoBehaviour
     //타겟이 사정거리 내에 있는지 체크
     public bool IsTargetInRange()
     {
-        if (targetCharacter == null)
+        //타겟이 살아있는지도 추가
+        if (targetCharacter == null || !targetCharacter.isLive)
         {
             return false;
         }

@@ -25,6 +25,11 @@ public class BattleManager : Singleton<BattleManager>
 
         foreach (BaseCharacter potentialTarget in targetList)
         {
+            if (!potentialTarget.isLive)
+            {
+                continue;
+            }
+
             // 현재 타겟과의 거리 계산
             float currentDistance = Vector2.Distance(standardCharacter.transform.position, potentialTarget.transform.position);
 

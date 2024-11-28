@@ -24,9 +24,13 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targetCharacter != null)
+        if (targetCharacter != null && targetCharacter.isLive)
         {
             direction = ((Vector2)targetCharacter.transform.position - (Vector2)transform.position).normalized;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         transform.position += (Vector3)(direction * speed * Time.deltaTime);

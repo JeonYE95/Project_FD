@@ -16,9 +16,10 @@ public class AttackState : BaseState
     {
         base.Update();
 
-        if (stateMachine.character.targetCharacter == null || !stateMachine.character.IsTargetInRange())
+        if (!CheckTarget(stateMachine.character.targetCharacter))
         {
             stateMachine.ChangeState(stateMachine.MoveState);
+            return; // 리턴 안하면 밑의 코드 실행함
         }
 
         if (stateMachine.character.IsAttackReady())
@@ -30,5 +31,11 @@ public class AttackState : BaseState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override bool CheckTarget(BaseCharacter targetCharacter)
+    {
+        return base.CheckTarget(targetCharacter) &&
+            stateMachine.character.IsTargetInRange();
     }
 }

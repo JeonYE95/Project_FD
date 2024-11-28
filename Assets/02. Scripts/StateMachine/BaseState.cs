@@ -39,4 +39,9 @@ public class BaseState : IState
     {
         //stateMachine.character.Animator.SetBool(~)
     }
+
+    public virtual bool CheckTarget(BaseCharacter targetCharacter)
+    {
+        return targetCharacter != null && targetCharacter.isLive;
+    }
 }

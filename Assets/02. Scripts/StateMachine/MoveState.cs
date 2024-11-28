@@ -18,18 +18,17 @@ public class MoveState : BaseState
         if (stateMachine.character.IsTargetInRange())
         {
             stateMachine.ChangeState(stateMachine.AttackState);
+            return;
+        }
+
+        //타겟이 정상적인 상태면 타겟한테 가라
+        if (CheckTarget(stateMachine.character.targetCharacter))
+        {
+            stateMachine.character.characterMovement.MoveToTarget();
         }
         else
         {
-            //가는 도중에 타겟을 잃어버리면 그 자리에서 새로운 타겟 찾기
-            if (stateMachine.character.targetCharacter == null)
-            {
-                stateMachine.ChangeState(stateMachine.IdleState);
-            }
-            else
-            {
-                stateMachine.character.characterMovement.MoveToTarget();
-            }
+            stateMachine.ChangeState(stateMachine.IdleState);
         }
     }
 
