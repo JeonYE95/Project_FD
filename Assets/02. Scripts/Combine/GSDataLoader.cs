@@ -59,11 +59,6 @@ public class GSDataLoader : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 LoadCombinations = CombinationData.ParseList(request.downloadHandler.text);
-
-                foreach (var combination in LoadCombinations)
-                {
-                    Debug.Log($"Combination ID: {combination.combinationID}, ResultUnitID: {combination.resultUnitID}, RequiredUnits: {string.Join(", ", combination.requiredUnits)}, IsHidden: {combination.isHidden}");
-                }
             }
         }
     }

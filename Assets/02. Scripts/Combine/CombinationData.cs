@@ -5,8 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class CombinationData
 {
-    public int combinationID;           // 조합식 ID
-    public int resultUnitID;            // 조합 결과 유닛 ID
+    public string resultUnit;            // 조합 결과 유닛 ID
     public List<int> requiredUnits;     // 조합식 필요 유닛 모음
     public bool isHidden;               // 조합식 잠금 여부
 
@@ -21,33 +20,20 @@ public class CombinationData
 
             string[] columns = rows[i].Split(',');
 
-            if (columns.Length < 6)
-            {
-                Debug.LogError($"Row {i} has insufficient columns: {rows[i]}");
-                continue;
-            }
+            if (columns.Length < 6) continue;
 
-            try
+            CombinationData combination = new CombinationData
             {
-                CombinationData combination = new CombinationData
+                resultUnit = columns[1].Trim(),
+                requiredUnits = new List<int>
                 {
-                    combinationID = int.TryParse(columns[0], out int combinationID) ? combinationID : 0,
-                    resultUnitID = int.TryParse(columns[1], out int resultUnitID) ? resultUnitID : 0,
-                    requiredUnits = new List<int>
-                {
-                    int.TryParse(columns[2], out int req1) ? req1 : 0,
-                    int.TryParse(columns[3], out int req2) ? req2 : 0,
+                    int.Parse(columns[2]),
+                    int.Parse(columns[3]),
                     int.TryParse(columns[4], out int req3) ? req3 : 0
                 },
-                    isHidden = bool.TryParse(columns[5].Trim(), out bool isHidden) ? isHidden : false
-                };
-
-                combinations.Add(combination);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"Error parsing row {i}: {rows[i]} - {ex.Message}");
-            }
+                isHidden = bool.Parse(columns[5].Trim())
+            };
+            combinations.Add(combination);
         }
 
         return combinations;
