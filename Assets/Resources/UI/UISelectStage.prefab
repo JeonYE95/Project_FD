@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2296237094657238761}
   - component: {fileID: 8504379621346955150}
   m_Layer: 5
-  m_Name: Stage1_1
+  m_Name: StageBtn1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 6817194100341483488}
   - component: {fileID: 2118492332318870655}
   m_Layer: 5
-  m_Name: Stage1_2
+  m_Name: StageBtn1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 1719444534413352159}
   - component: {fileID: 8150543799622705168}
   m_Layer: 5
-  m_Name: Stage1_3
+  m_Name: StageBtn1_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,6 +688,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39dc322f877242dc8827d1701ba697d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageBtn1_1: {fileID: 8504379621346955150}
+  stageBtn1_2: {fileID: 2118492332318870655}
+  stageBtn1_3: {fileID: 8150543799622705168}
+  stageBtn1_4: {fileID: 8982641104873704312}
+  stageBtn1_5: {fileID: 8550667197283598080}
 --- !u!1 &4761828425251987017
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +880,7 @@ GameObject:
   - component: {fileID: 9098985544737357206}
   - component: {fileID: 8550667197283598080}
   m_Layer: 5
-  m_Name: Stage1_5
+  m_Name: StageBtn1_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1578,7 +1583,7 @@ GameObject:
   - component: {fileID: 2233086090780194466}
   - component: {fileID: 8982641104873704312}
   m_Layer: 5
-  m_Name: Stage1_4
+  m_Name: StageBtn1_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
