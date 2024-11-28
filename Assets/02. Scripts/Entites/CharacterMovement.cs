@@ -6,10 +6,11 @@ public class CharacterMovement : MonoBehaviour
 {
     public float moveSpeed;
 
-    Vector2 moveDirection;
-    Vector2 destinationPosition;
+    //디버그용 퍼블릭
+    public Vector2 moveDirection;
+    public Vector2 destinationPosition;
 
-    Rigidbody2D rigidbody2D;
+    public Rigidbody2D rigidbody2D;
     BaseCharacter character;
 
 
@@ -43,16 +44,18 @@ public class CharacterMovement : MonoBehaviour
 
     public void MoveToTarget()
     {
-        if (character.target == null)
+        if (character.targetCharacter == null)
         {
             return;
         }
 
         Vector2 myPosition = transform.position;
-        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.target.position, character.attackRange);
+        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.targetCharacter.transform.position, character.attackRange);
 
         moveDirection = (AdjustedTargetPosition - myPosition).normalized;
         moveDirection = moveDirection * moveSpeed;
+
+        rigidbody2D.velocity = moveDirection;
     }
 
     private Vector2 GetAdjustedTargetPosition(Vector2 myPosition, Vector2 targetPosition, float attackRange)

@@ -1,4 +1,3 @@
-using UnityEngine; // 디버그 출력용 임시
 
 public class BaseState : IState
 {

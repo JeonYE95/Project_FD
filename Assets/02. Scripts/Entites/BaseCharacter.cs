@@ -6,9 +6,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseCharacter : MonoBehaviour
 {
-    public BaseCharacter targetCharacter;
-    public Transform target;
+    //얘네들 어웨이크 셋팅은 아직임
+    public ActionHandler attackHandler;
+    public ActionHandler skillHandler;
+    public HealthSystem healthSystem;
+
+    public bool isLive;
     public Vector2 direction;
+    public BaseCharacter targetCharacter;
 
     public CharacterMovement characterMovement;
 
@@ -18,11 +23,12 @@ public class BaseCharacter : MonoBehaviour
 
     public Action<Vector2> OnMoveEvent;
     public Action OnAttackEvent;
-    public Action OnDie;
+    public Action OnDieEvent;
 
     private float timeSinceLastAttack = float.MaxValue;
 
     //나중에 SO 화 할 것들
+    public float maxHP;
     public float moveSpeed;
     public float attackRange;
     public float attackDelay;
@@ -35,14 +41,21 @@ public class BaseCharacter : MonoBehaviour
         //상태 머신 만들기
         stateMachine = new StateMachine(this);
         characterMovement = GetComponent<CharacterMovement>();
+        attackHandler = GetComponent<ActionHandler>();
+        skillHandler = GetComponent<ActionHandler>();
+        healthSystem = GetComponent<HealthSystem>();
 
         CharacterInit();
     }
 
     public void CharacterInit()
     {
+        isLive = true;
+        healthSystem.maxHP = maxHP;
         characterMovement.moveSpeed = moveSpeed;
         stateMachine.ChangeState(stateMachine.IdleState);
+
+        OnDieEvent += CharacterDeActive;
     }
 
     // Start is called before the first frame update
@@ -114,6 +127,31 @@ public class BaseCharacter : MonoBehaviour
 
     }
 
+    public bool IsAttackReady()
+    {
+        return attackHandler.IsCooldownComplete();
+    }
+
+    public bool IsSkillReady()
+    {
+        return skillHandler.IsCooldownComplete();
+    }
+
+    public void PerformAttack()
+    {
+        if (targetCharacter == null || attackHandler == null)
+        {
+            Debug.Log("공격 시 타겟 캐릭터가 Null");
+            return;
+        }
+        attackHandler.ExecuteAction(targetCharacter);
+    }
+
+    public void UseSkill()
+    {
+        skillHandler.ExecuteAction(targetCharacter);
+    }
+
     public bool FindTarget()
     {
         targetCharacter = BattleManager.Instance.GetClosestTarget(this);
@@ -122,8 +160,6 @@ public class BaseCharacter : MonoBehaviour
         {
             return false;
         }
-
-        target = targetCharacter.transform;
 
         isFightWithTarget = true;
 
@@ -139,5 +175,16 @@ public class BaseCharacter : MonoBehaviour
         }
 
         return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
+    }
+
+    public void CharacterDeActive()
+    {
+        isLive = false;
+        gameObject.SetActive(false);
+    }
+
+    public void CallDieEvent()
+    {
+        OnDieEvent?.Invoke();
     }
 }
