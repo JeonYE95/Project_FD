@@ -15,5 +15,7 @@ public class Unit : MonoBehaviour
         Attack = data.Attack;
         Defense = data.Defense;
         Health = data.Health;
+
+        Debug.Log($"[Unit Data Applied] Name: {UnitName}, Attack: {Attack}, Defense: {Defense}, Health: {Health}");
     }
 }

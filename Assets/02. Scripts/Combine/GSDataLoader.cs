@@ -16,12 +16,20 @@ public class GSDataLoader : MonoBehaviour
     private void Start()
     {
         GetDataFromGS();
+        DataInPrefabs();
     }
 
     public void GetDataFromGS()
     {
-        StartCoroutine(LoadUnitData());
-        StartCoroutine(LoadCombinationData());
+        StartCoroutine(InitializeData());
+    }
+
+    IEnumerator InitializeData()
+    {
+        yield return StartCoroutine(LoadUnitData());
+        yield return StartCoroutine(LoadCombinationData());
+
+        DataInPrefabs();
     }
 
     IEnumerator LoadUnitData()
@@ -57,6 +65,34 @@ public class GSDataLoader : MonoBehaviour
                     Debug.Log($"Combination ID: {combination.combinationID}, ResultUnitID: {combination.resultUnitID}, RequiredUnits: {string.Join(", ", combination.requiredUnits)}, IsHidden: {combination.isHidden}");
                 }
             }
+        }
+    }
+
+    public void DataInPrefabs()
+    {
+        foreach (var data in LoadUnits)
+        {
+            GameObject prefab = Resources.Load<GameObject>($"Prefabs/Unit/{data.Name}");
+            if (prefab == null)
+            {
+                Debug.LogWarning($"Prefab not found for unit: {data.Name}");
+                continue;
+            }
+
+            GameObject unitInstance = Instantiate(prefab);
+            unitInstance.name = data.Name;
+
+            Unit unitComponent = unitInstance.GetComponent<Unit>();
+            if (unitComponent != null)
+            {
+                unitComponent.SetData(data);
+            }
+            else
+            {
+                Debug.Log($"Not Found Unit prefab {data.Name}");
+            }
+
+            Debug.Log($"Created Unit: {unitInstance.name}");
         }
     }
 }
