@@ -23,7 +23,7 @@ public class StageManager : Singleton<StageManager>
     public bool isRunningWave { get; private set; }
 
   
-    public event Action<int> onClearWave; // 웨이브 클리어 확인 - DB에서 불러와 연동해야.
+    public event Action<int> onClearWave; // 웨이브 클리어 확인 
     public event Action onWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
 
     private Coroutine preparationCoroutine;
@@ -108,7 +108,7 @@ public class StageManager : Singleton<StageManager>
         //DB에서 불러온 최종 스테이지 값과 비교해서 로직 실행
         /*
           
-        if(currentWave == DB의 최종 스테이지)
+        if(currentWave == DB 스테이지 최종 웨이브 )
         { 
              OnWaveAllClear?.Invoke();
              return;
