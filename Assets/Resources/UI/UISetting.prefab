@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6434445072839698983}
   - component: {fileID: 6511314892246932742}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 800, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6434445072839698983
 CanvasRenderer:
@@ -162,9 +162,9 @@ GameObject:
   - component: {fileID: 7541479528625595244}
   - component: {fileID: 646648977620346521}
   - component: {fileID: 60500967145730746}
-  - component: {fileID: 8077390986348251582}
+  - component: {fileID: 6639111572014428421}
   m_Layer: 5
-  m_Name: UIMenu
+  m_Name: UISetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8077390986348251582
+--- !u!114 &6639111572014428421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,6 +263,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6824356899032361607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a187e40e0eeb048c9900703c03fa655a, type: 3}
+  m_Script: {fileID: 11500000, guid: af7f1d87d596e43f0b02f70f4556a423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

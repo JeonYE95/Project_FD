@@ -6,6 +6,6 @@ public class GameScene : MonoBehaviour
 {
     private void Start()
     {
-        UIManager.Instance.OpenUI<UIStart>();
+        UIManager.Instance.OpenUI<UIMain>();
     }
 }
