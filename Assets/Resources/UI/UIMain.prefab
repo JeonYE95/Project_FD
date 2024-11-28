@@ -374,6 +374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startBtn: {fileID: 3125198786760559217}
+  settingBtn: {fileID: 8572388887470538951}
+  exitBtn: {fileID: 4644608191321150463}
 --- !u!1 &4095981270937546174
 GameObject:
   m_ObjectHideFlags: 0
