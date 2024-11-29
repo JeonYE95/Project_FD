@@ -31,6 +31,7 @@ namespace ScrollBGTest
         float SkyMoveValue;
         public float SkyScrollSpeed;
 
+        public float[] backgroundOffsets;
 
         void Start()
         {
@@ -40,7 +41,12 @@ namespace ScrollBGTest
 
             //Get MeshRenderers
             for (int i = 0; i < Background.Length; i++)
+            {
                 Ren[i] = Background[i].GetComponent<MeshRenderer>();
+                backgroundOffsets[i] = 0f;
+            }
+
+
         }
 
 
@@ -55,9 +61,13 @@ namespace ScrollBGTest
 
             //Material OffSet
             for (int i = 0; i < Background.Length; i++)
-                Ren[i].material.mainTextureOffset = new Vector2(MoveValue * ScrollSpeed[i], 0);
+            {
+                backgroundOffsets[i] += Time.unscaledDeltaTime * ScrollSpeed[i];
+                Ren[i].material.mainTextureOffset = new Vector2(backgroundOffsets[i], 0);
+            }
 
-            SkyRen.material.mainTextureOffset = new Vector2(SkyMoveValue += (Time.unscaledDeltaTime * -SkyScrollSpeed), 0);
+            SkyMoveValue += Time.unscaledDeltaTime * -SkyScrollSpeed;
+            SkyRen.material.mainTextureOffset = new Vector2(SkyMoveValue, 0);
         }
     }
 
