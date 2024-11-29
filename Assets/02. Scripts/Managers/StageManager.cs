@@ -89,9 +89,11 @@ public class StageManager : Singleton<StageManager>
     private void StartWave()
     {
 
-        currentWave = ;
+   
         isRunningWave = true;
 
+        // 몬스터, 플레이어 소환
+        //
 
     }
 
@@ -117,6 +119,7 @@ public class StageManager : Singleton<StageManager>
 
 
         // 보상 UI 불러오기
+
     }
 
 
@@ -125,7 +128,7 @@ public class StageManager : Singleton<StageManager>
     {
      
         yield return preparation;
-        StartWave(waveCount);
+        StartWave();
 
     }
 
