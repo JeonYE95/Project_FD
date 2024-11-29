@@ -10,7 +10,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                // ¾À¿¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é »õ·Î »ı¼º
+                // ì”¬ì— ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ìƒˆë¡œ ìƒì„±
                 instance = FindObjectOfType<T>();
 
                 if (instance == null)
@@ -26,7 +26,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤
         if (instance == null)
         {
             instance = this as T;

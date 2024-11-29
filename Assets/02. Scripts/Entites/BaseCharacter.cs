@@ -2,56 +2,151 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class BaseCharacter : MonoBehaviour
 {
+    //Character's Component
+    public HealthSystem healthSystem;
+    public ActionHandler attackHandler;
+    public ActionHandler skillHandler;
+    public CharacterMovement characterMovement;
+
+    public bool isLive;
+    public Vector2 direction;
     public BaseCharacter targetCharacter;
-    public GameObject targetObject;
 
+    //플레이어면 true , 적이면 false
     public bool isPlayerCharacter = false;
-    public bool isFightWithTarget = false;
 
-    //public Action 
+    public Action OnDieEvent;
+
+    //나중에 SO 화 할 것들
+    public float maxHP;
+    public float moveSpeed;
+    public float skillDelay;
+    public float attackRange;
+    public float attackDelay;
+
+    public StateMachine stateMachine;
+
+    private void Awake()
+    {
+        stateMachine = new StateMachine(this);
+
+        healthSystem = GetComponent<HealthSystem>();
+        attackHandler = GetComponent<ActionHandler>();
+        skillHandler = GetComponent<ActionHandler>();
+        characterMovement = GetComponent<CharacterMovement>();
+
+    }
+
+    //Start 에서 호출됨
+    public void CharacterInit()
+    {
+        isLive = true;
+        healthSystem.MaxHP = maxHP;
+        characterMovement.moveSpeed = moveSpeed;
+
+        //배틀매니저에 캐릭터 등록
+        BattleManager.Instance.RegisterCharacter(this);
+
+        
+        OnDieEvent += CharacterDeActive;
+    }
+
+    public void ActiveCharacter()
+    {
+        //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
+        stateMachine.ChangeState(stateMachine.IdleState);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        CharacterInit();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        stateMachine.Update();
     }
 
-    public void HandleAttackDelay()
+    public void ResetTarget()
     {
-        if (isFightWithTarget)
-        {
 
+    }
+
+    public bool IsAttackReady()
+    {
+        return attackHandler.IsCooldownComplete();
+    }
+
+    public bool IsSkillReady()
+    {
+        return skillHandler.IsCooldownComplete();
+    }
+
+    public void PerformAttack()
+    {
+        if (targetCharacter == null || attackHandler == null)
+        {
+            Debug.Log("공격 시 타겟 캐릭터가 Null");
+            return;
         }
 
-        OnMoveEvent();
+        attackHandler.ExecuteAction(targetCharacter);
     }
 
-    public void OnMoveEvent()
+    public void UseSkill()
+    {
+        if (targetCharacter == null)
+        {
+            Debug.Log("스킬 사용시 타겟 캐릭터가 Null");
+            return;
+        }
+
+        skillHandler.ExecuteAction(targetCharacter);
+    }
+
+    public bool FindTarget()
+    {
+        targetCharacter = BattleManager.Instance.GetClosestTarget(this);
+
+        if (targetCharacter == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    //타겟이 사정거리 내에 있는지 체크
+    public bool IsTargetInRange()
+    {
+        //타겟이 살아있는지도 추가
+        if (targetCharacter == null || !targetCharacter.isLive)
+        {
+            return false;
+        }
+
+        return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
+    }
+
+    public void ResetCharacter()
     {
 
     }
 
-    public void OnAttackEvent()
+    public void CharacterDeActive()
     {
-
+        isLive = false;
+        gameObject.SetActive(false);
     }
 
-    public void SetTarget()
+    public void CallDieEvent()
     {
-
-    }
-
-    public void FindTarget()
-    {
-
+        OnDieEvent?.Invoke();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BattleManager : Singleton<BattleManager>
@@ -8,23 +9,76 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseCharacter> players = new List<BaseCharacter>();
     public List<BaseCharacter> enemies = new List<BaseCharacter>();
 
-    // Start is called before the first frame update
-    void Start()
+    //살아있는 캐릭터와 죽어있는 캐릭터 용 리스트 필요??
+    //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
+    private int totalCharacters => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
+
+
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (BaseCharacter character in players)
+            {
+                allCharacters.Add(character);
+            }
+
+            foreach (BaseCharacter character in enemies)
+            {
+                allCharacters.Add(character);
+            }
+
+            foreach (BaseCharacter character in allCharacters)
+            {
+                character.ActiveCharacter();
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RegisterCharacter(BaseCharacter character)
     {
-        
+        if (character.isPlayerCharacter)
+        {
+            players.Add(character);
+        }
+        else
+        {
+            enemies.Add(character);
+        }
     }
 
-    public BaseCharacter GetClosetTarget(BaseCharacter unit)
+    public BaseCharacter GetClosestTarget(BaseCharacter standardCharacter)
     {
-        List<BaseCharacter> targetList = unit.isPlayerCharacter ? enemies : players;
-        BaseCharacter targer;
+        // 적과 플레이어 중 적절한 타겟 리스트 선택
+        List<BaseCharacter> targetList = standardCharacter.isPlayerCharacter ? enemies : players;
 
-        return targer = null;
+        // 리스트가 비어 있다면 null 반환
+        if (targetList.Count == 0)
+        {
+            return null;
+        }
+
+        BaseCharacter closestTarget = null; // 가장 가까운 타겟
+        float closestDistance = float.MaxValue; // 초기 값은 매우 큰 값으로 설정
+
+        foreach (BaseCharacter potentialTarget in targetList)
+        {
+            if (!potentialTarget.isLive)
+            {
+                continue;
+            }
+
+            // 현재 타겟과의 거리 계산
+            float currentDistance = Vector2.Distance(standardCharacter.transform.position, potentialTarget.transform.position);
+
+            // 더 짧은 거리라면 가장 가까운 타겟 갱신
+            if (currentDistance < closestDistance)
+            {
+                closestTarget = potentialTarget;
+                closestDistance = currentDistance;
+            }
+        }
+
+        return closestTarget;
     }
 }
