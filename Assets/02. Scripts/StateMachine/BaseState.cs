@@ -9,10 +9,7 @@ public class BaseState : IState
         this.stateMachine = stateMachine;
     }
 
-    public virtual void Enter()
-    {
-
-    }
+    public virtual void Enter() { }
 
     public virtual void PhysicsUpdate()
     {

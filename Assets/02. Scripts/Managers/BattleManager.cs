@@ -9,6 +9,27 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseCharacter> players = new List<BaseCharacter>();
     public List<BaseCharacter> enemies = new List<BaseCharacter>();
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (BaseCharacter character in players)
+            {
+                allCharacters.Add(character);
+            }
+
+            foreach (BaseCharacter character in enemies)
+            {
+                allCharacters.Add(character);
+            }
+
+            foreach (BaseCharacter character in allCharacters)
+            {
+                character.ActiveCharacter();
+            }
+        }
+    }
+
     public BaseCharacter GetClosestTarget(BaseCharacter standardCharacter)
     {
         // 적과 플레이어 중 적절한 타겟 리스트 선택

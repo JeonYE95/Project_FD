@@ -6,26 +6,20 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseCharacter : MonoBehaviour
 {
-    //얘네들 어웨이크 셋팅은 아직임
+    //Character's Component
+    public HealthSystem healthSystem;
     public ActionHandler attackHandler;
     public ActionHandler skillHandler;
-    public HealthSystem healthSystem;
+    public CharacterMovement characterMovement;
 
     public bool isLive;
     public Vector2 direction;
     public BaseCharacter targetCharacter;
 
-    public CharacterMovement characterMovement;
-
-    public bool isGoingToTarget = false;
+    //플레이어 면 true , 적이면 false
     public bool isPlayerCharacter = false;
-    public bool isFightWithTarget = false;
 
-    public Action<Vector2> OnMoveEvent;
-    public Action OnAttackEvent;
     public Action OnDieEvent;
-
-    private float timeSinceLastAttack = float.MaxValue;
 
     //나중에 SO 화 할 것들
     public float maxHP;
@@ -45,7 +39,6 @@ public class BaseCharacter : MonoBehaviour
         skillHandler = GetComponent<ActionHandler>();
         healthSystem = GetComponent<HealthSystem>();
 
-        CharacterInit();
     }
 
     public void CharacterInit()
@@ -54,73 +47,36 @@ public class BaseCharacter : MonoBehaviour
         healthSystem.maxHP = maxHP;
         healthSystem.currentHP = healthSystem.maxHP;
         characterMovement.moveSpeed = moveSpeed;
-        stateMachine.ChangeState(stateMachine.IdleState);
 
+        if (isPlayerCharacter)
+        {
+            BattleManager.Instance.players.Add(this);
+        }
+        else
+        {
+            BattleManager.Instance.enemies.Add(this);
+        }
+
+        
         OnDieEvent += CharacterDeActive;
+    }
+
+    public void ActiveCharacter()
+    {
+        //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
+        stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        CharacterInit();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //HandleAttackDelay();
-
         stateMachine.Update();
-    }
-
-    public void HandleAttackDelay()
-    {
-        //현재 싸우고 있는 타겟이 없는 경우
-        if (!isFightWithTarget)
-        {
-            //타겟을 찾을려고 시도했지만 못 찾은 경우
-            if (!FindTarget())
-            {
-                Debug.Log("타겟을 못찾음");
-                return;
-            }
-        }
-
-        //타겟을 향해 가고있는 경우
-        if (isGoingToTarget)
-        {
-            CallMoveEvent();
-            return;
-        }
-
-        //타겟이 사정거리 내에 도착해서 때려야 하는 경우
-        if (timeSinceLastAttack < attackDelay)
-        {
-            timeSinceLastAttack += Time.deltaTime;
-        }
-        else if (timeSinceLastAttack >= attackDelay)
-        {
-            timeSinceLastAttack = 0f;
-            CallAttackEvent();
-        }
-
-        /*if (isAttacking)
-        {
-            CallMoveEvent();
-            return;
-        }*/
-    }
-
-    public void CallMoveEvent()
-    {
-        direction = (targetCharacter.transform.position - transform.position).normalized;
-
-        OnMoveEvent?.Invoke(direction);
-    }
-
-    public void CallAttackEvent()
-    {
-        OnAttackEvent?.Invoke();
     }
 
     public void ResetTarget()
@@ -162,8 +118,6 @@ public class BaseCharacter : MonoBehaviour
             return false;
         }
 
-        isFightWithTarget = true;
-
         return true;
     }
 
@@ -177,6 +131,11 @@ public class BaseCharacter : MonoBehaviour
         }
 
         return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
+    }
+
+    public void ResetCharacter()
+    {
+
     }
 
     public void CharacterDeActive()
