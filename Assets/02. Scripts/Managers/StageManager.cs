@@ -66,9 +66,6 @@ public class StageManager : Singleton<StageManager>
 
     }
 
-
-
-
   
     public void WaveStartNow()
     {
@@ -77,20 +74,22 @@ public class StageManager : Singleton<StageManager>
 
         StopCoroutine(NextWavePrepare());
 
-        StartWave(waveCount);
+        StartWave();
     
     }
 
     private void ClearWave()
     {
 
-        waveCount++;
+
+        currentWave++;
     
     }
 
-    private void StartWave(int waveIndex)
+    private void StartWave()
     {
 
+        currentWave = ;
         isRunningWave = true;
 
 
