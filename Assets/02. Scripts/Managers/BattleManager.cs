@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BattleManager : Singleton<BattleManager>
 {
@@ -47,15 +50,16 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    public BaseCharacter GetClosestTarget(BaseCharacter standardCharacter)
+    
+    public BaseCharacter GetClosestOpponentTarget(BaseCharacter standardCharacter)
     {
         // 적과 플레이어 중 적절한 타겟 리스트 선택
         List<BaseCharacter> targetList = standardCharacter.isPlayerCharacter ? enemies : players;
+        targetList = targetList.Where(target => target.isLive).ToList();
 
-        // 리스트가 비어 있다면 null 반환
         if (targetList.Count == 0)
         {
-            return null;
+            return new BaseCharacter();
         }
 
         BaseCharacter closestTarget = null; // 가장 가까운 타겟
@@ -63,10 +67,11 @@ public class BattleManager : Singleton<BattleManager>
 
         foreach (BaseCharacter potentialTarget in targetList)
         {
-            if (!potentialTarget.isLive)
+            //위에서 체크함
+            /*if (!potentialTarget.isLive)
             {
                 continue;
-            }
+            }*/
 
             // 현재 타겟과의 거리 계산
             float currentDistance = Vector2.Distance(standardCharacter.transform.position, potentialTarget.transform.position);
@@ -80,5 +85,46 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         return closestTarget;
+    }
+
+    public List<BaseCharacter> GetRandomOpponentTargets(BaseCharacter standardCharacter, int number)
+    {
+        if (number < 2)
+        {
+            throw new ArgumentException("GetRandomOpponentTargets 함수에 넘버 2이상 넣어야됌");
+        }
+
+        //상대편 리스트
+        List<BaseCharacter> aliveOpponents = standardCharacter.isPlayerCharacter ? enemies : players;
+        //살아있는 캐릭터만
+        aliveOpponents = aliveOpponents.Where(target => target.isLive).ToList();
+        //리턴 할 타겟 리스트
+        List<BaseCharacter> targetList = new List<BaseCharacter>();
+
+        if (aliveOpponents.Count == 0)
+        {
+            return new List<BaseCharacter>();
+        }
+
+        //기존에 타겟이 있었으면 무조건 그 타겟은 타겟 리스트에 포함
+        if (standardCharacter.targetCharacter != null && standardCharacter.targetCharacter.isLive)
+        {
+            targetList.Add(standardCharacter.targetCharacter);
+            aliveOpponents.Remove(standardCharacter.targetCharacter);
+            number--;
+        }
+
+        // 요청한 타겟 수 제한
+        number = Mathf.Min(number, aliveOpponents.Count);
+
+        // 랜덤 타겟 추가
+        for (int i = 0; i < number; i++)
+        {
+            int random = Random.Range(0, aliveOpponents.Count);
+            targetList.Add(aliveOpponents[random]);
+            aliveOpponents.RemoveAt(random);
+        }
+
+        return targetList;
     }
 }
