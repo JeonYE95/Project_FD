@@ -16,7 +16,7 @@ public class BaseCharacter : MonoBehaviour
     public Vector2 direction;
     public BaseCharacter targetCharacter;
 
-    //플레이어 면 true , 적이면 false
+    //플레이어면 true , 적이면 false
     public bool isPlayerCharacter = false;
 
     public Action OnDieEvent;
@@ -24,38 +24,32 @@ public class BaseCharacter : MonoBehaviour
     //나중에 SO 화 할 것들
     public float maxHP;
     public float moveSpeed;
+    public float skillDelay;
     public float attackRange;
     public float attackDelay;
 
-    //State Machine 도입 테스트
     public StateMachine stateMachine;
 
     private void Awake()
     {
-        //상태 머신 만들기
         stateMachine = new StateMachine(this);
-        characterMovement = GetComponent<CharacterMovement>();
+
+        healthSystem = GetComponent<HealthSystem>();
         attackHandler = GetComponent<ActionHandler>();
         skillHandler = GetComponent<ActionHandler>();
-        healthSystem = GetComponent<HealthSystem>();
+        characterMovement = GetComponent<CharacterMovement>();
 
     }
 
+    //Start 에서 호출됨
     public void CharacterInit()
     {
         isLive = true;
-        healthSystem.maxHP = maxHP;
-        healthSystem.currentHP = healthSystem.maxHP;
+        healthSystem.MaxHP = maxHP;
         characterMovement.moveSpeed = moveSpeed;
 
-        if (isPlayerCharacter)
-        {
-            BattleManager.Instance.players.Add(this);
-        }
-        else
-        {
-            BattleManager.Instance.enemies.Add(this);
-        }
+        //배틀매니저에 캐릭터 등록
+        BattleManager.Instance.RegisterCharacter(this);
 
         
         OnDieEvent += CharacterDeActive;
@@ -101,11 +95,18 @@ public class BaseCharacter : MonoBehaviour
             Debug.Log("공격 시 타겟 캐릭터가 Null");
             return;
         }
+
         attackHandler.ExecuteAction(targetCharacter);
     }
 
     public void UseSkill()
     {
+        if (targetCharacter == null)
+        {
+            Debug.Log("스킬 사용시 타겟 캐릭터가 Null");
+            return;
+        }
+
         skillHandler.ExecuteAction(targetCharacter);
     }
 

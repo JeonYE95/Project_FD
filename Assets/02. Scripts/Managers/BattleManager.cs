@@ -9,6 +9,11 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseCharacter> players = new List<BaseCharacter>();
     public List<BaseCharacter> enemies = new List<BaseCharacter>();
 
+    //살아있는 캐릭터와 죽어있는 캐릭터 용 리스트 필요??
+    //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
+    private int totalCharacters => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -27,6 +32,18 @@ public class BattleManager : Singleton<BattleManager>
             {
                 character.ActiveCharacter();
             }
+        }
+    }
+
+    public void RegisterCharacter(BaseCharacter character)
+    {
+        if (character.isPlayerCharacter)
+        {
+            players.Add(character);
+        }
+        else
+        {
+            enemies.Add(character);
         }
     }
 
