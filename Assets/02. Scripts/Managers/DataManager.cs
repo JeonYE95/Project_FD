@@ -92,7 +92,7 @@ public class DataManager : SingletonDontDestory<DataManager>
         {
 
             // 파일의 텍스트를 string으로 저장
-            string jsonData = File.ReadAllText(path);
+            string jsonData = File.ReadAllText(_path);
             // 이 Json데이터를 역직렬화하여 playerData에 넣어줌
             _playerData = JsonUtility.FromJson<PlayerData>(jsonData);
 

@@ -10,21 +10,21 @@ public class OutStageShop : ShopBase
     protected override void AddGold(int value)
     {
 
-        _dataManager.PlayerData.gold += value;
+        _dataManager.PlayerData.Gold += value;
     
     }
 
     protected override bool HasGold(int value)
     {
 
-        return _dataManager.PlayerData.gold >= value;
+        return _dataManager.PlayerData.Gold >= value;
 
     }
 
     protected override void UseGold(int value)
     {
 
-        _dataManager.PlayerData.gold -= value;
+        _dataManager.PlayerData.Gold -= value;
 
     }
 
