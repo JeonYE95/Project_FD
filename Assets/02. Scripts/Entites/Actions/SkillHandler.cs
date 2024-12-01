@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkillHandler : ActionHandler
 {
+    public SkillData skillData;
+
     public override void ExecuteAction(BaseCharacter targetCharacter)
     {
         if (targetCharacter == null)

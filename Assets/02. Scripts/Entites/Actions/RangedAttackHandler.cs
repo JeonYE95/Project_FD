@@ -20,11 +20,11 @@ public class RangedAttackHandler : AttackHandler
             return;
         }
 
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        GameObject defaultProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
         Vector2 direction = (targetCharacter.transform.position - firePoint.position).normalized;
 
-        projectile.GetComponent<Projectile>().Initialize(targetCharacter, direction);
+        defaultProjectile.GetComponent<DefaultProjectile>().Initialize(targetCharacter, direction);
 
         ResetCooldown();
     }

@@ -66,9 +66,6 @@ public class StageManager : Singleton<StageManager>
 
     }
 
-
-
-
   
     public void WaveStartNow()
     {
@@ -77,22 +74,26 @@ public class StageManager : Singleton<StageManager>
 
         StopCoroutine(NextWavePrepare());
 
-        StartWave(waveCount);
+        StartWave();
     
     }
 
     private void ClearWave()
     {
 
-        waveCount++;
+
+        currentWave++;
     
     }
 
-    private void StartWave(int waveIndex)
+    private void StartWave()
     {
 
+   
         isRunningWave = true;
 
+        // 몬스터, 플레이어 소환
+        //
 
     }
 
@@ -118,6 +119,7 @@ public class StageManager : Singleton<StageManager>
 
 
         // 보상 UI 불러오기
+
     }
 
 
@@ -126,7 +128,7 @@ public class StageManager : Singleton<StageManager>
     {
      
         yield return preparation;
-        StartWave(waveCount);
+        StartWave();
 
     }
 
