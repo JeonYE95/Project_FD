@@ -25,9 +25,6 @@ public class WaveManager : Singleton<WaveManager>
 
     public bool IsRunningWave { get; private set; }
 
-    public int MonsterRemainCount { get; private set; }
-    public int PlayerRemainCount { get; private set; }
-
 
     public void Start()
     {
@@ -40,31 +37,20 @@ public class WaveManager : Singleton<WaveManager>
     }
 
 
-
-    private void Victroy()
+    // 웨이브에서 승리했을 때
+    public void Victroy()
     {
-
-        MonsterRemainCount--;
-
-        if (MonsterRemainCount == 0)
-        {
-            ClearWave();
-
-        }
+         ClearWave();
 
 
     }
 
-    private void Lose()
+    // 웨이브에서 패했을 때
+    public void Lose()
     {
-        PlayerRemainCount--;
 
-        if (PlayerRemainCount == 0)
-        {
-            StageManager.Instance.GameOver();
-
-        }
-
+        OnDead?.Invoke();
+        StartCoroutine(NextWavePrepare());
 
     }
 
@@ -79,36 +65,11 @@ public class WaveManager : Singleton<WaveManager>
 
     }
 
-    public void ClearWave()
+    private void ClearWave()
     {
 
         IsRunningWave = false;
 
-        CurrentWave++;
-
-
-    }
-
-    private void StartWave()
-    {
-
-
-        IsRunningWave = true;
-
-
-        PlayerRemainCount = BattleManager.Instance.players.Count;
-        MonsterRemainCount = BattleManager.Instance.enemies.Count;
-
-        //플레이어, 몬스터 소환
-
-
-
-    }
-
-
-    private void EndWave()
-    {
-        IsRunningWave = false;
         OnClearWave?.Invoke(CurrentWave);
 
 
@@ -124,16 +85,29 @@ public class WaveManager : Singleton<WaveManager>
          
        */
 
-
         //웨이브 클리어 보상 UI
 
 
-        //StageManager.Instance.Gold += ;
-        //StagetManager.Instance.Diamond += ;
+        //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
+        //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
+
+
+        CurrentWave++;
 
         StartCoroutine(NextWavePrepare());
 
     }
+
+    private void StartWave()
+    {
+
+        IsRunningWave = true;
+
+        //플레이어, 몬스터 소환
+
+
+    }
+
 
     //스테이지 끝나고 준비 시간 
     private IEnumerator NextWavePrepare()
