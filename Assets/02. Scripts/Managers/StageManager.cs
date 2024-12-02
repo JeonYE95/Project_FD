@@ -47,6 +47,10 @@ public class StageManager : Singleton<StageManager>
 
     public void GameOver()
     {
+
+
+        StageHealth -= 1;
+
         // 체력이 다 깎였을때 - 게임 오버 UI 불러오기
         if (StageHealth <= 0)
         {
@@ -55,7 +59,6 @@ public class StageManager : Singleton<StageManager>
 
         }
 
-        StageHealth -= 1;
 
         //재시작 
 
@@ -66,8 +69,8 @@ public class StageManager : Singleton<StageManager>
         // 게임 클리어 시 UI 불러오기 - 보상 받음
 
 
-        // DataManager.Instance.PlayerData.gold += 
-        // DataManager.Instacne.PlayerDatat.
+        // DataManager.Instance.PlayerData.gold += DB에서 값 불러오기
+        // DataManager.Instacne.PlayerData.
     }
 
 
