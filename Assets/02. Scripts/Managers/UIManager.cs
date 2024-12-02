@@ -31,10 +31,8 @@ public class UIManager : SingletonDontDestory<UIManager>
     private T CreateUI<T>() where T : UIBase
     {
         var uiName = typeof(T).Name;
-        Debug.Log(uiName);
-
+        
         T uiRes = Resources.Load<T>($"UI/{uiName}");
-        Debug.Log(uiRes);
         var uiObj = Instantiate(uiRes);
 
         if (IsExist<T>())

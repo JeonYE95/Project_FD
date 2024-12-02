@@ -7,6 +7,8 @@ public class Unit : MonoBehaviour
     public int Attack;
     public int Defense;
     public int Health;
+    
+    public string SpritePath;
 
     public void SetData(UnitData data)
     {
