@@ -112,7 +112,9 @@ public class BaseCharacter : MonoBehaviour
 
     public bool FindTarget()
     {
-        targetCharacter = BattleManager.Instance.GetClosestOpponentTarget(this);
+        targetCharacter = BattleManager.Instance.GetTargetClosestOpponent(this);
+
+        //targetCharacter = BattleManager.Instance.targetting
 
         if (targetCharacter == null)
         {
