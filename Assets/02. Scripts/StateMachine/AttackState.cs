@@ -21,9 +21,16 @@ public class AttackState : BaseState
             stateMachine.ChangeState(stateMachine.MoveState);
             return; // 리턴 안하면 밑의 코드 실행함
         }
-
+        
         if (stateMachine.character.IsAttackReady())
         {
+            /*//평타 공격 시 스킬 쿨타임이 돌았으면 스킬 사용
+            if (stateMachine.character.IsSkillReady())
+            {
+                stateMachine.ChangeState(stateMachine.SkillState);
+                return;
+            }*/
+
             stateMachine.character.PerformAttack();
         }
     }
