@@ -64,6 +64,7 @@ namespace GSDatas
 		public System.Int32 AttackSpeed;
 		public System.Int32 Cooltime;
 		public System.Int32 Range;
+		public System.String Grade;
   
 
 #region fuctions
