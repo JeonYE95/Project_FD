@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 
 public class BaseCharacter : MonoBehaviour
@@ -32,13 +33,20 @@ public class BaseCharacter : MonoBehaviour
 
     public StateMachine stateMachine;
 
+
+    //For Debug
+
+    [SerializeField]
+    public string CurrentState;
+
+
     private void Awake()
     {
         stateMachine = new StateMachine(this);
 
         healthSystem = GetComponent<HealthSystem>();
+        skillHandler = GetComponent<SkillHandler>();
         attackHandler = GetComponent<ActionHandler>();
-        skillHandler = GetComponent<ActionHandler>();
         characterMovement = GetComponent<CharacterMovement>();
 
     }
@@ -58,10 +66,15 @@ public class BaseCharacter : MonoBehaviour
         OnDieEvent += BattleManager.Instance.CharacterDie;
     }
 
+    //캐릭터 활동 시작 = 배틀 시작
     public void ActiveCharacter()
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
         stateMachine.ChangeState(stateMachine.IdleState);
+
+        //평타와 스킬 쿨타임 초기화
+        skillHandler.ResetCooldown();
+        attackHandler.ResetCooldown();
     }
 
     // Start is called before the first frame update
@@ -74,6 +87,9 @@ public class BaseCharacter : MonoBehaviour
     void Update()
     {
         stateMachine.Update();
+
+        //For Debug
+        CurrentState = stateMachine?.GetState();
     }
 
     public void ResetTarget()

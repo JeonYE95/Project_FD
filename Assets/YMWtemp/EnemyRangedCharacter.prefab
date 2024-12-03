@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6958994778922450307}
   - component: {fileID: 8298157978761089934}
   - component: {fileID: 3192654058382320028}
+  - component: {fileID: 6689119762804919717}
   m_Layer: 6
   m_Name: EnemyRangedCharacter
   m_TagString: Untagged
@@ -174,20 +175,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1547ff4f52a78f54a8588b6fe9b279f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthSystem: {fileID: 0}
   attackHandler: {fileID: 0}
   skillHandler: {fileID: 0}
-  healthSystem: {fileID: 0}
+  characterMovement: {fileID: 0}
   isLive: 0
   direction: {x: 0, y: 0}
   targetCharacter: {fileID: 0}
-  characterMovement: {fileID: 0}
-  isGoingToTarget: 0
   isPlayerCharacter: 0
-  isFightWithTarget: 0
-  maxHP: 100
+  maxHP: 300
   moveSpeed: 2
+  skillDelay: 0
   attackRange: 5
   attackDelay: 1
+  CurrentState: 
 --- !u!114 &6958994778922450307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 1.5
-  targetCharacter: {fileID: 0}
   attackDamage: 10
   projectilePrefab: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
   firePoint: {fileID: 0}
@@ -233,5 +233,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebc1a28ef16aa34d92e6928c1b4d124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
   currentHP: 0
+--- !u!114 &6689119762804919717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6383626602100036704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97df9eca21252aa4bb610ba2627b15a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 10
+  skillData:
+    skillName: 
+    skillType: 0
+    power: 0
+    cooldown: 0
+    maxTargets: 0
+    skillEffectPrefab: {fileID: 0}

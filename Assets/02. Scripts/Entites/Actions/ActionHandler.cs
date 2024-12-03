@@ -6,7 +6,7 @@ public abstract class ActionHandler : MonoBehaviour
 {
     protected float lastActionTime = -Mathf.Infinity;
 
-    public float cooldownTime = 1.5f;
+    public float cooldownTime;
 
     protected BaseCharacter character;
     protected BaseCharacter targetCharacter;

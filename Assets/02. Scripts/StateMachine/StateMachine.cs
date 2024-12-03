@@ -43,4 +43,10 @@ public class StateMachine
     {
         currentState?.PhysicsUpdate();
     }
+
+    //For Debug
+    public string GetState()
+    {
+        return currentState?.ToString();
+    }
 }

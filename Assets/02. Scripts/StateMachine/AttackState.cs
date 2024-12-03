@@ -10,6 +10,8 @@ public class AttackState : BaseState
     public override void Enter()
     {
         base.Enter();
+
+        stateMachine.character.attackHandler.ResetCooldown();
     }
 
     public override void Update()
@@ -24,12 +26,12 @@ public class AttackState : BaseState
         
         if (stateMachine.character.IsAttackReady())
         {
-            /*//평타 공격 시 스킬 쿨타임이 돌았으면 스킬 사용
+            //평타 공격 시 스킬 쿨타임이 돌았으면 스킬 사용
             if (stateMachine.character.IsSkillReady())
             {
                 stateMachine.ChangeState(stateMachine.SkillState);
                 return;
-            }*/
+            }
 
             stateMachine.character.PerformAttack();
         }
@@ -38,6 +40,8 @@ public class AttackState : BaseState
     public override void Exit()
     {
         base.Exit();
+
+        //stateMachine.character.attackHandler.ResetCooldown();
     }
 
     public override bool CheckTarget(BaseCharacter targetCharacter)

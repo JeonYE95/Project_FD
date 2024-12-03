@@ -5,6 +5,8 @@ using UnityEngine;
 public class SkillHandler : ActionHandler
 {
     public SkillData skillData;
+    float skillDuration;
+
 
     public override void ExecuteAction(BaseCharacter targetCharacter)
     {
@@ -13,11 +15,10 @@ public class SkillHandler : ActionHandler
             return;
         }
 
+        Debug.Log($"{gameObject.name} 스킬 사용됌");
         //스킬 사용 추가
         //Instantiate 나 오브젝트 풀링으로 스킬 생성
 
         ResetCooldown();
-
-        character.EndSkill();
     }
 }
