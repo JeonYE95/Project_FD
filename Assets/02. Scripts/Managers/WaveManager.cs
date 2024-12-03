@@ -7,9 +7,10 @@ public class WaveManager : Singleton<WaveManager>
 {
 
     private int _waveCount;
-    private const float preparationTime = 30f; // 대기 시간
-    private static readonly WaitForSeconds preparation = new WaitForSeconds(preparationTime); // 웨이브 끝난 후 대기 시간 코루틴 
-
+    private const float preparationTime = 30f; //대기 시간
+    public event Action<float> OnPreparationTimeChanged;
+    private float currentPreparationTime; // 남은 대기 시간
+    private bool isPreparing;
 
     public event Action<int> OnClearWave; // 웨이브 클리어 확인 
     public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
@@ -40,15 +41,13 @@ public class WaveManager : Singleton<WaveManager>
     // 웨이브에서 승리했을 때
     public void Victroy()
     {
-         ClearWave();
-
-
+        ClearWave();
     }
 
     // 웨이브에서 패했을 때
     public void Lose()
     {
-
+        IsRunningWave = false;
         OnDead?.Invoke();
         StartCoroutine(NextWavePrepare());
 
@@ -56,10 +55,9 @@ public class WaveManager : Singleton<WaveManager>
 
     public void WaveStartNow()
     {
-
-        //버튼 연동 필요 - StopCoroutine 진행, StartWave로 곧바로 넘어감
-
         StopCoroutine(NextWavePrepare());
+
+        isPreparing = false;
 
         StartWave();
 
@@ -78,7 +76,7 @@ public class WaveManager : Singleton<WaveManager>
           
         if(currentWave == DB 스테이지 최종 웨이브 )
         { 
-             OnWaveAllClear?.Invoke();
+            OnWaveAllClear?.Invoke();
             return;
           
         }
@@ -93,7 +91,6 @@ public class WaveManager : Singleton<WaveManager>
 
 
         CurrentWave++;
-
         StartCoroutine(NextWavePrepare());
 
     }
@@ -112,11 +109,26 @@ public class WaveManager : Singleton<WaveManager>
     //스테이지 끝나고 준비 시간 
     private IEnumerator NextWavePrepare()
     {
+        isPreparing = true;
+        currentPreparationTime = preparationTime;
 
-        yield return preparation;
+        while (currentPreparationTime > 0)
+        {
+            OnPreparationTimeChanged?.Invoke(currentPreparationTime);
+            yield return new WaitForSeconds(1f);
+            currentPreparationTime--;
+        }
+
+        isPreparing = false;
         StartWave();
 
     }
 
+
+    public string GetCurrentPreparationTimeText()
+    {
+        int seconds = Mathf.FloorToInt(currentPreparationTime % 60);
+        return $"{seconds:00}";
+    }
 
 }
