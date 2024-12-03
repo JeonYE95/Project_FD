@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ScrollBGTest
@@ -35,40 +36,49 @@ namespace ScrollBGTest
 
         void Start()
         {
-            //Reset Values
+            // Reset Values
             MoveValue = 0;
             SkyMoveValue = 0;
 
-            //Get MeshRenderers
+            // Initialize arrays
+            Ren = new MeshRenderer[Background.Length];
+            backgroundOffsets = new float[Background.Length];
+
+            // Get MeshRenderers
             for (int i = 0; i < Background.Length; i++)
             {
                 Ren[i] = Background[i].GetComponent<MeshRenderer>();
                 backgroundOffsets[i] = 0f;
             }
-
-
         }
+
 
 
         void Update()
         {
-            //Input
-            //if (Input.GetKey(KeyCode.LeftArrow))
-            //    MoveValue -= MoveSpeed;
+            // Input
+            if (Input.GetKey(KeyCode.LeftArrow))
+                MoveValue -= MoveSpeed * Time.unscaledDeltaTime;
 
-            //if (Input.GetKey(KeyCode.RightArrow))
-            //    MoveValue += MoveSpeed;
+            else if (Input.GetKey(KeyCode.RightArrow))
+                MoveValue += MoveSpeed * Time.unscaledDeltaTime;
+            
+            else
+                MoveValue = 0f;
 
-            //Material OffSet
+            // Material Offset
             for (int i = 0; i < Background.Length; i++)
             {
                 backgroundOffsets[i] += Time.unscaledDeltaTime * ScrollSpeed[i];
-                Ren[i].material.mainTextureOffset = new Vector2(backgroundOffsets[i], 0);
+                float offsetX = MoveValue * ScrollSpeed[i]; // MoveValue를 X축 오프셋에 적용
+                Ren[i].material.mainTextureOffset = new Vector2(offsetX + backgroundOffsets[i], 0);
             }
 
+            // Sky Background
             SkyMoveValue += Time.unscaledDeltaTime * -SkyScrollSpeed;
             SkyRen.material.mainTextureOffset = new Vector2(SkyMoveValue, 0);
         }
+
     }
 
 }
