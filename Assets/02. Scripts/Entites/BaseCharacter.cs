@@ -19,7 +19,9 @@ public class BaseCharacter : MonoBehaviour
     //플레이어면 true , 적이면 false
     public bool isPlayerCharacter = false;
 
-    public Action OnDieEvent;
+    private bool isSkillExecuting;
+
+    public Action <BaseCharacter> OnDieEvent;
 
     //나중에 SO 화 할 것들
     public float maxHP;
@@ -53,6 +55,7 @@ public class BaseCharacter : MonoBehaviour
 
         
         OnDieEvent += CharacterDeActive;
+        OnDieEvent += BattleManager.Instance.CharacterDie;
     }
 
     public void ActiveCharacter()
@@ -107,12 +110,25 @@ public class BaseCharacter : MonoBehaviour
             return;
         }
 
+        isSkillExecuting = true;
         skillHandler.ExecuteAction(targetCharacter);
+    }
+
+    public bool IsSkillExecuting()
+    {
+        return isSkillExecuting;
+    }
+
+    public void EndSkill()
+    {
+        isSkillExecuting = false;
     }
 
     public bool FindTarget()
     {
-        targetCharacter = BattleManager.Instance.GetClosestTarget(this);
+        targetCharacter = BattleManager.Instance.GetTargetClosestOpponent(this);
+
+        //targetCharacter = BattleManager.Instance.targetting
 
         if (targetCharacter == null)
         {
@@ -139,7 +155,7 @@ public class BaseCharacter : MonoBehaviour
 
     }
 
-    public void CharacterDeActive()
+    public void CharacterDeActive(BaseCharacter character)
     {
         isLive = false;
         gameObject.SetActive(false);
@@ -147,6 +163,6 @@ public class BaseCharacter : MonoBehaviour
 
     public void CallDieEvent()
     {
-        OnDieEvent?.Invoke();
+        OnDieEvent?.Invoke(this);
     }
 }

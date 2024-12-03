@@ -8,7 +8,8 @@ public abstract class ActionHandler : MonoBehaviour
 
     public float cooldownTime = 1.5f;
 
-    public BaseCharacter targetCharacter;
+    protected BaseCharacter character;
+    protected BaseCharacter targetCharacter;
 
     public bool IsCooldownComplete()
     {

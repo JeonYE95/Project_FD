@@ -14,6 +14,7 @@ public class StateMachine
 
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
+    public SkillState SkillState { get; }
     public AttackState AttackState { get; }
 
     public StateMachine(BaseCharacter character)
@@ -22,6 +23,7 @@ public class StateMachine
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);
+        SkillState = new SkillState(this);
         AttackState = new AttackState(this);
     }
 

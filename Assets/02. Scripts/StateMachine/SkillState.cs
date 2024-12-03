@@ -8,4 +8,23 @@ public class SkillState : BaseState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (stateMachine.character.IsSkillReady())
+        {
+            stateMachine.character.UseSkill();
+        }
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
 }
