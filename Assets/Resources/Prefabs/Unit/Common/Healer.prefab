@@ -5384,7 +5384,6 @@ GameObject:
   - component: {fileID: 396876181919042977}
   - component: {fileID: 2301919594540929004}
   - component: {fileID: 6661472955730306161}
-  - component: {fileID: 7151142247386528437}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Untagged
@@ -5400,7 +5399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788328734993432406}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.1, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5705,27 +5704,6 @@ MonoBehaviour:
   - {fileID: 5726026770901405453}
   - {fileID: 5726026770901405453}
   Firearm: {fileID: 6337708150222647079}
---- !u!114 &7151142247386528437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788328734993432406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!1 &834897217540589566
 GameObject:
   m_ObjectHideFlags: 0

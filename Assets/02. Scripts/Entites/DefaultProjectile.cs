@@ -8,25 +8,25 @@ public class DefaultProjectile : MonoBehaviour
     public float damage = 10f;
 
     private Vector2 direction;
-    private BaseCharacter targetCharacter;
+    private BaseUnit targetUnit;
 
     private void Start()
     {
         Destroy(gameObject, 7f);
     }
 
-    public void Initialize(BaseCharacter targetCharacter, Vector2 direction)
+    public void Initialize(BaseUnit targetUnit, Vector2 direction)
     {
         this.direction = direction;
-        this.targetCharacter = targetCharacter;
+        this.targetUnit = targetUnit;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (targetCharacter != null && targetCharacter.isLive)
+        if (targetUnit != null && targetUnit.isLive)
         {
-            direction = ((Vector2)targetCharacter.transform.position - (Vector2)transform.position).normalized;
+            direction = ((Vector2)targetUnit.transform.position - (Vector2)transform.position).normalized;
         }
         else
         {
@@ -39,7 +39,7 @@ public class DefaultProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //타겟 이외의 캐릭터
-        if (collision.gameObject != targetCharacter.gameObject)
+        if (collision.gameObject != targetUnit.gameObject)
         {
             return;
         }

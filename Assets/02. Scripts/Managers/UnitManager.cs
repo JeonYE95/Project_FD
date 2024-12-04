@@ -20,7 +20,7 @@ public class UnitManager
         }
     }
 
-    private List<Unit> _units = new List<Unit>();
+    private List<UnitInfo> _units = new List<UnitInfo>();
 
     public void Initialize()
     {
@@ -37,24 +37,19 @@ public class UnitManager
 
     private void CreateUnit(UnitData data)      // 개별 유닛 생성
     {
-        string prefabPath = $"Prefabs/Unit/{data.Grade}/{data.Name}";
+        string prefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
 
         if (prefab == null) return;
 
         GameObject unitInstance = UnityEngine.Object.Instantiate(prefab);
 
-        Unit unit = unitInstance.GetComponent<Unit>();
+        UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
         if (unit != null)
         {
             unit.SetData(data);
         }
 
         _units.Add(unit);
-    }
-
-    public Unit GetUnitByID(int unitID)     // 유닛ID로 유닛 찾기
-    {
-        return _units.Find(unit => unit.Unit_ID == unitID);
     }
 }

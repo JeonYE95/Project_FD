@@ -16595,7 +16595,6 @@ GameObject:
   - component: {fileID: 4560000064157435531}
   - component: {fileID: 2539972186321661954}
   - component: {fileID: 8996486379641276732}
-  - component: {fileID: 8964682753809259082}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -16611,7 +16610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8337979627782069809}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.1, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16913,27 +16912,6 @@ MonoBehaviour:
   - {fileID: 4938216078375874900}
   - {fileID: 4938216078375874900}
   Firearm: {fileID: 994394284484305095}
---- !u!114 &8964682753809259082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337979627782069809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!1 &8527541876134906368
 GameObject:
   m_ObjectHideFlags: 0
