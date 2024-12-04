@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class UIUnitSlot : MonoBehaviour
 {
-    // [SerializeField] private Image unitImg;
-    // [SerializeField] private TMP_Text unitNameTxt;
     private RectTransform content;
 
     [SerializeField] private GameObject unitSlotPrefab;
@@ -83,34 +81,51 @@ public class UIUnitSlot : MonoBehaviour
         //unit13.SpritePath = "Unit1";
         //inventoryUnits.Add(unit13);
 
-        //CreateUnitSlots();
+        CreateUnitSlots();
     }
 
-    //private void CreateUnitSlots()
-    //{
-    //    foreach (var unit in inventoryUnits)
-    //    {
-    //        GameObject go = Instantiate(unitSlotPrefab, content);
+    private void CreateUnitSlots()
+    {
+       foreach (var unit in inventoryUnits)
+       {
+           GameObject go = Instantiate(unitSlotPrefab, content);
 
-    //        TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
-    //        Image unitImg = go.GetComponentInChildren<Image>();
+           TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
+           Image unitImg = go.GetComponentInChildren<Image>();
 
-    //        if (unitNameTxt !=  null)
-    //        {
-    //            unitNameTxt.text = unit.Name;
-    //            Debug.Log(unitNameTxt);
-    //        }
-    //        else
-    //            Debug.Log("TMP 컴포넌트 없음.");
+           if (unitNameTxt !=  null)
+           {
+               unitNameTxt.text = unit.Name;
+               Debug.Log(unitNameTxt);
+           }
+           else
+               Debug.Log("TMP 컴포넌트 없음.");
 
-    //        if (unitImg != null)
-    //        {
-    //            Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit.SpritePath}");
-    //            unitImg.sprite = sprite;
-    //            Debug.Log(unitImg);
-    //        }
-    //        else
-    //            Debug.Log("Image 컴포넌트 없음.");
-    //    }
-    //}
+           if (unitImg != null)
+           {
+            //    Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit.SpritePath}");
+            //    unitImg.sprite = sprite;
+               Debug.Log(unitImg);
+           }
+           else
+               Debug.Log("Image 컴포넌트 없음.");
+       }
+    }
+
+    public void updateUnits(List<Unit> units)
+    {
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+            // 새로운 유닛 목록으로 업데이트
+            inventoryUnits = units;
+            CreateUnitSlots();
+    }
+
+    public List<Unit> InventoryUnits
+    {
+        get => inventoryUnits;
+        private set => inventoryUnits = value;
+    }
 }
