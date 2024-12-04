@@ -23938,7 +23938,6 @@ GameObject:
   - component: {fileID: 2685100592376945370}
   - component: {fileID: 8607910435402130423}
   - component: {fileID: 1071500850463502355}
-  - component: {fileID: -2880493935767878959}
   m_Layer: 0
   m_Name: Elementalist
   m_TagString: Untagged
@@ -23954,7 +23953,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5262169298616127438}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.1, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24259,18 +24258,6 @@ MonoBehaviour:
   - {fileID: 6719505862129175835}
   - {fileID: 6719505862129175835}
   Firearm: {fileID: 3022956833646795885}
---- !u!114 &-2880493935767878959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5262169298616127438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5544045606078135083
 GameObject:
   m_ObjectHideFlags: 0
