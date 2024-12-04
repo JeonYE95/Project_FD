@@ -8,6 +8,8 @@ public class MoveState : BaseState
     public override void Enter()
     {
         base.Enter();
+
+        StartBoolAnimation(AnimationData.isMoving);
     }
 
     public override void Update()
@@ -15,16 +17,16 @@ public class MoveState : BaseState
         base.Update();
 
         //타겟이 사정거리 내에 있을때는 어택 상태로 변경
-        if (stateMachine.character.IsTargetInRange())
+        if (stateMachine.unit.IsTargetInRange())
         {
             stateMachine.ChangeState(stateMachine.AttackState);
             return;
         }
 
         //타겟이 정상적인 상태면 타겟한테 가라
-        if (CheckTarget(stateMachine.character.targetCharacter))
+        if (CheckTarget(stateMachine.unit.targetUnit))
         {
-            stateMachine.character.characterMovement.MoveToTarget();
+            stateMachine.unit.UnitMovement.MoveToTarget();
         }
         else
         {
@@ -36,6 +38,8 @@ public class MoveState : BaseState
     {
         base.Exit();
 
-        stateMachine.character.characterMovement.Stop();
+        stateMachine.unit.UnitMovement.Stop();
+
+        StopBoolAnimation(AnimationData.isMoving);
     }
 }

@@ -8,9 +8,9 @@ using Random = UnityEngine.Random;
 
 public class BattleManager : Singleton<BattleManager>
 {
-    private List<BaseCharacter> allCharacters = new List<BaseCharacter>();
-    public List<BaseCharacter> players = new List<BaseCharacter>();
-    public List<BaseCharacter> enemies = new List<BaseCharacter>();
+    private List<BaseUnit> allUnits = new List<BaseUnit>();
+    public List<BaseUnit> players = new List<BaseUnit>();
+    public List<BaseUnit> enemies = new List<BaseUnit>();
 
     public int playerCount;
     public int enemyCount;
@@ -19,27 +19,16 @@ public class BattleManager : Singleton<BattleManager>
 
     //살아있는 캐릭터와 죽어있는 캐릭터 용 리스트 필요??
     //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
-    private int totalCharacterCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
+    private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
 
-    public List<BaseCharacter> GetPlayers()
+    public List<BaseUnit> GetPlayers()
     {
         return players;
     }
 
-    public List<BaseCharacter> GetEnemies()
+    public List<BaseUnit> GetEnemies()
     {
         return enemies;
-    }
-
-    //일단 많이 부를 일 없는 함수에는 LINQ 사용
-    public List<BaseCharacter> GetAlivePlayers()
-    {
-        return players.Where(x => x .isLive).ToList();
-    }
-
-    public List<BaseCharacter> GetAliveEnemies()
-    {
-        return enemies.Where(x => x .isLive).ToList();
     }
 
     protected override void Awake()
@@ -49,9 +38,9 @@ public class BattleManager : Singleton<BattleManager>
         targetingSystem = new TargetingSystem(this);
     }
 
-    public void CharacterDie(BaseCharacter character)
+    public void UnitDie(BaseUnit unit)
     {
-        if (character.isPlayerCharacter)
+        if (unit.isPlayerUnit)
         {
             playerCount--;
         }
@@ -84,48 +73,48 @@ public class BattleManager : Singleton<BattleManager>
 
     public void BattleSetingAndStart()
     {
-        foreach (BaseCharacter character in players)
+        foreach (BaseUnit unit in players)
         {
-            allCharacters.Add(character);
+            allUnits.Add(unit);
             //character.OnDieEvent += Wavema
 
             //WaveManager.Instance.Victory
         }
 
-        foreach (BaseCharacter character in enemies)
+        foreach (BaseUnit unit in enemies)
         {
-            allCharacters.Add(character);
+            allUnits.Add(unit);
         }
 
-        foreach (BaseCharacter character in allCharacters)
+        foreach (BaseUnit unit in allUnits)
         {
-            character.ActiveCharacter();
+            unit.ActiveUnit();
         }
 
         playerCount = players.Count;
         enemyCount = enemies.Count;
     }
 
-    public void RegisterCharacter(BaseCharacter character)
+    public void RegisterUnit(BaseUnit unit)
     {
-        if (character.isPlayerCharacter)
+        if (unit.isPlayerUnit)
         {
-            players.Add(character);
+            players.Add(unit);
         }
         else
         {
-            enemies.Add(character);
+            enemies.Add(unit);
         }
     }
 
     
-    public BaseCharacter GetTargetClosestOpponent(BaseCharacter standardCharacter)
+    public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {
-        return targetingSystem.GetTargetClosestOpponent(standardCharacter);
+        return targetingSystem.GetTargetClosestOpponent(standardUnit);
     }
 
-    public List<BaseCharacter> GetCharacters(BaseCharacter standardCharacter, CharacterSearchOptions options)
+    public List<BaseUnit> GetUnits(BaseUnit standardUnit, UnitSearchOptions options)
     {
-        return targetingSystem.GetCharacters(standardCharacter, options);
+        return targetingSystem.GetUnits(standardUnit, options);
     }
 }
