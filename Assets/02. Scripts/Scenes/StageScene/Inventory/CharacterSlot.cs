@@ -8,16 +8,37 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 {
     private Transform _previousPosition;
 
-    private GameObject _previewObject;
+    [SerializeField]
     private Image _draggedCharacterPreview;
+    [SerializeField]
+    private GameObject _previewObject;
+    [SerializeField]
+    private UIUnitSlot _UIUnitSlot;
 
-    private Inventory _characterSlot;
+
+    // 테스트 용
+    [SerializeField]
+    private UIUnitSlotTest _unitSlotTest;
+
+
     public int Index { get; private set; }
 
-    public void Init(Inventory characterSlot, int index)
+    private void Start()
     {
-        _characterSlot = characterSlot;
-        Index = index;
+        //자신의 순서를 인덱스로 자동 할당
+        Index = transform.GetSiblingIndex();
+
+        if (InventoryManager.Instance.PreviewObject == null)
+        {
+            CreatePreviewObject();
+        }
+        else
+        {
+            _previewObject = InventoryManager.Instance.PreviewObject;
+            _draggedCharacterPreview = _previewObject.GetComponent<Image>();
+        }
+
+        _unitSlotTest = GetComponentInParent<UIUnitSlotTest>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -25,30 +46,61 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
         _previousPosition = transform;
 
-        if (_previewObject == null)
+        if (_previewObject != null)
         {
-            _previewObject = new GameObject("DragPreview");
-            _draggedCharacterPreview = _previewObject.AddComponent<Image>();
 
 
-            // 테스트 용 , 실제는 캐릭터 ID 받아서 DB 저장 경로로 불러오기 
-            _draggedCharacterPreview.sprite = Resources.Load<Sprite>("Textures/Test1");
+            // 실제 동작 코드
+            /*
+             
+              // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
+            if (_UIUnitSlot != null && Index < _UIUnitSlot.InventoryUnits.Count)
+            {
+                Unit currentUnit = _UIUnitSlot.InventoryUnits[Index];
+                if (currentUnit != null)
+                {
+                  
+                    // 유닛 정보에 맞는 이미지로 업데이트
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit.Name}");
 
 
-            var canvas = FindObjectOfType<Canvas>();
-            _previewObject.transform.SetParent(canvas.transform);
+                    UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
+                    previewInfo.SetUnitInfo(currentUnit);
+                }
 
-            _draggedCharacterPreview.raycastTarget = false;
-            _previewObject.transform.SetAsLastSibling();
+            }
+             
+             */
+
+
+
+            //테스트 코드 
+            {
+
+                // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
+                if (_unitSlotTest != null && Index < _unitSlotTest.InventoryUnits.Count)
+            {
+                Unit currentUnit = _unitSlotTest.InventoryUnits[Index];
+                if (currentUnit != null)
+                {
+                  
+                    // 유닛 정보에 맞는 이미지로 업데이트
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit.Name}");
+
+
+                    UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
+                    previewInfo.SetUnitInfo(currentUnit);
+                }
+
+            }
+            
+            }
+
+
+            _previewObject.SetActive(true);
+            _previewObject.transform.position = eventData.position;
 
         }
-
-
-        //DB에 저장된 캐릭터 ID로 불러오기 
-        //draggedCharacterPreview.sprite = Resources.Load<Sprite>("Textures/캐릭터이름");
-
-        _previewObject.SetActive(true);
-        _previewObject.transform.position = eventData.position;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -62,12 +114,30 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // SetActive , 재활용
+        // preview 이미지 재활용
         if (_previewObject != null)
         {
             _previewObject.SetActive(false);
         }
 
+    }
+
+
+    private void CreatePreviewObject()
+    {
+        _previewObject = new GameObject("DragPreview");
+        _draggedCharacterPreview = _previewObject.AddComponent<Image>();
+        _draggedCharacterPreview.raycastTarget = false;
+
+        
+        UnitPrevInfo previewInfo = _previewObject.AddComponent<UnitPrevInfo>();
+
+        var canvas = FindObjectOfType<Canvas>();
+        _previewObject.transform.SetParent(canvas.transform);
+        _previewObject.transform.SetAsLastSibling();
+
+        InventoryManager.Instance.PreviewObject = _previewObject;
+        _previewObject.SetActive(false);
     }
 
 }

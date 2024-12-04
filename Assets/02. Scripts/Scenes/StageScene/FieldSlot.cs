@@ -8,7 +8,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 {
 
     private Vector3 _previousPosition;
-    private Inventory _fieldSlot;
+ 
 
     [SerializeField]
     private GameObject _character = null;
@@ -24,14 +24,14 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     // 몇번째 필드인지 정보 저장
     public int Index { get; private set; }
 
-    public void Init(Inventory FieldSlot, int index)
+    private void Start()
     {
-        _fieldSlot = FieldSlot;
-        Index = index;
+        //자신의 순서를 인덱스로 자동 할당
+        Index = transform.GetSiblingIndex();
     }
 
-    //소환 부분 : SpawnManager를 만들고 불러오는걸로 수정 예정
-    public void SpawnCharacter()
+    //소환 부분 : SpawnManager로 빼야
+    public void DropCharacter(Unit unitInfo)
     {
 
         Vector3 uiPosition = transform.position;
@@ -40,11 +40,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiPosition.x, uiPosition.y, Camera.main.nearClipPlane));
         worldPosition.z = 0; // 2D 게임이라면 z축을 0으로 설정
 
-        _character = Instantiate(Resources.Load<GameObject>("Prefabs/Unit/Common/Archer"), worldPosition, Quaternion.identity);
-        // _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{캐릭터등급}/{캐릭터이름} ? "), worldPosition, Quaternion.identity);
+
+        //인벤토리에 있는 Unit 정보 받아서 필드에 소환
+        _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{unitInfo.Grade}/{unitInfo.Name}"), worldPosition, Quaternion.identity);
 
         _character.transform.SetParent(this.transform);
-
 
         // 캐릭터 초기 위치 설정
         _previousPosition = _character.transform.position;
@@ -89,7 +89,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         CharacterSlot characterSlot = eventData.pointerDrag.GetComponent<CharacterSlot>();
         if (characterSlot != null && _character == null)
         {
-            SpawnCharacter();
+
+            UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
+            if (previewInfo != null)
+            {
+                Unit unitInfo = previewInfo.GetUnitInfo();
+                DropCharacter(unitInfo);
+            }
 
         }
 
@@ -146,26 +152,26 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         if (_character != null)
         {
             // 유효한 위치에 드롭되지 않았다면 원위치
-            CharacterPosReturn();
+            CharacterPosReSet();
 
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _fieldSlot.SelectSlot(this);
+        InventoryManager.Instance.SelectSlot(this);
     }
 
 
     public void CharacterInit()
     {
 
-        CharacterPosReturn();
+        CharacterPosReSet();
 
     }
       
 
-    private void CharacterPosReturn()
+    private void CharacterPosReSet()
     {
         _character.transform.position = _previousPosition;
 
