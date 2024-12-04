@@ -24,9 +24,9 @@ public class InventoryManager : Singleton<InventoryManager>
     public GameObject PreviewObject { get; set; }
 
 
-    private List<Unit> commonUnit = new List<Unit>();
-    private List<Unit> rareUnit = new List<Unit>();
-    private List<Unit> uniqueUnit = new List<Unit>();
+    private List<UnitInfo> commonUnit = new List<UnitInfo>();
+    private List<UnitInfo> rareUnit = new List<UnitInfo>();
+    private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
 
 
 
@@ -47,17 +47,17 @@ public class InventoryManager : Singleton<InventoryManager>
 
             _UIUnitSlotTest = GetComponentInChildren<UIUnitSlotTest>();
 
-            Unit unit1 = gameObject.AddComponent<Unit>();
-            unit1.Name = "Knight";
-            unit1.Grade = "Common";
+            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+            unit1._unitData.name = "Knight";
+            unit1._unitData.grade = "Common";
             commonUnit.Add(unit1);
-            Unit unit2 = gameObject.AddComponent<Unit>();
-            unit2.Name = "Maze";
-            unit2.Grade = "Common";
+            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+            unit2._unitData.name = "Maze";
+            unit2._unitData.grade = "Common";
             commonUnit.Add(unit2);
-            Unit unit3 = gameObject.AddComponent<Unit>();
-            unit3.Name = "Warrior";
-            unit3.Grade = "Common";
+            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+            unit3._unitData.name = "Warrior";
+            unit3._unitData.grade = "Common";
             commonUnit.Add(unit3);
 
 
@@ -75,7 +75,7 @@ public class InventoryManager : Singleton<InventoryManager>
     public void UpdateUnitGrade(Defines.UnitGrade unitGrade)
     {
 
-        List<Unit> unitsToShow = new List<Unit>();
+        List<UnitInfo> unitsToShow = new List<UnitInfo>();
 
         switch (unitGrade)
         {
@@ -152,18 +152,18 @@ public class InventoryManager : Singleton<InventoryManager>
 
     //합성 또는 뽑기를 통해 유닛이 인벤토리에 추가 되었을 때 분류
 
-    public void AddCharacter(Unit unitName, int amount = 1)
+    public void AddCharacter(UnitInfo unitName, int amount = 1)
     {
-        if (UnitHas.ContainsKey(unitName.Name))
+        if (UnitHas.ContainsKey(unitName._unitData.name))
         {
-            UnitHas[unitName.Name] += amount;
+            UnitHas[unitName._unitData.name] += amount;
     
         }
         else
         {
-            UnitHas.Add(unitName.Name, amount);
+            UnitHas.Add(unitName._unitData.name, amount);
 
-            switch (unitName.Grade)
+            switch (unitName._unitData.grade)
             {
                 case "Common":
                     commonUnit.Add(unitName);

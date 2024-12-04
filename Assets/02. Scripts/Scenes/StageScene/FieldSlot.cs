@@ -31,7 +31,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     }
 
     //소환 부분 : SpawnManager로 빼야
-    public void DropCharacter(Unit unitInfo)
+    public void DropCharacter(UnitInfo unitInfo)
     {
 
         Vector3 uiPosition = transform.position;
@@ -42,7 +42,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
-        _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{unitInfo.Grade}/{unitInfo.Name}"), worldPosition, Quaternion.identity);
+        _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{unitInfo._unitData.grade}/{unitInfo._unitData.name}"), worldPosition, Quaternion.identity);
 
         _character.transform.SetParent(this.transform);
 
@@ -93,7 +93,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)
             {
-                Unit unitInfo = previewInfo.GetUnitInfo();
+                UnitInfo unitInfo = previewInfo.GetUnitInfo();
                 DropCharacter(unitInfo);
             }
 

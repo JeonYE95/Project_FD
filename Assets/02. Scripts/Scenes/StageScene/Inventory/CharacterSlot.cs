@@ -80,12 +80,12 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
                 // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
                 if (_unitSlotTest != null && Index < _unitSlotTest.InventoryUnits.Count)
             {
-                Unit currentUnit = _unitSlotTest.InventoryUnits[Index];
+                UnitInfo currentUnit = _unitSlotTest.InventoryUnits[Index];
                 if (currentUnit != null)
                 {
                   
                     // 유닛 정보에 맞는 이미지로 업데이트
-                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit.Name}");
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit._unitData.name}");
 
 
                     UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();

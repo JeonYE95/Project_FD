@@ -11,9 +11,9 @@ public class UIUnitSlotTest : MonoBehaviour
     [SerializeField] private GameObject unitSlotPrefab;
 
     [SerializeField]
-    private List<Unit> inventoryUnits = new List<Unit>();
+    private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
 
-    public List<Unit> InventoryUnits
+    public List<UnitInfo> InventoryUnits
     {
         get => inventoryUnits;
         private set => inventoryUnits = value;
@@ -23,14 +23,14 @@ public class UIUnitSlotTest : MonoBehaviour
         content = gameObject.GetComponent<RectTransform>();
 
         // 테스트 코드
-        Unit unit1 = gameObject.AddComponent<Unit>();
-        unit1.Name = "Archer";
-        unit1.Grade = "Common";
+        UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+        unit1._unitData.name = "Archer";
+        unit1._unitData.grade = "Common";
         inventoryUnits.Add(unit1);
 
-        Unit unit2 = gameObject.AddComponent<Unit>();
-        unit2.Name = "Healer";
-        unit2.Grade = "Common";
+        UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+        unit2._unitData.name = "Healer";
+        unit2._unitData.grade = "Common";
         inventoryUnits.Add(unit2);
 
      
@@ -50,7 +50,7 @@ public class UIUnitSlotTest : MonoBehaviour
 
             if (unitNameTxt != null)
             {
-                unitNameTxt.text = unit.Name;
+                unitNameTxt.text = unit._unitData.name;
                 Debug.Log(unitNameTxt);
             }
             else
@@ -58,7 +58,7 @@ public class UIUnitSlotTest : MonoBehaviour
 
             if (unitImg != null)
             {
-                Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit.Name}");
+                Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit._unitData.name}");
                 unitImg.sprite = sprite;
                 Debug.Log(unitImg);
             }
@@ -67,7 +67,7 @@ public class UIUnitSlotTest : MonoBehaviour
         }
     }
 
-    public void updateUnits(List<Unit> units)
+    public void updateUnits(List<UnitInfo> units)
     {
         foreach (Transform child in content)
         {

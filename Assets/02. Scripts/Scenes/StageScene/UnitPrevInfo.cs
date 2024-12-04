@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class UnitPrevInfo : MonoBehaviour
 {
-    private Unit _unitInfo;
+    private UnitInfo _unitInfo;
 
-    public void SetUnitInfo(Unit unit)
+    public void SetUnitInfo(UnitInfo unit)
     {
         _unitInfo = unit;
     }
 
-    public Unit GetUnitInfo()
+    public UnitInfo GetUnitInfo()
     {
         return _unitInfo;
     }

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class UnitInfo : MonoBehaviour
 {
-    private UnitData _unitData;
+    public UnitData _unitData;
+
 
     public void SetData(GSDatas.UnitData data)
     {
