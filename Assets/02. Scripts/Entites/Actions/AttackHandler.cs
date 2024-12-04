@@ -6,7 +6,7 @@ public class AttackHandler : ActionHandler
 {
     public float attackDamage = 10f;
 
-    public override void ExecuteAction(BaseCharacter targetCharacter)
+    public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null)
         {

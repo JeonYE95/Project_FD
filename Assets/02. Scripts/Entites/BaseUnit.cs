@@ -5,25 +5,25 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 
-public class BaseCharacter : MonoBehaviour
+public class BaseUnit : MonoBehaviour
 {
-    //Character's Component
+    //Unit's Component
     public HealthSystem healthSystem;
     public ActionHandler attackHandler;
     public ActionHandler skillHandler;
-    public CharacterMovement characterMovement;
-    public CharacterAnimationController animController;
+    public UnitMovement UnitMovement;
+    public UnitAnimationController animController;
 
     public bool isLive;
     public Vector2 direction;
-    public BaseCharacter targetCharacter;
+    public BaseUnit targetUnit;
 
     //플레이어면 true , 적이면 false
-    public bool isPlayerCharacter = false;
+    public bool isPlayerUnit = false;
 
     private bool isSkillExecuting;
 
-    public Action <BaseCharacter> OnDieEvent;
+    public Action <BaseUnit> OnDieEvent;
 
     //나중에 SO 화 할 것들
     public float maxHP;
@@ -36,9 +36,7 @@ public class BaseCharacter : MonoBehaviour
 
 
     //For Debug
-
-    [SerializeField]
-    public string CurrentState;
+    [SerializeField] private string CurrentState;
 
 
     private void Awake()
@@ -47,23 +45,23 @@ public class BaseCharacter : MonoBehaviour
         healthSystem = GetComponent<HealthSystem>();
         skillHandler = GetComponent<SkillHandler>();
         attackHandler = GetComponent<ActionHandler>();
-        characterMovement = GetComponent<CharacterMovement>();
-        animController = GetComponent<CharacterAnimationController>();
+        UnitMovement = GetComponent<UnitMovement>();
+        animController = GetComponent<UnitAnimationController>();
     }
 
     //Start 에서 호출됨
-    public void CharacterInit()
+    public void UnitInit()
     {
         isLive = true;
         healthSystem.MaxHP = maxHP;
-        characterMovement.moveSpeed = moveSpeed;
+        UnitMovement.moveSpeed = moveSpeed;
 
         //배틀매니저에 캐릭터 등록
-        BattleManager.Instance.RegisterCharacter(this);
+        BattleManager.Instance.RegisterUnit(this);
 
         
-        OnDieEvent += CharacterDeActive;
-        OnDieEvent += BattleManager.Instance.CharacterDie;
+        OnDieEvent += UnitDeActive;
+        OnDieEvent += BattleManager.Instance.UnitDie;
 
         //나중에 셋캐릭터로 이동
         animController.SetSettingAnimation();
@@ -73,7 +71,7 @@ public class BaseCharacter : MonoBehaviour
     }
 
     //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틸매니저가 호출
-    public void ActiveCharacter()
+    public void ActiveUnit()
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
         stateMachine.ChangeState(stateMachine.IdleState);
@@ -84,12 +82,12 @@ public class BaseCharacter : MonoBehaviour
     }
 
     //유닛을 타일에 배치(셋팅) 햇을때
-    public void SetCharacter()
+    public void SetUnit()
     {
     }
 
     //유닛을 타일에서 해제했을때 = 현재 구조로는 프리팹자체 파괴
-    public void UnsetCharacter()
+    public void UnsetUnit()
     {
 
     }
@@ -97,7 +95,7 @@ public class BaseCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CharacterInit();
+        UnitInit();
     }
 
     // Update is called once per frame
@@ -121,25 +119,25 @@ public class BaseCharacter : MonoBehaviour
 
     public void PerformAttack()
     {
-        if (targetCharacter == null || attackHandler == null)
+        if (targetUnit == null || attackHandler == null)
         {
             Debug.Log("공격 시 타겟 캐릭터가 Null");
             return;
         }
 
-        attackHandler.ExecuteAction(targetCharacter);
+        attackHandler.ExecuteAction(targetUnit);
     }
 
     public void UseSkill()
     {
-        if (targetCharacter == null)
+        if (targetUnit == null)
         {
             Debug.Log("스킬 사용시 타겟 캐릭터가 Null");
             return;
         }
 
         isSkillExecuting = true;
-        skillHandler.ExecuteAction(targetCharacter);
+        skillHandler.ExecuteAction(targetUnit);
     }
 
     public bool IsSkillExecuting()
@@ -154,11 +152,11 @@ public class BaseCharacter : MonoBehaviour
 
     public bool FindTarget()
     {
-        targetCharacter = BattleManager.Instance.GetTargetClosestOpponent(this);
+        targetUnit = BattleManager.Instance.GetTargetClosestOpponent(this);
 
-        //targetCharacter = BattleManager.Instance.targetting
+        //targetUnit = BattleManager.Instance.targetting
 
-        if (targetCharacter == null)
+        if (targetUnit == null)
         {
             return false;
         }
@@ -170,17 +168,17 @@ public class BaseCharacter : MonoBehaviour
     public bool IsTargetInRange()
     {
         //타겟이 살아있는지도 추가
-        if (targetCharacter == null || !targetCharacter.isLive)
+        if (targetUnit == null || !targetUnit.isLive)
         {
             return false;
         }
 
-        return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
+        return Vector2.Distance(transform.position, targetUnit.transform.position) < attackRange;
     }
 
     
 
-    public void CharacterDeActive(BaseCharacter character)
+    public void UnitDeActive(BaseUnit Unit)
     {
         isLive = false;
         gameObject.SetActive(false);

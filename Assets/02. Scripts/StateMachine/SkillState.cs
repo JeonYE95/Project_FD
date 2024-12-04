@@ -17,9 +17,9 @@ public class SkillState : BaseState
 
         elapsedTime = 0f;
 
-        if (stateMachine.character.IsSkillReady())
+        if (stateMachine.unit.IsSkillReady())
         {
-            stateMachine.character.UseSkill();
+            stateMachine.unit.UseSkill();
         }
     }
 
@@ -42,6 +42,6 @@ public class SkillState : BaseState
         base.Exit();
 
         //스킬 사용 중 특정 조건 때문에 스킬 상태를 벗어낫을때 쿨은 돌게
-        stateMachine.character.skillHandler.ResetCooldown();
+        stateMachine.unit.skillHandler.ResetCooldown();
     }
 }

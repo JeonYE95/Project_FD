@@ -16,7 +16,7 @@ public class IdleState : BaseState
     {
         base.Update();
 
-        if (stateMachine.character.FindTarget())
+        if (stateMachine.unit.FindTarget())
         {
             stateMachine.ChangeState(stateMachine.MoveState);
         }

@@ -22,10 +22,10 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    BaseCharacter character;
+    BaseUnit unit;
     private void Awake()
     {
-        character = GetComponent<BaseCharacter>();
+        unit = GetComponent<BaseUnit>();
     }
 
     public void TakeDamage(float damage)
@@ -34,7 +34,7 @@ public class HealthSystem : MonoBehaviour
 
         if (currentHP < 0)
         {
-            character.CallDieEvent();
+            unit.CallDieEvent();
         }
     }
 }

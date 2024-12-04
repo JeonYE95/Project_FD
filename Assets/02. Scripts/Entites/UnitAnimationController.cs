@@ -11,7 +11,7 @@ public static class AnimationData
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
 }
 
-public class CharacterAnimationController : MonoBehaviour
+public class UnitAnimationController : MonoBehaviour
 {
     Animator animator;
 
@@ -30,7 +30,7 @@ public class CharacterAnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator.runtimeAnimatorController = f;
+        //animator.runtimeAnimatorController = f;
     }
 
     public void SetBool(int hashCode, bool isPlaying)

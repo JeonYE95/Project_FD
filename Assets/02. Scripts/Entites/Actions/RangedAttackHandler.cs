@@ -12,7 +12,7 @@ public class RangedAttackHandler : AttackHandler
         firePoint = transform;
     }
 
-    public override void ExecuteAction(BaseCharacter targetCharacter)
+    public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null || projectilePrefab == null || firePoint == null)
         {

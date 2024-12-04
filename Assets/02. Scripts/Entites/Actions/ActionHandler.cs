@@ -8,15 +8,15 @@ public abstract class ActionHandler : MonoBehaviour
 
     public float cooldownTime;
 
-    protected BaseCharacter character;
-    protected BaseCharacter targetCharacter;
+    protected BaseUnit character;
+    protected BaseUnit targetCharacter;
 
     public bool IsCooldownComplete()
     {
         return Time.time >= lastActionTime + cooldownTime;
     }
 
-    public abstract void ExecuteAction(BaseCharacter targetCharacter);
+    public abstract void ExecuteAction(BaseUnit targetCharacter);
 
     public void ResetCooldown()
     {

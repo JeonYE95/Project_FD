@@ -11,7 +11,7 @@ public class AttackState : BaseState
     {
         base.Enter();
 
-        stateMachine.character.attackHandler.ResetCooldown();
+        stateMachine.unit.attackHandler.ResetCooldown();
 
         StartBoolAnimation(AnimationData.isAttacking);
     }
@@ -20,22 +20,22 @@ public class AttackState : BaseState
     {
         base.Update();
 
-        if (!CheckTarget(stateMachine.character.targetCharacter))
+        if (!CheckTarget(stateMachine.unit.targetUnit))
         {
             stateMachine.ChangeState(stateMachine.MoveState);
             return; // 리턴 안하면 밑의 코드 실행함
         }
         
-        if (stateMachine.character.IsAttackReady())
+        if (stateMachine.unit.IsAttackReady())
         {
             //평타 공격 시 스킬 쿨타임이 돌았으면 스킬 사용
-            if (stateMachine.character.IsSkillReady())
+            if (stateMachine.unit.IsSkillReady())
             {
                 stateMachine.ChangeState(stateMachine.SkillState);
                 return;
             }
 
-            stateMachine.character.PerformAttack();
+            stateMachine.unit.PerformAttack();
         }
     }
 
@@ -48,9 +48,9 @@ public class AttackState : BaseState
         //stateMachine.character.attackHandler.ResetCooldown();
     }
 
-    public override bool CheckTarget(BaseCharacter targetCharacter)
+    public override bool CheckTarget(BaseUnit targetCharacter)
     {
         return base.CheckTarget(targetCharacter) &&
-            stateMachine.character.IsTargetInRange();
+            stateMachine.unit.IsTargetInRange();
     }
 }

@@ -44,7 +44,7 @@ public class BaseState : IState
         stateMachine.animController?.SetTrigger(animatorHash);
     }
 
-    public virtual bool CheckTarget(BaseCharacter targetCharacter)
+    public virtual bool CheckTarget(BaseUnit targetCharacter)
     {
         return targetCharacter != null && targetCharacter.isLive;
     }

@@ -179,15 +179,15 @@ MonoBehaviour:
   healthSystem: {fileID: 0}
   attackHandler: {fileID: 0}
   skillHandler: {fileID: 0}
-  characterMovement: {fileID: 0}
+  UnitMovement: {fileID: 0}
   animController: {fileID: 0}
   isLive: 0
   direction: {x: 0, y: 0}
-  targetCharacter: {fileID: 0}
-  isPlayerCharacter: 1
+  targetUnit: {fileID: 0}
+  isPlayerUnit: 1
   maxHP: 300
   moveSpeed: 2
-  skillDelay: 0
+  skillDelay: 10
   attackRange: 2
   attackDelay: 1
   CurrentState: 
@@ -200,10 +200,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8285971612550450801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb71002f586fdf940bc2b7074ccd181b, type: 3}
+  m_Script: {fileID: 11500000, guid: 74cc5c3bfede8c74c88465b039b1eacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 3
   moveDirection: {x: 0, y: 0}
   destinationPosition: {x: 0, y: 0}
   rigidbody2D: {fileID: 0}
@@ -266,3 +266,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6be7f06a93792384a9f9379de72cb2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  f: {fileID: 0}

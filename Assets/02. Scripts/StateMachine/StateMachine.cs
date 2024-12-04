@@ -11,18 +11,18 @@ public interface IState
 public class StateMachine
 {
     protected IState currentState;
-    public BaseCharacter character;
-    public CharacterAnimationController animController;
+    public BaseUnit unit;
+    public UnitAnimationController animController;
 
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
     public SkillState SkillState { get; }
     public AttackState AttackState { get; }
 
-    public StateMachine(BaseCharacter character)
+    public StateMachine(BaseUnit unit)
     {
-        this.character = character;
-        animController = character.animController;
+        this.unit = unit;
+        animController = unit.animController;
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);

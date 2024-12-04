@@ -8,7 +8,7 @@ public class SkillHandler : ActionHandler
     float skillDuration;
 
 
-    public override void ExecuteAction(BaseCharacter targetCharacter)
+    public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null)
         {

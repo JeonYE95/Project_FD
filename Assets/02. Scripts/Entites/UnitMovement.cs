@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class UnitMovement : MonoBehaviour
 {
     public float moveSpeed;
 
@@ -11,12 +11,12 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 destinationPosition;
 
     public Rigidbody2D rigidbody2D;
-    BaseCharacter character;
+    BaseUnit character;
 
 
     private void Awake()
     {
-        character = GetComponent<BaseCharacter>();
+        character = GetComponent<BaseUnit>();
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
@@ -44,13 +44,13 @@ public class CharacterMovement : MonoBehaviour
 
     public void MoveToTarget()
     {
-        if (character.targetCharacter == null)
+        if (character.targetUnit == null)
         {
             return;
         }
 
         Vector2 myPosition = transform.position;
-        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.targetCharacter.transform.position, character.attackRange);
+        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.targetUnit.transform.position, character.attackRange);
 
         moveDirection = (AdjustedTargetPosition - myPosition).normalized;
         moveDirection = moveDirection * moveSpeed;
