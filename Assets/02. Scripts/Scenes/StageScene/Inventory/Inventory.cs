@@ -15,9 +15,9 @@ public class Inventory : MonoBehaviour
 
     }
 
-    private List<Unit> normalUnit = new List<Unit>();
-    private List<Unit> rareUnit = new List<Unit>();
-    private List<Unit> uniqueUnit = new List<Unit>();
+    private List<UnitInfo> normalUnit = new List<UnitInfo>();
+    private List<UnitInfo> rareUnit = new List<UnitInfo>();
+    private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
 
 
     //private UIUnitSlot UnitList = GetComponentInChildren<UIUnitSlot>();
@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour
 
   
 
-    private void UpdateSlots(List<Unit> units)
+    private void UpdateSlots(List<UnitInfo> units)
     {
        
    

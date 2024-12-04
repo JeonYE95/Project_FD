@@ -11,7 +11,7 @@ public class UIUnitSlot : MonoBehaviour
 
     [SerializeField] private GameObject unitSlotPrefab;
 
-    private List<Unit> inventoryUnits = new List<Unit>();
+    private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
 
     void Start()
     {

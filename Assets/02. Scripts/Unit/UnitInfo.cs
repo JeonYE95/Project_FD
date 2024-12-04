@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class UnitInfo : MonoBehaviour
 {
     private UnitData _unitData;
 

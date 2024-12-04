@@ -20,7 +20,7 @@ public class UnitManager
         }
     }
 
-    private List<Unit> _units = new List<Unit>();
+    private List<UnitInfo> _units = new List<UnitInfo>();
 
     public void Initialize()
     {
@@ -44,7 +44,7 @@ public class UnitManager
 
         GameObject unitInstance = UnityEngine.Object.Instantiate(prefab);
 
-        Unit unit = unitInstance.GetComponent<Unit>();
+        UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
         if (unit != null)
         {
             unit.SetData(data);
