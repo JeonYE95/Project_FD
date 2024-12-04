@@ -24,7 +24,7 @@ namespace GSDatas
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "0"; // it is sheet id
+        static string sheetID = "741895290"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
@@ -56,15 +56,15 @@ namespace GSDatas
 
 /* Fields. */
 
-		public System.Int32 Unit_ID;
-		public System.String Name;
-		public System.Int32 Attack;
-		public System.Int32 Defense;
-		public System.Int32 Health;
-		public System.Int32 AttackSpeed;
-		public System.Int32 Cooltime;
-		public System.Int32 Range;
-		public System.String Grade;
+		public System.Int32 ID;
+		public System.String name;
+		public System.Int32 attack;
+		public System.Int32 defense;
+		public System.Int32 health;
+		public System.Int32 attackSpeed;
+		public System.Int32 cooltime;
+		public System.Int32 range;
+		public System.String grade;
   
 
 #region fuctions
@@ -182,7 +182,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.Unit_ID, instance);
+                            Map.Add(instance.ID, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 

@@ -1,3 +1,4 @@
+
 public interface IState
 {
     public void Enter();
@@ -10,16 +11,18 @@ public interface IState
 public class StateMachine
 {
     protected IState currentState;
-    public BaseCharacter character;
+    public BaseUnit unit;
+    public UnitAnimationController animController;
 
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
     public SkillState SkillState { get; }
     public AttackState AttackState { get; }
 
-    public StateMachine(BaseCharacter character)
+    public StateMachine(BaseUnit unit)
     {
-        this.character = character;
+        this.unit = unit;
+        animController = unit.animController;
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);
@@ -42,5 +45,11 @@ public class StateMachine
     public void PhysicsUpdate()
     {
         currentState?.PhysicsUpdate();
+    }
+
+    //For Debug
+    public string GetState()
+    {
+        return currentState?.ToString();
     }
 }
