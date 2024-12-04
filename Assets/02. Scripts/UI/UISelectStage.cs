@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UISelectStage : UIBase
@@ -11,20 +12,36 @@ public class UISelectStage : UIBase
     [SerializeField] private Button exitBtn;
 
     private UIInGame uiInGame;
-    private UISelectStage uISelectStage;
+    private UISelectStage uiSelectStage;
 
     void Start()
     {
-        stageBtn1_1.onClick.AddListener(() => { OpenInGameUI(1); });
+        stageBtn1_1.onClick.AddListener(() => 
+        { 
+            LoadInGameScene();
+        });
         
         exitBtn.onClick.AddListener(() => { Close(); });
     }
 
-    private void OpenInGameUI(int stageNum)
+    private void OpenInGameUI()
     {
         if (uiInGame == null)
             uiInGame = UIManager.Instance.GetUI<UIInGame>();
         
         uiInGame.Open();
+    }
+
+    private void LoadInGameScene()
+    {
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            // 씬 로드 후 UI 오픈
+            if (scene.name == "KYM_InGameScene")
+                OpenInGameUI();
+        };
+
+        UIManager.Instance.Clear();
+        SceneManager.LoadScene("KYM_InGameScene"); // 씬 로드
     }
 }

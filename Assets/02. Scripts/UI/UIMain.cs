@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class UIMain : UIBase
     {
         startBtn.onClick.AddListener(() => { OpenSelectStageUI(); });
         settingBtn.onClick.AddListener(() => { OpenSettingUI(); });
-        exitBtn.onClick.AddListener(() => { OpenExitUI(); });
+        // exitBtn.onClick.AddListener(() => { OpenExitUI(); });
     }
 
     private void OpenSelectStageUI()
@@ -34,11 +35,11 @@ public class UIMain : UIBase
         uiSetting.Open();
     }
 
-    private void OpenExitUI()
-    {
-        if (uiExit == null)
-            uiExit = UIManager.Instance.GetUI<UIExit>();
+    // private void OpenExitUI()
+    // {
+    //     if (uiExit == null)
+    //         uiExit = UIManager.Instance.GetUI<UIExit>();
         
-        uiExit.Open();
-    }
+    //     uiExit.Open();
+    // }
 }
