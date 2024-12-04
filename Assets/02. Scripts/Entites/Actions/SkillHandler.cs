@@ -17,5 +17,7 @@ public class SkillHandler : ActionHandler
         //Instantiate 나 오브젝트 풀링으로 스킬 생성
 
         ResetCooldown();
+
+        character.EndSkill();
     }
 }
