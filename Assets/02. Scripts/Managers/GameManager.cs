@@ -26,13 +26,13 @@ public class InGameItems
 }
 
 
-public class GameManager : SingletonDontDestory<DataManager>
+public class GameManager : SingletonDontDestory<GameManager>
 {
     public PlayerData playerData = new PlayerData();
 
     private void Start()
     {
-        DataManager.instance.Initialize();
+        DataManager.Instance.Initialize();
         UnitManager.Instance.Initialize();
     }
 
@@ -68,6 +68,4 @@ public class GameManager : SingletonDontDestory<DataManager>
         }
 
     }
-
-
 }

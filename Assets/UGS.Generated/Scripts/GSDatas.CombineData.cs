@@ -17,54 +17,49 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class UnitData : ITable
+    public partial class CombineData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<UnitData> loadedList, Dictionary<int, UnitData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<CombineData> loadedList, Dictionary<int, CombineData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "741895290"; // it is sheet id
+        static string sheetID = "781176987"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, UnitData> UnitDataMap = new Dictionary<int, UnitData>();  
-        public static List<UnitData> UnitDataList = new List<UnitData>();   
+        public static Dictionary<int, CombineData> CombineDataMap = new Dictionary<int, CombineData>();  
+        public static List<CombineData> CombineDataList = new List<CombineData>();   
 
         /// <summary>
-        /// Get UnitData List 
+        /// Get CombineData List 
         /// Auto Load
         /// </summary>
-        public static List<UnitData> GetList()
+        public static List<CombineData> GetList()
         {{
            if (isLoaded == false) Load();
-           return UnitDataList;
+           return CombineDataList;
         }}
 
         /// <summary>
-        /// Get UnitData Dictionary, keyType is your sheet A1 field type.
+        /// Get CombineData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, UnitData>  GetDictionary()
+        public static Dictionary<int, CombineData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return UnitDataMap;
+           return CombineDataMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 ID;
-		public System.String name;
-		public System.Int32 attack;
-		public System.Int32 defense;
-		public System.Int32 health;
-		public System.Int32 attackSpeed;
-		public System.Int32 cooltime;
-		public System.Int32 range;
-		public System.String grade;
+		public System.Int32 combineID;
+		public System.Int32 reuslutUnit;
+		public System.Int32 requiredunit1;
+		public System.Int32 requiredunit2;
   
 
 #region fuctions
@@ -75,7 +70,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("UnitData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("CombineData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -91,7 +86,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<UnitData>, Dictionary<int, UnitData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<CombineData>, Dictionary<int, CombineData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -119,14 +114,14 @@ namespace GSDatas
                
 
 
-    public static (List<UnitData> list, Dictionary<int, UnitData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, UnitData> Map = new Dictionary<int, UnitData>();
-            List<UnitData> List = new List<UnitData>();     
+    public static (List<CombineData> list, Dictionary<int, CombineData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, CombineData> Map = new Dictionary<int, CombineData>();
+            List<CombineData> List = new List<CombineData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(CombineData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["UnitData"];
+            var sheet = jsonObject["CombineData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -145,7 +140,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            UnitData instance = new UnitData();
+                            CombineData instance = new CombineData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -182,12 +177,12 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.ID, instance);
+                            Map.Add(instance.combineID, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            UnitDataList = List;
-                            UnitDataMap = Map;
+                            CombineDataList = List;
+                            CombineDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -197,10 +192,10 @@ namespace GSDatas
 
  
 
-        public static void Write(UnitData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(CombineData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(CombineData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
