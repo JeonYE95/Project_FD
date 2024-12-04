@@ -5116,6 +5116,7 @@ GameObject:
   - component: {fileID: 3969743810965217784}
   - component: {fileID: 5464188286472351698}
   - component: {fileID: 8262691559460967591}
+  - component: {fileID: 1009272450326591373}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -5199,6 +5200,19 @@ MonoBehaviour:
   _selectedSlot: {fileID: 0}
   _unitList: {fileID: 0}
   _UIUnitSlotTest: {fileID: 0}
+  _characterButton: {fileID: 0}
+--- !u!114 &1009272450326591373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337717621831861601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aafd21220d188d248a5ca75f45030939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8424996060128634878
 GameObject:
   m_ObjectHideFlags: 0
