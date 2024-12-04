@@ -12,7 +12,7 @@ public class WaveManager : Singleton<WaveManager>
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
 
-    public event Action<int> OnClearWave; // 웨이브 클리어 확인 
+    public event Action OnClearWave; // 웨이브 클리어 확인 
     public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
     public event Action OnDead; // 스테이지 라이프가 다해 죽었을 때
 
@@ -68,9 +68,7 @@ public class WaveManager : Singleton<WaveManager>
 
         IsRunningWave = false;
 
-        OnClearWave?.Invoke(CurrentWave);
-
-
+        CurrentWave++;
         //DB에서 불러온 최종 스테이지 값과 비교해서 로직 실행
         /*
           
@@ -83,14 +81,32 @@ public class WaveManager : Singleton<WaveManager>
          
        */
 
-        //웨이브 클리어 보상 UI
+        //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
+        /*
+      
+        //5스테이지 마다 중간 보스?
+        f (CurrentWave % 5 == 0)
+        {
+        
 
 
-        //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
-        //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
+        }
+        else 
+        {
+        
+
+         //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
+         //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
 
 
-        CurrentWave++;
+        }
+
+        */
+
+
+
+
+
         StartCoroutine(NextWavePrepare());
 
     }
@@ -109,7 +125,10 @@ public class WaveManager : Singleton<WaveManager>
     //스테이지 끝나고 준비 시간 
     private IEnumerator NextWavePrepare()
     {
+
+        OnClearWave?.Invoke();
         isPreparing = true;
+
         currentPreparationTime = preparationTime;
 
         while (currentPreparationTime > 0)

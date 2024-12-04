@@ -41,10 +41,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         worldPosition.z = 0; // 2D 게임이라면 z축을 0으로 설정
 
         _character = Instantiate(Resources.Load<GameObject>("Prefabs/Unit/Common/Archer"), worldPosition, Quaternion.identity);
-        // _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{캐릭터등급}/{캐릭터이름}"), worldPosition, Quaternion.identity);
+        // _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{캐릭터등급}/{캐릭터이름} ? "), worldPosition, Quaternion.identity);
 
         _character.transform.SetParent(this.transform);
 
+
+        // 캐릭터 초기 위치 설정
+        _previousPosition = _character.transform.position;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -143,15 +146,28 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         if (_character != null)
         {
             // 유효한 위치에 드롭되지 않았다면 원위치
-            _character.transform.position = _previousPosition;
+            CharacterPosReturn();
 
         }
-
-
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         _fieldSlot.SelectSlot(this);
+    }
+
+
+    public void CharacterInit()
+    {
+
+        CharacterPosReturn();
+
+    }
+      
+
+    private void CharacterPosReturn()
+    {
+        _character.transform.position = _previousPosition;
+
     }
 }

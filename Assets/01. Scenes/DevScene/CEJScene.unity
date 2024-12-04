@@ -279,6 +279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cave
       objectReference: {fileID: 0}
+    - target: {fileID: 8868303119862581872, guid: e53775922c4ac8c41b30747de9aa3785, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -363,6 +367,10 @@ PrefabInstance:
     - target: {fileID: 1892420787937326, guid: 8cc81305d37e7f546ac8b6604aca1497, type: 3}
       propertyPath: m_Name
       value: BURLY-MAN_1_swordsman
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892420787937326, guid: 8cc81305d37e7f546ac8b6604aca1497, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4372054120543010, guid: 8cc81305d37e7f546ac8b6604aca1497, type: 3}
       propertyPath: m_LocalPosition.x
@@ -524,6 +532,10 @@ PrefabInstance:
     - target: {fileID: 1256030191282544, guid: 125feebcde020894d91740ac65606688, type: 3}
       propertyPath: m_Name
       value: Wooden_Doll
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256030191282544, guid: 125feebcde020894d91740ac65606688, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1311079497928076, guid: 125feebcde020894d91740ac65606688, type: 3}
       propertyPath: m_IsActive

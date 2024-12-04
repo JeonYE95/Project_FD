@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
 
-    [SerializeField] private GameObject SpawnPoint; // SpawnPoint 연결
+ 
     [SerializeField] private FieldSlot[] _fieldSlots;
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
@@ -19,8 +19,10 @@ public class Inventory : MonoBehaviour
         common,
         rare,
         Unique,
+        Legendary
     }
 
+    private Dictionary<string, int> UnitHas = new Dictionary<string, int>();
     private List<Unit> commonUnit = new List<Unit>();
     private List<Unit> rareUnit = new List<Unit>();
     private List<Unit> uniqueUnit = new List<Unit>();
@@ -31,27 +33,27 @@ public class Inventory : MonoBehaviour
         Button rareButton = GetComponentsInChildren<Button>()[(int)UnitRarity.rare];
         Button uniqueButton = GetComponentsInChildren<Button>()[(int)UnitRarity.Unique];
 
-
         normalButton.onClick.AddListener(() => UpdateCharacterSlots(commonUnit));
         rareButton.onClick.AddListener(() => UpdateCharacterSlots(rareUnit));
         uniqueButton.onClick.AddListener(() => UpdateCharacterSlots(uniqueUnit));
 
+
         _unitList = GetComponentInChildren<UIUnitSlot>();
 
 
-        _fieldSlots = SpawnPoint.GetComponentsInChildren<FieldSlot>();
+        _fieldSlots = GetComponentsInChildren<FieldSlot>();
         for (int i = 0; i < _fieldSlots.Length; i++)
         {
             _fieldSlots[i].Init(this, i);
 
         }
 
-        // 해당 등급의 유닛 데이터로 슬롯 업데이트
+        // 버튼 누르면 해당 등급의 유닛 데이터로 슬롯 업데이트
         /*
          
         for (int i = 0; i < UnitList.inventoryUnits.Count; i++)
         {
-          
+            //맨 처음 기본 유닛 개수 
             UnitList.inventoryUnits[i] = commonUnit[i];
         }
 
@@ -82,20 +84,14 @@ public class Inventory : MonoBehaviour
 
         }
 
+
+        // 웨이브 끝날 때마다 캐릭터 위치 초기화
+        WaveManager.Instance.OnClearWave += CharacterPosReset;
+
+
     }
 
-    public void SwapItem(FieldSlot slot)
-    {
-        // 필드와 필드끼리 바꾸어야 함. 
-
-        if (_selectedSlot != null)
-        {
-
-            Swap(_selectedSlot.Index, slot.Index);
-            _selectedSlot = null;
-
-        }
-    }
+    
     public void SelectSlot(FieldSlot slot)
     {
         _selectedSlot = slot;
@@ -103,32 +99,13 @@ public class Inventory : MonoBehaviour
         Debug.Log(_selectedSlot.Index);
     }
 
-    private void Swap(int from, int to)
-    {
 
-        // 두 필드 슬롯 캐릭터 교환
-        GameObject tempCharacter = _fieldslots[from].Character;
-        GameObject toCharacter = _fieldslots[to].Character;
-
-        // fromIndex 슬롯의 캐릭터를 toIndex 슬롯으로 이동
-        tempCharacter.transform.SetParent(_fieldslots[to].transform);
-        tempCharacter.transform.position = _fieldslots[to].transform.position;
-
-        // toIndex 슬롯의 캐릭터를 fromIndex 슬롯으로 이동
-        toCharacter.transform.SetParent(_fieldslots[from].transform);
-        toCharacter.transform.position = _fieldslots[from].transform.position;
-
-        _fieldslots[from].SetCharacter(toCharacter);
-        _fieldslots[to].SetCharacter(tempCharacter);
-
-    }
-
-    //합성 또는 구매를 통해 캐릭터가 인벤토리에 추가 되었을 때 분류
+    //합성 또는 뽑기를 통해 캐릭터가 인벤토리에 추가 되었을 때 분류
     public void AddCharacter(Unit character)
     {
         /*
-            캐릭터 등급에 따라서 분류 - 캐릭터에서 불러와 처리
-           switch (UnitRarity)
+        캐릭터 등급에 따라서 분류 - 캐릭터에서 불러와 처리
+        switch (UnitRarity)
         { 
            case common:
                 commonUnit.Add(character);
@@ -156,12 +133,47 @@ public class Inventory : MonoBehaviour
         }
          */
 
-        for (int i = 0; i < Mathf.Min(units.Count, UIUnitSlotTest.InventoryUnits.Count); i++)
+        for (int i = 0; i < Mathf.Min(units.Count, _UIUnitSlotTest.InventoryUnits.Count); i++)
         {
 
-            UIUnitSlotTest.InventoryUnits[i] = units[i];
+            _UIUnitSlotTest.InventoryUnits[i] = units[i];
         }
 
+    }
+
+
+ 
+    public void CharacterPosReset()
+    {
+
+        foreach (FieldSlot characterPos in _fieldSlots)
+        {
+
+            if (characterPos.Character != null)
+            {
+
+                characterPos.CharacterInit();
+
+            }
+        
+        }
+        
+    }
+
+
+    public void AddCharacterInventory(string itemName, int amount = 1)
+    {
+        if (UnitHas.ContainsKey(itemName))
+        {
+            UnitHas[itemName] += amount;
+            //유닛 타입에 따라서 해당 리스트에 넣기
+
+        }
+        else
+        {
+            UnitHas.Add(itemName, amount);
+        }
+    
     }
 
 }
