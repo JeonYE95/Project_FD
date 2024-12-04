@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8298157978761089934}
   - component: {fileID: 3192654058382320028}
   - component: {fileID: 6689119762804919717}
+  - component: {fileID: 338004488110324812}
   m_Layer: 6
   m_Name: EnemyRangedCharacter
   m_TagString: Untagged
@@ -179,6 +180,7 @@ MonoBehaviour:
   attackHandler: {fileID: 0}
   skillHandler: {fileID: 0}
   characterMovement: {fileID: 0}
+  animController: {fileID: 0}
   isLive: 0
   direction: {x: 0, y: 0}
   targetCharacter: {fileID: 0}
@@ -254,3 +256,15 @@ MonoBehaviour:
     cooldown: 0
     maxTargets: 0
     skillEffectPrefab: {fileID: 0}
+--- !u!114 &338004488110324812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6383626602100036704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be7f06a93792384a9f9379de72cb2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

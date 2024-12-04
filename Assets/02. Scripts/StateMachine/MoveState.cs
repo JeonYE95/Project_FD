@@ -8,6 +8,8 @@ public class MoveState : BaseState
     public override void Enter()
     {
         base.Enter();
+
+        StartBoolAnimation(AnimationData.isMoving);
     }
 
     public override void Update()
@@ -37,5 +39,7 @@ public class MoveState : BaseState
         base.Exit();
 
         stateMachine.character.characterMovement.Stop();
+
+        StopBoolAnimation(AnimationData.isMoving);
     }
 }

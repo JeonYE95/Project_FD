@@ -53,8 +53,8 @@ public class UnitManager
         _units.Add(unit);
     }
 
-    public Unit GetUnitByID(int unitID)     // 유닛ID로 유닛 찾기
+    /*public Unit GetUnitByID(int unitID)     // 유닛ID로 유닛 찾기
     {
-        return _units.Find(unit => unit.Unit_ID == unitID);
-    }
+       // return _units.Find(unit => unit.Unit_ID == unitID);
+    }*/
 }

@@ -1,3 +1,4 @@
+
 public interface IState
 {
     public void Enter();
@@ -11,6 +12,7 @@ public class StateMachine
 {
     protected IState currentState;
     public BaseCharacter character;
+    public CharacterAnimationController animController;
 
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
@@ -20,6 +22,7 @@ public class StateMachine
     public StateMachine(BaseCharacter character)
     {
         this.character = character;
+        animController = character.animController;
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);

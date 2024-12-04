@@ -1,4 +1,6 @@
 
+using System.Diagnostics;
+
 public class BaseState : IState
 {
     protected StateMachine stateMachine;
@@ -27,14 +29,19 @@ public class BaseState : IState
     }
 
     //후에 애니메이션 있을 시 다시 수정
-    protected void StartAnimation(int animatorHash)
+    protected void StartBoolAnimation(int animatorHash)
     {
-        //stateMachine.character.Animator.SetBool(~)
+        stateMachine.animController?.SetBool(animatorHash, true);
     }
 
-    protected void StopAnimation(int animatorHash)
+    protected void StopBoolAnimation(int animatorHash)
     {
-        //stateMachine.character.Animator.SetBool(~)
+        stateMachine.animController?.SetBool(animatorHash, false);
+    }
+
+    protected void SetTriggerAnimation(int animatorHash)
+    {
+        stateMachine.animController?.SetTrigger(animatorHash);
     }
 
     public virtual bool CheckTarget(BaseCharacter targetCharacter)

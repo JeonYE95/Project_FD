@@ -12,6 +12,7 @@ public class BaseCharacter : MonoBehaviour
     public ActionHandler attackHandler;
     public ActionHandler skillHandler;
     public CharacterMovement characterMovement;
+    public CharacterAnimationController animController;
 
     public bool isLive;
     public Vector2 direction;
@@ -42,13 +43,12 @@ public class BaseCharacter : MonoBehaviour
 
     private void Awake()
     {
-        stateMachine = new StateMachine(this);
 
         healthSystem = GetComponent<HealthSystem>();
         skillHandler = GetComponent<SkillHandler>();
         attackHandler = GetComponent<ActionHandler>();
         characterMovement = GetComponent<CharacterMovement>();
-
+        animController = GetComponent<CharacterAnimationController>();
     }
 
     //Start 에서 호출됨
@@ -64,9 +64,15 @@ public class BaseCharacter : MonoBehaviour
         
         OnDieEvent += CharacterDeActive;
         OnDieEvent += BattleManager.Instance.CharacterDie;
+
+        //나중에 셋캐릭터로 이동
+        animController.SetSettingAnimation();
+
+        //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
+        stateMachine = new StateMachine(this);
     }
 
-    //캐릭터 활동 시작 = 배틀 시작
+    //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틸매니저가 호출
     public void ActiveCharacter()
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
@@ -75,6 +81,17 @@ public class BaseCharacter : MonoBehaviour
         //평타와 스킬 쿨타임 초기화
         skillHandler.ResetCooldown();
         attackHandler.ResetCooldown();
+    }
+
+    //유닛을 타일에 배치(셋팅) 햇을때
+    public void SetCharacter()
+    {
+    }
+
+    //유닛을 타일에서 해제했을때 = 현재 구조로는 프리팹자체 파괴
+    public void UnsetCharacter()
+    {
+
     }
 
     // Start is called before the first frame update
@@ -90,11 +107,6 @@ public class BaseCharacter : MonoBehaviour
 
         //For Debug
         CurrentState = stateMachine?.GetState();
-    }
-
-    public void ResetTarget()
-    {
-
     }
 
     public bool IsAttackReady()
@@ -166,10 +178,7 @@ public class BaseCharacter : MonoBehaviour
         return Vector2.Distance(transform.position, targetCharacter.transform.position) < attackRange;
     }
 
-    public void ResetCharacter()
-    {
-
-    }
+    
 
     public void CharacterDeActive(BaseCharacter character)
     {
