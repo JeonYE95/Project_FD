@@ -19719,7 +19719,6 @@ GameObject:
   - component: {fileID: 6649755194322467703}
   - component: {fileID: 6943422738308762466}
   - component: {fileID: 5438937029825940466}
-  - component: {fileID: -2948802119224294858}
   m_Layer: 0
   m_Name: Assasin
   m_TagString: Untagged
@@ -20040,18 +20039,6 @@ MonoBehaviour:
   - {fileID: 6334439139855076897}
   - {fileID: 6334439139855076897}
   Firearm: {fileID: 545621185058506655}
---- !u!114 &-2948802119224294858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6211904441361522567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6337124069466995177
 GameObject:
   m_ObjectHideFlags: 0

@@ -26116,7 +26116,6 @@ GameObject:
   - component: {fileID: 3263308475907303001}
   - component: {fileID: 7029680177740279019}
   - component: {fileID: 1708654593246800845}
-  - component: {fileID: 1269708253427085410}
   m_Layer: 0
   m_Name: Guardian
   m_TagString: Untagged
@@ -26434,18 +26433,6 @@ MonoBehaviour:
   - {fileID: 823377477380231000}
   - {fileID: 823377477380231000}
   Firearm: {fileID: 1373305872349242690}
---- !u!114 &1269708253427085410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960353636315471265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8040345031784700574
 GameObject:
   m_ObjectHideFlags: 0
