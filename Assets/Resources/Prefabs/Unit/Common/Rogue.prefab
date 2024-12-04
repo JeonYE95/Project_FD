@@ -8573,8 +8573,9 @@ GameObject:
   - component: {fileID: 7487792120794671687}
   - component: {fileID: 7483199285643888732}
   - component: {fileID: 7843318318862230266}
+  - component: {fileID: 5931147155004821362}
   m_Layer: 0
-  m_Name: Rouge
+  m_Name: Rogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8893,6 +8894,27 @@ MonoBehaviour:
   - {fileID: 4936301546069516920}
   - {fileID: 4936301546069516920}
   Firearm: {fileID: 1899236204912518003}
+--- !u!114 &5931147155004821362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854713415198505874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Unit_ID: 0
+  Name: 
+  Grade: 
+  Attack: 0
+  Defense: 0
+  Health: 0
+  AttackSpeed: 0
+  Cooltime: 0
+  Range: 0
 --- !u!1 &4921600612777058638
 GameObject:
   m_ObjectHideFlags: 0
