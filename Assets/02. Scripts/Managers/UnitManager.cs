@@ -37,7 +37,7 @@ public class UnitManager
 
     private void CreateUnit(UnitData data)      // 개별 유닛 생성
     {
-        string prefabPath = $"Prefabs/Unit/{data.Grade}/{data.Name}";
+        string prefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
 
         if (prefab == null) return;
@@ -51,10 +51,5 @@ public class UnitManager
         }
 
         _units.Add(unit);
-    }
-
-    public Unit GetUnitByID(int unitID)     // 유닛ID로 유닛 찾기
-    {
-        return _units.Find(unit => unit.Unit_ID == unitID);
     }
 }

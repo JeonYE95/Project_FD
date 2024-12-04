@@ -17,39 +17,39 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class UnitData : ITable
+    public partial class EnemyData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<UnitData> loadedList, Dictionary<int, UnitData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<EnemyData> loadedList, Dictionary<int, EnemyData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "741895290"; // it is sheet id
+        static string sheetID = "991856299"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, UnitData> UnitDataMap = new Dictionary<int, UnitData>();  
-        public static List<UnitData> UnitDataList = new List<UnitData>();   
+        public static Dictionary<int, EnemyData> EnemyDataMap = new Dictionary<int, EnemyData>();  
+        public static List<EnemyData> EnemyDataList = new List<EnemyData>();   
 
         /// <summary>
-        /// Get UnitData List 
+        /// Get EnemyData List 
         /// Auto Load
         /// </summary>
-        public static List<UnitData> GetList()
+        public static List<EnemyData> GetList()
         {{
            if (isLoaded == false) Load();
-           return UnitDataList;
+           return EnemyDataList;
         }}
 
         /// <summary>
-        /// Get UnitData Dictionary, keyType is your sheet A1 field type.
+        /// Get EnemyData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, UnitData>  GetDictionary()
+        public static Dictionary<int, EnemyData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return UnitDataMap;
+           return EnemyDataMap;
         }}
 
     
@@ -64,7 +64,6 @@ namespace GSDatas
 		public System.Int32 attackSpeed;
 		public System.Int32 cooltime;
 		public System.Int32 range;
-		public System.String grade;
   
 
 #region fuctions
@@ -75,7 +74,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("UnitData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("EnemyData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -91,7 +90,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<UnitData>, Dictionary<int, UnitData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<EnemyData>, Dictionary<int, EnemyData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -119,14 +118,14 @@ namespace GSDatas
                
 
 
-    public static (List<UnitData> list, Dictionary<int, UnitData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, UnitData> Map = new Dictionary<int, UnitData>();
-            List<UnitData> List = new List<UnitData>();     
+    public static (List<EnemyData> list, Dictionary<int, EnemyData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, EnemyData> Map = new Dictionary<int, EnemyData>();
+            List<EnemyData> List = new List<EnemyData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(EnemyData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["UnitData"];
+            var sheet = jsonObject["EnemyData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -145,7 +144,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            UnitData instance = new UnitData();
+                            EnemyData instance = new EnemyData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -186,8 +185,8 @@ namespace GSDatas
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            UnitDataList = List;
-                            UnitDataMap = Map;
+                            EnemyDataList = List;
+                            EnemyDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -197,10 +196,10 @@ namespace GSDatas
 
  
 
-        public static void Write(UnitData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(EnemyData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(EnemyData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

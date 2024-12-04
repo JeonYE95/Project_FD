@@ -4,22 +4,12 @@ using System.IO;
 using UGS;
 using UnityEngine;
 
-public class DataManager : SingletonDontDestory<GameManager>
+public class DataManager : SingletonDontDestory<DataManager>
 {
+    public UnitManager Units;
+
     private static DataManager _instance;
 
-    public static DataManager instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new DataManager();
-
-            return _instance;
-        }
-    }
-
-    public UnitManager Units;
 
     public void Initialize()
     {
