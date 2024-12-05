@@ -34,6 +34,12 @@ public class UnitAnimationController : MonoBehaviour
     public void SetBool(int hashCode, bool isPlaying)
     {
         animator?.SetBool(hashCode, isPlaying);
+
+        if (hashCode == Animator.StringToHash("isIdle"))
+        {
+            bool isIdle = animator.GetBool("isIdle");
+            Debug.Log($"{gameObject.name} : isIdle 상태: {isIdle}");
+        }
     }
 
     public void SetTrigger(int hashCode)
