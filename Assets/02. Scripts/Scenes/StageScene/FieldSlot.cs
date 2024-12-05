@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
+
 
 public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDropHandler,
     IPointerEnterHandler, IDragHandler
 {
 
     private Vector3 _previousPosition;
- 
+
 
     [SerializeField]
     private GameObject _character = null;
@@ -30,7 +29,6 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         Index = transform.GetSiblingIndex();
     }
 
-    //소환 부분 : SpawnManager로 빼야
     public void DropCharacter(UnitInfo unitInfo)
     {
 
@@ -42,12 +40,22 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
-        _character = Instantiate(Resources.Load<GameObject>($"Prefabs/Unit/{unitInfo._unitData.grade}/{unitInfo._unitData.name}"), worldPosition, Quaternion.identity);
+        _character = UnitManager.Instance.CreatePlayerUnit(unitInfo._unitData.ID);
 
-        _character.transform.SetParent(this.transform);
 
-        // 캐릭터 초기 위치 설정
-        _previousPosition = _character.transform.position;
+        if (_character != null)
+        {
+            // 부모-자식 관계 설정
+            _character.transform.SetParent(this.transform);
+
+            // 위치 설정
+            _character.transform.position = worldPosition;
+
+            // 초기 위치 저장
+            _previousPosition = worldPosition;
+        }
+
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -169,7 +177,6 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         CharacterPosReSet();
 
     }
-      
 
     private void CharacterPosReSet()
     {

@@ -6,7 +6,7 @@ public class AttackHandler : ActionHandler
 {
     public float attackDamage = 10f;
 
-    public override void ExecuteAction(BaseUnit targetCharacter)
+    /*public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null)
         {
@@ -21,6 +21,6 @@ public class AttackHandler : ActionHandler
         }
 
         ResetCooldown();
-    }
+    }*/
     
 }

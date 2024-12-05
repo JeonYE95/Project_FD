@@ -1,3 +1,4 @@
+using Assets.HeroEditor.Common.Scripts.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
-    public int playerCount;
-    public int enemyCount;
+    public int alivePlayerUnitsCount;
+    public int aliveEnemyUnitsCount;
 
     private TargetingSystem targetingSystem;
 
@@ -42,19 +43,26 @@ public class BattleManager : Singleton<BattleManager>
     {
         if (unit.isPlayerUnit)
         {
-            playerCount--;
+            alivePlayerUnitsCount--;
         }
         else
         {
-            enemyCount--;
+            aliveEnemyUnitsCount--;
         }
 
-        if (enemyCount == 0)
+        if (aliveEnemyUnitsCount == 0)
         {
             WaveManager.Instance.Victroy();
         }
-        else if (playerCount == 0)
+        else if (alivePlayerUnitsCount == 0)
         {
+            foreach(BaseUnit enemyUnit in enemies)
+            {
+                /*enemyUnit.GetComponent<EnemyUnit>().UnsetUnit();
+
+                enemyUnit.gameObject.SetActive(false);*/
+            }
+
             WaveManager.Instance.Lose();
         }
     }
@@ -68,6 +76,32 @@ public class BattleManager : Singleton<BattleManager>
         if (Input.GetKeyDown(KeyCode.Space))
         {
             BattleSetingAndStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            TestSpawn();
+        }
+    }
+
+    private void TestSpawn()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            var PlayerUnitList = UnitDataManager.GetList();
+
+            //int randomNumber = PlayerUnitList[Random.Range(0, PlayerUnitList.Count)].ID;
+            int randomNumber = Random.Range(1001, 1006);
+
+            GameObject obj = UnitManager.Instance.CreatePlayerUnit(randomNumber);
+            obj.transform.position = new Vector2(-5, 0);
+
+            var EnemyUnitList = EnemyDataManager.GetList();
+
+            randomNumber = EnemyUnitList[Random.Range(0, EnemyUnitList.Count)].ID;
+
+            GameObject obj2 = EnemyManager.Instance.CreateEnemy(randomNumber);
+            obj2.transform.position = new Vector2(5, 0);
         }
     }
 
@@ -88,22 +122,43 @@ public class BattleManager : Singleton<BattleManager>
 
         foreach (BaseUnit unit in allUnits)
         {
-            unit.ActiveUnit();
+            unit.UnitBattleStart();
         }
 
-        playerCount = players.Count;
-        enemyCount = enemies.Count;
+        alivePlayerUnitsCount = players.Count;
+        aliveEnemyUnitsCount = enemies.Count;
     }
 
     public void RegisterUnit(BaseUnit unit)
     {
-        if (unit.isPlayerUnit)
+        /*if (unit.isPlayerUnit)
         {
             players.Add(unit);
         }
         else
         {
             enemies.Add(unit);
+        }*/
+
+        if(unit as PlayerUnit)
+        {
+            players.Add(unit);
+        }
+        else if (unit as EnemyUnit)
+        {
+            enemies.Add(unit);
+        }
+    }
+
+    public void UnRegisterUnit(BaseUnit unit)
+    {
+        if (unit.isPlayerUnit)
+        {
+            players.Remove(unit);
+        }
+        else
+        {
+            enemies.Remove(unit);
         }
     }
 

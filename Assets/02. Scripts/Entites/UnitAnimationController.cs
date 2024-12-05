@@ -7,7 +7,7 @@ public static class AnimationData
 {
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
-    public static readonly int isSetting = Animator.StringToHash("isSetting");
+    public static readonly int isWaiting = Animator.StringToHash("isWaiting");
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
 }
 
@@ -15,27 +15,31 @@ public class UnitAnimationController : MonoBehaviour
 {
     Animator animator;
 
-    
-    private readonly int isIdle = Animator.StringToHash("isIdle");
-    private readonly int isMoving = Animator.StringToHash("isMoving");
-    private readonly int isSetting = Animator.StringToHash("isSetting");
-    private readonly int isAttacking = Animator.StringToHash("isAttacking");
-
-    public AnimatorController f;
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         //animator.runtimeAnimatorController = f;
+        SetAnimator();
+    }
+
+    public void SetAnimator()
+    {
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void SetBool(int hashCode, bool isPlaying)
     {
         animator?.SetBool(hashCode, isPlaying);
+
+        if (hashCode == Animator.StringToHash("isIdle"))
+        {
+            bool isIdle = animator.GetBool("isIdle");
+            Debug.Log($"{gameObject.name} : isIdle 상태: {isIdle}");
+        }
     }
 
     public void SetTrigger(int hashCode)
@@ -43,7 +47,7 @@ public class UnitAnimationController : MonoBehaviour
         animator?.SetTrigger(hashCode);
     }
 
-    public void SetSettingAnimation()
+    /*public void SetSettingAnimation()
     {
         animator?.SetBool(isSetting, true);
     }
@@ -61,5 +65,5 @@ public class UnitAnimationController : MonoBehaviour
     public void SetAttackAnimation()
     {
         animator?.SetBool(isAttacking, true);
-    }
+    }*/
 }

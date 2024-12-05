@@ -15,6 +15,17 @@ public class PlayerUnit : BaseUnit
 
     public void SetUnitInfo()
     {
-
+        maxHP = unitInfo._unitData.health;
+        defense = unitInfo._unitData.defense;
+        unitGrade = unitInfo._unitData.grade;
+        attackRange = unitInfo._unitData.range;
+        attackDamage = unitInfo._unitData.attack;
+        skillCooltime = unitInfo._unitData.skillCooltime;
+        attackCooltime = unitInfo._unitData.attackCooltime;
     }
+
+    /*private void OnDestroy()
+    {
+        UnsetUnit();
+    }*/
 }

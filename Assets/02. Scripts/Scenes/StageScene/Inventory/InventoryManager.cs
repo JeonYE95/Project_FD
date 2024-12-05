@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GSDatas;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
 
- 
+
     [SerializeField] private FieldSlot[] _fieldSlots;
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
@@ -20,9 +21,7 @@ public class InventoryManager : Singleton<InventoryManager>
     //유닛 가지고 있는지 확인
     private Dictionary<string, int> UnitHas = new Dictionary<string, int>();
 
-
     public GameObject PreviewObject { get; set; }
-
 
     private List<UnitInfo> commonUnit = new List<UnitInfo>();
     private List<UnitInfo> rareUnit = new List<UnitInfo>();
@@ -33,7 +32,7 @@ public class InventoryManager : Singleton<InventoryManager>
     public void Start()
     {
 
-        
+
         // 실제 동작 코드
         // _unitList = GetComponentInChildren<UIUnitSlot>();
 
@@ -46,28 +45,31 @@ public class InventoryManager : Singleton<InventoryManager>
         {
 
             _UIUnitSlotTest = GetComponentInChildren<UIUnitSlotTest>();
+            if (_UIUnitSlotTest != null)
+            {
 
-            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-            unit1._unitData.name = "Knight";
-            unit1._unitData.grade = "Common";
-            commonUnit.Add(unit1);
-            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-            unit2._unitData.name = "Maze";
-            unit2._unitData.grade = "Common";
-            commonUnit.Add(unit2);
-            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-            unit3._unitData.name = "Warrior";
-            unit3._unitData.grade = "Common";
-            commonUnit.Add(unit3);
+                UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+                unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
+                commonUnit.Add(unit1);
 
+
+                UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+                unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
+                commonUnit.Add(unit2);
+
+
+                UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+                unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
+                commonUnit.Add(unit3);
+
+
+            }
+
+
+            // 웨이브 끝날 때마다 유닛 위치 초기화
+            WaveManager.Instance.OnClearWave += CharacterPosReset;
 
         }
-
-
-        // 웨이브 끝날 때마다 캐릭터 위치 초기화
-        WaveManager.Instance.OnClearWave += CharacterPosReset;
-
-
     }
 
 
@@ -79,8 +81,8 @@ public class InventoryManager : Singleton<InventoryManager>
 
         switch (unitGrade)
         {
-            case Defines.UnitGrade.common :
-                unitsToShow =  commonUnit;
+            case Defines.UnitGrade.common:
+                unitsToShow = commonUnit;
                 break;
             case Defines.UnitGrade.rare:
                 unitsToShow = rareUnit;
@@ -99,32 +101,31 @@ public class InventoryManager : Singleton<InventoryManager>
              
           // 오브젝트 풀링으로 추후 수정해야.
          
-         
-        if (_unitList != null)
-        {
+            if (_unitList != null)
+            {
 
-            _unitList.UpdateUnits(unitsToShow);      
-            =>  오브젝트 풀링 적용으로 추후 수정해야.
-          
-        }
+                _unitList.UpdateUnits(unitsToShow);      
+                
+             }
+
         */
 
 
         // 테스트 코드
-        { 
-        if (_UIUnitSlotTest != null)
         {
+            if (_UIUnitSlotTest != null)
+            {
 
-            _UIUnitSlotTest.updateUnits(unitsToShow);
+                _UIUnitSlotTest.updateUnits(unitsToShow);
 
-        }
-        
+            }
+
         }
 
 
     }
 
-    
+
     public void SelectSlot(FieldSlot slot)
     {
         _selectedSlot = slot;
@@ -143,12 +144,10 @@ public class InventoryManager : Singleton<InventoryManager>
                 characterPos.CharacterInit();
 
             }
-        
+
         }
-        
+
     }
-
-
 
     //합성 또는 뽑기를 통해 유닛이 인벤토리에 추가 되었을 때 분류
 
@@ -157,7 +156,7 @@ public class InventoryManager : Singleton<InventoryManager>
         if (UnitHas.ContainsKey(unitName._unitData.name))
         {
             UnitHas[unitName._unitData.name] += amount;
-    
+
         }
         else
         {
@@ -178,7 +177,7 @@ public class InventoryManager : Singleton<InventoryManager>
             }
 
         }
-    
+
     }
 
     // 유닛 조합 / 필드로 내보낼 때 인벤토리에서 개수 감소
@@ -193,7 +192,7 @@ public class InventoryManager : Singleton<InventoryManager>
             {
                 UnitHas.Remove(itemName);
             }
-          
+
             return true;
 
         }
