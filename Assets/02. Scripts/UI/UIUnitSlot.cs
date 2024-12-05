@@ -1,116 +1,103 @@
-using GSDatas;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UIUnitSlot : MonoBehaviour
 {
-    [SerializeField] private Image unitImg;
-    [SerializeField] private TMP_Text unitNameTxt;
     private RectTransform content;
 
     [SerializeField] private GameObject unitSlotPrefab;
 
+    [SerializeField]
+    private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
+
+    public List<UnitInfo> InventoryUnits
+    {
+        get => inventoryUnits;
+        private set => inventoryUnits = value;
+    }
+
     void Start()
     {
-        //content = gameObject.GetComponent<RectTransform>();
+        content = gameObject.GetComponent<RectTransform>();
 
-        //테스트 코드
-        //UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-        //unitdata.name = "nametest1";
-        ////unit1.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit1);
+        // 테스트 코드
+        UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+        unit1.SetData(UnitDataManager.Instance.GetUnitData(1004));
+        inventoryUnits.Add(unit1);
 
+        UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+        unit2.SetData(UnitDataManager.Instance.GetUnitData(1005));
+        inventoryUnits.Add(unit2);
 
-        //Unit unit2 = gameObject.AddComponent<Unit>();
-        //unit2.Name = "nametest2";
-        //unit2.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit2);
+        // 스크롤뷰 테스트 코드
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
+        // inventoryUnits.Add(unit2);
 
-        //Unit unit3 = gameObject.AddComponent<Unit>();
-        //unit3.Name = "nametest3";
-        //unit3.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit3);
-
-        //Unit unit4 = gameObject.AddComponent<Unit>();
-        //unit4.Name = "nametest4";
-        //unit4.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit4);
-
-        //Unit unit5 = gameObject.AddComponent<Unit>();
-        //unit5.Name = "nametest5";
-        //unit5.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit5);
-
-        //Unit unit6 = gameObject.AddComponent<Unit>();
-        //unit6.Name = "nametest6";
-        //unit6.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit6);
-
-        //Unit unit7 = gameObject.AddComponent<Unit>();
-        //unit7.Name = "nametest7";
-        //unit7.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit7);
-
-        //Unit unit8 = gameObject.AddComponent<Unit>();
-        //unit8.Name = "nametest8";
-        //unit8.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit8);
-
-        //Unit unit9 = gameObject.AddComponent<Unit>();
-        //unit9.Name = "nametest9";
-        //unit9.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit9);
-
-        //Unit unit10 = gameObject.AddComponent<Unit>();
-        //unit10.Name = "nametest10";
-        //unit10.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit10);
-
-        //Unit unit11 = gameObject.AddComponent<Unit>();
-        //unit11.Name = "nametest11";
-        //unit11.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit11);
-
-        //Unit unit12 = gameObject.AddComponent<Unit>();
-        //unit12.Name = "nametest12";
-        //unit12.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit12);
-
-        //Unit unit13 = gameObject.AddComponent<Unit>();
-        //unit13.Name = "nametest13";
-        //unit13.SpritePath = "Unit1";
-        //inventoryUnits.Add(unit13);
-
-        //CreateUnitSlots();
+        CreateUnitSlots();
     }
 
     private void CreateUnitSlots()
     {
-        //foreach (var unit in inventoryUnits)
-        //{
-        //    GameObject go = Instantiate(unitSlotPrefab, content);
+       
+        // 인덱스를 명시적으로 할당하면서 슬롯 생성
+        for (int i = 0; i < inventoryUnits.Count; i++)
+        {
+            GameObject go = Instantiate(unitSlotPrefab, content);
+            var unit = inventoryUnits[i];
 
-        //    TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
-        //    Image unitImg = go.GetComponentInChildren<Image>();
+            // CharacterSlot의 인덱스 직접 설정
+            CharacterSlot characterSlot = go.GetComponent<CharacterSlot>();
+            if (characterSlot != null)
+            {
+                characterSlot.SetIndex(i);  // 인덱스 직접 설정
+            }
 
-        //    if (unitNameTxt != null)
-        //    {
-        //        unitNameTxt.text = unit.Name;
-        //        Debug.Log(unitNameTxt);
-        //    }
-        //    else
-        //        Debug.Log("TMP 컴포넌트 없음.");
+            // UI 요소 설정
+            TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
+            Image unitImg = go.GetComponentInChildren<Image>();
 
-        //    if (unitImg != null)
-        //    {
-        //        Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit.SpritePath}");
-        //        unitImg.sprite = sprite;
-        //        Debug.Log(unitImg);
-        //    }
-        //    else
-        //        Debug.Log("Image 컴포넌트 없음.");
-        //}
+            if (unitNameTxt != null)
+            {
+                unitNameTxt.text = unit._unitData.name;
+            }
+
+            if (unitImg != null)
+            {
+                Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/Common/{unit._unitData.name}");      // 파일 경로 유닛 종류별로 다르게 설정해야함(좀이따가)
+                unitImg.sprite = sprite;
+            }
+        }
+
+    }
+
+    public void UpdateUnits(List<UnitInfo> units)
+    {
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+        // 새로운 유닛 목록으로 업데이트
+        inventoryUnits = units;
+        CreateUnitSlots();
+    }
+
+    public UnitInfo GetUnitAtIndex(int index)
+    {
+        if (index >= 0 && index < inventoryUnits.Count)
+        {
+            return inventoryUnits[index];
+        }
+        return null;
     }
 }
