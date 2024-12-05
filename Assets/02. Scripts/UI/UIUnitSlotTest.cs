@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UIUnitSlotTest : MonoBehaviour
 {
    
@@ -23,15 +24,24 @@ public class UIUnitSlotTest : MonoBehaviour
         content = gameObject.GetComponent<RectTransform>();
 
         // 테스트 코드
+
         UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-        unit1._unitData.name = "Archer";
-        unit1._unitData.grade = "Common";
+        unit1._unitData = new GSDatas.UnitData
+        {
+            name = "Archer",
+            grade = "Common"
+        };
         inventoryUnits.Add(unit1);
 
         UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-        unit2._unitData.name = "Healer";
-        unit2._unitData.grade = "Common";
+        unit2._unitData = new GSDatas.UnitData
+        {
+            name = "Healer",
+            grade = "Common"
+        };
         inventoryUnits.Add(unit2);
+
+  
 
      
         CreateUnitSlots();

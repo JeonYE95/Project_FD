@@ -46,28 +46,40 @@ public class InventoryManager : Singleton<InventoryManager>
         {
 
             _UIUnitSlotTest = GetComponentInChildren<UIUnitSlotTest>();
+            if (_UIUnitSlotTest != null)
+            {
 
-            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-            unit1._unitData.name = "Knight";
-            unit1._unitData.grade = "Common";
-            commonUnit.Add(unit1);
-            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-            unit2._unitData.name = "Maze";
-            unit2._unitData.grade = "Common";
-            commonUnit.Add(unit2);
-            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-            unit3._unitData.name = "Warrior";
-            unit3._unitData.grade = "Common";
-            commonUnit.Add(unit3);
+                UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+                unit1._unitData = new GSDatas.UnitData
+                {
+                    name = "Knight",
+                    grade = "Common"
+                };
+                commonUnit.Add(unit1);
+                UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+                unit2._unitData = new GSDatas.UnitData
+                {
+                    name = "Maze",
+                    grade = "Common"
+                };
+                commonUnit.Add(unit2);
 
+                UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+                unit3._unitData = new GSDatas.UnitData
+                {
+                    name = "Warrior",
+                    grade = "Common"
+                };
+                commonUnit.Add(unit3);
+
+
+            }
+
+
+            // 웨이브 끝날 때마다 캐릭터 위치 초기화
+            WaveManager.Instance.OnClearWave += CharacterPosReset;
 
         }
-
-
-        // 웨이브 끝날 때마다 캐릭터 위치 초기화
-        WaveManager.Instance.OnClearWave += CharacterPosReset;
-
-
     }
 
 
