@@ -123,6 +123,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &70319989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70319991}
+  - component: {fileID: 70319990}
+  m_Layer: 0
+  m_Name: UnitManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &70319990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70319989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23be58305a899624bab5933253a33552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    name: 
+    level: 0
+    gold: 0
+    diamond: 0
+--- !u!4 &70319991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70319989}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.0587488, y: -0.05936861, z: 0.03896132}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &102082115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,15 +1218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!114 &154486243303390538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1190,15 +1230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!1 &161984745402173817
 GameObject:
   m_ObjectHideFlags: 0
@@ -109571,15 +109602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!114 &8964682753476329135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109592,15 +109614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee7b2623c393c94991d57284fd82fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit_ID: 0
-  Name: 
-  Grade: 
-  Attack: 0
-  Defense: 0
-  Health: 0
-  AttackSpeed: 0
-  Cooltime: 0
-  Range: 0
 --- !u!212 &8968128985535043619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110635,3 +110648,4 @@ SceneRoots:
   - {fileID: 542132885}
   - {fileID: 322016074}
   - {fileID: 2033786876}
+  - {fileID: 70319991}
