@@ -24,7 +24,7 @@ public class UnitManager
 
     public void Initialize()
     {
-        LoadUnits();
+        
     }
 
     private void LoadUnits()
