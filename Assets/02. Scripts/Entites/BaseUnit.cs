@@ -39,7 +39,7 @@ public class BaseUnit : MonoBehaviour
     [SerializeField] private string CurrentState;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
 
         healthSystem = GetComponent<HealthSystem>();
