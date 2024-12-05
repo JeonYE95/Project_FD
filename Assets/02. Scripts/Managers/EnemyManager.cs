@@ -33,7 +33,7 @@ public class EnemyManager : Singleton<EnemyManager>
         GameObject enemyInstance = UnityEngine.Object.Instantiate(enemyBasePrefab);
         GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
 
-        AssetInstance.transform.SetParent(enemyInstance.transform, false);
+        AssetInstance.transform.SetParent(enemyInstance.transform, true);
         AssetInstance.transform.position = Vector3.zero;
 
         EnemyInfo enemy = enemyInstance.GetComponent<EnemyInfo>();
@@ -42,6 +42,8 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             enemy.SetData(data);
         }
+
+        enemyInstance.GetComponent<EnemyUnit>().SetUnitInfo();
 
         return enemyInstance;
     }

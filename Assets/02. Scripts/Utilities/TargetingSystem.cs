@@ -49,6 +49,12 @@ public class TargetingSystem
         // 후보 리스트 생성
         List<BaseUnit> candidates = GetCandidates(standardUnit, options.RequireOpponent, options.IncludeSelf);
 
+        if (candidates.Count == 0)
+        {
+            Debug.LogWarning("타겟 후보가 없습니다.");
+            return new List<BaseUnit>();
+        }
+
         // 정렬 또는 랜덤 처리
         if (options.ClosestFirst)
         {
