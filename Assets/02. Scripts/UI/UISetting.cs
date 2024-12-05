@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UISetting : UIBase
 {
-    // Start is called before the first frame update
+    [SerializeField] private Button exitBtn;
+    
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        exitBtn.onClick.AddListener(() => { Close(); });
     }
 }

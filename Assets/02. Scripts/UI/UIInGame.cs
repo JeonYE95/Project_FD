@@ -1,28 +1,25 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIInGame : UIBase
 {
-    // private UIInGame uiInGame;
+    [SerializeField] private Button drawBtn;
+    [SerializeField] private Button unitGuideBtn;
 
-    // private void Start() 
-    // {
-    //     if (SceneManager.GetActiveScene().buildIndex == 4)
-    //     {
-    //         OpenInGameUI(1);
-    //     }
+    private UIUnitGuide uiUnitGuide;
 
-    // }
+    private void Start()
+    {
+        drawBtn.onClick.AddListener(() => {  });    // 버튼 클릭 시 호출 함수 필요
+        unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
+    }
 
-    //     private void OpenInGameUI(int stageNum)
-    // {
-    //     if (uiInGame == null)
-    //         uiInGame = UIManager.Instance.GetUI<UIInGame>();
+    private void OpenUnitGuideUI()
+    {
+        if (uiUnitGuide == null)
+            uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
         
-    //     uiInGame.Open();
-    // }
+        uiUnitGuide.Open();
+    }
 }
