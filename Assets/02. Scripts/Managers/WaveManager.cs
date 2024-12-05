@@ -7,11 +7,12 @@ public class WaveManager : Singleton<WaveManager>
 {
 
     private int _waveCount;
-    private const float preparationTime = 30f; // 대기 시간
-    private static readonly WaitForSeconds preparation = new WaitForSeconds(preparationTime); // 웨이브 끝난 후 대기 시간 코루틴 
+    private const float preparationTime = 30f; //대기 시간
+    public event Action<float> OnPreparationTimeChanged;
+    private float currentPreparationTime; // 남은 대기 시간
+    private bool isPreparing;
 
-
-    public event Action<int> OnClearWave; // 웨이브 클리어 확인 
+    public event Action OnClearWave; // 웨이브 클리어 확인 
     public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
     public event Action OnDead; // 스테이지 라이프가 다해 죽었을 때
 
@@ -40,15 +41,13 @@ public class WaveManager : Singleton<WaveManager>
     // 웨이브에서 승리했을 때
     public void Victroy()
     {
-         ClearWave();
-
-
+        ClearWave();
     }
 
     // 웨이브에서 패했을 때
     public void Lose()
     {
-
+        IsRunningWave = false;
         OnDead?.Invoke();
         StartCoroutine(NextWavePrepare());
 
@@ -56,10 +55,9 @@ public class WaveManager : Singleton<WaveManager>
 
     public void WaveStartNow()
     {
-
-        //버튼 연동 필요 - StopCoroutine 진행, StartWave로 곧바로 넘어감
-
         StopCoroutine(NextWavePrepare());
+
+        isPreparing = false;
 
         StartWave();
 
@@ -70,29 +68,44 @@ public class WaveManager : Singleton<WaveManager>
 
         IsRunningWave = false;
 
-        OnClearWave?.Invoke(CurrentWave);
-
-
+        CurrentWave++;
         //DB에서 불러온 최종 스테이지 값과 비교해서 로직 실행
         /*
           
         if(currentWave == DB 스테이지 최종 웨이브 )
         { 
-             OnWaveAllClear?.Invoke();
+            OnWaveAllClear?.Invoke();
             return;
           
         }
          
        */
 
-        //웨이브 클리어 보상 UI
+        //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
+        /*
+      
+        //5스테이지 마다 중간 보스?
+        f (CurrentWave % 5 == 0)
+        {
+        
 
 
-        //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
-        //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
+        }
+        else 
+        {
+        
+
+         //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
+         //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
 
 
-        CurrentWave++;
+        }
+
+        */
+
+
+
+
 
         StartCoroutine(NextWavePrepare());
 
@@ -113,10 +126,28 @@ public class WaveManager : Singleton<WaveManager>
     private IEnumerator NextWavePrepare()
     {
 
-        yield return preparation;
+        OnClearWave?.Invoke();
+        isPreparing = true;
+
+        currentPreparationTime = preparationTime;
+
+        while (currentPreparationTime > 0)
+        {
+            OnPreparationTimeChanged?.Invoke(currentPreparationTime);
+            yield return new WaitForSeconds(1f);
+            currentPreparationTime--;
+        }
+
+        isPreparing = false;
         StartWave();
 
     }
 
+
+    public string GetCurrentPreparationTimeText()
+    {
+        int seconds = Mathf.FloorToInt(currentPreparationTime % 60);
+        return $"{seconds:00}";
+    }
 
 }

@@ -9,13 +9,13 @@ public class UIManager : SingletonDontDestory<UIManager>
 {
     private Dictionary<string, UIBase> _uiDic = new Dictionary<string, UIBase>();
 
-    // private void Start()
-    // {
-    //     if (SceneManager.GetActiveScene().buildIndex == 1)
-    //     {
-    //         OpenUI<UIStart>();
-    //     }
-    // }
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            OpenUI<UIStart>();
+        }
+    }
 
     // 딕셔너리 체크 후 있다면 리턴, 없다면 새로 생성
     public T GetUI<T>() where T : UIBase
@@ -67,8 +67,8 @@ public class UIManager : SingletonDontDestory<UIManager>
     }
 
     // 씬 전환 시 사용하면 좋다.
-    // public void Clear()
-    // {
-    //     _uiDic.Clear();
-    // }
+    public void Clear()
+    {
+        _uiDic.Clear();
+    }
 }
