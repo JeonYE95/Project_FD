@@ -6,12 +6,17 @@ using UnityEngine;
 public class WaveManager : Singleton<WaveManager>
 {
 
+
+    private Coroutine _prepareCoroutine;
+
     private int _waveCount;
     private const float preparationTime = 30f; //대기 시간
     public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
 
+
+    public event Action OnBattleStart; // 전투 시작 확인
     public event Action OnClearWave; // 웨이브 클리어 확인 
     public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
     public event Action OnDead; // 스테이지 라이프가 다해 죽었을 때
@@ -35,6 +40,9 @@ public class WaveManager : Singleton<WaveManager>
         OnWaveAllClear += StageManager.Instance.GameClear;
         OnDead += StageManager.Instance.GameOver;
 
+        // 게임 시작 시 자동으로 대기 시간 시작
+        _prepareCoroutine = StartCoroutine(NextWavePrepare());
+
     }
 
 
@@ -42,6 +50,8 @@ public class WaveManager : Singleton<WaveManager>
     public void Victroy()
     {
         ClearWave();
+
+
     }
 
     // 웨이브에서 패했을 때
@@ -55,9 +65,14 @@ public class WaveManager : Singleton<WaveManager>
 
     public void WaveStartNow()
     {
-        StopCoroutine(NextWavePrepare());
+        if (_prepareCoroutine != null)
+        {
+            StopCoroutine(_prepareCoroutine);
+            _prepareCoroutine = null;
 
-        isPreparing = false;
+          
+
+        }
 
         StartWave();
 
@@ -104,10 +119,7 @@ public class WaveManager : Singleton<WaveManager>
         */
 
 
-
-
-
-        StartCoroutine(NextWavePrepare());
+        _prepareCoroutine = StartCoroutine(NextWavePrepare());
 
     }
 
@@ -115,6 +127,9 @@ public class WaveManager : Singleton<WaveManager>
     {
 
         IsRunningWave = true;
+        OnBattleStart?.Invoke(); // UI 비활성화
+        //BattleManager.Instance.  전투시작
+
 
         //플레이어, 몬스터 소환
 
@@ -129,6 +144,9 @@ public class WaveManager : Singleton<WaveManager>
         OnClearWave?.Invoke();
         isPreparing = true;
 
+        //UI 활성화 
+       
+
         currentPreparationTime = preparationTime;
 
         while (currentPreparationTime > 0)
@@ -139,6 +157,7 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         isPreparing = false;
+        Debug.Log("게임 시작");
         StartWave();
 
     }

@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &820284645618811038
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &1760257964899490450
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &1950202771662542054
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &1965496795842096225
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &2707859709884220711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,6 +1581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f95cd1c4a729fe4c82f378792292342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timerText: {fileID: 0}
+  _battleStartButton: {fileID: 0}
+  _spawnPointUI: {fileID: 1197656965525540090}
 --- !u!1 &3199180830372098804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,6 +1919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &3489906996862922552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,6 +2142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &3901708016655627610
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &3953821703732847918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,6 +2320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &3963252531633227368
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,6 +3112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &4876342705756799885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,6 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &4969136052345634670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3470,6 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &5541666914806376492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &5640025835908435267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3697,6 +3713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &5749199310835076612
 GameObject:
   m_ObjectHideFlags: 0
@@ -3950,6 +3967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &6808520723988501873
 GameObject:
   m_ObjectHideFlags: 0
@@ -4514,6 +4532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3630ceed1a8d4b8cd3639d072d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
 --- !u!1 &7453932067722697222
 GameObject:
   m_ObjectHideFlags: 0
@@ -5199,8 +5218,8 @@ MonoBehaviour:
   _fieldSlots: []
   _selectedSlot: {fileID: 0}
   _unitList: {fileID: 0}
-  _UIUnitSlotTest: {fileID: 0}
   _characterButton: {fileID: 0}
+  _UIUnitSlotTest: {fileID: 0}
 --- !u!114 &1009272450326591373
 MonoBehaviour:
   m_ObjectHideFlags: 0
