@@ -5,7 +5,6 @@ public class UnitInfo : MonoBehaviour
 {
     public UnitData _unitData;
 
-
     public void SetData(GSDatas.UnitData data)
     {
         _unitData = data;

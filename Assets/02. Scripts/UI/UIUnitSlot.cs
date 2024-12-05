@@ -1,3 +1,4 @@
+using GSDatas;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,17 +12,16 @@ public class UIUnitSlot : MonoBehaviour
 
     [SerializeField] private GameObject unitSlotPrefab;
 
-    private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
-
     void Start()
     {
         //content = gameObject.GetComponent<RectTransform>();
 
-        ////테스트 코드
-        //Unit unit1 = gameObject.AddComponent<Unit>();
-        //unit1.Name = "nametest1";
-        //unit1.SpritePath = "Unit1";
+        //테스트 코드
+        //UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+        //unitdata.name = "nametest1";
+        ////unit1.SpritePath = "Unit1";
         //inventoryUnits.Add(unit1);
+
 
         //Unit unit2 = gameObject.AddComponent<Unit>();
         //unit2.Name = "nametest2";
