@@ -44,6 +44,7 @@ public class InventoryManager : Singleton<InventoryManager>
         //테스트 코드 
         {
 
+
             _UIUnitSlotTest = GetComponentInChildren<UIUnitSlotTest>();
             if (_UIUnitSlotTest != null)
             {
