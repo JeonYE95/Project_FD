@@ -8,7 +8,7 @@ public class SkillHandler : ActionHandler
     float skillDuration;
 
 
-    public override void ExecuteAction(BaseUnit targetCharacter)
+    /*public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null)
         {
@@ -20,5 +20,5 @@ public class SkillHandler : ActionHandler
         //Instantiate 나 오브젝트 풀링으로 스킬 생성
 
         ResetCooldown();
-    }
+    }*/
 }

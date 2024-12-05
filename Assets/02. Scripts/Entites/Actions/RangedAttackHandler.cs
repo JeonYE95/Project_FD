@@ -5,14 +5,13 @@ using UnityEngine;
 public class RangedAttackHandler : AttackHandler
 {
     public GameObject projectilePrefab;
-    public Transform firePoint;
 
     private void Start()
     {
         firePoint = transform;
     }
 
-    public override void ExecuteAction(BaseUnit targetCharacter)
+    /*public override void ExecuteAction(BaseUnit targetCharacter)
     {
         if (targetCharacter == null || projectilePrefab == null || firePoint == null)
         {
@@ -27,6 +26,6 @@ public class RangedAttackHandler : AttackHandler
         defaultProjectile.GetComponent<DefaultProjectile>().Initialize(targetCharacter, direction);
 
         ResetCooldown();
-    }
+    }*/
 
 }

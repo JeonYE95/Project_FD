@@ -11,28 +11,35 @@ public class BaseUnit : MonoBehaviour
     public HealthSystem healthSystem;
     public ActionHandler attackHandler;
     public ActionHandler skillHandler;
+    public ActionHandler actionHandler;
     public UnitMovement UnitMovement;
     public UnitAnimationController animController;
 
+    //Unit's Field
     public bool isLive;
-    public Vector2 direction;
     public BaseUnit targetUnit;
+    public int defense;
+    public int attackDamage;
+    public int skillDamage;
+    public float maxHP;
+    public float moveSpeed;
+    public float skillCooltime;
+    public float attackCooltime;
+    public float attackRange;
+    public string unitGrade;
 
     //플레이어면 true , 적이면 false
     public bool isPlayerUnit = false;
+    public bool isRangedUnit = false;
+
+    public GameObject attackProjectile;
 
     private bool isSkillExecuting;
 
     public Action <BaseUnit> OnDieEvent;
 
-    //나중에 SO 화 할 것들
-    public float maxHP;
-    public float moveSpeed;
-    public float skillDelay;
-    public float attackRange;
-    public float attackDelay;
 
-    public StateMachine stateMachine;
+    private StateMachine stateMachine;
 
 
     //For Debug
@@ -41,61 +48,80 @@ public class BaseUnit : MonoBehaviour
 
     protected virtual void Awake()
     {
-
         healthSystem = GetComponent<HealthSystem>();
+
         skillHandler = GetComponent<SkillHandler>();
         attackHandler = GetComponent<ActionHandler>();
+
+        //앞으로 이거 통합으로
+        actionHandler = GetComponent<ActionHandler>();
+
         UnitMovement = GetComponent<UnitMovement>();
         animController = GetComponent<UnitAnimationController>();
-    }
-
-    //Start 에서 호출됨
-    public void UnitInit()
-    {
-        isLive = true;
-        healthSystem.MaxHP = maxHP;
-        UnitMovement.moveSpeed = moveSpeed;
-
-        //배틀매니저에 캐릭터 등록
-        BattleManager.Instance.RegisterUnit(this);
-
-        
-        OnDieEvent += UnitDeActive;
-        OnDieEvent += BattleManager.Instance.UnitDie;
-
-        //나중에 셋캐릭터로 이동
-        animController.SetSettingAnimation();
-
-        //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
-        stateMachine = new StateMachine(this);
-    }
-
-    //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틸매니저가 호출
-    public void ActiveUnit()
-    {
-        //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
-        stateMachine.ChangeState(stateMachine.IdleState);
-
-        //평타와 스킬 쿨타임 초기화
-        skillHandler.ResetCooldown();
-        attackHandler.ResetCooldown();
-    }
-
-    //유닛을 타일에 배치(셋팅) 햇을때
-    public void SetUnit()
-    {
-    }
-
-    //유닛을 타일에서 해제했을때 = 현재 구조로는 프리팹자체 파괴
-    public void UnsetUnit()
-    {
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
         UnitInit();
+    }
+
+    //Start 에서 호출됨
+    public void UnitInit()
+    {
+        healthSystem.MaxHP = maxHP;
+        UnitMovement.moveSpeed = moveSpeed;
+
+        if (attackRange >= 4f)
+        {
+            isRangedUnit = true;
+        }
+
+        //배틀매니저에 캐릭터 등록
+        BattleManager.Instance.RegisterUnit(this);
+
+        //죽엇을 시 이벤트 등록
+        OnDieEvent += UnitDeActive;
+        OnDieEvent += BattleManager.Instance.UnitDie;
+
+        //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
+        stateMachine = new StateMachine(this);
+    }
+
+    //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틀매니저가 호출
+    public void ActiveUnit()
+    {
+        //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
+        stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
+    //유닛을 타일에 배치(셋팅) 햇을때
+    public void SetUnit()
+    {
+
+    }
+
+    //유닛을 타일에서 해제했을때
+    //플레이어는 Destory 고 몬스터는 오브젝트풀링이라 따로
+    public void UnsetUnit()
+    {
+        OnDieEvent -= UnitDeActive;
+        OnDieEvent -= BattleManager.Instance.UnitDie;
+
+        BattleManager.Instance.UnRegisterUnit(this);
+    }
+
+    public void ReSetUnit()
+    {
+        isLive = true;
+        healthSystem.ResetHealth();
+
+        //평타와 스킬 쿨타임 초기화
+        skillHandler.ResetCooldown();
+        attackHandler.ResetCooldown();
+
+        //아예 가만히 있는 애니메이션으로 셋팅
+        animController.SetSettingAnimation();
     }
 
     // Update is called once per frame
@@ -115,6 +141,11 @@ public class BaseUnit : MonoBehaviour
     public bool IsSkillReady()
     {
         return skillHandler.IsCooldownComplete();
+    }
+
+    public bool PerformAction()
+    {
+        return actionHandler.ExecuteAction(targetUnit);
     }
 
     public void PerformAttack()
@@ -177,7 +208,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     
-
+    //유닛이 죽었을 경우 그 전투에서는 비활성화
     public void UnitDeActive(BaseUnit Unit)
     {
         isLive = false;

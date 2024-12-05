@@ -28,6 +28,10 @@ public class HealthSystem : MonoBehaviour
         unit = GetComponent<BaseUnit>();
     }
 
+    public void ResetHealth()
+    {
+        currentHP = maxHP;
+    }
     public void TakeDamage(float damage)
     {
         currentHP -= damage;

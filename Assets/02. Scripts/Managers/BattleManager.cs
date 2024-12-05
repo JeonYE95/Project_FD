@@ -107,6 +107,18 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
+    public void UnRegisterUnit(BaseUnit unit)
+    {
+        if (unit.isPlayerUnit)
+        {
+            players.Remove(unit);
+        }
+        else
+        {
+            enemies.Remove(unit);
+        }
+    }
+
     
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {
