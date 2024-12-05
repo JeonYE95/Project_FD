@@ -29,19 +29,13 @@ public class UnitManager
 
     private void LoadUnits()
     {
-        foreach (var data in UnitData.UnitDataList)
-        {
-            CreatePlayerUnit(data);
-        }
+       
     }
 
-    public GameObject CreatePlayerUnit(int unitID)
+    public GameObject CreatePlayerUnit(int unitID)      // 플레이어 개별 유닛 생성
     {
-        return CreatePlayerUnit(UnitDataManager.Instance.GetUnitData(unitID));
-    }
+        UnitData data = UnitDataManager.Instance.GetUnitData(unitID);
 
-    private GameObject CreatePlayerUnit(UnitData data)      // 플레이어 개별 유닛 생성
-    {
         //원본 프리팹
         string playerBasePrefabPath = $"Prefabs/BaseUnits/PlayerBasePrefab";
         GameObject playerBasePrefab = Resources.Load<GameObject>(playerBasePrefabPath);
