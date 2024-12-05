@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIUnitSlotTest : MonoBehaviour
 {
-   
+
     private RectTransform content;
 
     [SerializeField] private GameObject unitSlotPrefab;
@@ -26,24 +26,13 @@ public class UIUnitSlotTest : MonoBehaviour
         // 테스트 코드
 
         UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-        unit1._unitData = new GSDatas.UnitData
-        {
-            name = "Archer",
-            grade = "Common"
-        };
+        unit1.SetData(UnitDataManager.Instance.GetUnitData(1004));
         inventoryUnits.Add(unit1);
 
         UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-        unit2._unitData = new GSDatas.UnitData
-        {
-            name = "Healer",
-            grade = "Common"
-        };
+        unit2.SetData(UnitDataManager.Instance.GetUnitData(1005));
         inventoryUnits.Add(unit2);
 
-  
-
-     
         CreateUnitSlots();
     }
 
@@ -51,30 +40,36 @@ public class UIUnitSlotTest : MonoBehaviour
 
     private void CreateUnitSlots()
     {
-        foreach (var unit in inventoryUnits)
+       
+        // 인덱스를 명시적으로 할당하면서 슬롯 생성
+        for (int i = 0; i < inventoryUnits.Count; i++)
         {
             GameObject go = Instantiate(unitSlotPrefab, content);
+            var unit = inventoryUnits[i];
 
+            // CharacterSlot의 인덱스 직접 설정
+            CharacterSlot characterSlot = go.GetComponent<CharacterSlot>();
+            if (characterSlot != null)
+            {
+                characterSlot.SetIndex(i);  // 인덱스 직접 설정
+            }
+
+            // UI 요소 설정
             TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
             Image unitImg = go.GetComponentInChildren<Image>();
 
             if (unitNameTxt != null)
             {
                 unitNameTxt.text = unit._unitData.name;
-                Debug.Log(unitNameTxt);
             }
-            else
-                Debug.Log("TMP 컴포넌트 없음.");
 
             if (unitImg != null)
             {
                 Sprite sprite = Resources.Load<Sprite>($"Sprite/{unit._unitData.name}");
                 unitImg.sprite = sprite;
-                Debug.Log(unitImg);
             }
-            else
-                Debug.Log("Image 컴포넌트 없음.");
         }
+
     }
 
     public void updateUnits(List<UnitInfo> units)
@@ -86,6 +81,16 @@ public class UIUnitSlotTest : MonoBehaviour
         // 새로운 유닛 목록으로 업데이트
         inventoryUnits = units;
         CreateUnitSlots();
+    }
+
+
+    public UnitInfo GetUnitAtIndex(int index)
+    {
+        if (index >= 0 && index < inventoryUnits.Count)
+        {
+            return inventoryUnits[index];
+        }
+        return null;
     }
 
 }

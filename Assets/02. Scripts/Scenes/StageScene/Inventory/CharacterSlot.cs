@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
 
 public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -20,13 +19,18 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField]
     private UIUnitSlotTest _unitSlotTest;
 
+    [SerializeField] private int _index;
+    public int Index => _index;  // 읽기 전용 프로퍼티
 
-    public int Index { get; private set; }
+    public void SetIndex(int newIndex)
+    {
+        _index = newIndex;
+    }
 
     private void Start()
     {
-        //자신의 순서를 인덱스로 자동 할당
-        Index = transform.GetSiblingIndex();
+
+        _unitSlotTest = GetComponentInParent<UIUnitSlotTest>();
 
         if (InventoryManager.Instance.PreviewObject == null)
         {
@@ -38,7 +42,6 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             _draggedCharacterPreview = _previewObject.GetComponent<Image>();
         }
 
-        _unitSlotTest = GetComponentInParent<UIUnitSlotTest>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -56,7 +59,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
               // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
             if (_UIUnitSlot != null && Index < _UIUnitSlot.InventoryUnits.Count)
             {
-                Unit currentUnit = _UIUnitSlot.InventoryUnits[Index];
+                 UnitInfo currentUnit = _unitSlot.GetUnitAtIndex(Index);
                 if (currentUnit != null)
                 {
                   
@@ -78,22 +81,22 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             {
 
                 // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
-                if (_unitSlotTest != null && Index < _unitSlotTest.InventoryUnits.Count)
-            {
-                UnitInfo currentUnit = _unitSlotTest.InventoryUnits[Index];
-                if (currentUnit != null)
+                if (_unitSlotTest != null)
                 {
-                  
-                    // 유닛 정보에 맞는 이미지로 업데이트
-                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit._unitData.name}");
+                    UnitInfo currentUnit = _unitSlotTest.GetUnitAtIndex(Index);
+                    if (currentUnit != null)
+                    {
+
+                        // 유닛 정보에 맞는 이미지로 업데이트
+                        _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit._unitData.name}");
 
 
-                    UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
-                    previewInfo.SetUnitInfo(currentUnit);
+                        UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
+                        previewInfo.SetUnitInfo(currentUnit);
+                    }
+
                 }
 
-            }
-            
             }
 
 
@@ -129,7 +132,6 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         _draggedCharacterPreview = _previewObject.AddComponent<Image>();
         _draggedCharacterPreview.raycastTarget = false;
 
-        
         UnitPrevInfo previewInfo = _previewObject.AddComponent<UnitPrevInfo>();
 
         var canvas = FindObjectOfType<Canvas>();
