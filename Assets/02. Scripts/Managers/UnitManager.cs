@@ -29,14 +29,13 @@ public class UnitManager
 
     private void LoadUnits()
     {
-        foreach (var data in UnitData.UnitDataList)
-        {
-            CreatePlayerUnit(data);
-        }
+       
     }
 
-    private void CreatePlayerUnit(UnitData data)      // 플레이어 개별 유닛 생성
+    public GameObject CreatePlayerUnit(int unitID)      // 플레이어 개별 유닛 생성
     {
+        UnitData data = UnitDataManager.Instance.GetUnitData(unitID);
+
         //원본 프리팹
         string playerBasePrefabPath = $"Prefabs/BaseUnits/PlayerBasePrefab";
         GameObject playerBasePrefab = Resources.Load<GameObject>(playerBasePrefabPath);
@@ -45,7 +44,7 @@ public class UnitManager
         string prefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
 
-        if (prefab == null) return;
+        if (prefab == null) return null;
         
         GameObject unitInstance = UnityEngine.Object.Instantiate(playerBasePrefab);
         GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
@@ -60,6 +59,7 @@ public class UnitManager
             unit.SetData(data);
         }
 
+        return unitInstance;
         //_units.Add(unit);
     }
 
