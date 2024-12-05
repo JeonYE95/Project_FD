@@ -62,7 +62,7 @@ namespace GSDatas
 		public System.Int32 defense;
 		public System.Int32 health;
 		public System.Int32 attackCooltime;
-		public System.Int32 cooltime;
+		public System.Int32 skillCooltime;
 		public System.Int32 range;
   
 

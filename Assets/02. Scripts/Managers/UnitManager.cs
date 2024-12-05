@@ -49,7 +49,7 @@ public class UnitManager
         GameObject unitInstance = UnityEngine.Object.Instantiate(playerBasePrefab);
         GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
 
-        AssetInstance.transform.SetParent(unitInstance.transform, false);
+        AssetInstance.transform.SetParent(unitInstance.transform, true);
         AssetInstance.transform.position = Vector3.zero;
 
         UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
@@ -58,6 +58,8 @@ public class UnitManager
         {
             unit.SetData(data);
         }
+
+        unitInstance.GetComponent<PlayerUnit>().SetUnitInfo();
 
         return unitInstance;
         //_units.Add(unit);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DefaultProjectile : MonoBehaviour
 {
     public float speed = 10f;
-    public float damage = 10f;
+    public int damage = 10;
 
     private Vector2 direction;
     private BaseUnit targetUnit;
