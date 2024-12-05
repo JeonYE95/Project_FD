@@ -12,8 +12,8 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
-    public int playerCount;
-    public int enemyCount;
+    public int alivePlayerUnitsCount;
+    public int aliveEnemyUnitsCount;
 
     private TargetingSystem targetingSystem;
 
@@ -42,19 +42,26 @@ public class BattleManager : Singleton<BattleManager>
     {
         if (unit.isPlayerUnit)
         {
-            playerCount--;
+            alivePlayerUnitsCount--;
         }
         else
         {
-            enemyCount--;
+            aliveEnemyUnitsCount--;
         }
 
-        if (enemyCount == 0)
+        if (aliveEnemyUnitsCount == 0)
         {
             WaveManager.Instance.Victroy();
         }
-        else if (playerCount == 0)
+        else if (alivePlayerUnitsCount == 0)
         {
+            foreach(BaseUnit enemyUnit in enemies)
+            {
+                enemyUnit.GetComponent<EnemyUnit>().UnsetUnit();
+
+                enemyUnit.gameObject.SetActive(false);
+            }
+
             WaveManager.Instance.Lose();
         }
     }
@@ -88,11 +95,11 @@ public class BattleManager : Singleton<BattleManager>
 
         foreach (BaseUnit unit in allUnits)
         {
-            unit.ActiveUnit();
+            unit.UnitBattleStart();
         }
 
-        playerCount = players.Count;
-        enemyCount = enemies.Count;
+        alivePlayerUnitsCount = players.Count;
+        aliveEnemyUnitsCount = enemies.Count;
     }
 
     public void RegisterUnit(BaseUnit unit)

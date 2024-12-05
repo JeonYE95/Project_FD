@@ -86,10 +86,12 @@ public class BaseUnit : MonoBehaviour
 
         //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
         stateMachine = new StateMachine(this);
+
+        ReSetUnit();
     }
 
     //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틀매니저가 호출
-    public void ActiveUnit()
+    public void UnitBattleStart()
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
         stateMachine.ChangeState(stateMachine.IdleState);
@@ -99,10 +101,19 @@ public class BaseUnit : MonoBehaviour
     public void SetUnit()
     {
 
+
+        /*int[,] stage1 =
+        {
+            {2001, 0, 0, 0 },
+            {2001, 0, 2002, 0 },
+            {2001, 0, 2002, 0 },
+            {2001, 0, 0, 0 }
+        };*/
     }
 
     //유닛을 타일에서 해제했을때
     //플레이어는 Destory 고 몬스터는 오브젝트풀링이라 따로
+    //플레이어는 걍 오브젝트 파괴됬을때 호출, 몬스터는 비활성화?? 어쩌지
     public void UnsetUnit()
     {
         OnDieEvent -= UnitDeActive;
@@ -117,8 +128,8 @@ public class BaseUnit : MonoBehaviour
         healthSystem.ResetHealth();
 
         //평타와 스킬 쿨타임 초기화
-        skillHandler.ResetCooldown();
-        attackHandler.ResetCooldown();
+        actionHandler.ResetSkillCoolTime();
+        actionHandler.ResetAttackCoolTime();
 
         //아예 가만히 있는 애니메이션으로 셋팅
         animController.SetSettingAnimation();
@@ -135,12 +146,12 @@ public class BaseUnit : MonoBehaviour
 
     public bool IsAttackReady()
     {
-        return attackHandler.IsCooldownComplete();
+        return attackHandler.IsAttackCoolTimeComplete();
     }
 
     public bool IsSkillReady()
     {
-        return skillHandler.IsCooldownComplete();
+        return skillHandler.IsSkillCoolTimeComplete();
     }
 
     public bool PerformAction()

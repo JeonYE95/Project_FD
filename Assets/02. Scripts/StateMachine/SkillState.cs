@@ -11,7 +11,7 @@ public class SkillState : BaseState
 
     public float elapsedTime = 0f;
 
-    public override void Enter()
+    /*public override void Enter()
     {
         base.Enter();
 
@@ -43,5 +43,5 @@ public class SkillState : BaseState
 
         //스킬 사용 중 특정 조건 때문에 스킬 상태를 벗어낫을때 쿨은 돌게
         stateMachine.unit.skillHandler.ResetCooldown();
-    }
+    }*/
 }

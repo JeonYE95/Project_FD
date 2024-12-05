@@ -23,4 +23,9 @@ public class PlayerUnit : BaseUnit
         skillCooltime = unitInfo._unitData.skillCooltime;
         attackCooltime = unitInfo._unitData.attackCooltime;
     }
+
+    private void OnDestroy()
+    {
+        UnsetUnit();
+    }
 }
