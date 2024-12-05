@@ -31,26 +31,36 @@ public class UnitManager
     {
         foreach (var data in UnitData.UnitDataList)
         {
-            CreateUnit(data);
+            CreatePlayerUnit(data);
         }
     }
 
-    private void CreateUnit(UnitData data)      // 개별 유닛 생성
+    private void CreatePlayerUnit(UnitData data)      // 플레이어 개별 유닛 생성
     {
+        //원본 프리팹
+        string playerBasePrefabPath = $"Prefabs/BaseUnits/PlayerBasePrefab";
+        GameObject playerBasePrefab = Resources.Load<GameObject>(playerBasePrefabPath);
+
+        //에셋 프리팹
         string prefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
 
         if (prefab == null) return;
+        
+        GameObject unitInstance = UnityEngine.Object.Instantiate(playerBasePrefab);
+        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
 
-        GameObject unitInstance = UnityEngine.Object.Instantiate(prefab);
+        AssetInstance.transform.SetParent(unitInstance.transform, false);
+        AssetInstance.transform.position = Vector3.zero;
 
         UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
+
         if (unit != null)
         {
             unit.SetData(data);
         }
 
-        _units.Add(unit);
+        //_units.Add(unit);
     }
 
     
