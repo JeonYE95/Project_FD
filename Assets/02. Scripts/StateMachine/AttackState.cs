@@ -11,8 +11,6 @@ public class AttackState : BaseState
     {
         base.Enter();
 
-        stateMachine.unit.attackHandler.ResetCooldown();
-
         StartBoolAnimation(AnimationData.isAttacking);
     }
     public override void Update()

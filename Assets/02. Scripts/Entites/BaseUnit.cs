@@ -21,12 +21,13 @@ public class BaseUnit : MonoBehaviour
     public int defense;
     public int attackDamage;
     public int skillDamage;
-    public float maxHP;
-    public float moveSpeed;
+    public int maxHP;
     public float skillCooltime;
     public float attackCooltime;
     public float attackRange;
     public string unitGrade;
+
+    float moveSpeed = 1.5f;
 
     //플레이어면 true , 적이면 false
     public bool isPlayerUnit = false;
@@ -101,14 +102,6 @@ public class BaseUnit : MonoBehaviour
     public void SetUnit()
     {
 
-
-        /*int[,] stage1 =
-        {
-            {2001, 0, 0, 0 },
-            {2001, 0, 2002, 0 },
-            {2001, 0, 2002, 0 },
-            {2001, 0, 0, 0 }
-        };*/
     }
 
     //유닛을 타일에서 해제했을때
@@ -156,18 +149,11 @@ public class BaseUnit : MonoBehaviour
 
     public bool PerformAction()
     {
-        return actionHandler.ExecuteAction(targetUnit);
-    }
-
-    public void PerformAttack()
-    {
-        if (targetUnit == null || attackHandler == null)
+        if (targetUnit == null)
         {
-            Debug.Log("공격 시 타겟 캐릭터가 Null");
-            return;
+            Debug.Log("액션 시 타겟 캐릭터가 Null");
         }
-
-        attackHandler.ExecuteAction(targetUnit);
+        return actionHandler.ExecuteAction(targetUnit);
     }
 
     public void UseSkill()
@@ -181,17 +167,7 @@ public class BaseUnit : MonoBehaviour
         isSkillExecuting = true;
         skillHandler.ExecuteAction(targetUnit);
     }
-
-    public bool IsSkillExecuting()
-    {
-        return isSkillExecuting;
-    }
-
-    public void EndSkill()
-    {
-        isSkillExecuting = false;
-    }
-
+   
     public bool FindTarget()
     {
         targetUnit = BattleManager.Instance.GetTargetClosestOpponent(this);

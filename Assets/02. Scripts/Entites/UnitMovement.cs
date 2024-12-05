@@ -11,12 +11,12 @@ public class UnitMovement : MonoBehaviour
     public Vector2 destinationPosition;
 
     public Rigidbody2D rigidbody2D;
-    BaseUnit character;
+    BaseUnit myUnit;
 
 
     private void Awake()
     {
-        character = GetComponent<BaseUnit>();
+        myUnit = GetComponent<BaseUnit>();
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
@@ -44,13 +44,13 @@ public class UnitMovement : MonoBehaviour
 
     public void MoveToTarget()
     {
-        if (character.targetUnit == null)
+        if (myUnit.targetUnit == null)
         {
             return;
         }
 
         Vector2 myPosition = transform.position;
-        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, character.targetUnit.transform.position, character.attackRange);
+        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, myUnit.targetUnit.transform.position, myUnit.attackRange);
 
         moveDirection = (AdjustedTargetPosition - myPosition).normalized;
         moveDirection = moveDirection * moveSpeed;
@@ -74,7 +74,7 @@ public class UnitMovement : MonoBehaviour
 
     private void ApplyMove(Vector2 direction)
     {
-        direction = direction * character.moveSpeed;
+        direction = direction * moveSpeed;
 
         rigidbody2D.velocity = direction;
     }

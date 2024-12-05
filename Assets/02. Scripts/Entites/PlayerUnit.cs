@@ -13,7 +13,7 @@ public class PlayerUnit : BaseUnit
         unitInfo = GetComponent<UnitInfo>();
     }
 
-    private void SetUnitInfo()
+    public void SetUnitInfo()
     {
         maxHP = unitInfo._unitData.health;
         defense = unitInfo._unitData.defense;
@@ -24,8 +24,8 @@ public class PlayerUnit : BaseUnit
         attackCooltime = unitInfo._unitData.attackCooltime;
     }
 
-    private void OnDestroy()
+    /*private void OnDestroy()
     {
         UnsetUnit();
-    }
+    }*/
 }

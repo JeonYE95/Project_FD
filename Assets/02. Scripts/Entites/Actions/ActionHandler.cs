@@ -14,14 +14,18 @@ public class ActionHandler : MonoBehaviour
     public float skillCollTime;
     public float attackCoolTime;
 
-    protected BaseUnit myUnit;
-    protected BaseUnit targetUnit;
+    BaseUnit myUnit;
+    BaseUnit targetUnit;
 
     public Transform firePoint;
 
     private void Awake()
     {
         myUnit = GetComponent<BaseUnit>();
+        if (myUnit == null)
+        {
+            Debug.LogError("BaseUnit component is missing on this GameObject!");
+        }
     }
 
     private void Start()
@@ -33,19 +37,14 @@ public class ActionHandler : MonoBehaviour
     //나중에 여기서 통합해서 그냥 스킬쿨 중이면 공격 나가게 할수도 있는데,
     //스킬은 타겟이 범위 안에 있는지 체크 안할거라서 일단 상태에서
 
-    public bool IsCooldownComplete()
-    {
-        return Time.time >= lastActionTime + cooldownTime;
-    }
-
     public bool IsAttackCoolTimeComplete()
     {
-        return Time.time >= lastActionTime + attackCoolTime;
+        return Time.time >= lastAttackTime + attackCoolTime;
     }
 
     public bool IsSkillCoolTimeComplete()
     {
-        return Time.time >= lastActionTime + skillCollTime;
+        return Time.time >= lastSkillTime + skillCollTime;
     }
     public bool ExecuteAction(BaseUnit targetUnit)
     {
@@ -55,6 +54,8 @@ public class ActionHandler : MonoBehaviour
         {
             return false;
         }
+
+        this.targetUnit = targetUnit;
 
         if (IsSkillCoolTimeComplete())
         {
@@ -76,11 +77,6 @@ public class ActionHandler : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void ResetCooldown()
-    {
-        lastActionTime = Time.time;
     }
 
     public void ResetAttackCoolTime()
@@ -122,7 +118,7 @@ public class ActionHandler : MonoBehaviour
 
     private void UseSkill()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     

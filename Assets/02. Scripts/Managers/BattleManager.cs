@@ -1,3 +1,4 @@
+using Assets.HeroEditor.Common.Scripts.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,6 +77,30 @@ public class BattleManager : Singleton<BattleManager>
         {
             BattleSetingAndStart();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            TestSpawn();
+        }
+    }
+
+    private void TestSpawn()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            var PlayerUnitList = UnitDataManager.GetList();
+
+            //int randomNumber = PlayerUnitList[Random.Range(0, PlayerUnitList.Count)].ID;
+            int randomNumber = Random.Range(1001, 1006);
+
+            UnitManager.Instance.CreatePlayerUnit(randomNumber);
+
+            var EnemyUnitList = EnemyDataManager.GetList();
+
+            randomNumber = EnemyUnitList[Random.Range(0, EnemyUnitList.Count)].ID;
+
+            EnemyManager.Instance.CreateEnemy(randomNumber);
+        }
     }
 
     public void BattleSetingAndStart()
@@ -104,11 +129,20 @@ public class BattleManager : Singleton<BattleManager>
 
     public void RegisterUnit(BaseUnit unit)
     {
-        if (unit.isPlayerUnit)
+        /*if (unit.isPlayerUnit)
         {
             players.Add(unit);
         }
         else
+        {
+            enemies.Add(unit);
+        }*/
+
+        if(unit as PlayerUnit)
+        {
+            players.Add(unit);
+        }
+        else if (unit as EnemyUnit)
         {
             enemies.Add(unit);
         }

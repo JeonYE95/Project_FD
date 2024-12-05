@@ -13,7 +13,7 @@ public class EnemyUnit : BaseUnit
         unitInfo = GetComponent<EnemyInfo>();
     }
 
-    private void SetUnitInfo()
+    public void SetUnitInfo()
     {
         maxHP = unitInfo._enemyData.health;
         defense = unitInfo._enemyData.defense;

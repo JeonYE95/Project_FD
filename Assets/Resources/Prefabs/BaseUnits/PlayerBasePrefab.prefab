@@ -54,7 +54,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -65,7 +65,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5036631582659262649
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -135,14 +135,13 @@ MonoBehaviour:
   attackDamage: 0
   skillDamage: 0
   maxHP: 0
-  moveSpeed: 0
   skillCooltime: 0
   attackCooltime: 0
   attackRange: 0
   unitGrade: 
-  isPlayerUnit: 0
+  isPlayerUnit: 1
   isRangedUnit: 0
-  attackProjectile: {fileID: 0}
+  attackProjectile: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
   CurrentState: 
 --- !u!114 &3459946797341866766
 MonoBehaviour:
