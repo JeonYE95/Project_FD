@@ -56,6 +56,7 @@ namespace GSDatas
 
 /* Fields. */
 
+		public System.Int32 key;
 		public System.Int32 StageID;
 		public System.Int32 wave;
 		public System.Int32 RewardID;
@@ -177,7 +178,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.StageID, instance);
+                            Map.Add(instance.key, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
