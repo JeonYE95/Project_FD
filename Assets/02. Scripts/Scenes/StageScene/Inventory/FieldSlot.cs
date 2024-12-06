@@ -55,7 +55,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             _previousPosition = worldPosition;
 
 
-            InventoryManager.Instance.UpdateFieldUnitTracking(Index, unitInfo);
+            InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
         }
 
 

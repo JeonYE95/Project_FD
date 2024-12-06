@@ -9,7 +9,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
     private int _maxSummonUnitCount;
 
-
     [SerializeField] private FieldSlot[] _fieldSlots;
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
