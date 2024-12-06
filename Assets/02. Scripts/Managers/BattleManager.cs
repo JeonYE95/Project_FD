@@ -22,16 +22,6 @@ public class BattleManager : Singleton<BattleManager>
     //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
     private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
 
-    public List<BaseUnit> GetPlayers()
-    {
-        return players;
-    }
-
-    public List<BaseUnit> GetEnemies()
-    {
-        return enemies;
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -39,38 +29,27 @@ public class BattleManager : Singleton<BattleManager>
         targetingSystem = new TargetingSystem(this);
     }
 
-    public void UnitDie(BaseUnit unit)
+    public static InGameSkillData _0111 = new InGameSkillData()
     {
-        if (unit.isPlayerUnit)
-        {
-            alivePlayerUnitsCount--;
-        }
-        else
-        {
-            aliveEnemyUnitsCount--;
-        }
+        skillID = 111,
+        unitID = 1001,
+        skillName = "GuardianShield",
+        skillType = SkillType.Buff,
+        skillEffect = SkillEffect.DefenseBoost,
+        value = 30.0f,
+        duration = 5.0f,
+        skillCoolDown = 10.0f,
 
-        if (aliveEnemyUnitsCount == 0)
-        {
-            WaveManager.Instance.Victroy();
-        }
-        else if (alivePlayerUnitsCount == 0)
-        {
-            foreach(BaseUnit enemyUnit in enemies)
-            {
-                /*enemyUnit.GetComponent<EnemyUnit>().UnsetUnit();
-
-                enemyUnit.gameObject.SetActive(false);*/
-            }
-
-            WaveManager.Instance.Lose();
-        }
-    }
+        targetGroup = TargetGroup.Self,
+        targetPriority = TargetPriority.All,
+        targetCount = 1
+    };
 
     private void Start()
     {
-        
+        Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -82,6 +61,45 @@ public class BattleManager : Singleton<BattleManager>
         {
             TestSpawn();
         }
+    }
+    public void UnitDie(BaseUnit unit)
+    {
+        if (unit is PlayerUnit)
+        {
+            alivePlayerUnitsCount--;
+        }
+        else if (unit is EnemyUnit)
+        {
+            aliveEnemyUnitsCount--;
+        }
+
+        CheckBattleResult();
+    }
+
+    private void CheckBattleResult()
+    {
+        if (aliveEnemyUnitsCount == 0)
+        {
+            WaveManager.Instance.Victroy();
+            Debug.Log("플레이어 승리");
+            BattleEnd();
+        }
+        else if (alivePlayerUnitsCount == 0)
+        {
+            WaveManager.Instance.Lose();
+            Debug.Log("플레이어 패배");
+            BattleEnd();
+        }
+    }
+
+    private void BattleEnd()
+    {
+
+    }
+
+    private void ResetAllUnit()
+    {
+
     }
 
     private void TestSpawn()
@@ -131,15 +149,6 @@ public class BattleManager : Singleton<BattleManager>
 
     public void RegisterUnit(BaseUnit unit)
     {
-        /*if (unit.isPlayerUnit)
-        {
-            players.Add(unit);
-        }
-        else
-        {
-            enemies.Add(unit);
-        }*/
-
         if(unit as PlayerUnit)
         {
             players.Add(unit);
@@ -149,7 +158,6 @@ public class BattleManager : Singleton<BattleManager>
             enemies.Add(unit);
         }
     }
-
     public void UnRegisterUnit(BaseUnit unit)
     {
         if (unit.isPlayerUnit)
@@ -161,8 +169,6 @@ public class BattleManager : Singleton<BattleManager>
             enemies.Remove(unit);
         }
     }
-
-    
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {
         return targetingSystem.GetTargetClosestOpponent(standardUnit);

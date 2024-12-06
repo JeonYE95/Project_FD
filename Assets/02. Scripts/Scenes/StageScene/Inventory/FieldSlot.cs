@@ -186,4 +186,16 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         _character.transform.position = _previousPosition;
 
     }
+
+    public void RemoveCharacter()           // 캐릭터 제거 및 데이터 초기화
+    {
+        if (_character != null)
+        {
+            Destroy(_character);
+
+            _character = null;
+
+            InventoryManager.Instance.UntrackFieldUnit(Index);
+        }
+    }
 }

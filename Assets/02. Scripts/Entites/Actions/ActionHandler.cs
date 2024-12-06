@@ -5,24 +5,27 @@ using UnityEngine;
 
 public class ActionHandler : MonoBehaviour
 {
-    protected float lastActionTime = -Mathf.Infinity;
-    public float cooldownTime;
-
-    protected float lastSkillTime = -Mathf.Infinity;
-    protected float lastAttackTime = -Mathf.Infinity;
+    BaseUnit _myUnit;
+    BaseUnit _targetUnit;
 
     public float skillCollTime;
     public float attackCoolTime;
 
-    BaseUnit myUnit;
-    BaseUnit targetUnit;
+    float lastSkillTime = -Mathf.Infinity;
+    float lastAttackTime = -Mathf.Infinity;
 
+    InGameSkillData skillData;
+    SkillExecutor _skillExecutor;
+    UnitAnimationController _controller;
     public Transform firePoint;
 
     private void Awake()
     {
-        myUnit = GetComponent<BaseUnit>();
-        if (myUnit == null)
+        _myUnit = GetComponent<BaseUnit>();
+        _controller = GetComponent<UnitAnimationController>();
+        _skillExecutor = new SkillExecutor(skillData);
+
+        if (_myUnit == null)
         {
             Debug.LogError("BaseUnit component is missing on this GameObject!");
         }
@@ -48,14 +51,18 @@ public class ActionHandler : MonoBehaviour
     }
     public bool ExecuteAction(BaseUnit targetUnit)
     {
+        //스킬이 평타 대신 나가는 거라서 평타 쿨도 초기화
         ResetAttackCoolTime();
 
-        if (targetUnit == null)
+        if (targetUnit == null || !_myUnit.isLive)
         {
             return false;
         }
 
-        this.targetUnit = targetUnit;
+        _myUnit.PlayAttackAnimation();
+
+        //액션핸들러가 들고있는 타겟 변경
+        this._targetUnit = targetUnit;
 
         if (IsSkillCoolTimeComplete())
         {
@@ -65,7 +72,7 @@ public class ActionHandler : MonoBehaviour
         }
         else
         {
-            if (targetUnit.isLive && myUnit.IsTargetInRange())
+            if (targetUnit.isLive && _myUnit.IsTargetInRange())
             {
                 DoAttack();
                 //평타 공격
@@ -91,7 +98,7 @@ public class ActionHandler : MonoBehaviour
 
     private void DoAttack()
     {
-        if (myUnit.isRangedUnit)
+        if (_myUnit.isRangedUnit)
         {
             PerformRangedAttack();
         }
@@ -103,22 +110,23 @@ public class ActionHandler : MonoBehaviour
 
     private void PerformRangedAttack()
     {
-        GameObject attackProjectile = Instantiate(myUnit.attackProjectile, firePoint.position, Quaternion.identity);
-        Vector2 direction = (targetUnit.transform.position - firePoint.position).normalized;
-        attackProjectile.GetComponent<DefaultProjectile>().Initialize(targetUnit, direction);
+        GameObject attackProjectile = Instantiate(_myUnit.attackProjectile, firePoint.position, Quaternion.identity);
+        Vector2 direction = (_targetUnit.transform.position - firePoint.position).normalized;
+        attackProjectile.GetComponent<DefaultProjectile>().Initialize(_targetUnit, direction);
     }
 
     private void PerformMeleeAttack()
     {
-        if (targetUnit.TryGetComponent(out HealthSystem healthSystem))
+        if (_targetUnit.TryGetComponent(out HealthSystem healthSystem))
         {
-            healthSystem.TakeDamage(myUnit.attackDamage);
+            healthSystem.TakeDamage(_myUnit.attackDamage);
         }
     }
 
     private void UseSkill()
     {
-        //throw new NotImplementedException();
+        _skillExecutor.ExecuteSkill(_myUnit, skillData);
+        Debug.Log($"{gameObject.name} 스킬 사용함");
     }
 
     

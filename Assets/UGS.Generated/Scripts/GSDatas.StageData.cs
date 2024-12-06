@@ -58,8 +58,6 @@ namespace GSDatas
 
 		public System.Int32 ID;
 		public System.String name;
-		public System.Int32 rewardcount;
-		public System.Int32 maxWave;
   
 
 #region fuctions

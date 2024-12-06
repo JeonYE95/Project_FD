@@ -17,50 +17,47 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class WaveData : ITable
+    public partial class RewardData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<WaveData> loadedList, Dictionary<int, WaveData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<RewardData> loadedList, Dictionary<int, RewardData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "1649698253"; // it is sheet id
+        static string sheetID = "227078304"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, WaveData> WaveDataMap = new Dictionary<int, WaveData>();  
-        public static List<WaveData> WaveDataList = new List<WaveData>();   
+        public static Dictionary<int, RewardData> RewardDataMap = new Dictionary<int, RewardData>();  
+        public static List<RewardData> RewardDataList = new List<RewardData>();   
 
         /// <summary>
-        /// Get WaveData List 
+        /// Get RewardData List 
         /// Auto Load
         /// </summary>
-        public static List<WaveData> GetList()
+        public static List<RewardData> GetList()
         {{
            if (isLoaded == false) Load();
-           return WaveDataList;
+           return RewardDataList;
         }}
 
         /// <summary>
-        /// Get WaveData Dictionary, keyType is your sheet A1 field type.
+        /// Get RewardData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, WaveData>  GetDictionary()
+        public static Dictionary<int, RewardData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return WaveDataMap;
+           return RewardDataMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 Key;
 		public System.Int32 ID;
-		public System.Int32 wave;
-		public System.Int32 spawnPosition;
-		public System.Int32 enemyID;
+		public System.String name;
   
 
 #region fuctions
@@ -71,7 +68,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("WaveData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("RewardData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -87,7 +84,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<WaveData>, Dictionary<int, WaveData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<RewardData>, Dictionary<int, RewardData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -115,14 +112,14 @@ namespace GSDatas
                
 
 
-    public static (List<WaveData> list, Dictionary<int, WaveData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, WaveData> Map = new Dictionary<int, WaveData>();
-            List<WaveData> List = new List<WaveData>();     
+    public static (List<RewardData> list, Dictionary<int, RewardData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, RewardData> Map = new Dictionary<int, RewardData>();
+            List<RewardData> List = new List<RewardData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(WaveData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(RewardData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["WaveData"];
+            var sheet = jsonObject["RewardData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -141,7 +138,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            WaveData instance = new WaveData();
+                            RewardData instance = new RewardData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -178,12 +175,12 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.Key, instance);
+                            Map.Add(instance.ID, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            WaveDataList = List;
-                            WaveDataMap = Map;
+                            RewardDataList = List;
+                            RewardDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -193,10 +190,10 @@ namespace GSDatas
 
  
 
-        public static void Write(WaveData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(RewardData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(WaveData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(RewardData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

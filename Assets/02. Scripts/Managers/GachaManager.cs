@@ -17,7 +17,7 @@ public class GachaManager : Singleton<GachaManager>
 
         List<UnitData> commonUnits = new List<UnitData>();
 
-        foreach (var unit in UnitData.GetList())
+        foreach (var unit in UnitDataManager.Instance.GetUnitDatas())
         {
             if (unit.grade == "Common")
             {
@@ -27,6 +27,10 @@ public class GachaManager : Singleton<GachaManager>
 
         UnitData selectedUnit = commonUnits[Random.Range(0, commonUnits.Count)];
 
-        //InventoryManager.Instance.AddCharacter(selectedUnit, 1);
+        GameObject unitObject = new GameObject($"Unit_{selectedUnit.name}");
+        UnitInfo unitInfo = unitObject.AddComponent<UnitInfo>();
+        unitInfo.SetData(selectedUnit);
+
+        InventoryManager.Instance.AddCharacter(unitInfo);
     }
 }
