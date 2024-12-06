@@ -5,65 +5,79 @@ using UnityEngine;
 
 public static class AnimationData
 {
+    // Boolean 파라미터 (플레이어용)
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
+
+    // Integer 파라미터 (몬스터용)
+    public static readonly int IdleState = 0;   // Idle 애니메이션은 State = 0
+    public static readonly int WalkState = 2;  // Walk 애니메이션은 State = 2
+    public static readonly int RunState = 3;   // Run 애니메이션은 State = 3
+    public static readonly int DeathState = 9; // Death 애니메이션은 State = 9
 }
 
 public class UnitAnimationController : MonoBehaviour
 {
+    BaseUnit _myUnit;
     Animator animator;
+
+    [SerializeField] private AnimatorController animController;
 
     private void Awake()
     {
+        _myUnit = GetComponent<BaseUnit>();
     }
 
-    // Start is called before the first frame update
+    //Awake에서는 아직 애니메이션 에셋이 달리지 않음
     void Start()
     {
-        //animator.runtimeAnimatorController = f;
         SetAnimator();
     }
 
     public void SetAnimator()
     {
         animator = GetComponentInChildren<Animator>();
-    }
 
-    public void SetBool(int hashCode, bool isPlaying)
-    {
-        animator?.SetBool(hashCode, isPlaying);
-
-        if (hashCode == Animator.StringToHash("isIdle"))
+        if (animator == null)
         {
-            bool isIdle = animator.GetBool("isIdle");
-            Debug.Log($"{gameObject.name} : isIdle 상태: {isIdle}");
+            Debug.LogWarning($"Animator가 {gameObject.name}에 연결되지 않았습니다.");
+            return;
+        }
+
+        if (_myUnit is PlayerUnit)
+        {
+            animator.runtimeAnimatorController = animController;
         }
     }
 
+    // Boolean 파라미터 설정
+    public void SetBool(int hashCode, bool value)
+    {
+        if (animator == null) return;
+        animator.SetBool(hashCode, value);
+    }
+
+    // Integer 파라미터 설정
+    public void SetState(int stateValue)
+    {
+        if (animator == null) return;
+        animator.SetInteger("State", stateValue);
+    }
+
+    // Trigger 파라미터 설정
     public void SetTrigger(int hashCode)
     {
-        animator?.SetTrigger(hashCode);
+        if (animator == null) return;
+        animator.SetTrigger(hashCode);
     }
 
-    /*public void SetSettingAnimation()
+    // 애니메이션 상태 디버깅
+    public void DebugAnimationState()
     {
-        animator?.SetBool(isSetting, true);
-    }
+        if (animator == null) return;
 
-    public void SetIdleAnimation()
-    {
-        animator?.SetBool(isIdle, true);
+        Debug.Log($"{gameObject.name}: 현재 상태: {animator.GetCurrentAnimatorStateInfo(0).shortNameHash}");
     }
-
-    public void SetMoveAnimation()
-    {
-        animator?.SetBool(isMoving, true);
-    }
-
-    public void SetAttackAnimation()
-    {
-        animator?.SetBool(isAttacking, true);
-    }*/
 }

@@ -7,15 +7,11 @@ public class MoveState : BaseState
 
     public override void Enter()
     {
-        base.Enter();
-
-        StartBoolAnimation(AnimationData.isMoving);
+        stateMachine.unit.PlayMoveAnimation();
     }
 
     public override void Update()
     {
-        base.Update();
-
         //타겟이 사정거리 내에 있을때는 어택 상태로 변경
         if (stateMachine.unit.IsTargetInRange())
         {
@@ -36,10 +32,6 @@ public class MoveState : BaseState
 
     public override void Exit()
     {
-        base.Exit();
-
         stateMachine.unit.UnitMovement.Stop();
-
-        StopBoolAnimation(AnimationData.isMoving);
     }
 }

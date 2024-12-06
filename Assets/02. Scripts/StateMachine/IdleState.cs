@@ -7,15 +7,11 @@ public class IdleState : BaseState
     
     public override void Enter()
     {
-        base.Enter();
-
-        StartBoolAnimation(AnimationData.isIdle);
+        stateMachine.unit.PlayIdleAnimation();
     }
 
     public override void Update()
     {
-        base.Update();
-
         if (stateMachine.unit.FindTarget())
         {
             stateMachine.ChangeState(stateMachine.MoveState);
@@ -24,9 +20,7 @@ public class IdleState : BaseState
 
     public override void Exit()
     {
-        base.Exit();
 
-        StopBoolAnimation(AnimationData.isIdle);
     }
 
     //StartAni
