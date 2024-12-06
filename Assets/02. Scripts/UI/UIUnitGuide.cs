@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class UIUnitGuide : UIBase
 {
-    [SerializeField] private Button exitBtn;
+    [SerializeField] private Button closeBtn;
     
     void Start()
     {
-        exitBtn.onClick.AddListener(() => { Close(); });
+        closeBtn.onClick.AddListener(() => { Close(); });
     }
 }
