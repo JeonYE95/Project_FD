@@ -17,39 +17,39 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class StageData : ITable
+    public partial class RewardData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<StageData> loadedList, Dictionary<int, StageData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<RewardData> loadedList, Dictionary<int, RewardData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "1895690268"; // it is sheet id
+        static string sheetID = "227078304"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, StageData> StageDataMap = new Dictionary<int, StageData>();  
-        public static List<StageData> StageDataList = new List<StageData>();   
+        public static Dictionary<int, RewardData> RewardDataMap = new Dictionary<int, RewardData>();  
+        public static List<RewardData> RewardDataList = new List<RewardData>();   
 
         /// <summary>
-        /// Get StageData List 
+        /// Get RewardData List 
         /// Auto Load
         /// </summary>
-        public static List<StageData> GetList()
+        public static List<RewardData> GetList()
         {{
            if (isLoaded == false) Load();
-           return StageDataList;
+           return RewardDataList;
         }}
 
         /// <summary>
-        /// Get StageData Dictionary, keyType is your sheet A1 field type.
+        /// Get RewardData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, StageData>  GetDictionary()
+        public static Dictionary<int, RewardData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return StageDataMap;
+           return RewardDataMap;
         }}
 
     
@@ -68,7 +68,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("StageData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("RewardData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -84,7 +84,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<StageData>, Dictionary<int, StageData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<RewardData>, Dictionary<int, RewardData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -112,14 +112,14 @@ namespace GSDatas
                
 
 
-    public static (List<StageData> list, Dictionary<int, StageData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, StageData> Map = new Dictionary<int, StageData>();
-            List<StageData> List = new List<StageData>();     
+    public static (List<RewardData> list, Dictionary<int, RewardData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, RewardData> Map = new Dictionary<int, RewardData>();
+            List<RewardData> List = new List<RewardData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(RewardData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["StageData"];
+            var sheet = jsonObject["RewardData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -138,7 +138,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            StageData instance = new StageData();
+                            RewardData instance = new RewardData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -179,8 +179,8 @@ namespace GSDatas
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            StageDataList = List;
-                            StageDataMap = Map;
+                            RewardDataList = List;
+                            RewardDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -190,10 +190,10 @@ namespace GSDatas
 
  
 
-        public static void Write(StageData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(RewardData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(RewardData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillHandler : ActionHandler
 {
-    public SkillData skillData;
+    public InGameSkillData skillData;
     float skillDuration;
 
 

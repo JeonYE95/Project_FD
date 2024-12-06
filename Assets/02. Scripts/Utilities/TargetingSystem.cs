@@ -3,24 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class UnitSearchOptions
 {
-    public int Number { get; set; }
-    public bool RequireOpponent { get; set; } = true;
-    public bool ClosestFirst { get; set; } = true;
+    public int Number { get; set; } = 1; // 기본값 : 한명
+    public TargetGroup Group { get; set; } = TargetGroup.Enemy; // 기본값: 적군
+    public TargetPriority Priority { get; set; } = TargetPriority.Closest; // 기본값: 가까운 순서
     public bool IncludeSelf { get; set; } = false;
-    public bool UseTargetAsReference { get; set; } = false;
-
-    // 필수 속성은 생성자로 설정
-    public UnitSearchOptions(int number)
-    {
-        Number = number;
-    }
+    
 }
 
+public enum TargetGroup
+{
+    Ally,
+    Enemy,
+    AllAlly,
+    AllEnemy,
+    Self
+}
+
+public enum TargetPriority
+{
+    Closest,
+    Farthest,
+    Random,
+    All
+}
 
 public class TargetingSystem
 {
@@ -39,84 +48,57 @@ public class TargetingSystem
 
     public List<BaseUnit> GetUnits(BaseUnit standardUnit, UnitSearchOptions options)
     {
-        // 입력 매개변수 널 체크
-        if (standardUnit == null)
-        {
-            Debug.LogError("standardUnit is null!");
-            return new List<BaseUnit>();
-        }
-
-        // 후보 리스트 생성
-        List<BaseUnit> candidates = GetCandidates(standardUnit, options.RequireOpponent, options.IncludeSelf);
-
-        if (candidates.Count == 0)
-        {
-            Debug.LogWarning("타겟 후보가 없습니다.");
-            return new List<BaseUnit>();
-        }
-
-        // 정렬 또는 랜덤 처리
-        if (options.ClosestFirst)
-        {
-            SortByDistance(candidates, standardUnit, options.UseTargetAsReference);
-        }
-        else
-        {
-            ShuffleList(candidates);
-        }
-
-        // 요청된 수만큼 반환
-        return GetTopUnits(candidates, options.Number);
-    }
-
-
-    private List<BaseUnit> GetCandidates(BaseUnit standardUnit, bool requireOpponent, bool includeSelf)
-    {
         List<BaseUnit> candidates = new List<BaseUnit>();
 
-        if (requireOpponent)
+        // 그룹에 따른 후보군 설정
+        if (options.Group == TargetGroup.Enemy || options.Group == TargetGroup.AllEnemy)
         {
-            //상대리스트 가져오기
-            List<BaseUnit> source = standardUnit.isPlayerUnit ? enemies : players;
-
-            foreach (BaseUnit unit in source)
-            {
-                if (unit != null && unit.isLive)
-                {
-                    candidates.Add(unit);
-                }
-            }
+            candidates = standardUnit.isPlayerUnit ? enemies : players;
         }
-        else
+        else if (options.Group == TargetGroup.Ally || options.Group == TargetGroup.AllAlly)
         {
-            //팀원리스트 가져오기
-            List<BaseUnit> source = standardUnit.isPlayerUnit ? players : enemies;
+            candidates = standardUnit.isPlayerUnit ? players : enemies;
+        }
 
-            foreach (var unit in source)
-            {
-                //첫번째 조건은 위랑 같지만 두번째는 나 포함 이냐 아니냐 에 따라서 다름
-                if (unit != null && unit.isLive && (includeSelf || unit != standardUnit))
-                {
-                    candidates.Add(unit);
-                }
-            }
+        // 생존한 유닛만 포함
+        candidates = candidates.Where(unit => unit.isLive).ToList();
+
+        // 우선순위에 따른 정렬
+        if (options.Priority == TargetPriority.Closest)
+        {
+            SortByDistance(candidates, standardUnit, false, false); // 가까운 순
+        }
+        else if (options.Priority == TargetPriority.Farthest)
+        {
+            SortByDistance(candidates, standardUnit, false, true); // 먼 순
+        }
+        else if (options.Priority == TargetPriority.Random)
+        {
+            ShuffleList(candidates); // 랜덤
+        }
+
+        // 타겟 수 제한
+        if (options.Number > 0 && options.Number < candidates.Count)
+        {
+            return GetTopUnits(candidates, options.Number);
         }
 
         return candidates;
     }
 
-    private void SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference)
+    private void SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference, bool isDescending = false)
     {
-        Transform referenseTransform = useTargetAsReference && standardUnit.targetUnit != null
+        Transform referenceTransform = useTargetAsReference && standardUnit.targetUnit != null
             ? standardUnit.targetUnit.transform
             : standardUnit.transform;
 
-        //정렬 기준 람다 함수로 넣기
         candidates.Sort((a, b) =>
         {
-            float distanceA = Vector2.Distance(referenseTransform.position, a.transform.position);
-            float distanceB = Vector2.Distance(referenseTransform.position, b.transform.position);
-            return distanceA.CompareTo(distanceB);
+            float distanceA = Vector2.Distance(referenceTransform.position, a.transform.position);
+            float distanceB = Vector2.Distance(referenceTransform.position, b.transform.position);
+
+            // isDescending에 따라 정렬 방향 결정
+            return isDescending ? distanceB.CompareTo(distanceA) : distanceA.CompareTo(distanceB);
         });
     }
 
@@ -136,7 +118,7 @@ public class TargetingSystem
     {
         List<BaseUnit> result = new List<BaseUnit>();
 
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < number && i < candidates.Count; i++) // 초과 방지
         {
             result.Add(candidates[i]);
         }
@@ -144,106 +126,27 @@ public class TargetingSystem
         return result;
     }
 
-    //가장 가까운 상대편 반환
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {
-        // 상대편 리스트 선택
-        //List<BaseCharacter> targetList = GetAliveOpponents(standardCharacter);
-
-        List<BaseUnit> targetList = GetCandidates(standardUnit, true, false);
-
-        BaseUnit closestTarget = null; // 가장 가까운 타겟
-        float closestDistance = float.MaxValue; // 초기 값은 매우 큰 값으로 설정
-
-        // 직접 구현(O(n))으로 최적화.
-        foreach (BaseUnit potentialTarget in targetList)
+        var options = new UnitSearchOptions()
         {
-            // 현재 타겟과의 거리 계산
-            float currentDistance = Vector2.Distance(standardUnit.transform.position, potentialTarget.transform.position);
+            Group = TargetGroup.Enemy,
+            Priority = TargetPriority.Closest
+        };
 
-            // 더 짧은 거리라면 가장 가까운 타겟 갱신
-            if (currentDistance < closestDistance)
-            {
-                closestTarget = potentialTarget;
-                closestDistance = currentDistance;
-            }
-        }
-
-        return closestTarget;
+        List<BaseUnit> closestEnemies = GetUnits(standardUnit, options);
+        return closestEnemies.FirstOrDefault(); // 가장 가까운 적 반환
     }
 
-    //LINQ 지양하는 쪽으로 코드 리펙토링
-
-/*    public List<BaseCharacter> GetAliveOpponents(BaseCharacter standardCharacter)
+    public BaseUnit GetTargetFarthestOpponent(BaseUnit standardUnit)
     {
-        List<BaseCharacter> targetList = standardCharacter.isPlayerCharacter
-            ? enemies.Where(target => target.isLive).ToList()
-            : players.Where(target => target.isLive).ToList();
+        var options = new UnitSearchOptions()
+        {
+            Group = TargetGroup.Enemy,
+            Priority = TargetPriority.Farthest
+        };
 
-        return targetList;
+        List<BaseUnit> farthestEnemies = GetUnits(standardUnit, options);
+        return farthestEnemies.FirstOrDefault(); // 가장 먼 적 반환
     }
-
-    //기존 타겟이 있으면 타겟 리스트에 추가하는 함수
-    void IncludeExistingTarget(BaseCharacter standardCharacter, List<BaseCharacter> targetList, List<BaseCharacter> aliveOpponents)
-    {
-        if (standardCharacter.targetCharacter != null && standardCharacter.targetCharacter.isLive)
-        {
-            targetList.Add(standardCharacter.targetCharacter);
-            aliveOpponents.Remove(standardCharacter.targetCharacter);
-        }
-    }
-
-    //타겟과 랜덤 N명 상대편 반환
-    public List<BaseCharacter> GetTargetAndRandomOpponents(BaseCharacter standardCharacter, int number)
-    {
-        if (number < 2)
-        {
-            throw new ArgumentException("GetRandomOpponentTargets 함수에 넘버 2이상 넣어야됌");
-        }
-
-        //상대편 리스트
-        List<BaseCharacter> aliveOpponents = GetAliveOpponents(standardCharacter);
-
-        //리턴 할 타겟 리스트
-        List<BaseCharacter> targetList = new List<BaseCharacter>();
-
-        IncludeExistingTarget(standardCharacter, targetList, aliveOpponents);
-        
-        number = Mathf.Min(number - targetList.Count, aliveOpponents.Count);
-
-        // 랜덤 타겟 추가
-        for (int i = 0; i < number; i++)
-        {
-            int random = Random.Range(0, aliveOpponents.Count);
-            targetList.Add(aliveOpponents[random]);
-            aliveOpponents.RemoveAt(random);
-        }
-
-        return targetList;
-    }
-
-    //GetTargetAndClosestOpponentsFromTarget 이름 고민중
-    //타겟과 타겟에서 가까운 순으로 상대편 N명 반환
-    public List<BaseCharacter> GetTargetAndClosestOpponents(BaseCharacter standardCharacter, int number)
-    {
-        List<BaseCharacter> aliveOpponents = GetAliveOpponents(standardCharacter);
-
-        aliveOpponents = aliveOpponents.OrderBy(target
-            => Vector2.Distance(target.transform.position, standardCharacter.transform.position)).ToList();
-
-        List<BaseCharacter > targetList = new List<BaseCharacter>();
-
-        IncludeExistingTarget(standardCharacter, targetList, aliveOpponents);
-        number = Mathf.Min(number - targetList.Count, aliveOpponents.Count);
-
-        //TAKE(LINQ) 사용시 / 사용안할시
-        targetList.AddRange(aliveOpponents.Take(number));
-
-        *//*for (int i = 0; i < number; i++)
-        {
-            targetList.Add(aliveOpponents[i]);
-        }*//*
-
-        return targetList;
-    }*/
 }

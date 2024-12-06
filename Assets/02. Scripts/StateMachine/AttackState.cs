@@ -9,9 +9,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        base.Enter();
-
-        StartBoolAnimation(AnimationData.isAttacking);
+        //stateMachine.unit.PlayAttackAnimation();
     }
     public override void Update()
     {
@@ -79,11 +77,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        base.Exit();
 
-
-        StopBoolAnimation(AnimationData.isAttacking);
-        //stateMachine.character.attackHandler.ResetCooldown();
     }
 
     public bool CheckTargetInRange(BaseUnit targetUnit)
