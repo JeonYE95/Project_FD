@@ -17,47 +17,56 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class StageData : ITable
+    public partial class SkillData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<StageData> loadedList, Dictionary<int, StageData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<SkillData> loadedList, Dictionary<int, SkillData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "1895690268"; // it is sheet id
+        static string sheetID = "1733731338"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, StageData> StageDataMap = new Dictionary<int, StageData>();  
-        public static List<StageData> StageDataList = new List<StageData>();   
+        public static Dictionary<int, SkillData> SkillDataMap = new Dictionary<int, SkillData>();  
+        public static List<SkillData> SkillDataList = new List<SkillData>();   
 
         /// <summary>
-        /// Get StageData List 
+        /// Get SkillData List 
         /// Auto Load
         /// </summary>
-        public static List<StageData> GetList()
+        public static List<SkillData> GetList()
         {{
            if (isLoaded == false) Load();
-           return StageDataList;
+           return SkillDataList;
         }}
 
         /// <summary>
-        /// Get StageData Dictionary, keyType is your sheet A1 field type.
+        /// Get SkillData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, StageData>  GetDictionary()
+        public static Dictionary<int, SkillData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return StageDataMap;
+           return SkillDataMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 ID;
-		public System.String name;
+		public System.Int32 skillID;
+		public System.Int32 UnitID;
+		public System.String skillName;
+		public System.String SkillType;
+		public System.String SkillEffect;
+		public System.Single value;
+		public System.Single duration;
+		public System.Single skillCoolDown;
+		public System.String TargetGroup;
+		public System.String TargetPriority;
+		public System.Int32 targetCount;
   
 
 #region fuctions
@@ -68,7 +77,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("StageData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("SkillData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -84,7 +93,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<StageData>, Dictionary<int, StageData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<SkillData>, Dictionary<int, SkillData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -112,14 +121,14 @@ namespace GSDatas
                
 
 
-    public static (List<StageData> list, Dictionary<int, StageData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, StageData> Map = new Dictionary<int, StageData>();
-            List<StageData> List = new List<StageData>();     
+    public static (List<SkillData> list, Dictionary<int, SkillData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, SkillData> Map = new Dictionary<int, SkillData>();
+            List<SkillData> List = new List<SkillData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(SkillData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["StageData"];
+            var sheet = jsonObject["SkillData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -138,7 +147,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            StageData instance = new StageData();
+                            SkillData instance = new SkillData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -175,12 +184,12 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.ID, instance);
+                            Map.Add(instance.skillID, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            StageDataList = List;
-                            StageDataMap = Map;
+                            SkillDataList = List;
+                            SkillDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -190,10 +199,10 @@ namespace GSDatas
 
  
 
-        public static void Write(StageData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(SkillData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(SkillData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
