@@ -15,10 +15,6 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField] private BindingGradeButton _characterButton;
 
 
-    //테스트 코드 - 추후 UIUnitSlot으로 합칠 예정
-    [SerializeField] private UIUnitSlotTest _UIUnitSlotTest;
-
-
     //유닛 인벤토리에 가지고 있는지 확인
     private Dictionary<string, int> UnitHas = new Dictionary<string, int>();
 
@@ -50,38 +46,30 @@ public class InventoryManager : Singleton<InventoryManager>
     public void Start()
     {
 
-        // 실제 동작 코드
-        // _unitList = GetComponentInChildren<UIUnitSlot>();
 
+        _unitList = GetComponentInChildren<UIUnitSlot>();
         _fieldSlots = GetComponentsInChildren<FieldSlot>();
-
         _characterButton = GetComponentInChildren<BindingGradeButton>();
 
 
         //테스트 코드 
+
         {
 
-
-            _UIUnitSlotTest = GetComponentInChildren<UIUnitSlotTest>();
-            if (_UIUnitSlotTest != null)
-            {
-
-                UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-                unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
-                commonUnit.Add(unit1);
+          
+            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+            unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
+            commonUnit.Add(unit1);
 
 
-                UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-                unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
-                commonUnit.Add(unit2);
+            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+            unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
+            commonUnit.Add(unit2);
 
 
-                UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-                unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
-                commonUnit.Add(unit3);
-
-
-            }
+            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+            unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
+            commonUnit.Add(unit3);
 
 
             // 웨이브 끝날 때마다 유닛 위치 초기화
@@ -114,12 +102,9 @@ public class InventoryManager : Singleton<InventoryManager>
                 break;
         }
 
-
-        // 실제 동작 코드 
-        /*
-             
+       
           // 오브젝트 풀링으로 추후 수정해야.
-         
+     
             if (_unitList != null)
             {
 
@@ -127,19 +112,7 @@ public class InventoryManager : Singleton<InventoryManager>
                 
              }
 
-        */
-
-
-        // 테스트 코드
-        {
-            if (_UIUnitSlotTest != null)
-            {
-
-                _UIUnitSlotTest.updateUnits(unitsToShow);
-
-            }
-
-        }
+  
 
     }
 
@@ -168,14 +141,11 @@ public class InventoryManager : Singleton<InventoryManager>
         }
     }
 
-
-
     public void SelectSlot(FieldSlot slot)
     {
         _selectedSlot = slot;
 
     }
-
 
     // 필드 유닛 위치 초기화
     public void UnitPosReset()

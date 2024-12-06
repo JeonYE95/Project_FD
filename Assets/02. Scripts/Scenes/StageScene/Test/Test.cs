@@ -6,12 +6,12 @@ public class Test : MonoBehaviour
 {
 
 
-    public UIInGameTest uiInGame;
+    public UIInGame uiInGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        uiInGame = UIManager.Instance.GetUI<UIInGameTest>();
+        uiInGame = UIManager.Instance.GetUI<UIInGame>();
     }
 
     

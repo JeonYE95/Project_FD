@@ -15,10 +15,6 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     private UIUnitSlot _UIUnitSlot;
 
 
-    // 테스트 용
-    [SerializeField]
-    private UIUnitSlotTest _unitSlotTest;
-
     [SerializeField] private int _index;
     public int Index => _index;  // 읽기 전용 프로퍼티
 
@@ -30,7 +26,8 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     private void Start()
     {
 
-        _unitSlotTest = GetComponentInParent<UIUnitSlotTest>();
+        _UIUnitSlot = GetComponentInParent<UIUnitSlot>();
+
 
         if (InventoryManager.Instance.PreviewObject == null)
         {
@@ -54,47 +51,21 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
 
             // 실제 동작 코드
-            /*
-             
-              // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
-            if (_UIUnitSlot != null && Index < _UIUnitSlot.InventoryUnits.Count)
+
+
+            // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
+            if (_UIUnitSlot != null)
             {
-                 UnitInfo currentUnit = _unitSlot.GetUnitAtIndex(Index);
+                UnitInfo currentUnit = _UIUnitSlot.GetUnitAtIndex(Index);
                 if (currentUnit != null)
                 {
-                  
+
                     // 유닛 정보에 맞는 이미지로 업데이트
-                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit.Name}");
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/Unit/{currentUnit._unitData.grade}/{currentUnit._unitData.name}");
 
 
                     UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
                     previewInfo.SetUnitInfo(currentUnit);
-                }
-
-            }
-             
-             */
-
-
-
-            //테스트 코드 
-            {
-
-                // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
-                if (_unitSlotTest != null)
-                {
-                    UnitInfo currentUnit = _unitSlotTest.GetUnitAtIndex(Index);
-                    if (currentUnit != null)
-                    {
-
-                        // 유닛 정보에 맞는 이미지로 업데이트
-                        _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/{currentUnit._unitData.name}");
-
-
-                        UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
-                        previewInfo.SetUnitInfo(currentUnit);
-                    }
-
                 }
 
             }
@@ -124,7 +95,6 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         }
 
     }
-
 
     private void CreatePreviewObject()
     {

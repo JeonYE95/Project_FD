@@ -131,7 +131,7 @@ public class WaveManager : Singleton<WaveManager>
         //BattleManager.Instance.  전투시작
 
 
-        //플레이어, 몬스터 소환
+        //몬스터 소환
 
 
     }
