@@ -9,15 +9,17 @@ public class UIInGame : UIBase
     [SerializeField] private Button unitGuideBtn;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private Button _battleStartButton;
-
+    [SerializeField] private Button combineInfoBtn;
     [SerializeField] private GameObject _spawnPointUI;
 
     private UIUnitGuide uiUnitGuide;
+    private UICombineInfo uiCombineInfo;
 
     private void Start()
     {
         drawBtn.onClick.AddListener(() => {  });    // 버튼 클릭 시 호출 함수 필요
         unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
+        combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
         // _timerText = GetComponentInChildren<TMP_Text>();
@@ -40,6 +42,14 @@ public class UIInGame : UIBase
             uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
         
         uiUnitGuide.Open();
+    }
+
+    private void OpenCombineInfoUI()
+    {
+        if (uiCombineInfo == null)
+            uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
+        
+        uiCombineInfo.Open();
     }
 
     private void UpdateTimerText(float remainingTime)
