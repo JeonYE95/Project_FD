@@ -16,11 +16,13 @@ public class ActionHandler : MonoBehaviour
 
     InGameSkillData skillData;
     SkillExecutor _skillExecutor;
+    UnitAnimationController _controller;
     public Transform firePoint;
 
     private void Awake()
     {
         _myUnit = GetComponent<BaseUnit>();
+        _controller = GetComponent<UnitAnimationController>();
         _skillExecutor = new SkillExecutor(skillData);
 
         if (_myUnit == null)
@@ -56,6 +58,8 @@ public class ActionHandler : MonoBehaviour
         {
             return false;
         }
+
+        _myUnit.PlayAttackAnimation();
 
         //액션핸들러가 들고있는 타겟 변경
         this._targetUnit = targetUnit;

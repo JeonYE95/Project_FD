@@ -45,7 +45,8 @@ public class PlayerUnit : BaseUnit
 
     public override void PlayAttackAnimation()
     {
-        animController.SetBool(AnimationData.isAttacking, true);
+        animController.SetTrigger(AnimationData.isAttacking);
+        animController.SetBool(AnimationData.isMoving, false);
         //Debug.Log($"{gameObject.name}: Attack 애니메이션 실행");
     }
 

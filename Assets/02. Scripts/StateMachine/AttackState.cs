@@ -9,7 +9,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        stateMachine.unit.PlayAttackAnimation();
+        //stateMachine.unit.PlayAttackAnimation();
     }
     public override void Update()
     {
