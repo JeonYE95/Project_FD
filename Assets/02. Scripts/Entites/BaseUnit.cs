@@ -102,6 +102,9 @@ public class BaseUnit : MonoBehaviour
     //유닛을 타일에서 해제했을때
     //플레이어는 Destory 고 몬스터는 오브젝트풀링이라 따로
     //플레이어는 걍 오브젝트 파괴됬을때 호출, 몬스터는 비활성화?? 어쩌지
+    //이걸 내가 아니라 배치타일 하는 사람이 호출해달라고 해야할듯
+    //플레이어는 하나하나 배치 해제 하면 언셋인데
+    //몬스터는 웨이브 끝나면 전부 언셋 한 다음 다음 웨이브 ...?
     public void UnsetUnit()
     {
         OnDieEvent -= UnitDeActive;

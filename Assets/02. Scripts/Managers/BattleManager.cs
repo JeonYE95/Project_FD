@@ -33,6 +33,7 @@ public class BattleManager : Singleton<BattleManager>
     {
 
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -76,6 +77,11 @@ public class BattleManager : Singleton<BattleManager>
     }
 
     private void BattleEnd()
+    {
+
+    }
+
+    private void ResetAllUnit()
     {
 
     }
