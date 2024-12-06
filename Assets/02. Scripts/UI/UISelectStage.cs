@@ -37,11 +37,11 @@ public class UISelectStage : UIBase
         SceneManager.sceneLoaded += (scene, mode) =>
         {
             // 씬 로드 후 UI 오픈
-            if (scene.name == "KYM_InGameScene")
+            if (SceneManager.GetActiveScene().buildIndex == 2)
                 OpenInGameUI();
         };
 
         UIManager.Instance.Clear();
-        SceneManager.LoadScene("KYM_InGameScene"); // 씬 로드
+        SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
     }
 }

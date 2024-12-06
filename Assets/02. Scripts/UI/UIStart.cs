@@ -21,15 +21,15 @@ public class UIStart : UIBase
         uiMain.Open();
     }
 
-        private void LoadMainScene()
+    private void LoadMainScene()
     {
         SceneManager.sceneLoaded += (scene, mode) =>
         {
-            if (scene.name == "KYM_MainScene")
+            if (SceneManager.GetActiveScene().buildIndex == 1)    
                 OpenMainUI();
         };
 
         UIManager.Instance.Clear();
-        SceneManager.LoadScene("KYM_MainScene");
+        SceneManager.LoadScene("MainScene");
     }
 }

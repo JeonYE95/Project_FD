@@ -9,9 +9,17 @@ public class UIManager : SingletonDontDestory<UIManager>
 {
     private Dictionary<string, UIBase> _uiDic = new Dictionary<string, UIBase>();
 
-    private void Start()
+    // private void Start()
+    // {
+    //     if (SceneManager.GetActiveScene().buildIndex == 3)
+    //     {
+    //         OpenUI<UIStart>();
+    //     }
+    // }
+
+    public void Initialize()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 3)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             OpenUI<UIStart>();
         }

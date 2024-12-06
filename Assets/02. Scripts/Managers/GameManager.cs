@@ -34,6 +34,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
         DataManager.Instance.Initialize();
         UnitManager.Instance.Initialize();
+        UIManager.Instance.Initialize();
     }
 
     //인 게임에서 변동 시 JSON 관리

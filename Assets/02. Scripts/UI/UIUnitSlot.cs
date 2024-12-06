@@ -74,7 +74,7 @@ public class UIUnitSlot : MonoBehaviour
 
             if (unitImg != null)
             {
-                Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/Common/{unit._unitData.name}");      // 파일 경로 유닛 종류별로 다르게 설정해야함(좀이따가)
+                Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/Common/{unit._unitData.name}");      // 파일 경로 유닛 종류별로 다르게 설정해야함(좀이따가)
                 unitImg.sprite = sprite;
             }
         }
