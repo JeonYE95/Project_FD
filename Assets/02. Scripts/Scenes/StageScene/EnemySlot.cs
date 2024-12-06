@@ -7,6 +7,7 @@ public class EnemySlot : MonoBehaviour
     //몬스터 필드 위치 확인용
 
     // 몇번째 필드인지 정보 저장
+    [SerializeField]
     private int _index;
 
     public int Index => _index;

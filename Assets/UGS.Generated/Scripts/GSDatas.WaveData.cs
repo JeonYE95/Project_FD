@@ -56,6 +56,7 @@ namespace GSDatas
 
 /* Fields. */
 
+		public System.Int32 Key;
 		public System.Int32 ID;
 		public System.Int32 wave;
 		public System.Int32 spawnPosition;
@@ -177,7 +178,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.ID, instance);
+                            Map.Add(instance.Key, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 

@@ -17,7 +17,7 @@ public class WaveManager : Singleton<WaveManager>
 
 
     private const float preparationTime = 30f; //대기 시간
-    public event Action<float> OnPreparationTimeChanged; 
+    public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
 
@@ -29,7 +29,10 @@ public class WaveManager : Singleton<WaveManager>
 
 
     //웨이브 정보 저장 - 몬스터 소환 위치 및 정보
-    public List<WaveData> WaveData = new List<WaveData>();
+    private List<WaveData> _AllStageWaveData = new List<WaveData>();
+    private List<WaveData> _currentStageWaveData; 
+
+
 
     public int CurrentWave
     {
@@ -47,13 +50,20 @@ public class WaveManager : Singleton<WaveManager>
 
     public bool IsRunningWave { get; private set; }
 
+    public List<WaveData> CurrentStageWaveData
+    {
+        get { return _currentStageWaveData; }
+    }
+
 
     public void Start()
     {
 
+        //임시로 스테이지 ID 넣음.
+        int stageID = 101;
 
-        // 스테이지 ID 넣기 
-        GetWaveData(101);
+        // 해당 스테이지에 맞게 재분류
+        GetStageData(stageID);
 
         CurrentWave = 1;
         OnWaveAllClear += StageManager.Instance.GameClear;
@@ -70,7 +80,6 @@ public class WaveManager : Singleton<WaveManager>
     {
         ClearWave();
 
-
     }
 
     // 웨이브에서 패했을 때
@@ -86,10 +95,9 @@ public class WaveManager : Singleton<WaveManager>
     {
         if (_prepareCoroutine != null)
         {
+
             StopCoroutine(_prepareCoroutine);
             _prepareCoroutine = null;
-
-
 
         }
 
@@ -104,14 +112,14 @@ public class WaveManager : Singleton<WaveManager>
 
         CurrentWave++;
         //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
-       
-        if(CurrentWave == _endWave )
-        { 
+
+        if (CurrentWave == _endWave)
+        {
             OnWaveAllClear?.Invoke();
             return;
-          
+
         }
-         
+
 
         //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
         /*
@@ -163,7 +171,7 @@ public class WaveManager : Singleton<WaveManager>
         isPreparing = true;
 
         //UI 활성화 필요
-
+        //
 
         currentPreparationTime = preparationTime;
 
@@ -189,13 +197,20 @@ public class WaveManager : Singleton<WaveManager>
 
 
     //최대 스테이지 및 웨이브 데이터 구하기
-    public void GetWaveData(int stageID)
+    public void GetStageData(int stageID)
     {
 
-         WaveData = WaveDataManager.GetList().Where(data => data.ID == stageID).ToList();
-        _endWave = WaveData.Max(data => data.wave);
+        _AllStageWaveData = WaveData.GetList().Where(data => data.ID == stageID).ToList();
+        _endWave = _AllStageWaveData.Max(data => data.wave);
 
     }
-    
-    
+
+    // wave별로 데이터 가져오기
+    public List<WaveData> GetWaveData(int wave)
+    {
+        return _AllStageWaveData.Where(data => data.wave == wave).ToList();
+    }
+
+
+
 }

@@ -6,11 +6,16 @@ public class SpawnManager : Singleton<SpawnManager>
 {
 
 
-    [SerializeField] private EnemySlot[] _enemySlots;
+    [SerializeField] private List<EnemySlot> _enemySlots  = new List<EnemySlot>();
 
 
     public void RegisterEnemySlot(EnemySlot slot)
     {
+       
+        while (_enemySlots.Count <= slot.Index)
+        {
+            _enemySlots.Add(null);
+        }
         _enemySlots[slot.Index] = slot;
     }
 
