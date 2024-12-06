@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class CombineManager : Singleton<CombineManager>
 {
-
     private List<CombineData> _combineData = new List<CombineData>();
-
-    public void Initialize()
-    {
-    }
 
     public bool CanCombine(int unit1ID, int unit2ID)
     {

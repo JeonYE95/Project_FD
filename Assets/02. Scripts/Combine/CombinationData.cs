@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class Combination : MonoBehaviour
+public class CombinationData : MonoBehaviour
 {
     public CombineData _combineData;
 
