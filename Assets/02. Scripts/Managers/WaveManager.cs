@@ -1,5 +1,8 @@
+using GSDatas;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -9,23 +12,36 @@ public class WaveManager : Singleton<WaveManager>
 
     private Coroutine _prepareCoroutine;
 
-    private int _waveCount;
+    private int _currentWave; // 현재 웨이브 
+    private int _endWave; // 마지막 웨이브
+
+
     private const float preparationTime = 30f; //대기 시간
-    public event Action<float> OnPreparationTimeChanged;
+    public event Action<float> OnPreparationTimeChanged; 
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
 
 
     public event Action OnBattleStart; // 전투 시작 확인
     public event Action OnClearWave; // 웨이브 클리어 확인 
-    public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 - DB에서 불러와 연동해야.
+    public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 
     public event Action OnDead; // 스테이지 라이프가 다해 죽었을 때
 
 
+    //웨이브 정보 저장 - 몬스터 소환 위치 및 정보
+    public List<WaveData> WaveData = new List<WaveData>();
+
     public int CurrentWave
     {
-        get { return _waveCount; }
-        private set { _waveCount = value; }
+        get { return _currentWave; }
+        private set { _currentWave = value; }
+
+    }
+
+    public int EndWave
+    {
+        get { return _endWave; }
+        private set { _endWave = value; }
 
     }
 
@@ -35,8 +51,11 @@ public class WaveManager : Singleton<WaveManager>
     public void Start()
     {
 
-        CurrentWave = 1;
 
+        // 스테이지 ID 넣기 
+        GetWaveData(101);
+
+        CurrentWave = 1;
         OnWaveAllClear += StageManager.Instance.GameClear;
         OnDead += StageManager.Instance.GameOver;
 
@@ -70,7 +89,7 @@ public class WaveManager : Singleton<WaveManager>
             StopCoroutine(_prepareCoroutine);
             _prepareCoroutine = null;
 
-          
+
 
         }
 
@@ -84,17 +103,15 @@ public class WaveManager : Singleton<WaveManager>
         IsRunningWave = false;
 
         CurrentWave++;
-        //DB에서 불러온 최종 스테이지 값과 비교해서 로직 실행
-        /*
-          
-        if(currentWave == DB 스테이지 최종 웨이브 )
+        //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
+       
+        if(CurrentWave == _endWave )
         { 
             OnWaveAllClear?.Invoke();
             return;
           
         }
          
-       */
 
         //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
         /*
@@ -118,7 +135,6 @@ public class WaveManager : Singleton<WaveManager>
 
         */
 
-
         _prepareCoroutine = StartCoroutine(NextWavePrepare());
 
     }
@@ -128,7 +144,9 @@ public class WaveManager : Singleton<WaveManager>
 
         IsRunningWave = true;
         OnBattleStart?.Invoke(); // UI 비활성화
-        //BattleManager.Instance.  전투시작
+
+        //전투 시작
+        //BattleManager.Instance.BattleSetingAndStart(); 
 
 
         //몬스터 소환
@@ -144,8 +162,8 @@ public class WaveManager : Singleton<WaveManager>
         OnClearWave?.Invoke();
         isPreparing = true;
 
-        //UI 활성화 
-       
+        //UI 활성화 필요
+
 
         currentPreparationTime = preparationTime;
 
@@ -169,4 +187,15 @@ public class WaveManager : Singleton<WaveManager>
         return $"{seconds:00}";
     }
 
+
+    //최대 스테이지 및 웨이브 데이터 구하기
+    public void GetWaveData(int stageID)
+    {
+
+         WaveData = WaveDataManager.GetList().Where(data => data.ID == stageID).ToList();
+        _endWave = WaveData.Max(data => data.wave);
+
+    }
+    
+    
 }
