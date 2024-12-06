@@ -29,9 +29,25 @@ public class BattleManager : Singleton<BattleManager>
         targetingSystem = new TargetingSystem(this);
     }
 
+    public static InGameSkillData _0111 = new InGameSkillData()
+    {
+        skillID = 111,
+        unitID = 1001,
+        skillName = "GuardianShield",
+        skillType = SkillType.Buff,
+        skillEffect = SkillEffect.DefenseBoost,
+        value = 30.0f,
+        duration = 5.0f,
+        skillCoolDown = 10.0f,
+
+        targetGroup = TargetGroup.Self,
+        targetPriority = TargetPriority.All,
+        targetCount = 1
+    };
+
     private void Start()
     {
-
+        Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
     }
 
     private void Update()

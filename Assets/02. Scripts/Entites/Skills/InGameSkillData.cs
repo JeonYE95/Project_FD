@@ -1,10 +1,11 @@
 [System.Serializable]
-public class SkillData
+public class InGameSkillData
 {
     public int skillID;                // 스킬 고유 ID
+    public int unitID;
     public string skillName;           // 스킬 이름
     public SkillType skillType;        // 스킬 동작 유형 (Buff, Heal, Damage 등)
-    public SkillEffect effect;         // 효과 이름 (DefenseBoost, HealAmount 등)
+    public SkillEffect skillEffect;         // 효과 이름 (DefenseBoost, HealAmount 등)
     public float value;                // 효과 값 (스킬의 강도, 배율, 회복량 등)
     public float duration;             // 지속 시간 (스킬 효과가 유지되는 시간, 초 단위)
     public float skillCoolDown;             // 쿨타임 (스킬 재사용 대기 시간, 초 단위)
@@ -28,3 +29,4 @@ public enum SkillEffect
     HealAmount,    // 체력 회복
     Damage         // 데미지
 }
+

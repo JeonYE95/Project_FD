@@ -14,7 +14,7 @@ public class ActionHandler : MonoBehaviour
     float lastSkillTime = -Mathf.Infinity;
     float lastAttackTime = -Mathf.Infinity;
 
-    SkillData skillData;
+    InGameSkillData skillData;
     SkillExecutor _skillExecutor;
     public Transform firePoint;
 

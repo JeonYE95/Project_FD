@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SkillExecutor : MonoBehaviour
 {
-    SkillData _skillData;
+    InGameSkillData _skillData;
 
-    public SkillExecutor(SkillData skillData)
+    public SkillExecutor(InGameSkillData skillData)
     {
         this._skillData = skillData;
     }
@@ -21,7 +21,7 @@ public class SkillExecutor : MonoBehaviour
         };
     }
 
-    public void ExecuteSkill(BaseUnit _myUnit, SkillData skillData)
+    public void ExecuteSkill(BaseUnit _myUnit, InGameSkillData skillData)
     {
 
         // UnitSearchOptions 생성
@@ -48,7 +48,7 @@ public class SkillExecutor : MonoBehaviour
 
     private void ApplySkillEffect(BaseUnit caster, BaseUnit target)
     {
-        switch (_skillData.effect)
+        switch (_skillData.skillEffect)
         {
             case SkillEffect.DefenseBoost:
                 // 방어력 증가 효과
@@ -67,7 +67,7 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             default:
-                Debug.LogWarning($"알 수 없는 스킬 효과: {_skillData.effect}");
+                Debug.LogWarning($"알 수 없는 스킬 효과: {_skillData.skillEffect}");
                 break;
         }
     }
