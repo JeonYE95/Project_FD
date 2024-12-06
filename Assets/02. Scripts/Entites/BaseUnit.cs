@@ -9,8 +9,6 @@ public class BaseUnit : MonoBehaviour
 {
     //Unit's Component
     public HealthSystem healthSystem;
-    public ActionHandler attackHandler;
-    public ActionHandler skillHandler;
     public ActionHandler actionHandler;
     public UnitMovement UnitMovement;
     public UnitAnimationController animController;
@@ -50,9 +48,6 @@ public class BaseUnit : MonoBehaviour
     protected virtual void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-
-        skillHandler = GetComponent<SkillHandler>();
-        attackHandler = GetComponent<ActionHandler>();
 
         //앞으로 이거 통합으로
         actionHandler = GetComponent<ActionHandler>();
@@ -107,6 +102,9 @@ public class BaseUnit : MonoBehaviour
     //유닛을 타일에서 해제했을때
     //플레이어는 Destory 고 몬스터는 오브젝트풀링이라 따로
     //플레이어는 걍 오브젝트 파괴됬을때 호출, 몬스터는 비활성화?? 어쩌지
+    //이걸 내가 아니라 배치타일 하는 사람이 호출해달라고 해야할듯
+    //플레이어는 하나하나 배치 해제 하면 언셋인데
+    //몬스터는 웨이브 끝나면 전부 언셋 한 다음 다음 웨이브 ...?
     public void UnsetUnit()
     {
         OnDieEvent -= UnitDeActive;
@@ -139,12 +137,7 @@ public class BaseUnit : MonoBehaviour
 
     public bool IsAttackReady()
     {
-        return attackHandler.IsAttackCoolTimeComplete();
-    }
-
-    public bool IsSkillReady()
-    {
-        return skillHandler.IsSkillCoolTimeComplete();
+        return actionHandler.IsAttackCoolTimeComplete();
     }
 
     public bool PerformAction()
@@ -165,7 +158,6 @@ public class BaseUnit : MonoBehaviour
         }
 
         isSkillExecuting = true;
-        skillHandler.ExecuteAction(targetUnit);
     }
    
     public bool FindTarget()
@@ -206,4 +198,12 @@ public class BaseUnit : MonoBehaviour
     {
         OnDieEvent?.Invoke(this);
     }
+
+    public virtual void PlayIdleAnimation() {}
+
+    public virtual void PlayMoveAnimation() {}
+
+    public virtual void PlayAttackAnimation() {}
+
+    public virtual void PlayDeathAnimation() {}
 }

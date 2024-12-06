@@ -32,6 +32,12 @@ public class HealthSystem : MonoBehaviour
     {
         currentHP = maxHP;
     }
+
+    public void TakeHealth(int heal)
+    {
+        currentHP = Mathf.Min(currentHP + heal, maxHP);
+    }
+
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
