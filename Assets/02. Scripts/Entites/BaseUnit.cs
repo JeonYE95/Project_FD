@@ -9,8 +9,6 @@ public class BaseUnit : MonoBehaviour
 {
     //Unit's Component
     public HealthSystem healthSystem;
-    public ActionHandler attackHandler;
-    public ActionHandler skillHandler;
     public ActionHandler actionHandler;
     public UnitMovement UnitMovement;
     public UnitAnimationController animController;
@@ -50,9 +48,6 @@ public class BaseUnit : MonoBehaviour
     protected virtual void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-
-        skillHandler = GetComponent<SkillHandler>();
-        attackHandler = GetComponent<ActionHandler>();
 
         //앞으로 이거 통합으로
         actionHandler = GetComponent<ActionHandler>();
@@ -139,12 +134,7 @@ public class BaseUnit : MonoBehaviour
 
     public bool IsAttackReady()
     {
-        return attackHandler.IsAttackCoolTimeComplete();
-    }
-
-    public bool IsSkillReady()
-    {
-        return skillHandler.IsSkillCoolTimeComplete();
+        return actionHandler.IsAttackCoolTimeComplete();
     }
 
     public bool PerformAction()
@@ -165,7 +155,6 @@ public class BaseUnit : MonoBehaviour
         }
 
         isSkillExecuting = true;
-        skillHandler.ExecuteAction(targetUnit);
     }
    
     public bool FindTarget()
@@ -206,4 +195,12 @@ public class BaseUnit : MonoBehaviour
     {
         OnDieEvent?.Invoke(this);
     }
+
+    public virtual void PlayIdleAnimation() {}
+
+    public virtual void PlayMoveAnimation() {}
+
+    public virtual void PlayAttackAnimation() {}
+
+    public virtual void PlayDeathAnimation() {}
 }
