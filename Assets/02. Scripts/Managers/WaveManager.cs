@@ -179,21 +179,27 @@ public class WaveManager : Singleton<WaveManager>
         OnBattleStart?.Invoke(); // UI 비활성화
 
         //전투 시작
-        //BattleManager.Instance.BattleSetingAndStart(); 
-
-
-        //몬스터 소환
-
-
+        BattleManager.Instance.BattleSetingAndStart();
     }
 
 
     //스테이지 끝나고 준비 시간 
     private IEnumerator NextWavePrepare()
     {
+        isPreparing = true;
+
+
+        // SpawnManager의 초기화가 완료될 때까지 대기
+        while (!SpawnManager.Instance.SlotsInitialized)
+        {
+            yield return null;
+        }
+
 
         OnClearWave?.Invoke();
-        isPreparing = true;
+        SpawnManager.Instance.SpawnEnemy();
+
+
 
         //UI 활성화 필요
         //

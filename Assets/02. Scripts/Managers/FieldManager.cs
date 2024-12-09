@@ -16,7 +16,7 @@ public class FieldManager : Singleton<FieldManager>
     protected override void Awake()
     {
         base.Awake();
-        InitializeCharactersParent(); 
+        InitializeCharactersParent();
     }
 
     private void Start()
@@ -114,9 +114,9 @@ public class FieldManager : Singleton<FieldManager>
 
     private Vector3 GetFieldPosition(FieldSlot slot)
     {
-    
+
         Vector3 screenPos = slot.transform.position;
-        screenPos.z = 10f; 
+        screenPos.z = 10f;
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
         return worldPos;
     }
