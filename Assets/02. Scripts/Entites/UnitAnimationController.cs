@@ -16,10 +16,11 @@ public static class EnemyAnimData
 {
     // Integer 파라미터 (몬스터용)
     public static readonly int Attack = Animator.StringToHash("Attack");
-    public static readonly int IdleState = 0;   // Idle 애니메이션은 State = 0
-    public static readonly int WalkState = 2;  // Walk 애니메이션은 State = 2
-    public static readonly int RunState = 3;   // Run 애니메이션은 State = 3
-    public static readonly int DeathState = 9; // Death 애니메이션은 State = 9
+    public static readonly int IdleState = 0;
+    public static readonly int ReadyState = 1;
+    public static readonly int WalkState = 3;
+    public static readonly int RunState = 4;
+    public static readonly int DeathState = 9; 
 }
 
 public class UnitAnimationController : MonoBehaviour
@@ -50,38 +51,71 @@ public class UnitAnimationController : MonoBehaviour
             return;
         }
 
+        //각각의 프리팹(에셋)마다 해야되는 동작이 다름
+        //플레이어 에셋은 컨트롤러 교체 필요, 몬스터는 어택트리거 초기화필요
         if (_myUnit is PlayerUnit)
         {
             animator.runtimeAnimatorController = animController;
         }
+        else if (_myUnit is EnemyUnit)
+        {
+            animator.ResetTrigger(EnemyAnimData.Attack);
+        }
     }
 
-    // Boolean 파라미터 설정
+    // Bool 파라미터 설정
     public void SetBool(int hashCode, bool value)
     {
-        if (animator == null) return;
+        if (animator == null)
+        {
+            return;
+        }
+
         animator.SetBool(hashCode, value);
     }
 
-    // Integer 파라미터 설정
+    // Int 파라미터 설정
     public void SetState(int stateValue)
     {
-        if (animator == null) return;
+        if (animator == null)
+        {
+            return;
+        }
+
         animator.SetInteger("State", stateValue);
     }
 
     // Trigger 파라미터 설정
     public void SetTrigger(int hashCode)
     {
-        if (animator == null) return;
+        if (animator == null)
+        {
+            return;
+        }
+
         animator.SetTrigger(hashCode);
     }
 
     // 애니메이션 상태 디버깅
     public void DebugAnimationState()
     {
-        if (animator == null) return;
+        if (animator == null)
+        {
+            return;
+        }
 
         Debug.Log($"{gameObject.name}: 현재 상태: {animator.GetCurrentAnimatorStateInfo(0).shortNameHash}");
+    }
+
+    public void ResetAttackTrigger()
+    {
+        if (_myUnit is PlayerUnit)
+        {
+            animator.ResetTrigger(PlayerAnimData.isAttacking);
+        }
+        else if (_myUnit is EnemyUnit)
+        {
+            animator.ResetTrigger(EnemyAnimData.Attack);
+        }
     }
 }
