@@ -2,6 +2,7 @@ using GSDatas;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class UnitManager
 {
@@ -50,8 +51,8 @@ public class UnitManager
         GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
         AssetInstance.transform.SetParent(unitInstance.transform, true);
-        //AssetInstance.transform.position = Vector3.zero;
         AssetInstance.transform.localPosition = Vector3.zero;
+        AssetInstance.GetComponentInChildren<SortingGroup>().sortingOrder = 201;
 
 
         UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
@@ -64,7 +65,6 @@ public class UnitManager
         unitInstance.GetComponent<PlayerUnit>().SetUnitInfo();
 
         return unitInstance;
-        //_units.Add(unit);
     }
 
     
