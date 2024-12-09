@@ -7,7 +7,7 @@ public class InventoryManager : Singleton<InventoryManager>
 {
 
 
-    private int _maxSummonUnitCount;
+    private int _maxSummonUnitCount = 1;
 
     [SerializeField] private FieldSlot[] _fieldSlots;
     public FieldSlot[] FieldSlots => _fieldSlots;
@@ -44,9 +44,6 @@ public class InventoryManager : Singleton<InventoryManager>
     private List<UnitInfo> commonUnit = new List<UnitInfo>();
     private List<UnitInfo> rareUnit = new List<UnitInfo>();
     private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
-
-
-
 
 
     public void Start()
@@ -289,6 +286,18 @@ public class InventoryManager : Singleton<InventoryManager>
             return true;
         }
         return false;
+    }
+
+
+    // 소환 가능 수 비교 
+    public bool CanSummonUnit()
+    {
+        bool canSummon = SummonUnitCount < MaxSummonUnitCount;
+        if (!canSummon)
+        {
+            Debug.Log($"최대 소환 가능 수({MaxSummonUnitCount})에 도달했습니다!");
+        }
+        return canSummon;
     }
 
 }
