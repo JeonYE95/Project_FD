@@ -112,17 +112,23 @@ public class InventoryManager : Singleton<InventoryManager>
                 break;
         }
 
-       
-          // 오브젝트 풀링으로 추후 수정해야.
-     
-            if (_unitList != null)
+
+        // 오브젝트 풀링으로 추후 수정해야.
+
+        if (_unitList != null)
+        {
+
+            _unitList.UpdateUnits(unitsToShow);
+
+            foreach (var unit in unitsToShow)
             {
+                int unitcount = UnitHas.ContainsKey(unit._unitData.name) ? UnitHas[unit._unitData.name] : 0;
+                //_unitList.UpdateUnitCount(unit, unitCount);
+            }
 
-                _unitList.UpdateUnits(unitsToShow);      
-                
-             }
+        }
 
-  
+
 
     }
 
