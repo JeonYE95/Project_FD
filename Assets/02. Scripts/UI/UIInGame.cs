@@ -16,7 +16,6 @@ public class UIInGame : UIBase
     [SerializeField] private Image mask2;
     [SerializeField] private Image mask3;
     
-
     private UIUnitGuide uiUnitGuide;
     private UICombineInfo uiCombineInfo;
 
@@ -31,6 +30,7 @@ public class UIInGame : UIBase
 
         //WaveManager 버튼 연동
         _battleStartButton.onClick.AddListener(WaveManager.Instance.WaveStartNow);
+
         //타이머 연동
         WaveManager.Instance.OnPreparationTimeChanged += UpdateTimerText;
 
@@ -90,11 +90,22 @@ public class UIInGame : UIBase
                 mask3.SetActive(true);
                 break;
             case 1:
+                mask3.SetActive(true);
                 mask2.SetActive(true);
                 break;
             case 0:
+                mask3.SetActive(true);
+                mask2.SetActive(true);
                 mask1.SetActive(true);
                 break;
         }
+    }
+
+    // 스테이지 새로 시작할 때마다 호출
+    public void InitializeStageHealth()
+    {
+        mask1.SetActive(false);
+        mask2.SetActive(false);
+        mask3.SetActive(false);
     }
 }

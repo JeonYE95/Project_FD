@@ -10,6 +10,8 @@ public class InventoryManager : Singleton<InventoryManager>
     private int _maxSummonUnitCount;
 
     [SerializeField] private FieldSlot[] _fieldSlots;
+    public FieldSlot[] FieldSlots => _fieldSlots;
+
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
     [SerializeField] private BindingGradeButton _characterButton;
@@ -20,7 +22,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     //필드에 소환되어 있는 유닛 추적 : 필드 번호 / 유닛 정보
     private Dictionary<int, UnitInfo> _fieldUnitHas = new Dictionary<int, UnitInfo>();
-
+    
 
     // 필드에 소환되어 있는 유닛 수 
     public int SummonUnitCount => _fieldUnitHas.Count;
@@ -38,15 +40,20 @@ public class InventoryManager : Singleton<InventoryManager>
     //현재 켜져있는 인벤토리 등급 확인 
     private Defines.UnitGrade _currentSelectedGrade;
 
+
     private List<UnitInfo> commonUnit = new List<UnitInfo>();
     private List<UnitInfo> rareUnit = new List<UnitInfo>();
     private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
+
+
+
 
 
     public void Start()
     {
 
 
+    
         _unitList = GetComponentInChildren<UIUnitSlot>();
         _fieldSlots = GetComponentsInChildren<FieldSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
@@ -76,6 +83,9 @@ public class InventoryManager : Singleton<InventoryManager>
             WaveManager.Instance.OnClearWave += UnitPosReset;
 
         }
+
+
+
     }
 
 

@@ -14,7 +14,7 @@ public class EnemySlot : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemy = null;
-    public GameObject Ehemy => _enemy;
+    public GameObject Enemy => _enemy;
 
 
 
@@ -30,6 +30,22 @@ public class EnemySlot : MonoBehaviour
         }
     }
 
+
+
+    public void SetEnemy(GameObject enemy)
+    {
+        _enemy = enemy;
+
+        if (enemy != null)
+        {
+            // SpawnManager에서 저장된 위치 사용
+            Vector3 worldPos = SpawnManager.Instance.GetEnemyPosition(_index);
+
+            // SpawnManager의 Enemies 오브젝트 아래에 배치
+            enemy.transform.SetParent(SpawnManager.Instance.EnemiesParent);
+            enemy.transform.position = worldPos;
+        }
+    }
 
 
 }
