@@ -38,18 +38,12 @@ public class EnemySlot : MonoBehaviour
 
         if (enemy != null)
         {
-            // UI 좌표를 월드 좌표로 변환
-            Vector3 uiPosition = transform.position;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(
-                uiPosition.x,
-                uiPosition.y,
-                Camera.main.nearClipPlane));
-            worldPosition.z = 0; // 2D 게임이므로 z축을 0으로 설정
+            // SpawnManager에서 저장된 위치 사용
+            Vector3 worldPos = SpawnManager.Instance.GetEnemyPosition(_index);
 
-            // 부모-자식 관계 설정
-            enemy.transform.SetParent(transform);
-            // 위치 설정
-            enemy.transform.position = worldPosition;
+            // SpawnManager의 Enemies 오브젝트 아래에 배치
+            enemy.transform.SetParent(SpawnManager.Instance.EnemiesParent);
+            enemy.transform.position = worldPos;
         }
     }
 

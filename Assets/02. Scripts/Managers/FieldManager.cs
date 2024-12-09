@@ -6,6 +6,26 @@ public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] private FieldSlot[] _fieldSlots;
 
+    [SerializeField] private Transform _charactersParent; //실제 유닛 담을 빈 게임오브젝트
+    private Dictionary<int, Vector3> _fieldPositions = new Dictionary<int, Vector3>(); // 인게임에서 보일 필드 위치 저장
+
+
+    public Transform CharactersParent => _charactersParent;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeCharactersParent(); 
+    }
+
+    private void Start()
+    {
+        _fieldSlots = InventoryManager.Instance.FieldSlots;
+        InitializeFieldPositions();
+    }
+
+
     public bool HasUnitInField(int unitID)      // 유닛ID 필드에서 존재하는지 확인
     {
         foreach (var slot in _fieldSlots)
@@ -68,6 +88,37 @@ public class FieldManager : Singleton<FieldManager>
             if (slot.Character == null) return true;
         }
         return false;
+    }
+
+
+
+    private void InitializeCharactersParent()
+    {
+        if (_charactersParent == null)
+        {
+            _charactersParent = new GameObject("Characters").transform;
+        }
+
+    }
+
+
+    private void InitializeFieldPositions()
+    {
+        foreach (var slot in _fieldSlots)
+        {
+            Vector3 worldPos = GetFieldPosition(slot);
+            _fieldPositions[slot.Index] = worldPos;
+        }
+    }
+
+
+    private Vector3 GetFieldPosition(FieldSlot slot)
+    {
+    
+        Vector3 screenPos = slot.transform.position;
+        screenPos.z = 10f; 
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        return worldPos;
     }
 
 }

@@ -6,11 +6,35 @@ using UnityEngine;
 public class SpawnManager : Singleton<SpawnManager>
 {
 
-    //EnemySlot 저장
+    [SerializeField] private Transform _enemiesParent; // 적 캐릭터들을 담을 빈 게임오브젝트
+
+    //EnemySlot 위치 저장
+    private Dictionary<int, Vector3> _enemyPositions = new Dictionary<int, Vector3>(); 
+
+    //EnemySlot 저장 - 어떤 Slot에 어떤 정보 담겨있는지 파악 용도
     private Dictionary<int, EnemySlot> _enemySlots = new Dictionary<int, EnemySlot>();
 
     //EnemySlot에 있는 적 ID 저장 - 오브젝트 풀 위한 저장
     private Dictionary<int, List<GameObject>> _activeEnemies = new Dictionary<int, List<GameObject>>();
+
+
+
+    public Transform EnemiesParent => _enemiesParent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeEnemiesParent(); // Awake에서 Enemies 오브젝트 먼저 초기화
+    }
+
+
+    private void InitializeEnemiesParent()
+    {
+        if (_enemiesParent == null)
+        {
+            _enemiesParent = new GameObject("Enemies").transform;
+        }
+    }
 
 
     public void RegisterEnemySlot(EnemySlot slot)
@@ -19,6 +43,23 @@ public class SpawnManager : Singleton<SpawnManager>
             return;
 
         _enemySlots[slot.Index] = slot;
+
+
+        //EnemySlot의 위치를 월드 좌표로 변환하여 저장
+        Vector3 screenPos = slot.transform.position;
+        screenPos.z = 10f;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        _enemyPositions[slot.Index] = worldPos;
+    }
+
+    // 특정 EnemySlot 위치 가져오기
+    public Vector3 GetEnemyPosition(int slotIndex)
+    {
+        if (_enemyPositions.TryGetValue(slotIndex, out Vector3 position))
+        {
+            return position;
+        }
+        return Vector3.zero;
     }
 
 
@@ -26,7 +67,6 @@ public class SpawnManager : Singleton<SpawnManager>
     {
 
         List<WaveData> currentWaveSpawnEnemy = WaveManager.Instance.CurrentWaveData;
-
 
 
         foreach (WaveData waveData in currentWaveSpawnEnemy)
@@ -71,8 +111,7 @@ public class SpawnManager : Singleton<SpawnManager>
         }
         _activeEnemies[enemyID].Add(enemy);
 
-        enemy.transform.SetParent(_enemySlots[spawnPosition].transform);
-        enemy.transform.localPosition = Vector3.zero;
+        _enemySlots[spawnPosition].SetEnemy(enemy);
 
     }
 
