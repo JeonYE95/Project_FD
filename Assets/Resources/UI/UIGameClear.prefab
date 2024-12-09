@@ -3499,8 +3499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8418f55a7f5fc463c981e5d79ef23c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStageBtn: {fileID: 6213383777876508997}
-  homeBtn: {fileID: 4590371433255570351}
+  _nextStageBtn: {fileID: 6213383777876508997}
+  _homeBtn: {fileID: 4590371433255570351}
 --- !u!1 &8401668965984399608
 GameObject:
   m_ObjectHideFlags: 0

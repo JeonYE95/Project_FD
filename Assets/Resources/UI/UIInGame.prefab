@@ -2189,15 +2189,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5dc668d8203540ee8436222dd8d6d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawBtn: {fileID: 4115603490862628569}
-  unitGuideBtn: {fileID: 8587083710125258321}
+  _drawBtn: {fileID: 4115603490862628569}
+  _unitGuideBtn: {fileID: 8587083710125258321}
   _timerText: {fileID: 6012983599704916858}
   _battleStartButton: {fileID: 7797259329157591807}
-  combineInfoBtn: {fileID: 1851640927924391791}
+  _combineInfoBtn: {fileID: 1851640927924391791}
   _spawnPointUI: {fileID: 8603383932264211665}
-  mask1: {fileID: 5375116000988467047}
-  mask2: {fileID: 7520082390494805210}
-  mask3: {fileID: 4041166538163520217}
+  _mask1: {fileID: 5375116000988467047}
+  _mask2: {fileID: 7520082390494805210}
+  _mask3: {fileID: 4041166538163520217}
 --- !u!1 &3124621622122010963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3578,7 +3578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c4a39c2560b4b6394f4c29796d483c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSlotPrefab: {fileID: 3730409067850291645, guid: 406ec67fe8bf84014956793ef8e40e10, type: 3}
+  _unitSlotPrefab: {fileID: 3730409067850291645, guid: 406ec67fe8bf84014956793ef8e40e10, type: 3}
 --- !u!1 &3997237295166165096
 GameObject:
   m_ObjectHideFlags: 0
