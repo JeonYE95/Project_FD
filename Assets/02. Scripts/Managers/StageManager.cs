@@ -73,12 +73,7 @@ public class StageManager : Singleton<StageManager>
 
         // DataManager.Instance.PlayerData.gold += DB에서 값 불러오기
         // DataManager.Instacne.PlayerData.
-    }
 
-    public void InitializeStage()
-    {
         _stageHealth = 3;
     }
-
-
 }
