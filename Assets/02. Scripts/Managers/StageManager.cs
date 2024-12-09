@@ -16,7 +16,7 @@ public class StageManager : Singleton<StageManager>
     }
 
 
-    [Header("스테이지 재화 관리")]
+    [Header("스테이지 내 재화 관리")]
     private int _gold;
 
     public int Gold
@@ -34,6 +34,8 @@ public class StageManager : Singleton<StageManager>
         }
 
     }
+
+
 
     public void StopGame()
     {

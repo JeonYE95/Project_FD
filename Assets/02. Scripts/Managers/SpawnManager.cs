@@ -25,7 +25,7 @@ public class SpawnManager : Singleton<SpawnManager>
     public void SpawnEnemy()
     {
 
-        List<WaveData> currentWaveSpawnEnemy = WaveManager.Instance.CurrentStageWaveData;
+        List<WaveData> currentWaveSpawnEnemy = WaveManager.Instance.CurrentWaveData;
 
 
 

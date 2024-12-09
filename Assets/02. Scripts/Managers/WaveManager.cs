@@ -29,8 +29,13 @@ public class WaveManager : Singleton<WaveManager>
 
 
     //웨이브 정보 저장 - 몬스터 소환 위치 및 정보
-    private List<WaveData> _AllStageWaveData = new List<WaveData>();
-    private List<WaveData> _currentStageWaveData; 
+    private List<WaveData> _AllWaveData = new List<WaveData>();
+    private List<WaveData> _currentWaveData;
+
+    //웨이브 보상 정보 저장
+    private List<WaveRewardData> _AllWaveRewardata = new List<WaveRewardData>();
+    private List<WaveRewardData> _currentWaveRewardData;
+
 
 
 
@@ -50,10 +55,11 @@ public class WaveManager : Singleton<WaveManager>
 
     public bool IsRunningWave { get; private set; }
 
-    public List<WaveData> CurrentStageWaveData
+    public List<WaveData> CurrentWaveData
     {
-        get { return _currentStageWaveData; }
+        get { return _currentWaveData; }
     }
+
 
 
     public void Start()
@@ -65,15 +71,17 @@ public class WaveManager : Singleton<WaveManager>
         CurrentWave = 1;
 
         // 해당 스테이지/웨이브에 맞게 재분류
-        GetStageData(stageID);
+        GetAllWaveData(stageID);
         GetWaveData();
 
 
+        GetRewardData(stageID);
+        GetRewardData();
 
 
         OnClearWave += GetWaveData;
-        OnClearWave += SpawnManager.Instance.SpawnEnemy; 
-
+        OnClearWave += GetRewardData;
+        OnClearWave += SpawnManager.Instance.SpawnEnemy;
 
         OnWaveAllClear += StageManager.Instance.GameClear;
         OnDead += StageManager.Instance.GameOver;
@@ -132,26 +140,33 @@ public class WaveManager : Singleton<WaveManager>
 
 
         //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
-        /*
-      
+
+
         //5스테이지 마다 중간 보스?
-        f (CurrentWave % 5 == 0)
+        if (CurrentWave % 5 == 0)
         {
-        
+
 
 
         }
-        else 
+        else
         {
-        
 
-         //StageManager.Instance.Gold += DB에서 정해진 값 불러오기;
-         //StagetManager.Instance.Diamond += DB에서 정해진 값 불러오기;
+
+            foreach (WaveRewardData reward in _currentWaveRewardData)
+            {
+
+                if (reward.RewardID == 3001)
+                    StageManager.Instance.Gold += reward.count;
+
+                else
+                    Debug.Log($" 추가 재화 : {reward.count} 획득");
+
+            }
 
 
         }
 
-        */
 
         _prepareCoroutine = StartCoroutine(NextWavePrepare());
 
@@ -207,18 +222,32 @@ public class WaveManager : Singleton<WaveManager>
 
 
     //최대 스테이지 및 웨이브 데이터 구하기
-    public void GetStageData(int stageID)
+    private void GetAllWaveData(int stageID)
     {
 
-        _AllStageWaveData = WaveData.GetList().Where(data => data.ID == stageID).ToList();
-        _endWave = _AllStageWaveData.Max(data => data.wave);
+        _AllWaveData = WaveData.GetList().Where(data => data.ID == stageID).ToList();
+        _endWave = _AllWaveData.Max(data => data.wave);
 
     }
 
     // wave별로 데이터 가져오기
-    public void GetWaveData()
+    private void GetWaveData()
     {
-        _currentStageWaveData =  _AllStageWaveData.Where(data => data.wave == CurrentWave).ToList();
+        _currentWaveData = _AllWaveData.Where(data => data.wave == CurrentWave).ToList();
+    }
+
+
+    private void GetRewardData(int stageID)
+    {
+        _AllWaveRewardata = WaveRewardData.GetList().Where(data => data.ID == stageID).ToList();
+
+    }
+
+    private void GetRewardData()
+    {
+
+        _currentWaveRewardData = _AllWaveRewardata.Where(data => data.wave == CurrentWave).ToList();
+
     }
 
 
