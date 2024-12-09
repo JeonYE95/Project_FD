@@ -47,7 +47,7 @@ public class BattleManager : Singleton<BattleManager>
 
     private void Start()
     {
-        Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
+        //Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
     }
 
     private void Update()

@@ -25,25 +25,24 @@ public class EnemyUnit : BaseUnit
 
     public override void PlayIdleAnimation()
     {
-        animController.SetState(AnimationData.IdleState); // State = 0
-        //Debug.Log($"{gameObject.name}: Idle 애니메이션 실행");
+        animController.SetState(EnemyAnimData.IdleState);
+        animController.ResetAttackTrigger();
     }
 
     public override void PlayMoveAnimation()
     {
-        animController.SetState(AnimationData.WalkState); // State = 2
-        //Debug.Log($"{gameObject.name}: Move 애니메이션 실행");
+        animController.SetState(EnemyAnimData.WalkState);
+        animController.ResetAttackTrigger();
     }
 
     public override void PlayAttackAnimation()
     {
-        animController.SetState(AnimationData.RunState); // 공격과 동일하게 Run 처리
-        //Debug.Log($"{gameObject.name}: Attack 애니메이션 실행");
+        animController.SetState(EnemyAnimData.ReadyState);
+        animController.SetTrigger(EnemyAnimData.Attack);
     }
 
     public override void PlayDeathAnimation()
     {
-        animController.SetState(AnimationData.DeathState); // State = 9
-        //Debug.Log($"{gameObject.name}: Death 애니메이션 실행");
+        animController.SetState(EnemyAnimData.DeathState); // State = 9
     }
 }

@@ -1,6 +1,7 @@
 using GSDatas;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -25,16 +26,18 @@ public class EnemyManager : Singleton<EnemyManager>
         GameObject enemyBasePrefab = Resources.Load<GameObject>(enemyBasePrefabPath);
 
         //에셋 프리팹
-        string prefabPath = $"Prefabs/Enemy/{data.name}";
-        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        string assetPrefabPath = $"Prefabs/Enemy/{data.name}";
+        GameObject assetPrefab = Resources.Load<GameObject>(assetPrefabPath);
 
-        if (prefab == null) return null;
+        if (assetPrefab == null)
+        {
+            return null;
+        }
 
         GameObject enemyInstance = UnityEngine.Object.Instantiate(enemyBasePrefab);
-        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        GameObject AssetInstance = UnityEngine.Object.Instantiate(assetPrefab, Vector3.zero, Quaternion.identity);
 
         AssetInstance.transform.SetParent(enemyInstance.transform, true);
-        //AssetInstance.transform.position = Vector3.zero;
         AssetInstance.transform.localPosition = Vector3.zero;
 
         EnemyInfo enemy = enemyInstance.GetComponent<EnemyInfo>();

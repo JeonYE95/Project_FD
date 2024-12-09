@@ -64,19 +64,19 @@ public class InventoryManager : Singleton<InventoryManager>
         {
 
           
-            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-            unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
-            commonUnit.Add(unit1);
+            //UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+            //unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
+            //commonUnit.Add(unit1);
 
 
-            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-            unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
-            commonUnit.Add(unit2);
+            //UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+            //unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
+            //commonUnit.Add(unit2);
 
 
-            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-            unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
-            commonUnit.Add(unit3);
+            //UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+            //unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
+            //commonUnit.Add(unit3);
 
 
             // 웨이브 끝날 때마다 유닛 위치 초기화
@@ -112,17 +112,23 @@ public class InventoryManager : Singleton<InventoryManager>
                 break;
         }
 
-       
-          // 오브젝트 풀링으로 추후 수정해야.
-     
-            if (_unitList != null)
+
+        // 오브젝트 풀링으로 추후 수정해야.
+
+        if (_unitList != null)
+        {
+
+            _unitList.UpdateUnits(unitsToShow);
+
+            foreach (var unit in unitsToShow)
             {
+                int unitcount = UnitHas.ContainsKey(unit._unitData.name) ? UnitHas[unit._unitData.name] : 0;
+                //_unitList.UpdateUnitCount(unit, unitCount);
+            }
 
-                _unitList.UpdateUnits(unitsToShow);      
-                
-             }
+        }
 
-  
+
 
     }
 
