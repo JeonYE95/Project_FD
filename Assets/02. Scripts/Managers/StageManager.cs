@@ -17,7 +17,7 @@ public class StageManager : Singleton<StageManager>
 
 
     [Header("스테이지 재화 관리")]
-    private int _gold;
+    private int _gold = 15;
 
     public int Gold
     {
