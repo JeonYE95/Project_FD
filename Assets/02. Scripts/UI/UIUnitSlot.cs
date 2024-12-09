@@ -6,30 +6,30 @@ using UnityEngine.UI;
 
 public class UIUnitSlot : MonoBehaviour
 {
-    private RectTransform content;
+    private RectTransform _content;
 
-    [SerializeField] private GameObject unitSlotPrefab;
+    [SerializeField] private GameObject _unitSlotPrefab;
 
-    private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
+    private List<UnitInfo> _inventoryUnits = new List<UnitInfo>();
 
     public List<UnitInfo> InventoryUnits
     {
-        get => inventoryUnits;
-        private set => inventoryUnits = value;
+        get => _inventoryUnits;
+        private set => _inventoryUnits = value;
     }
 
     void Start()
     {
-        content = gameObject.GetComponent<RectTransform>();
+        _content = gameObject.GetComponent<RectTransform>();
 
         // 테스트 코드
         UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
         unit1.SetData(UnitDataManager.Instance.GetUnitData(1004));
-        inventoryUnits.Add(unit1);
+        _inventoryUnits.Add(unit1);
 
         UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
         unit2.SetData(UnitDataManager.Instance.GetUnitData(1005));
-        inventoryUnits.Add(unit2);
+        _inventoryUnits.Add(unit2);
 
         // 스크롤뷰 테스트 코드
         // inventoryUnits.Add(unit2);
@@ -50,10 +50,10 @@ public class UIUnitSlot : MonoBehaviour
     {
        
         // 인덱스를 명시적으로 할당하면서 슬롯 생성
-        for (int i = 0; i < inventoryUnits.Count; i++)
+        for (int i = 0; i < _inventoryUnits.Count; i++)
         {
-            GameObject go = Instantiate(unitSlotPrefab, content);
-            var unit = inventoryUnits[i];
+            GameObject go = Instantiate(_unitSlotPrefab, _content);
+            var unit = _inventoryUnits[i];
 
             // CharacterSlot의 인덱스 직접 설정
             CharacterSlot characterSlot = go.GetComponent<CharacterSlot>();
@@ -91,20 +91,20 @@ public class UIUnitSlot : MonoBehaviour
 
     public void UpdateUnits(List<UnitInfo> units)
     {
-        foreach (Transform child in content)
+        foreach (Transform child in _content)
         {
             Destroy(child.gameObject);
         }
         // 새로운 유닛 목록으로 업데이트
-        inventoryUnits = units;
+        _inventoryUnits = units;
         CreateUnitSlots();
     }
 
     public UnitInfo GetUnitAtIndex(int index)
     {
-        if (index >= 0 && index < inventoryUnits.Count)
+        if (index >= 0 && index < _inventoryUnits.Count)
         {
-            return inventoryUnits[index];
+            return _inventoryUnits[index];
         }
         return null;
     }

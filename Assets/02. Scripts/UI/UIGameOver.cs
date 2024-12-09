@@ -4,23 +4,23 @@ using UnityEngine.UI;
 
 public class UIGameOver : UIBase
 {
-    [SerializeField] private Button restartBtn;
-    [SerializeField] private Button homeBtn;
+    [SerializeField] private Button _restartBtn;
+    [SerializeField] private Button _homeBtn;
 
-    private UIMain uiMain;
+    private UIMain _uiMain;
 
     private void Start()
     {
-        restartBtn.onClick.AddListener(() => {  });     // 게임 재시작 로직 연결
-        homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
+        _restartBtn.onClick.AddListener(() => {  });     // 게임 재시작 로직 연결
+        _homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
     }
 
     private void OpenMainUI()
     {
-        if (uiMain == null)
-            uiMain = UIManager.Instance.GetUI<UIMain>();
+        if (_uiMain == null)
+            _uiMain = UIManager.Instance.GetUI<UIMain>();
         
-        uiMain.Open();
+        _uiMain.Open();
     }
 
     private void LoadMainScene()

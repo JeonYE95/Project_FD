@@ -5,26 +5,26 @@ using UnityEngine.UI;
 
 public class UIInGame : UIBase
 {
-    [SerializeField] private Button drawBtn;
-    [SerializeField] private Button unitGuideBtn;
+    [SerializeField] private Button _drawBtn;
+    [SerializeField] private Button _unitGuideBtn;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private Button _battleStartButton;
-    [SerializeField] private Button combineInfoBtn;
+    [SerializeField] private Button _combineInfoBtn;
     [SerializeField] private GameObject _spawnPointUI;
 
-    [SerializeField] private Image mask1;
-    [SerializeField] private Image mask2;
-    [SerializeField] private Image mask3;
+    [SerializeField] private Image _mask1;
+    [SerializeField] private Image _mask2;
+    [SerializeField] private Image _mask3;
     
 
-    private UIUnitGuide uiUnitGuide;
-    private UICombineInfo uiCombineInfo;
+    private UIUnitGuide _uiUnitGuide;
+    private UICombineInfo _uiCombineInfo;
 
     private void Start()
     {
-        drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
-        unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
-        combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
+        _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
+        _unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
+        _combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
         // _timerText = GetComponentInChildren<TMP_Text>();
@@ -48,18 +48,18 @@ public class UIInGame : UIBase
 
     private void OpenUnitGuideUI()
     {
-        if (uiUnitGuide == null)
-            uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
+        if (_uiUnitGuide == null)
+            _uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
         
-        uiUnitGuide.Open();
+        _uiUnitGuide.Open();
     }
 
     private void OpenCombineInfoUI()
     {
-        if (uiCombineInfo == null)
-            uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
+        if (_uiCombineInfo == null)
+            _uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
         
-        uiCombineInfo.Open();
+        _uiCombineInfo.Open();
     }
 
     private void UpdateTimerText(float remainingTime)
@@ -85,24 +85,24 @@ public class UIInGame : UIBase
         switch (StageManager.Instance.StageHealth)
         {
             case 3:
-                mask1.SetActive(false);
-                mask2.SetActive(false);
-                mask3.SetActive(false);
+                _mask1.SetActive(false);
+                _mask2.SetActive(false);
+                _mask3.SetActive(false);
                 break;
             case 2:
-                mask1.SetActive(false);
-                mask2.SetActive(false);
-                mask3.SetActive(true);
+                _mask1.SetActive(false);
+                _mask2.SetActive(false);
+                _mask3.SetActive(true);
                 break;
             case 1:
-                mask1.SetActive(false);
-                mask2.SetActive(true);
-                mask3.SetActive(true);
+                _mask1.SetActive(false);
+                _mask2.SetActive(true);
+                _mask3.SetActive(true);
                 break;
             case 0:
-                mask1.SetActive(true);
-                mask2.SetActive(true);
-                mask3.SetActive(true);
+                _mask1.SetActive(true);
+                _mask2.SetActive(true);
+                _mask3.SetActive(true);
                 break;
         }
     }

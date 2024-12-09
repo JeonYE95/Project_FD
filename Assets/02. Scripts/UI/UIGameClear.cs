@@ -4,23 +4,23 @@ using UnityEngine.UI;
 
 public class UIGameClear : UIBase
 {
-    [SerializeField] private Button nextStageBtn;
-    [SerializeField] private Button homeBtn;
+    [SerializeField] private Button _nextStageBtn;
+    [SerializeField] private Button _homeBtn;
 
-    private UIMain uiMain;
+    private UIMain _uiMain;
 
     private void Start()
     {
-        nextStageBtn.onClick.AddListener(() => {  });     // 다음 스테이지 이동 로직 연결
-        homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
+        _nextStageBtn.onClick.AddListener(() => {  });     // 다음 스테이지 이동 로직 연결
+        _homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
     }
 
     private void OpenMainUI()
     {
-        if (uiMain == null)
-            uiMain = UIManager.Instance.GetUI<UIMain>();
+        if (_uiMain == null)
+            _uiMain = UIManager.Instance.GetUI<UIMain>();
         
-        uiMain.Open();
+        _uiMain.Open();
     }
 
     private void LoadMainScene()
