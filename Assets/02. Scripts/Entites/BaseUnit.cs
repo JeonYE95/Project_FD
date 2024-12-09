@@ -123,7 +123,7 @@ public class BaseUnit : MonoBehaviour
         actionHandler.ResetAttackCoolTime();
 
         //아예 가만히 있는 애니메이션으로 셋팅
-        animController.SetBool(AnimationData.isWaiting, true);
+        animController.SetBool(PlayerAnimData.isWaiting, true);
     }
 
     // Update is called once per frame

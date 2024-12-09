@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public static class AnimationData
+public static class PlayerAnimData
 {
     // Boolean 파라미터 (플레이어용)
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
+}
 
+public static class EnemyAnimData
+{
     // Integer 파라미터 (몬스터용)
+    public static readonly int Attack = Animator.StringToHash("Attack");
     public static readonly int IdleState = 0;   // Idle 애니메이션은 State = 0
     public static readonly int WalkState = 2;  // Walk 애니메이션은 State = 2
     public static readonly int RunState = 3;   // Run 애니메이션은 State = 3

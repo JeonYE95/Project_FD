@@ -31,22 +31,22 @@ public class PlayerUnit : BaseUnit
 
     public override void PlayIdleAnimation()
     {
-        animController.SetBool(AnimationData.isIdle, true);
-        animController.SetBool(AnimationData.isMoving, false);
+        animController.SetBool(PlayerAnimData.isIdle, true);
+        animController.SetBool(PlayerAnimData.isMoving, false);
         //Debug.Log($"{gameObject.name}: Idle 애니메이션 실행");
     }
 
     public override void PlayMoveAnimation()
     {
-        animController.SetBool(AnimationData.isMoving, true);
-        animController.SetBool(AnimationData.isIdle, false);
+        animController.SetBool(PlayerAnimData.isMoving, true);
+        animController.SetBool(PlayerAnimData.isIdle, false);
         //Debug.Log($"{gameObject.name}: Move 애니메이션 실행");
     }
 
     public override void PlayAttackAnimation()
     {
-        animController.SetTrigger(AnimationData.isAttacking);
-        animController.SetBool(AnimationData.isMoving, false);
+        animController.SetTrigger(PlayerAnimData.isAttacking);
+        animController.SetBool(PlayerAnimData.isMoving, false);
         //Debug.Log($"{gameObject.name}: Attack 애니메이션 실행");
     }
 
