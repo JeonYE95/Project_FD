@@ -21,7 +21,6 @@ public class WaveDataManager : WaveData
     }
 
 
-
     private WaveDataManager() { }
 
     public List<WaveData> GetUnitDatas()

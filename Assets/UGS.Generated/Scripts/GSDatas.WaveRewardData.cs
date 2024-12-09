@@ -57,7 +57,7 @@ namespace GSDatas
 /* Fields. */
 
 		public System.Int32 key;
-		public System.Int32 StageID;
+		public System.Int32 ID;
 		public System.Int32 wave;
 		public System.Int32 RewardID;
 		public System.Int32 count;
