@@ -47,10 +47,12 @@ public class UnitManager
         if (prefab == null) return null;
         
         GameObject unitInstance = UnityEngine.Object.Instantiate(playerBasePrefab);
-        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
+        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
         AssetInstance.transform.SetParent(unitInstance.transform, true);
-        AssetInstance.transform.position = Vector3.zero;
+        //AssetInstance.transform.position = Vector3.zero;
+        AssetInstance.transform.localPosition = Vector3.zero;
+
 
         UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
 

@@ -31,10 +31,11 @@ public class EnemyManager : Singleton<EnemyManager>
         if (prefab == null) return null;
 
         GameObject enemyInstance = UnityEngine.Object.Instantiate(enemyBasePrefab);
-        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab);
+        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
         AssetInstance.transform.SetParent(enemyInstance.transform, true);
-        AssetInstance.transform.position = Vector3.zero;
+        //AssetInstance.transform.position = Vector3.zero;
+        AssetInstance.transform.localPosition = Vector3.zero;
 
         EnemyInfo enemy = enemyInstance.GetComponent<EnemyInfo>();
 
