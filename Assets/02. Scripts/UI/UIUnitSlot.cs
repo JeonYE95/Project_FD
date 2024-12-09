@@ -10,7 +10,6 @@ public class UIUnitSlot : MonoBehaviour
 
     [SerializeField] private GameObject unitSlotPrefab;
 
-    [SerializeField]
     private List<UnitInfo> inventoryUnits = new List<UnitInfo>();
 
     public List<UnitInfo> InventoryUnits
@@ -63,14 +62,23 @@ public class UIUnitSlot : MonoBehaviour
                 characterSlot.SetIndex(i);  // 인덱스 직접 설정
             }
 
+            TextMeshProUGUI[] texts = go.GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI unitNameTxt = texts[0];
+            TextMeshProUGUI unitCountTxt = texts[1];
+
             // UI 요소 설정
-            TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
+            // TextMeshProUGUI unitNameTxt = go.GetComponentInChildren<TextMeshProUGUI>();
             Image unitImg = go.GetComponentInChildren<Image>();
 
             if (unitNameTxt != null)
             {
                 unitNameTxt.text = unit._unitData.name;
             }
+
+            // if (unitCountTxt != null)
+            // {
+            //     unitCountTxt.text = unit._unitData.count;
+            // }
 
             if (unitImg != null)
             {
