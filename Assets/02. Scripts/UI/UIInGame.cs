@@ -22,7 +22,7 @@ public class UIInGame : UIBase
 
     private void Start()
     {
-        drawBtn.onClick.AddListener(() => {  });    // 버튼 클릭 시 호출 함수 필요
+        drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
         unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
         combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
 
