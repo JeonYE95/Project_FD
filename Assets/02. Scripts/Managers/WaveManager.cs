@@ -59,15 +59,25 @@ public class WaveManager : Singleton<WaveManager>
     public void Start()
     {
 
-        //임시로 스테이지 ID 넣음.
+        //임시로 스테이지 ID 넣음  -> 나중에 스테이지 진입시 정보를 받아와야 함.
+
         int stageID = 101;
-
-        // 해당 스테이지에 맞게 재분류
-        GetStageData(stageID);
-
         CurrentWave = 1;
+
+        // 해당 스테이지/웨이브에 맞게 재분류
+        GetStageData(stageID);
+        GetWaveData();
+
+
+
+
+        OnClearWave += GetWaveData;
+        OnClearWave += SpawnManager.Instance.SpawnEnemy; 
+
+
         OnWaveAllClear += StageManager.Instance.GameClear;
         OnDead += StageManager.Instance.GameOver;
+
 
         // 게임 시작 시 자동으로 대기 시간 시작
         _prepareCoroutine = StartCoroutine(NextWavePrepare());
@@ -206,9 +216,9 @@ public class WaveManager : Singleton<WaveManager>
     }
 
     // wave별로 데이터 가져오기
-    public List<WaveData> GetWaveData(int wave)
+    public void GetWaveData()
     {
-        return _AllStageWaveData.Where(data => data.wave == wave).ToList();
+        _currentStageWaveData =  _AllStageWaveData.Where(data => data.wave == CurrentWave).ToList();
     }
 
 
