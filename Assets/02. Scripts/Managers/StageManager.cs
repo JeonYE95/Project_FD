@@ -6,7 +6,7 @@ public class StageManager : Singleton<StageManager>
 
 
     [Header("스테이지 관리")]
-    private int _stageHealth = 2;
+    private int _stageHealth = 3;
     private int _StageId;
 
     public int StageHealth
