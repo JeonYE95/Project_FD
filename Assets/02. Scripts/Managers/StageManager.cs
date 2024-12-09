@@ -73,5 +73,10 @@ public class StageManager : Singleton<StageManager>
         // DataManager.Instacne.PlayerData.
     }
 
+    public void InitializeStage()
+    {
+        _stageHealth = 3;
+    }
+
 
 }

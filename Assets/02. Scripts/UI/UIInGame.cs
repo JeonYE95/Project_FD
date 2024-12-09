@@ -85,15 +85,24 @@ public class UIInGame : UIBase
         switch (StageManager.Instance.StageHealth)
         {
             case 3:
+                mask1.SetActive(false);
+                mask2.SetActive(false);
+                mask3.SetActive(false);
                 break;
             case 2:
+                mask1.SetActive(false);
+                mask2.SetActive(false);
                 mask3.SetActive(true);
                 break;
             case 1:
+                mask1.SetActive(false);
                 mask2.SetActive(true);
+                mask3.SetActive(true);
                 break;
             case 0:
                 mask1.SetActive(true);
+                mask2.SetActive(true);
+                mask3.SetActive(true);
                 break;
         }
     }
