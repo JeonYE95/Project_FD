@@ -22,27 +22,6 @@ public class UIUnitSlot : MonoBehaviour
     {
         _content = gameObject.GetComponent<RectTransform>();
 
-        // 테스트 코드
-        UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-        unit1.SetData(UnitDataManager.Instance.GetUnitData(1004));
-        _inventoryUnits.Add(unit1);
-
-        UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-        unit2.SetData(UnitDataManager.Instance.GetUnitData(1005));
-        _inventoryUnits.Add(unit2);
-
-        // 스크롤뷰 테스트 코드
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-        // inventoryUnits.Add(unit2);
-
         CreateUnitSlots();
     }
 
