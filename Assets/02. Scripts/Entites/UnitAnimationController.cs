@@ -18,8 +18,8 @@ public static class EnemyAnimData
     public static readonly int Attack = Animator.StringToHash("Attack");
     public static readonly int IdleState = 0;
     public static readonly int ReadyState = 1;
-    public static readonly int WalkState = 3;
-    public static readonly int RunState = 4;
+    public static readonly int WalkState = 2;
+    public static readonly int RunState = 3;
     public static readonly int DeathState = 9; 
 }
 

@@ -80,21 +80,36 @@ public class BattleManager : Singleton<BattleManager>
     {
         if (aliveEnemyUnitsCount == 0)
         {
-            WaveManager.Instance.Victroy();
-            Debug.Log("플레이어 승리");
             BattleEnd();
+            Debug.Log("플레이어 승리");
+            StartCoroutine(Victory());
         }
         else if (alivePlayerUnitsCount == 0)
         {
-            WaveManager.Instance.Lose();
-            Debug.Log("플레이어 패배");
             BattleEnd();
+            Debug.Log("플레이어 패배");
+            StartCoroutine(Lose());
         }
+    }
+
+    private IEnumerator Victory()
+    {
+        yield return new WaitForSeconds(1f);
+        WaveManager.Instance.Victroy();
+    }
+
+    private IEnumerator Lose()
+    {
+        yield return new WaitForSeconds(1f);
+        WaveManager.Instance.Lose();
     }
 
     private void BattleEnd()
     {
-
+        foreach(BaseUnit unit in enemies)
+        {
+            unit.UnregisterFromBattleManager();
+        }
     }
 
     private void ResetAllUnit()

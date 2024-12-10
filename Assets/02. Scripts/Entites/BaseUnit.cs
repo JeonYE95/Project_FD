@@ -63,7 +63,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     //Start 에서 호출됨
-    public void UnitInit()
+    public virtual void UnitInit()
     {
         healthSystem.MaxHP = maxHP;
         UnitMovement.moveSpeed = moveSpeed;
@@ -73,12 +73,7 @@ public class BaseUnit : MonoBehaviour
             isRangedUnit = true;
         }
 
-        //배틀매니저에 캐릭터 등록
-        BattleManager.Instance.RegisterUnit(this);
-
-        //죽엇을 시 이벤트 등록
-        OnDieEvent += UnitDeActive;
-        OnDieEvent += BattleManager.Instance.UnitDie;
+        RegisterToBattleManager();
 
         //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
         stateMachine = new StateMachine(this);
@@ -94,9 +89,14 @@ public class BaseUnit : MonoBehaviour
     }
 
     //유닛을 타일에 배치(셋팅) 햇을때
-    public void SetUnit()
+    public void RegisterToBattleManager()
     {
+        //배틀매니저에 캐릭터 등록
+        BattleManager.Instance.RegisterUnit(this);
 
+        //죽엇을 시 이벤트 등록
+        OnDieEvent += UnitDeActive;
+        OnDieEvent += BattleManager.Instance.UnitDie;
     }
 
     //유닛을 타일에서 해제했을때
@@ -105,12 +105,15 @@ public class BaseUnit : MonoBehaviour
     //이걸 내가 아니라 배치타일 하는 사람이 호출해달라고 해야할듯
     //플레이어는 하나하나 배치 해제 하면 언셋인데
     //몬스터는 웨이브 끝나면 전부 언셋 한 다음 다음 웨이브 ...?
-    public void UnsetUnit()
+    //함수 이름 Set 보다는 배틀 매니저에 등록하는 동작이 더 중요해서 변경
+    public void UnregisterFromBattleManager()
     {
         OnDieEvent -= UnitDeActive;
         OnDieEvent -= BattleManager.Instance.UnitDie;
 
         BattleManager.Instance.UnRegisterUnit(this);
+        
+        gameObject.SetActive(false);
     }
 
     public void ReSetUnit()
@@ -191,6 +194,7 @@ public class BaseUnit : MonoBehaviour
     public void UnitDeActive(BaseUnit Unit)
     {
         isLive = false;
+        stateMachine.ChangeState(stateMachine.DeathState);
         gameObject.SetActive(false);
     }
 

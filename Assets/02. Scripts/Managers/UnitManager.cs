@@ -52,6 +52,7 @@ public class UnitManager
 
         AssetInstance.transform.SetParent(unitInstance.transform, true);
         AssetInstance.transform.localPosition = Vector3.zero;
+
         AssetInstance.GetComponentInChildren<SortingGroup>().sortingOrder = 201;
 
 

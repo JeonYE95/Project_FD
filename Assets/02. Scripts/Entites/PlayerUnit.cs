@@ -13,6 +13,13 @@ public class PlayerUnit : BaseUnit
         unitInfo = GetComponent<UnitInfo>();
     }
 
+    public override void UnitInit()
+    {
+        base.UnitInit();
+
+        //나중에 플레이어는 자동으로 호출되니까 여기서 등록 몬스터는 상의 후 등록
+    }
+
     public void SetUnitInfo()
     {
         maxHP = unitInfo._unitData.health;
@@ -24,10 +31,10 @@ public class PlayerUnit : BaseUnit
         attackCooltime = unitInfo._unitData.attackCooltime;
     }
 
-    /*private void OnDestroy()
+    private void OnDestroy()
     {
-        UnsetUnit();
-    }*/
+        UnregisterFromBattleManager();
+    }
 
     public override void PlayIdleAnimation()
     {
