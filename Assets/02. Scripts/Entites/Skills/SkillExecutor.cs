@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class SkillExecutor : MonoBehaviour
 {
-    InGameSkillData _skillData;
-
-    public SkillExecutor(InGameSkillData skillData)
-    {
-        this._skillData = skillData;
-    }
+    public InGameSkillData _skillData;
+    
 
     public UnitSearchOptions CreateSearchOptionsFromSkill()
     {

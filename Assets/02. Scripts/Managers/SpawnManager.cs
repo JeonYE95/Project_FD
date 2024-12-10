@@ -103,6 +103,8 @@ public class SpawnManager : Singleton<SpawnManager>
 
             // 적 소환 및 위치 조정
             adjustEnemyPosition(spawnPosition, enemyID);
+
+            
         }
 
     }

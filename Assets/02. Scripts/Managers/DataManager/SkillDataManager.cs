@@ -39,7 +39,7 @@ public class SkillDataManager
         }
 
         isInitialized = true;
-        Debug.Log("SkillDataManager 초기화 완료!");
+        //Debug.Log("SkillDataManager 초기화 완료!");
     }
 
     // 유닛 ID로 스킬 가져오기
