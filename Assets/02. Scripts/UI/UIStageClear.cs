@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIGameClear : UIBase
+public class UIStageClear : UIBase
 {
     [SerializeField] private Button _nextStageBtn;
     [SerializeField] private Button _homeBtn;
