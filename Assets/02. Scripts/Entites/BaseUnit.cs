@@ -103,13 +103,15 @@ public class BaseUnit : MonoBehaviour
         OnDieEvent -= UnitDeActive;
         OnDieEvent -= BattleManager.Instance.UnitDie;
 
-        BattleManager.Instance.UnRegisterUnit(this);
+        BattleManager.Instance?.UnRegisterUnit(this);
         
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void ReSetUnit()
     {
+        gameObject.SetActive(true);
+
         isLive = true;
         healthSystem.ResetHealth();
 
@@ -187,7 +189,6 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
-        gameObject.SetActive(false);
     }
 
     public void CallDieEvent()

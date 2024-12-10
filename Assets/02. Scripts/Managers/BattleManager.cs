@@ -22,9 +22,14 @@ public class BattleManager : Singleton<BattleManager>
     //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
     private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
 
+    readonly int BattleResultAndResetTime = 3;
+    WaitForSeconds _battleResultAndResetTimer;
+
     protected override void Awake()
     {
         base.Awake();
+
+        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
 
         targetingSystem = new TargetingSystem(this);
     }
@@ -78,6 +83,8 @@ public class BattleManager : Singleton<BattleManager>
 
     private void CheckBattleResult()
     {
+        //끝나면 그상태로 결과창 띄우고 결과창 확인하고나면 리셋이 좋긴한데
+        //그러면 또 어려워짐
         if (aliveEnemyUnitsCount == 0)
         {
             Debug.Log("플레이어 승리");
@@ -92,20 +99,26 @@ public class BattleManager : Singleton<BattleManager>
 
     private IEnumerator Victory()
     {
-        yield return new WaitForSeconds(1f);
+        yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Victroy();
     }
 
     private IEnumerator Lose()
     {
-        yield return new WaitForSeconds(1f);
+        yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Lose();
     }
 
     private void BattleEnd()
     {
+        var unitsToDeActive = allUnits.ToList();
+        foreach (var unit in unitsToDeActive)
+        {
+            unit.SetActive(false);
+        }
+
         var unitsToRemove = enemies.ToList(); // 순회 도중 오류 발생 방지
         foreach (BaseUnit unit in unitsToRemove)
         {
