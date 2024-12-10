@@ -21,6 +21,11 @@ public class InGameSkillData
 
     public void SetInGameSkillData(SkillData skillData)
     {
+        if (skillData == null)
+        {
+            return;
+        }
+
         skillID = skillData.skillID;
         unitID = skillData.UnitID;
         skillName = skillData.skillName;
@@ -47,7 +52,8 @@ public enum SkillEffect
 {
     DefenseBoost,  // 방어력 증가
     HealAmount,    // 체력 회복
-    Damage         // 데미지
+    Damage,         // 데미지
+    AttackBoost
 }
 public static class EnumExtensions
 {

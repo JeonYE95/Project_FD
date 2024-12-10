@@ -148,7 +148,8 @@ public class SpawnManager : Singleton<SpawnManager>
         EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
         if (enemyUnit != null)
         {
-            BattleManager.Instance.RegisterUnit(enemyUnit);
+            //BattleManager.Instance.RegisterUnit(enemyUnit);
+            enemyUnit.RegisterToBattleManager();
         }
         else
         {

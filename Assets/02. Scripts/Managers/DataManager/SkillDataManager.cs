@@ -71,4 +71,24 @@ public class SkillDataManager
         Initialize();
         Debug.Log("SkillDataManager: 스킬 데이터가 다시 로드되었습니다!");
     }
+
+    private static InGameSkillData _defaultSkillData = new InGameSkillData
+    {
+        skillID = 0,
+        unitID = 0,
+        skillName = "Default Action",
+        skillType = SkillType.Buff, // 또는 다른 기본 타입
+        skillEffect = SkillEffect.Damage, // 또는 다른 기본 효과
+        value = 0, // 기본값
+        duration = 0, // 지속 시간 없음
+        skillCoolDown = 0, // 쿨타임 없음
+        targetGroup = TargetGroup.Self, // 자기 자신만 타겟팅
+        targetPriority = TargetPriority.All,
+        targetCount = 0
+    };
+
+    public static InGameSkillData GetDefaultSkillData()
+    {
+        return _defaultSkillData;
+    }
 }
