@@ -20,8 +20,17 @@ public class UIInGame : UIBase
     private UIUnitGuide _uiUnitGuide;
     private UICombineInfo _uiCombineInfo;
 
+    private Canvas _canvas;
+    private Camera _mainCamera;
+
     private void Start()
     {
+        // 카메라 할당
+        _canvas = gameObject.GetComponent<Canvas>();
+        _mainCamera = Camera.main;
+
+        _canvas.worldCamera = _mainCamera;
+
         _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
         _unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
         _combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
