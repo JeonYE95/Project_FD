@@ -46,12 +46,16 @@ public class EnemySlot : MonoBehaviour
 
         if (enemy != null)
         {
-            // SpawnManager에서 저장된 위치 사용
-            Vector3 worldPos = SpawnManager.Instance.GetEnemyPosition(_index);
-
             // SpawnManager의 Enemies 오브젝트 아래에 배치
             enemy.transform.SetParent(SpawnManager.Instance.EnemiesParent);
+
+            // SpawnManager에서 저장된 위치 사용
+            Vector3 worldPos = SpawnManager.Instance.GetEnemyPosition(_index);
             enemy.transform.position = worldPos;
+
+
+
+
         }
     }
 
