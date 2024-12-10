@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitState : MonoBehaviour
+public class WaitState : BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public WaitState(StateMachine stateMachine) : base(stateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        stateMachine.unit.PlayWaitAnimation();
     }
 }
