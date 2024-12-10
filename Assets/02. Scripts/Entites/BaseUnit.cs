@@ -73,12 +73,8 @@ public class BaseUnit : MonoBehaviour
             isRangedUnit = true;
         }
 
-        RegisterToBattleManager();
-
         //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
         stateMachine = new StateMachine(this);
-
-        ReSetUnit();
     }
 
     //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틀매니저가 호출
@@ -97,15 +93,11 @@ public class BaseUnit : MonoBehaviour
         //죽엇을 시 이벤트 등록
         OnDieEvent += UnitDeActive;
         OnDieEvent += BattleManager.Instance.UnitDie;
+
+        ReSetUnit();
     }
 
-    //유닛을 타일에서 해제했을때
-    //플레이어는 Destory 고 몬스터는 오브젝트풀링이라 따로
-    //플레이어는 걍 오브젝트 파괴됬을때 호출, 몬스터는 비활성화?? 어쩌지
-    //이걸 내가 아니라 배치타일 하는 사람이 호출해달라고 해야할듯
-    //플레이어는 하나하나 배치 해제 하면 언셋인데
-    //몬스터는 웨이브 끝나면 전부 언셋 한 다음 다음 웨이브 ...?
-    //함수 이름 Set 보다는 배틀 매니저에 등록하는 동작이 더 중요해서 변경
+    //플레이어는 배치 해제시, 몬스터는 배틀 끝났을 시
     public void UnregisterFromBattleManager()
     {
         OnDieEvent -= UnitDeActive;

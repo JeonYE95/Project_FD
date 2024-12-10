@@ -18,6 +18,7 @@ public class PlayerUnit : BaseUnit
         base.UnitInit();
 
         //나중에 플레이어는 자동으로 호출되니까 여기서 등록 몬스터는 상의 후 등록
+        RegisterToBattleManager();
     }
 
     public void SetUnitInfo()
@@ -59,7 +60,8 @@ public class PlayerUnit : BaseUnit
 
     public override void PlayDeathAnimation()
     {
-        animController.SetTrigger(Animator.StringToHash("Death"));
-        //Debug.Log($"{gameObject.name}: Death 애니메이션 실행");
+        animController.ResetAttackTrigger();
+        animController.SetTrigger(PlayerAnimData.Death);
+        Debug.Log($"{gameObject.name}: Death 애니메이션 실행");
     }
 }

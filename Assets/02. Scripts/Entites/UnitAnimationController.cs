@@ -6,6 +6,7 @@ using UnityEngine;
 public static class PlayerAnimData
 {
     // Boolean 파라미터 (플레이어용)
+    public static readonly int Death = Animator.StringToHash("Death");
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
