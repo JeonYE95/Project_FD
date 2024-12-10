@@ -22,9 +22,14 @@ public class BattleManager : Singleton<BattleManager>
     //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
     private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
 
+    readonly int BattleResultAndResetTime = 3;
+    WaitForSeconds _battleResultAndResetTimer;
+
     protected override void Awake()
     {
         base.Awake();
+
+        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
 
         targetingSystem = new TargetingSystem(this);
     }
@@ -78,28 +83,57 @@ public class BattleManager : Singleton<BattleManager>
 
     private void CheckBattleResult()
     {
+        //끝나면 그상태로 결과창 띄우고 결과창 확인하고나면 리셋이 좋긴한데
+        //그러면 또 어려워짐
         if (aliveEnemyUnitsCount == 0)
         {
-            WaveManager.Instance.Victroy();
             Debug.Log("플레이어 승리");
-            BattleEnd();
+            StartCoroutine(Victory());
         }
         else if (alivePlayerUnitsCount == 0)
         {
-            WaveManager.Instance.Lose();
             Debug.Log("플레이어 패배");
-            BattleEnd();
+            StartCoroutine(Lose());
         }
+    }
+
+    private IEnumerator Victory()
+    {
+        yield return _battleResultAndResetTimer;
+        BattleEnd();
+        WaveManager.Instance.Victroy();
+    }
+
+    private IEnumerator Lose()
+    {
+        yield return _battleResultAndResetTimer;
+        BattleEnd();
+        WaveManager.Instance.Lose();
     }
 
     private void BattleEnd()
     {
+        var unitsToDeActive = allUnits.ToList();
+        foreach (var unit in unitsToDeActive)
+        {
+            unit.SetActive(false);
+        }
 
+        var unitsToRemove = enemies.ToList(); // 순회 도중 오류 발생 방지
+        foreach (BaseUnit unit in unitsToRemove)
+        {
+            unit.UnregisterFromBattleManager();
+        }
     }
+
 
     private void ResetAllUnit()
     {
-
+        //몬스터는 소환될때 리셋되고 배틀 끝나면 다른 몬스터 써서 리셋 필요없음
+        foreach(BaseUnit unit in players)
+        {
+            unit.ReSetUnit();
+        }
     }
 
     private void TestSpawn()
@@ -119,6 +153,7 @@ public class BattleManager : Singleton<BattleManager>
             randomNumber = EnemyUnitList[Random.Range(0, EnemyUnitList.Count)].ID;
 
             GameObject obj2 = EnemyManager.Instance.CreateEnemy(randomNumber);
+            obj2.GetComponent<EnemyUnit>().RegisterToBattleManager();
             obj2.transform.position = new Vector2(5, 0);
         }
     }
@@ -158,6 +193,7 @@ public class BattleManager : Singleton<BattleManager>
             enemies.Add(unit);
         }
     }
+
     public void UnRegisterUnit(BaseUnit unit)
     {
         if (unit.isPlayerUnit)
@@ -169,6 +205,7 @@ public class BattleManager : Singleton<BattleManager>
             enemies.Remove(unit);
         }
     }
+
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {
         return targetingSystem.GetTargetClosestOpponent(standardUnit);

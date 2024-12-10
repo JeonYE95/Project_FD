@@ -48,6 +48,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     public void DropCharacter(UnitInfo unitInfo)
     {
 
+        // 최대 소환 가능 수 도달하면 소환 불가
+        if (!InventoryManager.Instance.CanSummonUnit())
+        {
+            return;
+        }
+
+
         Vector3 uiPosition = transform.position;
 
         // UI 좌표를 월드 좌표로 변환
@@ -116,6 +123,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         CharacterSlot characterSlot = eventData.pointerDrag.GetComponent<CharacterSlot>();
         if (characterSlot != null && _character == null)
         {
+
+            // 최대 소환 가능 수 도달 시 소환 불가
+            if (!InventoryManager.Instance.CanSummonUnit())
+            {
+                return;
+            }
+
 
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)

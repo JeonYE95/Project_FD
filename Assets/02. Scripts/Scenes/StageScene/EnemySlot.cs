@@ -20,16 +20,24 @@ public class EnemySlot : MonoBehaviour
 
     private void Start()
     {
-        // 자신의 순서를 인덱스로 자동 할당 
+
+        StartCoroutine(DelayedRegister());
+
+
+    }
+
+    private IEnumerator DelayedRegister()
+    {
+        // 한 프레임 기다려서 UI 레이아웃이 업데이트되도록 함
+        yield return null;
+
         _index = transform.GetSiblingIndex();
 
-        // SpawnManager에 자신을 등록
         if (SpawnManager.Instance != null)
         {
             SpawnManager.Instance.RegisterEnemySlot(this);
         }
     }
-
 
 
     public void SetEnemy(GameObject enemy)
