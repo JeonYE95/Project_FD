@@ -1,3 +1,7 @@
+using Assets.HeroEditor.Common.Scripts.Common;
+using GSDatas;
+using System;
+
 [System.Serializable]
 public class InGameSkillData
 {
@@ -14,6 +18,27 @@ public class InGameSkillData
     public TargetGroup targetGroup;    // 스킬 타겟 그룹 (Self, Ally, Enemy 등)
     public TargetPriority targetPriority; // 타겟 우선순위 (Closest, Farthest, Random 등)
     public int targetCount;            // 타겟 수 (0 = 전체, n = 최대 타겟 수)
+
+    public void SetInGameSkillData(SkillData skillData)
+    {
+        if (skillData == null)
+        {
+            return;
+        }
+
+        skillID = skillData.skillID;
+        unitID = skillData.UnitID;
+        skillName = skillData.skillName;
+        skillType = EnumExtensions.ToEnum<SkillType>(skillData.SkillType);
+        skillEffect = EnumExtensions.ToEnum<SkillEffect>(skillData.SkillEffect);
+        value = skillData.value;
+        duration = skillData.duration;
+        skillCoolDown = skillData.skillCoolDown;
+        targetGroup = EnumExtensions.ToEnum<TargetGroup>(skillData.TargetGroup);
+        targetPriority = EnumExtensions.ToEnum<TargetPriority>(skillData.TargetPriority);
+        targetCount = skillData.targetCount;
+    }
+
 }
 
 public enum SkillType
@@ -27,6 +52,21 @@ public enum SkillEffect
 {
     DefenseBoost,  // 방어력 증가
     HealAmount,    // 체력 회복
-    Damage         // 데미지
+    Damage,         // 데미지
+    AttackBoost
 }
+public static class EnumExtensions
+{
+    public static T ToEnum<T>(this string value) where T : Enum
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new ArgumentNullException(nameof(value), "Value cannot be null or empty.");
+        }
+
+        return (T)Enum.Parse(typeof(T), value, true); // 대소문자 구분 없이 변환
+    }
+}
+
+
 

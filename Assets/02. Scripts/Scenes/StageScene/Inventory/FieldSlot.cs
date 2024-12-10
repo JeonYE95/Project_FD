@@ -13,6 +13,28 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     private GameObject _character = null;
     public GameObject Character => _character;
 
+    // 몇번째 필드인지 정보 저장
+    public int Index { get; private set; }
+
+    private void Awake()
+    {
+        // Awake에서 InventoryManager에 자신을 등록
+        InventoryManager.Instance.RegisterFieldSlot(this);
+    }
+
+
+    private void Start()
+    {
+        //자신의 순서를 인덱스로 자동 할당
+        Index = transform.GetSiblingIndex();
+    }
+
+    public void SetIndex(int index)
+    {
+        Index = index;
+    }
+
+
 
     // 필드에 캐릭터가 있는지 
     public void SetCharacter(GameObject character)
@@ -30,15 +52,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     }
 
-    // 몇번째 필드인지 정보 저장
-    public int Index { get; private set; }
 
-    private void Start()
-    {
-        //자신의 순서를 인덱스로 자동 할당
-        Index = transform.GetSiblingIndex();
-    }
 
+  
     public void DropCharacter(UnitInfo unitInfo)
     {
 

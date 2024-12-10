@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
+using System.Linq;
 
 
 public class InventoryManager : Singleton<InventoryManager>
 {
 
     [SerializeField]
-    private int _maxSummonUnitCount = 1;
+    private int _maxSummonUnitCount = 5;
 
-    [SerializeField] private FieldSlot[] _fieldSlots;
-    public FieldSlot[] FieldSlots => _fieldSlots;
+    [SerializeField] private List<FieldSlot> _fieldSlots = new List<FieldSlot>();
+    public FieldSlot[] FieldSlots => _fieldSlots.ToArray();
 
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
@@ -50,9 +51,7 @@ public class InventoryManager : Singleton<InventoryManager>
     {
 
 
-    
         _unitList = GetComponentInChildren<UIUnitSlot>();
-        _fieldSlots = GetComponentsInChildren<FieldSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
 
 
@@ -85,6 +84,16 @@ public class InventoryManager : Singleton<InventoryManager>
 
     }
 
+    // 필드 슬롯 등록
+    public void RegisterFieldSlot(FieldSlot fieldSlot)
+    {
+        if (!_fieldSlots.Contains(fieldSlot))
+        {
+            _fieldSlots.Add(fieldSlot);
+            // 인덱스 재할당
+            fieldSlot.SetIndex(_fieldSlots.Count - 1);
+        }
+    }
 
     // 해당 등급 리스트에서 데이터 전달, UI 업데이트
     public void UpdateUnitGrade(Defines.UnitGrade unitGrade)
@@ -164,12 +173,14 @@ public class InventoryManager : Singleton<InventoryManager>
     public void UnitPosReset()
     {
 
+        //유닛 상태 초기화
+        BattleManager.Instance.ResetAllUnit();
+
         foreach (FieldSlot characterPos in _fieldSlots)
         {
 
             if (characterPos.Character != null)
             {
-
                 characterPos.CharacterInit();
 
             }
