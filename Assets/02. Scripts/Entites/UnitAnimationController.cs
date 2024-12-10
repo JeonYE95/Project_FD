@@ -10,6 +10,7 @@ public static class PlayerAnimData
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
+    public static readonly int ResetAnim = Animator.StringToHash("ResetAnim");
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
 }
 

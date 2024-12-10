@@ -17,7 +17,6 @@ public class PlayerUnit : BaseUnit
     {
         base.UnitInit();
 
-        //나중에 플레이어는 자동으로 호출되니까 여기서 등록 몬스터는 상의 후 등록
         RegisterToBattleManager();
     }
 
@@ -39,7 +38,8 @@ public class PlayerUnit : BaseUnit
 
     public override void PlayWaitAnimation()
     {
-        animController.SetBool(PlayerAnimData.isWaiting, true);
+        animController.SetTrigger(PlayerAnimData.ResetAnim);
+        animController.SetBool(PlayerAnimData.isIdle, true);
         animController.SetBool(PlayerAnimData.isMoving, false);
         animController.ResetAttackTrigger();
         animController.ResetDeathTrigger();

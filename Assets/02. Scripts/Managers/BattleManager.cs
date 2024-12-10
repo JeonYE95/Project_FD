@@ -83,14 +83,14 @@ public class BattleManager : Singleton<BattleManager>
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
-        WaveManager.Instance.Victroy();
+        //WaveManager.Instance.Victroy();
     }
 
     private IEnumerator Lose()
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
-        WaveManager.Instance.Lose();
+        //WaveManager.Instance.Lose();
     }
 
     private void BattleEnd()
