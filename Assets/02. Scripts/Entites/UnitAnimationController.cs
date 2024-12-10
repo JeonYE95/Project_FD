@@ -6,6 +6,7 @@ using UnityEngine;
 public static class PlayerAnimData
 {
     // Boolean 파라미터 (플레이어용)
+    public static readonly int Death = Animator.StringToHash("Death");
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
@@ -18,8 +19,8 @@ public static class EnemyAnimData
     public static readonly int Attack = Animator.StringToHash("Attack");
     public static readonly int IdleState = 0;
     public static readonly int ReadyState = 1;
-    public static readonly int WalkState = 3;
-    public static readonly int RunState = 4;
+    public static readonly int WalkState = 2;
+    public static readonly int RunState = 3;
     public static readonly int DeathState = 9; 
 }
 

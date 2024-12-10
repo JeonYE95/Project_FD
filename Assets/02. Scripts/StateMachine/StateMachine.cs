@@ -16,6 +16,8 @@ public class StateMachine
 
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
+
+    public DeathState DeathState { get; }
     public SkillState SkillState { get; }
     public AttackState AttackState { get; }
 
@@ -26,6 +28,7 @@ public class StateMachine
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);
+        DeathState = new DeathState(this);
         SkillState = new SkillState(this);
         AttackState = new AttackState(this);
     }

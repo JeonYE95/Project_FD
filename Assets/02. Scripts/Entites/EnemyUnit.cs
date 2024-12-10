@@ -43,6 +43,6 @@ public class EnemyUnit : BaseUnit
 
     public override void PlayDeathAnimation()
     {
-        animController.SetState(EnemyAnimData.DeathState); // State = 9
+        animController.SetState(EnemyAnimData.DeathState);
     }
 }
