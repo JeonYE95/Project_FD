@@ -37,6 +37,14 @@ public class PlayerUnit : BaseUnit
         UnregisterFromBattleManager();
     }
 
+    public override void PlayWaitAnimation()
+    {
+        animController.SetBool(PlayerAnimData.isWaiting, true);
+        animController.SetBool(PlayerAnimData.isMoving, false);
+        animController.ResetAttackTrigger();
+        animController.ResetDeathTrigger();
+    }
+
     public override void PlayIdleAnimation()
     {
         animController.SetBool(PlayerAnimData.isIdle, true);

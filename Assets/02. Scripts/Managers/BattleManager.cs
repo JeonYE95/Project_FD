@@ -17,10 +17,8 @@ public class BattleManager : Singleton<BattleManager>
     public int aliveEnemyUnitsCount;
 
     private TargetingSystem targetingSystem;
-
-    //살아있는 캐릭터와 죽어있는 캐릭터 용 리스트 필요??
-    //어느정도는 필요한게 적들 다 죽거나 플레이어 다 죽으면 웨이브(배틀) 이 끝나야 함
-    private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수 자동집계
+    
+    private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수
 
     readonly int BattleResultAndResetTime = 3;
     WaitForSeconds _battleResultAndResetTimer;
@@ -33,22 +31,6 @@ public class BattleManager : Singleton<BattleManager>
 
         targetingSystem = new TargetingSystem(this);
     }
-
-    public static InGameSkillData _0111 = new InGameSkillData()
-    {
-        skillID = 111,
-        unitID = 1001,
-        skillName = "GuardianShield",
-        skillType = SkillType.Buff,
-        skillEffect = SkillEffect.DefenseBoost,
-        value = 30.0f,
-        duration = 5.0f,
-        skillCoolDown = 10.0f,
-
-        targetGroup = TargetGroup.Self,
-        targetPriority = TargetPriority.All,
-        targetCount = 1
-    };
 
     private void Start()
     {
@@ -113,26 +95,33 @@ public class BattleManager : Singleton<BattleManager>
 
     private void BattleEnd()
     {
-        var unitsToDeActive = allUnits.ToList();
-        foreach (var unit in unitsToDeActive)
+        foreach (var unit in allUnits)
         {
+            unit.isLive = false;
             unit.SetActive(false);
         }
 
-        var unitsToRemove = enemies.ToList(); // 순회 도중 오류 발생 방지
-        foreach (BaseUnit unit in unitsToRemove)
+        foreach (var unit in enemies)
         {
             unit.UnregisterFromBattleManager();
         }
+
+        //몬스터의 등록해제 타이밍이 문제
+        //몬스터는 걍 죽을때마다 지가 해제해
+        //ㄴㄴ 여기서 하는게 맞는데 구현만 분리해
+
+        allUnits.RemoveAll(unit => enemies.Contains(unit));
+        enemies.Clear();
     }
 
     public void ResetAllUnit()
     {
-        //몬스터는 소환될때 리셋되고 배틀 끝나면 다른 몬스터 써서 리셋 필요없음
         foreach(BaseUnit unit in players)
         {
             unit.ReSetUnit();
         }
+        
+        Debug.Log("ResetAllUnit");
     }
 
     private void TestSpawn()
@@ -162,9 +151,6 @@ public class BattleManager : Singleton<BattleManager>
         foreach (BaseUnit unit in players)
         {
             allUnits.Add(unit);
-            //character.OnDieEvent += Wavema
-
-            //WaveManager.Instance.Victory
         }
 
         foreach (BaseUnit unit in enemies)

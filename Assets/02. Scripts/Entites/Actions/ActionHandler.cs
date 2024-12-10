@@ -37,7 +37,7 @@ public class ActionHandler : MonoBehaviour
     {
         firePoint = transform;
 
-        if (_skillExecutor._skillData == SkillDataManager.GetDefaultSkillData())
+        if (_skillExecutor._gameSkillData == SkillDataManager.GetDefaultSkillData())
         {
             _haveSkill = false;
             Debug.Log($"{gameObject.name} 스킬 업슴");
