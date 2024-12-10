@@ -10,6 +10,7 @@ public static class PlayerAnimData
     public static readonly int isIdle = Animator.StringToHash("isIdle");
     public static readonly int isMoving = Animator.StringToHash("isMoving");
     public static readonly int isWaiting = Animator.StringToHash("isWaiting");
+    public static readonly int ResetAnim = Animator.StringToHash("ResetAnim");
     public static readonly int isAttacking = Animator.StringToHash("isAttacking");
 }
 
@@ -112,11 +113,23 @@ public class UnitAnimationController : MonoBehaviour
     {
         if (_myUnit is PlayerUnit)
         {
-            animator.ResetTrigger(PlayerAnimData.isAttacking);
+            animator?.ResetTrigger(PlayerAnimData.isAttacking);
         }
         else if (_myUnit is EnemyUnit)
         {
-            animator.ResetTrigger(EnemyAnimData.Attack);
+            animator?.ResetTrigger(EnemyAnimData.Attack);
+        }
+    }
+
+    public void ResetDeathTrigger()
+    {
+        if (_myUnit is PlayerUnit)
+        {
+            animator?.ResetTrigger(PlayerAnimData.Death);
+        }
+        else if (_myUnit is EnemyUnit)
+        {
+            animator?.ResetTrigger(EnemyAnimData.DeathState);
         }
     }
 }
