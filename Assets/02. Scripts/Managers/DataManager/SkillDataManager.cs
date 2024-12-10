@@ -50,7 +50,7 @@ public class SkillDataManager
             return skillData;
         }
 
-        Debug.LogWarning($"SkillDataManager: Unit ID {unitID}에 해당하는 스킬이 없습니다.");
+        Debug.Log($"SkillDataManager: Unit ID {unitID}에 해당하는 스킬이 없습니다.");
         return null;
     }
 
