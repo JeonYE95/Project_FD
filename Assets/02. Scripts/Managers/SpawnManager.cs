@@ -99,6 +99,8 @@ public class SpawnManager : Singleton<SpawnManager>
 
             // 적 소환 및 위치 조정
             adjustEnemyPosition(spawnPosition, enemyID);
+
+            
         }
 
     }
@@ -146,7 +148,8 @@ public class SpawnManager : Singleton<SpawnManager>
         EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
         if (enemyUnit != null)
         {
-            BattleManager.Instance.RegisterUnit(enemyUnit);
+            //BattleManager.Instance.RegisterUnit(enemyUnit);
+            enemyUnit.RegisterToBattleManager();
         }
         else
         {

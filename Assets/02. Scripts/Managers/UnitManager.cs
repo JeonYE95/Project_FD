@@ -42,30 +42,58 @@ public class UnitManager
         GameObject playerBasePrefab = Resources.Load<GameObject>(playerBasePrefabPath);
 
         //에셋 프리팹
-        string prefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
-        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        string assetPrefabPath = $"Prefabs/Unit/{data.grade}/{data.name}";
+        GameObject assetPrefab = Resources.Load<GameObject>(assetPrefabPath);
 
-        if (prefab == null) return null;
+        if (assetPrefab == null)
+        {
+            return null;
+        }
         
         GameObject unitInstance = UnityEngine.Object.Instantiate(playerBasePrefab);
-        GameObject AssetInstance = UnityEngine.Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        GameObject AssetInstance = UnityEngine.Object.Instantiate(assetPrefab, Vector3.zero, Quaternion.identity);
 
-        AssetInstance.transform.SetParent(unitInstance.transform, true);
-        AssetInstance.transform.localPosition = Vector3.zero;
+        SetPlayerUnit(unitInstance, AssetInstance, data);
 
-        AssetInstance.GetComponentInChildren<SortingGroup>().sortingOrder = 201;
+        return unitInstance;
+    }
 
+    public void SetPlayerUnit(GameObject origin, GameObject assets, UnitData data)
+    {
+        assets.transform.SetParent(origin.transform, true);
+        assets.transform.localPosition = Vector3.zero;
 
-        UnitInfo unit = unitInstance.GetComponent<UnitInfo>();
+        assets.GetComponentInChildren<SortingGroup>().sortingOrder = GameManager.PlayerSortingOrder;
+
+        UnitInfo unit = origin.GetComponent<UnitInfo>();
+        SkillExecutor skillExecutor = origin.GetComponent<SkillExecutor>();
 
         if (unit != null)
         {
             unit.SetData(data);
         }
 
-        unitInstance.GetComponent<PlayerUnit>().SetUnitInfo();
+        if (skillExecutor != null)
+        {
+            var skillData = SkillDataManager.Instance.GetSkillByUnitID(data.ID);
 
-        return unitInstance;
+            // _skillData 생성 (InGameSkillData)
+            if (skillExecutor._skillData == null)
+            {
+                skillExecutor._skillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
+            }
+
+            if (skillData == null) // 스킬 데이터가 없으면
+            {
+                skillExecutor._skillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
+            }
+            else
+            {
+                skillExecutor._skillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
+            }
+        }
+
+        origin.GetComponent<PlayerUnit>().SetUnitInfo();
     }
 
     

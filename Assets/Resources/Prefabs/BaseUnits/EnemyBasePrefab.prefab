@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3820379539235696041}
   - component: {fileID: 3936040257335207736}
   - component: {fileID: 52258576958791805}
+  - component: {fileID: -8981915486441791970}
   m_Layer: 6
   m_Name: EnemyBasePrefab
   m_TagString: Untagged
@@ -124,8 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSystem: {fileID: 0}
-  attackHandler: {fileID: 0}
-  skillHandler: {fileID: 0}
   actionHandler: {fileID: 0}
   UnitMovement: {fileID: 0}
   animController: {fileID: 0}
@@ -168,7 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79861e34cf5802d4d9693b160258c53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 0
   skillCollTime: 10
   attackCoolTime: 2
   firePoint: {fileID: 0}
@@ -187,7 +185,6 @@ MonoBehaviour:
   moveSpeed: 0
   moveDirection: {x: 0, y: 0}
   destinationPosition: {x: 0, y: 0}
-  rigidbody2D: {fileID: 0}
 --- !u!114 &3936040257335207736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,5 +208,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4107c8b8f971f54596896344ea48ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8981915486441791970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106247442466667482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1867e2e73aae10d4a86be28abe1cda29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -8,22 +8,24 @@ public class ActionHandler : MonoBehaviour
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
 
-    public float skillCollTime;
+
+    public float skillCoolTime;
     public float attackCoolTime;
 
-    float lastSkillTime = -Mathf.Infinity;
-    float lastAttackTime = -Mathf.Infinity;
+    bool _haveSkill = true;
+    float _lastSkillTime = -Mathf.Infinity;
+    float _lastAttackTime = -Mathf.Infinity;
 
+    public Transform firePoint;
     InGameSkillData skillData;
     SkillExecutor _skillExecutor;
     UnitAnimationController _controller;
-    public Transform firePoint;
 
     private void Awake()
     {
         _myUnit = GetComponent<BaseUnit>();
+        _skillExecutor = GetComponent<SkillExecutor>();
         _controller = GetComponent<UnitAnimationController>();
-        _skillExecutor = new SkillExecutor(skillData);
 
         if (_myUnit == null)
         {
@@ -34,6 +36,15 @@ public class ActionHandler : MonoBehaviour
     private void Start()
     {
         firePoint = transform;
+
+        if (_skillExecutor._skillData == SkillDataManager.GetDefaultSkillData())
+        {
+            _haveSkill = false;
+            Debug.Log($"{gameObject.name} 스킬 업슴");
+        }
+
+        skillCoolTime = _myUnit.skillCooltime;
+        attackCoolTime = _myUnit.attackCooltime;
     }
 
     //일단은 상태에서 공격,스킬중 어떤것을 할건지 결정하는데
@@ -42,12 +53,12 @@ public class ActionHandler : MonoBehaviour
 
     public bool IsAttackCoolTimeComplete()
     {
-        return Time.time >= lastAttackTime + attackCoolTime;
+        return Time.time >= _lastAttackTime + attackCoolTime;
     }
 
     public bool IsSkillCoolTimeComplete()
     {
-        return Time.time >= lastSkillTime + skillCollTime;
+        return Time.time >= _lastSkillTime + skillCoolTime;
     }
     public bool ExecuteAction(BaseUnit targetUnit)
     {
@@ -64,7 +75,7 @@ public class ActionHandler : MonoBehaviour
         //액션핸들러가 들고있는 타겟 변경
         this._targetUnit = targetUnit;
 
-        if (IsSkillCoolTimeComplete())
+        if (IsSkillCoolTimeComplete() && _haveSkill)
         {
             //스킬 사용
             UseSkill();
@@ -88,12 +99,12 @@ public class ActionHandler : MonoBehaviour
 
     public void ResetAttackCoolTime()
     {
-        lastAttackTime = Time.time;
+        _lastAttackTime = Time.time;
     }
 
     public void ResetSkillCoolTime()
     {
-        lastSkillTime = Time.time;
+        _lastSkillTime = Time.time;
     }
 
     private void DoAttack()
