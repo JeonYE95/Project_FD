@@ -145,7 +145,18 @@ public class SpawnManager : Singleton<SpawnManager>
         _activeEnemies[enemyID].Add(enemy);
 
 
-        BattleManager.Instance.RegisterUnit(enemy.GetComponent<BaseUnit>());
+
+        // 적 등록
+        EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
+        if (enemyUnit != null)
+        {
+            BattleManager.Instance.RegisterUnit(enemyUnit);
+        }
+        else
+        {
+            Debug.LogError($"Enemy GameObject does not have EnemyUnit component: {enemyID}");
+            return;
+        }
 
         _enemySlots[spawnPosition].SetEnemy(enemy);
 
