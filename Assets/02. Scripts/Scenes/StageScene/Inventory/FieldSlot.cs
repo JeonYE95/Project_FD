@@ -1,3 +1,4 @@
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +16,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     // 몇번째 필드인지 정보 저장
     public int Index { get; private set; }
+    public int GroupIndex { get; private set; }
 
     private void Awake()
     {
@@ -32,25 +34,83 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     public void SetIndex(int index)
     {
         Index = index;
+
+        if (index >= 0 && index <=3)
+            GroupIndex = 1;
+        else if (index >= 4 && index <= 7)
+            GroupIndex = 2;
+        else if (index >= 8 && index <= 11)
+            GroupIndex = 3;
+        else if (index >= 12 && index <= 15)
+            GroupIndex = 4;
+        else
+            return;
+    }
+
+    private int SetGroupIndex(int index)
+    {
+        if (index >= 0 && index <=3)
+            return 1;
+        else if (index >= 4 && index <= 7)
+            return 2;
+        else if (index >= 8 && index <= 11)
+            return 3;
+        else if (index >= 12 && index <= 15)
+            return 4;
+        else
+            return 0;
     }
 
 
 
     // 필드에 캐릭터가 있는지 
+    // public void SetCharacter(GameObject character)
+    // {
+    //     _character = character;
+
+    //     if (character != null)
+    //     {
+    //         // 유닛을 Characters 오브젝트의 자식으로 설정
+    //         character.transform.SetParent(FieldManager.Instance.CharactersParent);
+
+    //         // UI 요소의 월드 중심점 구하기
+    //         character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+    //     }
+
+    // }
+
     public void SetCharacter(GameObject character)
     {
         _character = character;
 
         if (character != null)
         {
-            // 유닛을 Characters 오브젝트의 자식으로 설정
-            character.transform.SetParent(FieldManager.Instance.CharactersParent);
+            // 유효한 그룹 인덱스인지 확인
+            if (GroupIndex < 1 || GroupIndex > 4)
+            {
+                Debug.LogError("Invalid group index. Must be between 1 and 4.");
+                return;
+            }
+
+            // 그룹 찾기
+            string groupName = $"Group{GroupIndex}";
+            Transform group = FieldManager.Instance.CharactersParent.Find(groupName);
+
+            if (group == null)
+            {
+                Debug.LogError($"Group '{groupName}' not found under 'Characters'.");
+                return;
+            }
+
+            // 캐릭터를 그룹에 배치
+            character.transform.SetParent(group);
 
             // UI 요소의 월드 중심점 구하기
             character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
         }
-
     }
+
+
 
 
 

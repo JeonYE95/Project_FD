@@ -98,7 +98,21 @@ public class FieldManager : Singleton<FieldManager>
             _charactersParent = new GameObject("Characters").transform;
         }
 
+        // 하위 오브젝트 4개 생성
+        string[] subGroups = { "Group1", "Group2", "Group3", "Group4" };
+
+        foreach (string groupName in subGroups)
+        {
+            Transform group = _charactersParent.Find(groupName); // 이미 있는지 확인
+            if (group == null)
+            {
+                // 없으면 새로 생성
+                GameObject newGroup = new GameObject(groupName);
+                newGroup.transform.SetParent(_charactersParent);
+            }
+        }
     }
+
 
 
     private void InitializeFieldPositions()
