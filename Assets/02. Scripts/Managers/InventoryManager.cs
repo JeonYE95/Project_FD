@@ -7,7 +7,7 @@ public class InventoryManager : Singleton<InventoryManager>
 {
 
     [SerializeField]
-    private int _maxSummonUnitCount = 1;
+    private int _maxSummonUnitCount = 5;
 
     [SerializeField] private FieldSlot[] _fieldSlots;
     public FieldSlot[] FieldSlots => _fieldSlots;
