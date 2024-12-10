@@ -263,6 +263,10 @@ public class InventoryManager : Singleton<InventoryManager>
                 }
 
             }
+            else
+            {
+                UpdateUnitGrade(_currentSelectedGrade);
+            }
 
             return true;
 
