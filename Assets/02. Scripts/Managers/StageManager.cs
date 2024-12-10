@@ -16,8 +16,8 @@ public class StageManager : Singleton<StageManager>
     }
 
 
-    [Header("스테이지 재화 관리")]
-    private int _gold;
+    [Header("스테이지 내 재화 관리")]
+    private int _gold = 15;
 
     public int Gold
     {
@@ -34,6 +34,8 @@ public class StageManager : Singleton<StageManager>
         }
 
     }
+
+
 
     public void StopGame()
     {
@@ -71,7 +73,7 @@ public class StageManager : Singleton<StageManager>
 
         // DataManager.Instance.PlayerData.gold += DB에서 값 불러오기
         // DataManager.Instacne.PlayerData.
+
+        _stageHealth = 3;
     }
-
-
 }

@@ -1,25 +1,30 @@
-using System;
+using Assets.HeroEditor.Common.Scripts.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIInGame : UIBase
 {
-    [SerializeField] private Button drawBtn;
-    [SerializeField] private Button unitGuideBtn;
+    [SerializeField] private Button _drawBtn;
+    [SerializeField] private Button _unitGuideBtn;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private Button _battleStartButton;
-    [SerializeField] private Button combineInfoBtn;
+    [SerializeField] private Button _combineInfoBtn;
     [SerializeField] private GameObject _spawnPointUI;
 
-    private UIUnitGuide uiUnitGuide;
-    private UICombineInfo uiCombineInfo;
+    [SerializeField] private Image _mask1;
+    [SerializeField] private Image _mask2;
+    [SerializeField] private Image _mask3;
+    
+
+    private UIUnitGuide _uiUnitGuide;
+    private UICombineInfo _uiCombineInfo;
 
     private void Start()
     {
-        drawBtn.onClick.AddListener(() => {  });    // 버튼 클릭 시 호출 함수 필요
-        unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
-        combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
+        _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
+        _unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
+        _combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
         // _timerText = GetComponentInChildren<TMP_Text>();
@@ -36,20 +41,25 @@ public class UIInGame : UIBase
         WaveManager.Instance.OnClearWave += EnablePrepUI;
     }
 
+    private void Update()
+    {
+        SetStageHealth();   // 게임 종료 시마다(성공 또는 실패 시 마다) 호출하는게 더 나으려나
+    }
+
     private void OpenUnitGuideUI()
     {
-        if (uiUnitGuide == null)
-            uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
+        if (_uiUnitGuide == null)
+            _uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
         
-        uiUnitGuide.Open();
+        _uiUnitGuide.Open();
     }
 
     private void OpenCombineInfoUI()
     {
-        if (uiCombineInfo == null)
-            uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
+        if (_uiCombineInfo == null)
+            _uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
         
-        uiCombineInfo.Open();
+        _uiCombineInfo.Open();
     }
 
     private void UpdateTimerText(float remainingTime)
@@ -68,5 +78,32 @@ public class UIInGame : UIBase
     {
         _battleStartButton.gameObject.SetActive(true);
         _timerText.gameObject.SetActive(true);
+    }
+    
+    private void SetStageHealth()
+    {
+        switch (StageManager.Instance.StageHealth)
+        {
+            case 3:
+                _mask1.SetActive(false);
+                _mask2.SetActive(false);
+                _mask3.SetActive(false);
+                break;
+            case 2:
+                _mask1.SetActive(false);
+                _mask2.SetActive(false);
+                _mask3.SetActive(true);
+                break;
+            case 1:
+                _mask1.SetActive(false);
+                _mask2.SetActive(true);
+                _mask3.SetActive(true);
+                break;
+            case 0:
+                _mask1.SetActive(true);
+                _mask2.SetActive(true);
+                _mask3.SetActive(true);
+                break;
+        }
     }
 }

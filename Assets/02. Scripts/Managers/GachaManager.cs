@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GachaManager : Singleton<GachaManager>
 {
-    public int GachaGold = 5;
+    public int GachaGold = 1;
 
     public void PlayGacha()
     {

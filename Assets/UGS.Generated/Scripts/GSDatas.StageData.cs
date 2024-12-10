@@ -56,8 +56,11 @@ namespace GSDatas
 
 /* Fields. */
 
+		public System.Int32 Key;
 		public System.Int32 ID;
 		public System.String name;
+		public System.Int32 RewardID;
+		public System.Int32 count;
   
 
 #region fuctions
@@ -175,7 +178,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.ID, instance);
+                            Map.Add(instance.Key, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 

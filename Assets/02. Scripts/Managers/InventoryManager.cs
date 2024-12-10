@@ -7,9 +7,11 @@ public class InventoryManager : Singleton<InventoryManager>
 {
 
 
-    private int _maxSummonUnitCount;
+    private int _maxSummonUnitCount = 1;
 
     [SerializeField] private FieldSlot[] _fieldSlots;
+    public FieldSlot[] FieldSlots => _fieldSlots;
+
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
     [SerializeField] private BindingGradeButton _characterButton;
@@ -20,7 +22,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     //필드에 소환되어 있는 유닛 추적 : 필드 번호 / 유닛 정보
     private Dictionary<int, UnitInfo> _fieldUnitHas = new Dictionary<int, UnitInfo>();
-
+    
 
     // 필드에 소환되어 있는 유닛 수 
     public int SummonUnitCount => _fieldUnitHas.Count;
@@ -38,6 +40,7 @@ public class InventoryManager : Singleton<InventoryManager>
     //현재 켜져있는 인벤토리 등급 확인 
     private Defines.UnitGrade _currentSelectedGrade;
 
+
     private List<UnitInfo> commonUnit = new List<UnitInfo>();
     private List<UnitInfo> rareUnit = new List<UnitInfo>();
     private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
@@ -47,6 +50,7 @@ public class InventoryManager : Singleton<InventoryManager>
     {
 
 
+    
         _unitList = GetComponentInChildren<UIUnitSlot>();
         _fieldSlots = GetComponentsInChildren<FieldSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
@@ -57,25 +61,28 @@ public class InventoryManager : Singleton<InventoryManager>
         {
 
           
-            UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-            unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
-            commonUnit.Add(unit1);
+            //UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
+            //unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
+            //commonUnit.Add(unit1);
 
 
-            UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-            unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
-            commonUnit.Add(unit2);
+            //UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
+            //unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
+            //commonUnit.Add(unit2);
 
 
-            UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-            unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
-            commonUnit.Add(unit3);
+            //UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
+            //unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
+            //commonUnit.Add(unit3);
 
 
             // 웨이브 끝날 때마다 유닛 위치 초기화
             WaveManager.Instance.OnClearWave += UnitPosReset;
 
         }
+
+
+
     }
 
 
@@ -102,17 +109,23 @@ public class InventoryManager : Singleton<InventoryManager>
                 break;
         }
 
-       
-          // 오브젝트 풀링으로 추후 수정해야.
-     
-            if (_unitList != null)
+
+        // 오브젝트 풀링으로 추후 수정해야.
+
+        if (_unitList != null)
+        {
+
+            _unitList.UpdateUnits(unitsToShow);
+
+            foreach (var unit in unitsToShow)
             {
+                int unitcount = UnitHas.ContainsKey(unit._unitData.name) ? UnitHas[unit._unitData.name] : 0;
+                //_unitList.UpdateUnitCount(unit, unitCount);
+            }
 
-                _unitList.UpdateUnits(unitsToShow);      
-                
-             }
+        }
 
-  
+
 
     }
 
@@ -279,6 +292,18 @@ public class InventoryManager : Singleton<InventoryManager>
             return true;
         }
         return false;
+    }
+
+
+    // 소환 가능 수 비교 
+    public bool CanSummonUnit()
+    {
+        bool canSummon = SummonUnitCount < MaxSummonUnitCount;
+        if (!canSummon)
+        {
+            Debug.Log($"최대 소환 가능 수({MaxSummonUnitCount})에 도달했습니다!");
+        }
+        return canSummon;
     }
 
 }

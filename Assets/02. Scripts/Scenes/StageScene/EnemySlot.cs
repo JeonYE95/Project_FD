@@ -14,22 +14,46 @@ public class EnemySlot : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemy = null;
-    public GameObject Ehemy => _enemy;
+    public GameObject Enemy => _enemy;
 
 
 
     private void Start()
     {
-        // 자신의 순서를 인덱스로 자동 할당 
+
+        StartCoroutine(DelayedRegister());
+
+
+    }
+
+    private IEnumerator DelayedRegister()
+    {
+        // 한 프레임 기다려서 UI 레이아웃이 업데이트되도록 함
+        yield return null;
+
         _index = transform.GetSiblingIndex();
 
-        // SpawnManager에 자신을 등록
         if (SpawnManager.Instance != null)
         {
             SpawnManager.Instance.RegisterEnemySlot(this);
         }
     }
 
+
+    public void SetEnemy(GameObject enemy)
+    {
+        _enemy = enemy;
+
+        if (enemy != null)
+        {
+            // SpawnManager에서 저장된 위치 사용
+            Vector3 worldPos = SpawnManager.Instance.GetEnemyPosition(_index);
+
+            // SpawnManager의 Enemies 오브젝트 아래에 배치
+            enemy.transform.SetParent(SpawnManager.Instance.EnemiesParent);
+            enemy.transform.position = worldPos;
+        }
+    }
 
 
 }

@@ -810,12 +810,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39dc322f877242dc8827d1701ba697d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageBtn1_1: {fileID: 8504379621346955150}
-  stageBtn1_2: {fileID: 2118492332318870655}
-  stageBtn1_3: {fileID: 8150543799622705168}
-  stageBtn1_4: {fileID: 8982641104873704312}
-  stageBtn1_5: {fileID: 8550667197283598080}
-  exitBtn: {fileID: 7227123893686825896}
+  _stageBtn1_1: {fileID: 8504379621346955150}
+  _stageBtn1_2: {fileID: 0}
+  _stageBtn1_3: {fileID: 0}
+  _stageBtn1_4: {fileID: 0}
+  _stageBtn1_5: {fileID: 0}
+  _exitBtn: {fileID: 0}
 --- !u!1 &4761828425251987017
 GameObject:
   m_ObjectHideFlags: 0

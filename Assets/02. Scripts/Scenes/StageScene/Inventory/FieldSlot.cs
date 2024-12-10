@@ -18,6 +18,22 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     public void SetCharacter(GameObject character)
     {
         _character = character;
+
+        if (character != null)
+        {
+            // 유닛을 Characters 오브젝트의 자식으로 설정
+            character.transform.SetParent(FieldManager.Instance.CharactersParent);
+
+            // UI 위치를 기준으로 적절한 월드 좌표 계산
+            Vector3 screenPos = transform.position;
+            screenPos.z = 10f; // 카메라로부터의 거리 설정
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+
+           
+
+            character.transform.position = worldPos;
+        }
+
     }
 
     // 몇번째 필드인지 정보 저장
@@ -31,6 +47,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     public void DropCharacter(UnitInfo unitInfo)
     {
+
+        // 최대 소환 가능 수 도달하면 소환 불가
+        if (!InventoryManager.Instance.CanSummonUnit())
+        {
+            return;
+        }
+
 
         Vector3 uiPosition = transform.position;
 
@@ -46,7 +69,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         if (_character != null)
         {
             // 부모-자식 관계 설정
-            _character.transform.SetParent(this.transform);
+            _character.transform.SetParent(FieldManager.Instance.CharactersParent);
 
             // 위치 설정
             _character.transform.position = worldPosition;
@@ -101,6 +124,13 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         if (characterSlot != null && _character == null)
         {
 
+            // 최대 소환 가능 수 도달 시 소환 불가
+            if (!InventoryManager.Instance.CanSummonUnit())
+            {
+                return;
+            }
+
+
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)
             {
@@ -122,35 +152,35 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 _character = fromSlot._character;
                 fromSlot._character = null;
 
-                // 부모-자식 관계 및 위치 업데이트
-                _character.transform.SetParent(transform);
-
-                // RectTransform 위치를 사용하여 월드 좌표 계산
-                Vector3 uiPosition = GetComponent<RectTransform>().position;
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiPosition.x, uiPosition.y, Camera.main.nearClipPlane));
-                worldPosition.z = 0;
-                _character.transform.position = worldPosition;
+                // 캐릭터 위치 업데이트
+                Vector3 mousePos = transform.position;
+                mousePos.z = 10f;
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
+                _character.transform.position = worldPos;
 
             }
 
             //현재 필드에 캐릭터가 있는 경우 - 교환
             else
             {
-                // 캐릭터 교환
+                //유닛 교환
                 GameObject tempCharacter = _character;
                 _character = fromSlot._character;
                 fromSlot._character = tempCharacter;
 
-                // 각각의 부모-자식 관계 및 위치 업데이트
-                _character.transform.SetParent(transform);
-                Vector3 thisPosition = Camera.main.ScreenToWorldPoint(transform.position);
-                thisPosition.z = 0;
-                _character.transform.position = thisPosition;
+                //각 유닛 위치 업데이트
+                Vector3 thisPos = transform.position;
+                thisPos.z = 10f;
+                Vector3 thisWorldPos = Camera.main.ScreenToWorldPoint(thisPos);
+                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
+                _character.transform.position = thisWorldPos;
 
-                tempCharacter.transform.SetParent(fromSlot.transform);
-                Vector3 otherPosition = Camera.main.ScreenToWorldPoint(fromSlot.transform.position);
-                otherPosition.z = 0;
-                tempCharacter.transform.position = otherPosition;
+                Vector3 otherPos = fromSlot.transform.position;
+                otherPos.z = 10f;
+                Vector3 otherWorldPos = Camera.main.ScreenToWorldPoint(otherPos);
+                tempCharacter.transform.SetParent(FieldManager.Instance.CharactersParent);
+                tempCharacter.transform.position = otherWorldPos;
             }
 
         }

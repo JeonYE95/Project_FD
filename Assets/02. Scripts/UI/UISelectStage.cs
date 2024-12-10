@@ -4,32 +4,32 @@ using UnityEngine.UI;
 
 public class UISelectStage : UIBase
 {
-    [SerializeField] private Button stageBtn1_1;
-    [SerializeField] private Button stageBtn1_2;
-    [SerializeField] private Button stageBtn1_3;
-    [SerializeField] private Button stageBtn1_4;
-    [SerializeField] private Button stageBtn1_5;
-    [SerializeField] private Button exitBtn;
+    [SerializeField] private Button _stageBtn1_1;
+    [SerializeField] private Button _stageBtn1_2;
+    [SerializeField] private Button _stageBtn1_3;
+    [SerializeField] private Button _stageBtn1_4;
+    [SerializeField] private Button _stageBtn1_5;
+    [SerializeField] private Button _exitBtn;
 
-    private UIInGame uiInGame;
-    private UISelectStage uiSelectStage;
+    private UIInGame _uiInGame;
+    private UISelectStage _uiSelectStage;
 
     void Start()
     {
-        stageBtn1_1.onClick.AddListener(() => 
+        _stageBtn1_1.onClick.AddListener(() => 
         { 
             LoadInGameScene();
         });
         
-        exitBtn.onClick.AddListener(() => { Close(); });
+        _exitBtn.onClick.AddListener(() => { Close(); });
     }
 
     private void OpenInGameUI()
     {
-        if (uiInGame == null)
-            uiInGame = UIManager.Instance.GetUI<UIInGame>();
+        if (_uiInGame == null)
+            _uiInGame = UIManager.Instance.GetUI<UIInGame>();
         
-        uiInGame.Open();
+        _uiInGame.Open();
     }
 
     private void LoadInGameScene()

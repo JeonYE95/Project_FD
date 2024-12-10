@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class UIStart : UIBase
 {
-    [SerializeField] private Button startBtn;
+    [SerializeField] private Button _startBtn;
 
     private UIMain uiMain;
 
     private void Start()
     {
-        startBtn.onClick.AddListener(() => { LoadMainScene(); });
+        _startBtn.onClick.AddListener(() => { LoadMainScene(); });
     }
 
     private void OpenMainUI()
