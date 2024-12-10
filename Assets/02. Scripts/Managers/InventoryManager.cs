@@ -186,6 +186,11 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             UnitHas[unitName._unitData.name] += amount;
 
+            Defines.UnitGrade addedUnitGrade = GetUnitGrade(unitName._unitData.grade);
+            if (addedUnitGrade == _currentSelectedGrade)
+            {
+                UpdateUnitGrade(_currentSelectedGrade);
+            }
         }
         else
         {
@@ -304,6 +309,16 @@ public class InventoryManager : Singleton<InventoryManager>
             Debug.Log($"최대 소환 가능 수({MaxSummonUnitCount})에 도달했습니다!");
         }
         return canSummon;
+    }
+
+    public int GetUnitCount(string unitName)
+    {
+        if (UnitHas.ContainsKey(unitName))
+        {
+            return UnitHas[unitName];
+        }
+
+        return 0;
     }
 
 }

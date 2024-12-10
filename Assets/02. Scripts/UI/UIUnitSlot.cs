@@ -54,10 +54,10 @@ public class UIUnitSlot : MonoBehaviour
                 unitNameTxt.text = unit._unitData.name;
             }
 
-            // if (unitCountTxt != null)
-            // {
-            //     unitCountTxt.text = unit._unitData.count;
-            // }
+            if (unitCountTxt != null)
+            {
+                unitCountTxt.text = $"x{InventoryManager.Instance.GetUnitCount(unit._unitData.name)}";
+            }
 
             if (unitImg != null)
             {
