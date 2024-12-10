@@ -59,12 +59,8 @@ public class SpawnManager : Singleton<SpawnManager>
         // 최대 인덱스 업데이트
         _maxSlotIndex = Mathf.Max(_maxSlotIndex, slot.Index);
 
-
-        //EnemySlot의 위치를 월드 좌표로 변환하여 저장
-        Vector3 screenPos = slot.transform.position;
-        screenPos.z = 10f;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        _enemyPositions[slot.Index] = worldPos;
+        // RectTransform의 월드 위치 구하기
+        _enemyPositions[slot.Index] = Extensions.GetUIWorldPosition(slot.GetComponent<RectTransform>());
 
 
     }
@@ -145,6 +141,20 @@ public class SpawnManager : Singleton<SpawnManager>
             _activeEnemies[enemyID] = new List<GameObject>();
         }
         _activeEnemies[enemyID].Add(enemy);
+
+
+
+        // 적 등록
+        EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
+        if (enemyUnit != null)
+        {
+            BattleManager.Instance.RegisterUnit(enemyUnit);
+        }
+        else
+        {
+            Debug.LogError($"Enemy GameObject does not have EnemyUnit component: {enemyID}");
+            return;
+        }
 
         _enemySlots[spawnPosition].SetEnemy(enemy);
 

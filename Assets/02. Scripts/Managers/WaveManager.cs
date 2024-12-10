@@ -128,15 +128,16 @@ public class WaveManager : Singleton<WaveManager>
 
         IsRunningWave = false;
 
-        CurrentWave++;
-        //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
-
         if (CurrentWave == _endWave)
         {
             OnWaveAllClear?.Invoke();
             return;
 
         }
+
+        CurrentWave++;
+        //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
+
 
 
         //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
@@ -159,7 +160,7 @@ public class WaveManager : Singleton<WaveManager>
                 if (reward.RewardID == 3001)
                     StageManager.Instance.Gold += reward.count;
 
-                else
+              
                     Debug.Log($" 추가 재화 : {reward.count} 획득");
 
             }
@@ -197,7 +198,7 @@ public class WaveManager : Singleton<WaveManager>
 
 
         OnClearWave?.Invoke();
-        SpawnManager.Instance.SpawnEnemy();
+       
 
 
 

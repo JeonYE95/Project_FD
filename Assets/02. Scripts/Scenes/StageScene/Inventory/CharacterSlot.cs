@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Transform _previousPosition;
+    private Canvas _canvas; // Canvas 참조 캐싱용 변수 추가
 
     [SerializeField]
     private Image _draggedCharacterPreview;
@@ -27,6 +28,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     {
 
         _UIUnitSlot = GetComponentInParent<UIUnitSlot>();
+        _canvas = GetComponentInParent<Canvas>(); // Start에서 한 번만 가져오기
 
 
         if (InventoryManager.Instance.PreviewObject == null)
@@ -102,10 +104,14 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         _draggedCharacterPreview = _previewObject.AddComponent<Image>();
         _draggedCharacterPreview.raycastTarget = false;
 
+        RectTransform rectTransform = _previewObject.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(100, 100);
+        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
         UnitPrevInfo previewInfo = _previewObject.AddComponent<UnitPrevInfo>();
 
-        var canvas = FindObjectOfType<Canvas>();
-        _previewObject.transform.SetParent(canvas.transform);
+        // 캐싱된 Canvas 사용
+        _previewObject.transform.SetParent(_canvas.transform, false);
         _previewObject.transform.SetAsLastSibling();
 
         InventoryManager.Instance.PreviewObject = _previewObject;

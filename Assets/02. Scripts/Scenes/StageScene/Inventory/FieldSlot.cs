@@ -7,7 +7,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 {
 
     private Vector3 _previousPosition;
-
+    private Canvas _canvas; // Canvas 참조 캐싱용 
 
     [SerializeField]
     private GameObject _character = null;
@@ -24,14 +24,8 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             // 유닛을 Characters 오브젝트의 자식으로 설정
             character.transform.SetParent(FieldManager.Instance.CharactersParent);
 
-            // UI 위치를 기준으로 적절한 월드 좌표 계산
-            Vector3 screenPos = transform.position;
-            screenPos.z = 10f; // 카메라로부터의 거리 설정
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-
-           
-
-            character.transform.position = worldPos;
+            // UI 요소의 월드 중심점 구하기
+            character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
         }
 
     }
@@ -50,17 +44,15 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
         // 최대 소환 가능 수 도달하면 소환 불가
         if (!InventoryManager.Instance.CanSummonUnit())
-        {
             return;
-        }
 
 
-        Vector3 uiPosition = transform.position;
-
-        // UI 좌표를 월드 좌표로 변환
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiPosition.x, uiPosition.y, Camera.main.nearClipPlane));
-        worldPosition.z = 0; // 2D 게임이라면 z축을 0으로 설정
-
+        // RectTransform의 월드 위치 구하기
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
+        Vector3 worldPosition = (corners[0] + corners[2]) / 2f;
+        worldPosition.z = 0;
 
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
         _character = UnitManager.Instance.CreatePlayerUnit(unitInfo._unitData.ID);
@@ -92,14 +84,15 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         {
             _previousPosition = _character.transform.position;
 
-            Vector3 mousePosition = eventData.position;
-            mousePosition.z = Camera.main.nearClipPlane;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            worldPosition.z = 0;
+            if (_canvas == null)
+            {
+                _canvas = GetComponentInParent<Canvas>();
+            }
 
-            _character.transform.position = worldPosition;
-
+            // UI 요소의 월드 중심점 구하기
+            _character.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
         }
+
 
     }
 
@@ -109,7 +102,14 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
         if (_character != null)
         {
-            _character.transform.position = Camera.main.ScreenToWorldPoint(eventData.position);
+
+            if (_canvas == null)
+            {
+                _canvas = GetComponentInParent<Canvas>();
+            }
+
+
+            _character.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
         }
 
     }
@@ -152,10 +152,10 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 _character = fromSlot._character;
                 fromSlot._character = null;
 
-                // 캐릭터 위치 업데이트
-                Vector3 mousePos = transform.position;
-                mousePos.z = 10f;
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+                // RectTransform의 월드 위치 구하기
+                Vector3 worldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+                
                 _character.transform.SetParent(FieldManager.Instance.CharactersParent);
                 _character.transform.position = worldPos;
 
@@ -170,15 +170,12 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 fromSlot._character = tempCharacter;
 
                 //각 유닛 위치 업데이트
-                Vector3 thisPos = transform.position;
-                thisPos.z = 10f;
-                Vector3 thisWorldPos = Camera.main.ScreenToWorldPoint(thisPos);
+                Vector3 thisWorldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+                Vector3 otherWorldPos = Extensions.GetUIWorldPosition(fromSlot.GetComponent<RectTransform>());
+
                 _character.transform.SetParent(FieldManager.Instance.CharactersParent);
                 _character.transform.position = thisWorldPos;
 
-                Vector3 otherPos = fromSlot.transform.position;
-                otherPos.z = 10f;
-                Vector3 otherWorldPos = Camera.main.ScreenToWorldPoint(otherPos);
                 tempCharacter.transform.SetParent(FieldManager.Instance.CharactersParent);
                 tempCharacter.transform.position = otherWorldPos;
             }
