@@ -117,11 +117,11 @@ public class InventoryManager : Singleton<InventoryManager>
 
             _unitList.UpdateUnits(unitsToShow);
 
-            foreach (var unit in unitsToShow)
-            {
-                int unitcount = UnitHas.ContainsKey(unit._unitData.name) ? UnitHas[unit._unitData.name] : 0;
-                //_unitList.UpdateUnitCount(unit, unitCount);
-            }
+            //foreach (var unit in unitsToShow)
+            //{
+            //    int unitcount = UnitHas.ContainsKey(unit._unitData.name) ? UnitHas[unit._unitData.name] : 0;
+            //    _unitList.UpdateUnitCount(unit, unitcount);
+            //}
 
         }
 

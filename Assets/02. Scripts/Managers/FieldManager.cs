@@ -62,11 +62,9 @@ public class FieldManager : Singleton<FieldManager>
     public void AddUnitToField(int unitID)      // 필드에 유닛 생성 배치
     {
         var unitData = UnitDataManager.Instance.GetUnitData(unitID);
-
         if (unitData == null) return;
 
         GameObject unitInstance = UnitManager.Instance.CreatePlayerUnit(unitID);
-
         if (unitInstance == null) return;
 
         foreach (var slot in _fieldSlots)
@@ -76,6 +74,7 @@ public class FieldManager : Singleton<FieldManager>
                 slot.SetCharacter(unitInstance);
                 unitInstance.transform.SetParent(slot.transform);
                 unitInstance.transform.localPosition = Vector3.zero;
+
                 return;
             }
         }
