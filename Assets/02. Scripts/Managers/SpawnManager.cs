@@ -54,7 +54,12 @@ public class SpawnManager : Singleton<SpawnManager>
         if (slot == null)
             return;
 
-        _enemySlots[slot.Index] = slot;
+
+        int newIndex = _enemySlots.Count;
+        
+        slot.SetIndex(newIndex);
+
+        _enemySlots[newIndex] = slot;
 
         // 최대 인덱스 업데이트
         _maxSlotIndex = Mathf.Max(_maxSlotIndex, slot.Index);
