@@ -815,7 +815,7 @@ MonoBehaviour:
   _stageBtn1_3: {fileID: 0}
   _stageBtn1_4: {fileID: 0}
   _stageBtn1_5: {fileID: 0}
-  _exitBtn: {fileID: 0}
+  _exitBtn: {fileID: 7227123893686825896}
 --- !u!1 &4761828425251987017
 GameObject:
   m_ObjectHideFlags: 0
