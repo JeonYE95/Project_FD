@@ -116,7 +116,11 @@ public class BattleManager : Singleton<BattleManager>
 
     private void ResetAllUnit()
     {
-
+        //몬스터는 소환될때 리셋되고 배틀 끝나면 다른 몬스터 써서 리셋 필요없음
+        foreach(BaseUnit unit in players)
+        {
+            unit.ReSetUnit();
+        }
     }
 
     private void TestSpawn()
