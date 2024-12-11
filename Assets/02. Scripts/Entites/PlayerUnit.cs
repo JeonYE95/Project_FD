@@ -38,11 +38,18 @@ public class PlayerUnit : BaseUnit
 
     public override void PlayWaitAnimation()
     {
+        /*animController.ResetAttackTrigger();
+        animController.ResetDeathTrigger();
+
         animController.SetTrigger(PlayerAnimData.ResetAnim);
         animController.SetBool(PlayerAnimData.isIdle, true);
         animController.SetBool(PlayerAnimData.isMoving, false);
-        animController.ResetAttackTrigger();
-        animController.ResetDeathTrigger();
+
+        Debug.Log($"{gameObject.name} 웨이트");*/
+
+        //animController.ResetAnim();
+
+        animController.SetTrigger(PlayerAnimData.ResetAnim);
     }
 
     public override void PlayIdleAnimation()
@@ -70,6 +77,6 @@ public class PlayerUnit : BaseUnit
     {
         animController.ResetAttackTrigger();
         animController.SetTrigger(PlayerAnimData.Death);
-        Debug.Log($"{gameObject.name}: Death 애니메이션 실행");
+        //Debug.Log($"{gameObject.name}: Death 애니메이션 실행");
     }
 }

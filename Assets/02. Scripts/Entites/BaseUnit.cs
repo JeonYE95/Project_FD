@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
+using Assets.HeroEditor.Common.Scripts.CharacterScripts;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -123,7 +124,23 @@ public class BaseUnit : MonoBehaviour
         actionHandler.ResetAttackCoolTime();
 
         stateMachine?.ChangeState(stateMachine.WaitState);
+
+        //GetComponentInChildren<CharacterAnimation>().
+        //ResetTransformRecursive(transform);
     }
+
+    private void ResetTransformRecursive(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            //child.localPosition = Vector3.zero;
+            child.localRotation = Quaternion.identity;
+
+            // 자식의 자식도 초기화
+            ResetTransformRecursive(child);
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -196,6 +213,7 @@ public class BaseUnit : MonoBehaviour
     public void CallDieEvent()
     {
         OnDieEvent?.Invoke(this);
+        Debug.Log($"{gameObject.name} 콜다이이벤트");
     }
 
     public virtual void PlayWaitAnimation() {}
