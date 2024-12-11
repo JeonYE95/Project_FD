@@ -132,4 +132,48 @@ public class UnitAnimationController : MonoBehaviour
             animator?.ResetTrigger(EnemyAnimData.DeathState);
         }
     }
+
+    public void ResetAnim()
+    {
+        /*animator.enabled = false;
+        animator.enabled = true;
+
+        animator.Rebind(); // 애니메이터 초기화
+        animator.Update(0f); // 즉시 갱신
+
+        ResetAnimationsRecursive(transform);*/
+    }
+
+    void ResetAllAnimations(GameObject obj)
+    {
+        // Animator 초기화
+        Animator animator = obj.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        // Animation 초기화
+        Animation animation = obj.GetComponent<Animation>();
+        if (animation != null)
+        {
+            foreach (AnimationState state in animation)
+            {
+                state.time = 0f;
+            }
+            animation.Stop();
+        }
+    }
+
+    void ResetAnimationsRecursive(Transform root)
+    {
+        foreach (Transform child in root)
+        {
+            ResetAllAnimations(child.gameObject);
+            ResetAnimationsRecursive(child); // 자식 객체도 초기화
+        }
+    }
+
+
 }

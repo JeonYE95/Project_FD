@@ -13,9 +13,10 @@ public class ObjectPool : Singleton<ObjectPool>
     }
 
     [SerializeField]
-    public List<Pool> Pools;
-    public Dictionary<string, Queue<GameObject>> PoolDictionary;
-    public Dictionary<string, GameObject> PrefabDictionary;
+    private List<Pool> pools = new List<Pool>();
+    private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>(); // 풀 확장 때 추가하기위한 프리팹 저장
+
 
     protected override void Awake()
     {
@@ -23,14 +24,21 @@ public class ObjectPool : Singleton<ObjectPool>
         InitializePools();
     }
 
+
+    public bool HasPool(string tag)
+    {
+        return poolDictionary != null && poolDictionary.ContainsKey(tag);
+    }
+
     private void InitializePools()
     {
-        PoolDictionary = new Dictionary<string, Queue<GameObject>>();
-        PrefabDictionary = new Dictionary<string, GameObject>();
 
-        foreach (Pool pool in Pools)
+        foreach (Pool pool in pools)
         {
-            CreatePool(pool);
+            if (pool != null && pool.prefab != null)
+            {
+                CreatePool(pool);
+            }
         }
     }
 
@@ -38,68 +46,86 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
 
+
         for (int i = 0; i < pool.size; i++)
         {
             GameObject obj = CreateNewPoolObject(pool.prefab);
             objectPool.Enqueue(obj);
         }
 
-        PoolDictionary.Add(pool.tag, objectPool);
-        PrefabDictionary.Add(pool.tag, pool.prefab);
+        poolDictionary[pool.tag] = objectPool;
+        prefabDictionary[pool.tag] = pool.prefab;
     }
 
     private GameObject CreateNewPoolObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab);
+        obj.transform.SetParent(prefab.transform.parent);
         obj.SetActive(false);
         return obj;
     }
 
     public GameObject SpawnFromPool(string tag, Vector3 position = default, Quaternion rotation = default)
     {
-        if (!PoolDictionary.ContainsKey(tag))
+        if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogError($"Pool with tag {tag} doesn't exist.");
             return null;
         }
 
-        Queue<GameObject> pool = PoolDictionary[tag];
+        Queue<GameObject> pool = poolDictionary[tag];
         GameObject obj = null;
 
-        // 풀에 오브젝트가 있는 경우
         if (pool.Count > 0)
         {
             obj = pool.Dequeue();
+            pool.Enqueue(obj);
+
+            if (obj.activeInHierarchy)
+            {
+                obj = TryExpandPool(tag);
+            }
         }
-        // 풀이 비어있는 경우
         else
         {
-            Pool poolSettings = Pools.Find(p => p.tag == tag);
-            if (poolSettings != null && poolSettings.canExpand)
-            {
-                Debug.Log($"Pool {tag} is empty. Creating new object...");
-                obj = CreateNewPoolObject(PrefabDictionary[tag]);
-            }
-            else
-            {
-                Debug.LogWarning($"Pool {tag} is empty and cannot expand.");
-                return null;
-            }
+            obj = TryExpandPool(tag);
         }
 
-        obj.transform.position = position;
-        obj.transform.rotation = rotation;
-        obj.SetActive(true);
-        pool.Enqueue(obj);
+        if (obj != null)
+        {
+            obj.transform.position = position;
+            obj.transform.rotation = rotation;
+            obj.SetActive(true);
+        }
 
         return obj;
     }
 
+
+    //풀이 가득 찼을 때 혹은 모두 활성화 상태 일때 새로 생성하여 풀 확장
+    private GameObject TryExpandPool(string tag)
+    {
+
+        Pool poolSettings = pools.Find(p => p.tag == tag);
+        if (poolSettings != null && poolSettings.canExpand)
+        {
+            GameObject obj = CreateNewPoolObject(prefabDictionary[tag]);
+            poolDictionary[tag].Enqueue(obj);
+            return obj;
+        }
+
+        return null;
+
+    }
+
+
     // 범용적인 프리팹 등록 메서드
     public void RegisterPrefab(string tag, GameObject prefab, int poolSize, bool canExpand = true)
     {
+
+
         // 이미 등록된 풀이 있다면 스킵
-        if (PoolDictionary.ContainsKey(tag))
+        if (poolDictionary.ContainsKey(tag))
         {
             Debug.LogWarning($"Pool with tag {tag} already exists.");
             return;
@@ -113,14 +139,14 @@ public class ObjectPool : Singleton<ObjectPool>
             canExpand = canExpand
         };
 
-        Pools.Add(newPool);
+        pools.Add(newPool);
         CreatePool(newPool);
     }
 
     // 오브젝트 반환 메서드
     public void ReturnToPool(GameObject obj, string tag)
     {
-        if (!PoolDictionary.ContainsKey(tag))
+        if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogError($"Pool with tag {tag} doesn't exist.");
             return;
@@ -132,13 +158,13 @@ public class ObjectPool : Singleton<ObjectPool>
     // 특정 풀의 모든 오브젝트 비활성화
     public void DeactivateAll(string tag)
     {
-        if (!PoolDictionary.ContainsKey(tag))
+        if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogError($"Pool with tag {tag} doesn't exist.");
             return;
         }
 
-        Queue<GameObject> pool = PoolDictionary[tag];
+        Queue<GameObject> pool = poolDictionary[tag];
         foreach (GameObject obj in pool)
         {
             obj.SetActive(false);
