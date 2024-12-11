@@ -24,14 +24,19 @@ public class SpawnManager : Singleton<SpawnManager>
     //EnemySlot 저장 - 어떤 Slot에 어떤 정보 담겨있는지 파악 용도
     private Dictionary<int, EnemySlot> _enemySlots = new Dictionary<int, EnemySlot>();
 
+    //EnemySlot에 있는 적 ID 저장 - 오브젝트 풀 위한 저장
+    private Dictionary<int, List<GameObject>> _activeEnemies = new Dictionary<int, List<GameObject>>();
+
+
+
     public Transform EnemiesParent => _enemiesParent;
 
     protected override void Awake()
     {
         base.Awake();
-        InitializeEnemiesParent(); // Awake에서 Enemies 담을 오브젝트 먼저 초기화
+        InitializeEnemiesParent(); // Awake에서 Enemies 오브젝트 먼저 초기화
         StartCoroutine(WaitForInitialSlotRegistration());
- 
+
     }
 
 
@@ -40,38 +45,6 @@ public class SpawnManager : Singleton<SpawnManager>
         if (_enemiesParent == null)
         {
             _enemiesParent = new GameObject("Enemies").transform;
-        }
-    }
-
-
-   
-
-    private void RegisterEnemyToPool(int enemyID)
-    {
-        string poolTag = $"Enemy_{enemyID}";
-
-        // ObjectPool이 없다면 생성
-        if (ObjectPool.Instance == null)
-        {
-            GameObject poolObj = new GameObject("ObjectPool");
-            poolObj.AddComponent<ObjectPool>();
-        }
-
-        if (!ObjectPool.Instance.HasPool(poolTag))
-        {
-            GameObject enemyPrefab = EnemyManager.Instance.CreateEnemy(enemyID);
-            if (enemyPrefab != null)
-            {
-
-                // 생성된 enemyPrefab의 부모를 제거하고, 위치 초기화
-                enemyPrefab.transform.SetParent(_enemiesParent);
-                enemyPrefab.transform.position = Vector3.zero;
-
-                // 프리팹을 풀에 등록하기 전에 비활성화
-                enemyPrefab.SetActive(false);
-
-                ObjectPool.Instance.RegisterPrefab(poolTag, enemyPrefab, 4, true);
-            }
         }
     }
 
@@ -123,14 +96,6 @@ public class SpawnManager : Singleton<SpawnManager>
         List<WaveData> currentWaveSpawnEnemy = WaveManager.Instance.CurrentWaveData;
 
 
-        // 웨이브의 Enemy들을 풀에 등록
-        foreach (WaveData waveData in currentWaveSpawnEnemy)
-        {
-            RegisterEnemyToPool(waveData.enemyID);
-        }
-
-
-        // 등록된 풀에서 소환
         foreach (WaveData waveData in currentWaveSpawnEnemy)
         {
             // WaveData에서 필요한 정보 추출
@@ -138,14 +103,14 @@ public class SpawnManager : Singleton<SpawnManager>
             int enemyID = waveData.enemyID;
 
             // 적 소환 및 위치 조정
-            AdjustEnemyPosition(spawnPosition, enemyID);
+            adjustEnemyPosition(spawnPosition, enemyID);
 
             
         }
 
     }
 
-    private void AdjustEnemyPosition(int spawnPosition, int enemyID)
+    private void adjustEnemyPosition(int spawnPosition, int enemyID)
     {
 
 
@@ -156,24 +121,39 @@ public class SpawnManager : Singleton<SpawnManager>
             return;
         }
 
-        // 풀에서 Enemy 가져오기
+        GameObject enemy;
 
-        Vector3 position = GetEnemyPosition(spawnPosition);
-        string poolTag = $"Enemy_{enemyID}";
-        GameObject enemy = ObjectPool.Instance.SpawnFromPool(poolTag, position);
-
-    
-        if (enemy != null)
+        // 같은 ID의 비활성화된 적이 있는지 확인
+        if (_activeEnemies.TryGetValue(enemyID, out var enemies))
         {
-            enemy.transform.position = position;
-            RegisterEnemyToBattle(enemy);
-            _enemySlots[spawnPosition].SetEnemy(enemy);
-        }
-        else
-        {
-            Debug.LogError($"Failed to spawn enemy with ID: {enemyID}");
+            enemy = enemies.Find(e => !e.activeSelf);
+            if (enemy != null)
+            {
+                // 비활성화된 적을 재사용
+                enemy.SetActive(true);
+
+                //적 전투 등록
+                RegisterEnemyToBattle(enemy);
+                _enemySlots[spawnPosition].SetEnemy(enemy);
+
+                return;
+            }
         }
 
+        // 재사용 가능한 적이 없으면 새로 생성
+        enemy = EnemyManager.Instance.CreateEnemy(enemyID);
+        if (enemy == null) return;
+
+        // 생성된 적을 추적 목록에 추가
+        if (!_activeEnemies.ContainsKey(enemyID))
+        {
+            _activeEnemies[enemyID] = new List<GameObject>();
+        }
+        _activeEnemies[enemyID].Add(enemy);
+
+        //적 전투 등록
+        RegisterEnemyToBattle(enemy);
+        _enemySlots[spawnPosition].SetEnemy(enemy);
 
     }
 
@@ -224,11 +204,8 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         if (enemy == null) return;
 
-        string poolTag = $"Enemy_{enemyID}";
-
-        // 풀로 반환하기 전에 부모 제거
+        enemy.SetActive(false);
         enemy.transform.SetParent(null);
-        ObjectPool.Instance.ReturnToPool(enemy, poolTag);
     }
 
 
