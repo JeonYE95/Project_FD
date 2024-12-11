@@ -56,7 +56,6 @@ namespace GSDatas
 
 /* Fields. */
 
-		public System.Int32 combineID;
 		public System.Int32 reuslutUnit;
 		public System.Int32 requiredunit1;
 		public System.Int32 requiredunit2;
@@ -177,7 +176,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.combineID, instance);
+                            Map.Add(instance.reuslutUnit, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 

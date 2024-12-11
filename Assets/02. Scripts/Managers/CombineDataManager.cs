@@ -22,11 +22,11 @@ public class CombineDataManager : CombineData
         return GetList();
     }
 
-    public CombineData GetCombineData(int combineId)
+    public CombineData GetCombineData(int ID)
     {
-        if (CombineDataMap.TryGetValue(combineId, out var combineData))
+        if (CombineDataMap.TryGetValue(ID, out var data))
         {
-            return combineData;
+            return data;
         }
         return null;
     }
