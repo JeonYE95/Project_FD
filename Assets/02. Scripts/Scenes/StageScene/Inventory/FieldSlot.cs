@@ -120,10 +120,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
             // UI 요소의 월드 중심점 구하고 위치 설정
             Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-           
-
+            
             // 위치 설정
-            _character.transform.position = worldPosition;
+            _character.transform.localPosition = worldPosition;
 
             // 초기 위치 저장
             _previousPosition = worldPosition;
