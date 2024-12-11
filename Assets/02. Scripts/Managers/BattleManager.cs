@@ -122,7 +122,7 @@ public class BattleManager : Singleton<BattleManager>
         foreach(BaseUnit unit in players)
         {
             unit.ReSetUnit();
-            unit.animController.ResetAnim();
+            //unit.animController.ResetAnim();
         }
         
         Debug.Log("ResetAllUnit");
