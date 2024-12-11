@@ -131,7 +131,11 @@ public class SpawnManager : Singleton<SpawnManager>
             {
                 // 비활성화된 적을 재사용
                 enemy.SetActive(true);
+
+                //적 전투 등록
+                RegisterEnemyToBattle(enemy);
                 _enemySlots[spawnPosition].SetEnemy(enemy);
+
                 return;
             }
         }
@@ -147,21 +151,8 @@ public class SpawnManager : Singleton<SpawnManager>
         }
         _activeEnemies[enemyID].Add(enemy);
 
-
-
-        // 적 등록
-        EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
-        if (enemyUnit != null)
-        {
-            //BattleManager.Instance.RegisterUnit(enemyUnit);
-            enemyUnit.RegisterToBattleManager();
-        }
-        else
-        {
-            Debug.LogError($"Enemy GameObject does not have EnemyUnit component: {enemyID}");
-            return;
-        }
-
+        //적 전투 등록
+        RegisterEnemyToBattle(enemy);
         _enemySlots[spawnPosition].SetEnemy(enemy);
 
     }
@@ -192,6 +183,21 @@ public class SpawnManager : Singleton<SpawnManager>
         return _maxSlotIndex >= 0;  // 최소한 하나의 슬롯은 있어야 함
     }
 
+
+    private void RegisterEnemyToBattle(GameObject enemy)
+    {
+
+        EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
+        if (enemyUnit != null)
+        {
+            enemyUnit.RegisterToBattleManager();
+        }
+        else
+        {
+            Debug.LogError($"Enemy GameObject does not have EnemyUnit component");
+        }
+
+    }
 
 
     public void DeactivateEnemy(GameObject enemy, int enemyID)
