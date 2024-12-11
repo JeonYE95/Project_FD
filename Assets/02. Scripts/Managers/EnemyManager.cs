@@ -63,18 +63,18 @@ public class EnemyManager : Singleton<EnemyManager>
             var skillData = SkillDataManager.Instance.GetSkillByUnitID(data.ID);
 
             // _skillData 생성 (InGameSkillData)
-            if (skillExecutor._skillData == null)
+            if (skillExecutor._gameSkillData == null)
             {
-                skillExecutor._skillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
+                skillExecutor._gameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
             }
 
             if (skillData == null) // 스킬 데이터가 없으면
             {
-                skillExecutor._skillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
+                skillExecutor._gameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
             }
             else
             {
-                skillExecutor._skillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
+                skillExecutor._gameSkillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
             }
         }
 

@@ -103,7 +103,10 @@ public class BaseUnit : MonoBehaviour
         OnDieEvent -= UnitDeActive;
         OnDieEvent -= BattleManager.Instance.UnitDie;
 
-        BattleManager.Instance?.UnRegisterUnit(this);
+        if (this is PlayerUnit)
+        {
+            BattleManager.Instance.UnRegisterUnit(this);
+        }
         
         //gameObject.SetActive(false);
     }
@@ -119,8 +122,7 @@ public class BaseUnit : MonoBehaviour
         actionHandler.ResetSkillCoolTime();
         actionHandler.ResetAttackCoolTime();
 
-        //아예 가만히 있는 애니메이션으로 셋팅
-        animController.SetBool(PlayerAnimData.isWaiting, true);
+        stateMachine?.ChangeState(stateMachine.WaitState);
     }
 
     // Update is called once per frame
@@ -195,6 +197,8 @@ public class BaseUnit : MonoBehaviour
     {
         OnDieEvent?.Invoke(this);
     }
+
+    public virtual void PlayWaitAnimation() {}
 
     public virtual void PlayIdleAnimation() {}
 

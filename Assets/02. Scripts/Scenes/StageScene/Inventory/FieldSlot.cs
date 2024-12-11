@@ -13,8 +13,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     private GameObject _character = null;
     public GameObject Character => _character;
 
+    // FieldSlot에 직렬화 필드 추가
+    [SerializeField] private int _slotIndex;
+
     // 몇번째 필드인지 정보 저장
-    public int Index { get; private set; }
+    public int Index => _slotIndex;
 
     private void Awake()
     {
@@ -22,16 +25,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         InventoryManager.Instance.RegisterFieldSlot(this);
     }
 
-
-    private void Start()
-    {
-        //자신의 순서를 인덱스로 자동 할당
-        Index = transform.GetSiblingIndex();
-    }
-
     public void SetIndex(int index)
     {
-        Index = index;
+        _slotIndex = index;
     }
 
 
@@ -139,13 +135,6 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         CharacterSlot characterSlot = eventData.pointerDrag.GetComponent<CharacterSlot>();
         if (characterSlot != null && _character == null)
         {
-
-            // 최대 소환 가능 수 도달 시 소환 불가
-            if (!InventoryManager.Instance.CanSummonUnit())
-            {
-                return;
-            }
-
 
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)

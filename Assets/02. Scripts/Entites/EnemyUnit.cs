@@ -23,6 +23,13 @@ public class EnemyUnit : BaseUnit
         attackCooltime = unitInfo._enemyData.attackCooltime;
     }
 
+    public override void PlayWaitAnimation()
+    {
+        animController.SetState(EnemyAnimData.IdleState);
+        animController.ResetAttackTrigger();
+        animController.ResetDeathTrigger();
+    }
+
     public override void PlayIdleAnimation()
     {
         animController.SetState(EnemyAnimData.IdleState);
