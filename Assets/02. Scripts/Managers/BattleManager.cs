@@ -83,14 +83,14 @@ public class BattleManager : Singleton<BattleManager>
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
-        //WaveManager.Instance.Victroy();
+        WaveManager.Instance.Victroy();
     }
 
     private IEnumerator Lose()
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
-        //WaveManager.Instance.Lose();
+        WaveManager.Instance.Lose();
     }
 
     private void BattleEnd()
@@ -98,7 +98,7 @@ public class BattleManager : Singleton<BattleManager>
         foreach (var unit in allUnits)
         {
             unit.isLive = false;
-            unit.SetActive(false);
+            unit.gameObject.SetActive(false);
         }
 
         foreach (var unit in enemies)

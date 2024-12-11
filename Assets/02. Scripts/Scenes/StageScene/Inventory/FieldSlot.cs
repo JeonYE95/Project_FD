@@ -59,13 +59,6 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             return;
 
 
-        // RectTransform의 월드 위치 구하기
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        Vector3[] corners = new Vector3[4];
-        rectTransform.GetWorldCorners(corners);
-        Vector3 worldPosition = (corners[0] + corners[2]) / 2f;
-        worldPosition.z = 0;
-
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
         _character = UnitManager.Instance.CreatePlayerUnit(unitInfo._unitData.ID);
 
@@ -74,6 +67,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         {
             // 부모-자식 관계 설정
             _character.transform.SetParent(FieldManager.Instance.CharactersParent);
+
+
+            // UI 요소의 월드 중심점 구하고 위치 설정
+            Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+           
 
             // 위치 설정
             _character.transform.position = worldPosition;

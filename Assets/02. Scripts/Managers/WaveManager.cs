@@ -207,6 +207,8 @@ public class WaveManager : Singleton<WaveManager>
 
         currentPreparationTime = preparationTime;
 
+        Debug.Log(currentPreparationTime);
+
         while (currentPreparationTime > 0)
         {
             OnPreparationTimeChanged?.Invoke(currentPreparationTime);

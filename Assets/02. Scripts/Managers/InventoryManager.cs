@@ -23,7 +23,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     //필드에 소환되어 있는 유닛 추적 : 필드 번호 / 유닛 정보
     private Dictionary<int, UnitInfo> _fieldUnitHas = new Dictionary<int, UnitInfo>();
-    
+
 
     // 필드에 소환되어 있는 유닛 수 
     public int SummonUnitCount => _fieldUnitHas.Count;
@@ -54,33 +54,8 @@ public class InventoryManager : Singleton<InventoryManager>
         _unitList = GetComponentInChildren<UIUnitSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
 
-
-        //테스트 코드 
-
-        {
-
-          
-            //UnitInfo unit1 = gameObject.AddComponent<UnitInfo>();
-            //unit1.SetData(UnitDataManager.Instance.GetUnitData(1001));
-            //commonUnit.Add(unit1);
-
-
-            //UnitInfo unit2 = gameObject.AddComponent<UnitInfo>();
-            //unit2.SetData(UnitDataManager.Instance.GetUnitData(1002));  // Archer ID
-            //commonUnit.Add(unit2);
-
-
-            //UnitInfo unit3 = gameObject.AddComponent<UnitInfo>();
-            //unit3.SetData(UnitDataManager.Instance.GetUnitData(1003));  // Maze ID
-            //commonUnit.Add(unit3);
-
-
-            // 웨이브 끝날 때마다 유닛 위치 초기화
-            WaveManager.Instance.OnClearWave += UnitPosReset;
-
-        }
-
-
+        // 웨이브 끝날 때마다 유닛 위치 초기화
+        WaveManager.Instance.OnClearWave += UnitPosReset;
 
     }
 
