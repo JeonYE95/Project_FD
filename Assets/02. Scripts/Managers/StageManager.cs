@@ -75,5 +75,8 @@ public class StageManager : Singleton<StageManager>
         // DataManager.Instacne.PlayerData.
 
         _stageHealth = 3;
+
+        Debug.Log("스테이지 클리어");
+
     }
 }
