@@ -121,7 +121,8 @@ public class ActionHandler : MonoBehaviour
 
     private void PerformRangedAttack()
     {
-        GameObject attackProjectile = Instantiate(_myUnit.attackProjectile, firePoint.position, Quaternion.identity);
+        //GameObject attackProjectile = Instantiate(_myUnit.attackProjectile, firePoint.position, Quaternion.identity);
+        GameObject attackProjectile = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint.position);
         Vector2 direction = (_targetUnit.transform.position - firePoint.position).normalized;
         attackProjectile.GetComponent<DefaultProjectile>().Initialize(_targetUnit, direction);
     }

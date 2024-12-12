@@ -24,17 +24,12 @@ public class SpawnManager : Singleton<SpawnManager>
     //EnemySlot 저장 - 어떤 Slot에 어떤 정보 담겨있는지 파악 용도
     private Dictionary<int, EnemySlot> _enemySlots = new Dictionary<int, EnemySlot>();
 
-    //EnemySlot에 있는 적 ID 저장 - 오브젝트 풀 위한 저장
-    private Dictionary<int, List<GameObject>> _activeEnemies = new Dictionary<int, List<GameObject>>();
-
-
-
     public Transform EnemiesParent => _enemiesParent;
 
     protected override void Awake()
     {
         base.Awake();
-        InitializeEnemiesParent(); // Awake에서 Enemies 오브젝트 먼저 초기화
+        InitializeEnemiesParent(); // Awake에서 Enemies 담을 오브젝트 먼저 초기화
         StartCoroutine(WaitForInitialSlotRegistration());
 
     }
@@ -49,6 +44,46 @@ public class SpawnManager : Singleton<SpawnManager>
     }
 
 
+    private void RegisterEnemyToPool(int enemyID)
+    {
+        string poolTag = $"Enemy_{enemyID}";
+
+        // ObjectPool이 없다면 생성
+        if (ObjectPool.Instance == null)
+        {
+            GameObject poolObj = new GameObject("ObjectPool");
+            poolObj.AddComponent<ObjectPool>();
+        }
+
+        if (!ObjectPool.Instance.HasPool(poolTag))
+        {
+            GameObject enemyPrefab = EnemyManager.Instance.CreateEnemy(enemyID);
+            if (enemyPrefab != null)
+            {
+
+                InitializePoolPrefab(enemyPrefab, enemyID);
+
+            }
+        }
+    }
+
+
+    private void InitializePoolPrefab(GameObject enemyPrefab, int enemyID)
+    {
+
+        // 생성된 enemyPrefab의 부모를 제거하고, 위치 초기화
+
+        enemyPrefab.transform.SetParent(_enemiesParent);
+        enemyPrefab.transform.position = Vector3.zero;
+
+        // EnemyUnit이 초기화되었는지 확인
+
+        EnemyUnit enemyUnit = enemyPrefab.GetComponent<EnemyUnit>();
+        enemyUnit.SetUnitInfo();
+        enemyPrefab.SetActive(false);
+        ObjectPool.Instance.RegisterPrefab($"Enemy_{enemyID}", enemyPrefab, 5, true);
+    }
+
     public void RegisterEnemySlot(EnemySlot slot)
     {
         if (slot == null)
@@ -56,7 +91,7 @@ public class SpawnManager : Singleton<SpawnManager>
 
 
         int newIndex = _enemySlots.Count;
-        
+
         slot.SetIndex(newIndex);
 
         _enemySlots[newIndex] = slot;
@@ -81,6 +116,7 @@ public class SpawnManager : Singleton<SpawnManager>
     }
 
 
+    //적 소환
     public void SpawnEnemy()
     {
 
@@ -96,6 +132,14 @@ public class SpawnManager : Singleton<SpawnManager>
         List<WaveData> currentWaveSpawnEnemy = WaveManager.Instance.CurrentWaveData;
 
 
+        // 웨이브의 Enemy들을 풀에 등록
+        foreach (WaveData waveData in currentWaveSpawnEnemy)
+        {
+            RegisterEnemyToPool(waveData.enemyID);
+        }
+
+
+        // 등록된 풀에서 소환
         foreach (WaveData waveData in currentWaveSpawnEnemy)
         {
             // WaveData에서 필요한 정보 추출
@@ -103,59 +147,58 @@ public class SpawnManager : Singleton<SpawnManager>
             int enemyID = waveData.enemyID;
 
             // 적 소환 및 위치 조정
-            adjustEnemyPosition(spawnPosition, enemyID);
+            AdjustEnemyPosition(spawnPosition, enemyID);
 
-            
+
         }
 
     }
 
-    private void adjustEnemyPosition(int spawnPosition, int enemyID)
+    // 적 소환 및 위치 조정
+    private void AdjustEnemyPosition(int spawnPosition, int enemyID)
     {
 
 
-        // 안전 검사 추가
-        if (!_enemySlots.ContainsKey(spawnPosition))
+        // 풀에서 Enemy 가져오기
+
+        Vector3 position = GetEnemyPosition(spawnPosition);
+        string poolTag = $"Enemy_{enemyID}";
+
+        GameObject enemy = ObjectPool.Instance.SpawnFromPool(poolTag, position);
+
+        if (enemy != null)
         {
-            Debug.LogError($"Trying to spawn enemy at invalid position: {spawnPosition}");
-            return;
+
+            ConfigureSpawnedEnemy(enemy, position, spawnPosition, enemyID);
+
         }
+     
+    }
 
-        GameObject enemy;
 
-        // 같은 ID의 비활성화된 적이 있는지 확인
-        if (_activeEnemies.TryGetValue(enemyID, out var enemies))
+    private void ConfigureSpawnedEnemy(GameObject enemy, Vector3 position, int spawnPosition, int enemyID)
+    {
+        enemy.transform.SetParent(_enemiesParent);
+        enemy.transform.position = position;
+
+        // EnemyManager를 통해 유닛 재초기화
+        EnemyData data = EnemyDataManager.Instance.GetEnemyData(enemyID);
+        if (data != null)
         {
-            enemy = enemies.Find(e => !e.activeSelf);
-            if (enemy != null)
+
+            // 첫번째 자식 = 유닛
+            Transform assetTransform = enemy.transform.GetChild(0);
+            if (assetTransform != null)
             {
-                // 비활성화된 적을 재사용
-                enemy.SetActive(true);
-
-                //적 전투 등록
-                RegisterEnemyToBattle(enemy);
-                _enemySlots[spawnPosition].SetEnemy(enemy);
-
-                return;
+                EnemyManager.Instance.SetEnemyUnit(enemy, assetTransform.gameObject, data);
             }
         }
 
-        // 재사용 가능한 적이 없으면 새로 생성
-        enemy = EnemyManager.Instance.CreateEnemy(enemyID);
-        if (enemy == null) return;
-
-        // 생성된 적을 추적 목록에 추가
-        if (!_activeEnemies.ContainsKey(enemyID))
-        {
-            _activeEnemies[enemyID] = new List<GameObject>();
-        }
-        _activeEnemies[enemyID].Add(enemy);
-
-        //적 전투 등록
+        //전투 등록
         RegisterEnemyToBattle(enemy);
         _enemySlots[spawnPosition].SetEnemy(enemy);
-
     }
+
 
     // 초기 슬롯 등록을 위한 코루틴
     private IEnumerator WaitForInitialSlotRegistration()
@@ -190,12 +233,11 @@ public class SpawnManager : Singleton<SpawnManager>
         EnemyUnit enemyUnit = enemy.GetComponent<EnemyUnit>();
         if (enemyUnit != null)
         {
+
             enemyUnit.RegisterToBattleManager();
+
         }
-        else
-        {
-            Debug.LogError($"Enemy GameObject does not have EnemyUnit component");
-        }
+   
 
     }
 
@@ -204,8 +246,11 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         if (enemy == null) return;
 
-        enemy.SetActive(false);
+        string poolTag = $"Enemy_{enemyID}";
+
+        // 풀로 반환하기 전에 부모 제거
         enemy.transform.SetParent(null);
+        ObjectPool.Instance.ReturnToPool(enemy, poolTag);
     }
 
 

@@ -15,9 +15,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     // FieldSlot에 직렬화 필드 추가
     [SerializeField] private int _slotIndex;
+    [SerializeField] private int _groupIndex;
 
     // 몇번째 필드인지 정보 저장
     public int Index => _slotIndex;
+    public int GroupIndex => _groupIndex;
 
     private void Awake()
     {
@@ -28,24 +30,68 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     public void SetIndex(int index)
     {
         _slotIndex = index;
+
+        if (index >= 0 && index <=3)
+            _groupIndex = 1;
+        else if (index >= 4 && index <= 7)
+            _groupIndex = 2;
+        else if (index >= 8 && index <= 11)
+            _groupIndex = 3;
+        else if (index >= 12 && index <= 15)
+            _groupIndex = 4;
+        else
+            return;
     }
 
 
 
     // 필드에 캐릭터가 있는지 
+    // public void SetCharacter(GameObject character)
+    // {
+    //     _character = character;
+
+    //     if (character != null)
+    //     {
+    //         // 유닛을 Characters 오브젝트의 자식으로 설정
+    //         character.transform.SetParent(FieldManager.Instance.CharactersParent);
+
+    //         // UI 요소의 월드 중심점 구하기
+    //         character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+    //     }
+
+    // }
+
     public void SetCharacter(GameObject character)
     {
         _character = character;
 
         if (character != null)
         {
-            // 유닛을 Characters 오브젝트의 자식으로 설정
-            character.transform.SetParent(FieldManager.Instance.CharactersParent);
+            // 유효한 그룹 인덱스인지 확인
+            if (_groupIndex < 0 || _groupIndex > 5)
+            {
+                Debug.LogError("Invalid group index. Must be between 1 and 4.");
+                return;
+            }
+
+            // 그룹 
+            string groupName = $"Group{_groupIndex}";
+            Transform group = FieldManager.Instance.CharactersParent.Find(groupName);
+
+            if (group == null)
+            {
+                Debug.LogError($"Group '{groupName}' not found under 'Characters'.");
+                return;
+            }
+
+            // 유닛을 그룹에 배치
+            character.transform.SetParent(group);
+
+            character.transform.SetSiblingIndex(_groupIndex);
 
             // UI 요소의 월드 중심점 구하기
             character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
         }
-
     }
 
 
@@ -65,16 +111,18 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
         if (_character != null)
         {
+            string groupName = $"Group{_groupIndex}";
+            Transform group = FieldManager.Instance.CharactersParent.Find(groupName);
+
             // 부모-자식 관계 설정
-            _character.transform.SetParent(FieldManager.Instance.CharactersParent);
+            _character.transform.SetParent(group);
 
 
             // UI 요소의 월드 중심점 구하고 위치 설정
             Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-           
-
+            
             // 위치 설정
-            _character.transform.position = worldPosition;
+            _character.transform.localPosition = worldPosition;
 
             // 초기 위치 저장
             _previousPosition = worldPosition;

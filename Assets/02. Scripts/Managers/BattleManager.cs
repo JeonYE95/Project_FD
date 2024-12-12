@@ -77,6 +77,9 @@ public class BattleManager : Singleton<BattleManager>
             Debug.Log("플레이어 패배");
             StartCoroutine(Lose());
         }
+
+        aliveEnemyUnitsCount = 0;
+        alivePlayerUnitsCount = 0;
     }
 
     private IEnumerator Victory()
@@ -119,6 +122,7 @@ public class BattleManager : Singleton<BattleManager>
         foreach(BaseUnit unit in players)
         {
             unit.ReSetUnit();
+            //unit.animController.ResetAnim();
         }
         
         Debug.Log("ResetAllUnit");

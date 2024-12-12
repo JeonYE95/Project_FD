@@ -12,7 +12,7 @@ public class DefaultProjectile : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 7f);
+        //Destroy(gameObject, 7f);
     }
 
     public void Initialize(BaseUnit targetUnit, Vector2 direction)
@@ -30,7 +30,8 @@ public class DefaultProjectile : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
@@ -47,7 +48,7 @@ public class DefaultProjectile : MonoBehaviour
         if (collision.TryGetComponent(out HealthSystem healthSystem))
         {
             healthSystem.TakeDamage(damage);
-            Destroy(gameObject); 
+            gameObject.SetActive(false);
         }
     }
 }
