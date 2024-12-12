@@ -263,7 +263,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
 
     // 유닛 등급 문자열을 Defines.UnitGrade 변환
-    private Defines.UnitGrade GetUnitGrade(string grade)
+    public Defines.UnitGrade GetUnitGrade(string grade)
     {
         switch (grade.ToLower())
         {
