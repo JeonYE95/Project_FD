@@ -51,10 +51,6 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         if (_previewObject != null)
         {
 
-
-            // 실제 동작 코드
-
-
             // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
             if (_UIUnitSlot != null)
             {
@@ -63,7 +59,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
                 {
 
                     // 유닛 정보에 맞는 이미지로 업데이트
-                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/Unit/{currentUnit._unitData.grade}/{currentUnit._unitData.name}");
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{currentUnit._unitData.grade}/{currentUnit._unitData.name}");
 
 
                     UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
@@ -74,7 +70,9 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
 
             _previewObject.SetActive(true);
-            _previewObject.transform.position = eventData.position;
+
+            //캔버스 UI 공간 좌표에 맞게 변환
+            _previewObject.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
 
         }
     }
@@ -83,7 +81,8 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if (_previewObject != null && _previewObject.activeSelf)
         {
-            _previewObject.transform.position = eventData.position;
+            // 캔버스 공간으로 변환
+            _previewObject.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
         }
 
     }

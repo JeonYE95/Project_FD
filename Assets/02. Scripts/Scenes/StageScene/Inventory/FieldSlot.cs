@@ -188,6 +188,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             {
                 UnitInfo unitInfo = previewInfo.GetUnitInfo();
                 DropCharacter(unitInfo);
+
+                // PreviewObject 비활성화 
+                InventoryManager.Instance.PreviewObject.SetActive(false);
             }
 
         }
