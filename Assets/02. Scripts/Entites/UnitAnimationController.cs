@@ -133,6 +133,14 @@ public class UnitAnimationController : MonoBehaviour
         }
     }
 
+    public void StartAnim()
+    {
+        if (_myUnit is PlayerUnit)
+        {
+            animator.ResetTrigger(PlayerAnimData.ResetAnim);
+        }
+    }
+
     public void ResetAnim()
     {
         /*animator.enabled = false;

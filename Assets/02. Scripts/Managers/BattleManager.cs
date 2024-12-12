@@ -78,8 +78,8 @@ public class BattleManager : Singleton<BattleManager>
             StartCoroutine(Lose());
         }
 
-        aliveEnemyUnitsCount = 0;
-        alivePlayerUnitsCount = 0;
+        //aliveEnemyUnitsCount = 0;
+        //alivePlayerUnitsCount = 0;
     }
 
     private IEnumerator Victory()

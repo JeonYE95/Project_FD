@@ -83,6 +83,9 @@ public class BaseUnit : MonoBehaviour
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
         stateMachine.ChangeState(stateMachine.IdleState);
+
+        //배틀스타트할때 초기화해야할것 해주는 함수
+        animController.StartAnim();
     }
 
     //유닛을 타일에 배치(셋팅) 햇을때
