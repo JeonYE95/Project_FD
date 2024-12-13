@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using GSDatas;
+using System;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
@@ -29,6 +30,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
                 // 필드에서 유닛 제거
                 fieldSlot.RemoveCharacter();
+
+                InventoryManager.Instance.UntrackFieldUnit(fieldSlot.Index);
 
             }
         }

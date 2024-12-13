@@ -210,7 +210,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
                 //그룹으로 유닛 위치 이동
                 SetCharacter(_character);
-
+                fromSlot.SetCharacter(null);
 
             }
 

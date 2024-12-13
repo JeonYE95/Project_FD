@@ -95,8 +95,6 @@ public class InventoryManager : Singleton<InventoryManager>
         }
 
 
-        // 오브젝트 풀링으로 추후 수정해야.
-
         if (_unitList != null)
         {
 
@@ -157,7 +155,9 @@ public class InventoryManager : Singleton<InventoryManager>
 
             if (characterPos.Character != null)
             {
-                characterPos.CharacterInit();
+                // 유닛 그룹 재설정 
+                characterPos.SetCharacter(characterPos.Character);
+
 
             }
 
