@@ -23,6 +23,8 @@ public class BattleManager : Singleton<BattleManager>
     readonly int BattleResultAndResetTime = 3;
     WaitForSeconds _battleResultAndResetTimer;
 
+    bool _isBattleEnd = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -83,6 +85,13 @@ public class BattleManager : Singleton<BattleManager>
 
     public IEnumerator Victory()
     {
+        if (_isBattleEnd)
+        {
+            yield break;
+        }
+
+        _isBattleEnd = true;
+
         yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Victroy();
@@ -90,6 +99,13 @@ public class BattleManager : Singleton<BattleManager>
 
     public IEnumerator Lose()
     {
+        if (!_isBattleEnd)
+        {
+            yield break;
+        }
+
+        _isBattleEnd = true;
+
         yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Lose();
@@ -175,6 +191,8 @@ public class BattleManager : Singleton<BattleManager>
 
         alivePlayerUnitsCount = players.Count;
         aliveEnemyUnitsCount = enemies.Count;
+
+        _isBattleEnd = false;
     }
 
     public void RegisterUnit(BaseUnit unit)
@@ -189,6 +207,7 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         SetAllUnits();
+
     }
 
     public void UnRegisterUnit(BaseUnit unit)
