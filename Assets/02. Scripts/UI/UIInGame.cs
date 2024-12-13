@@ -86,7 +86,8 @@ public class UIInGame : UIBase
     private void EnablePrepUI()
     {
         _battleStartButton.gameObject.SetActive(true);
-        _timerText.gameObject.SetActive(true);
+        _spawnPointUI.gameObject.SetActive(true);
+       
     }
     
     private void SetStageHealth()

@@ -60,7 +60,17 @@ public class ObjectPool : Singleton<ObjectPool>
     private GameObject CreateNewPoolObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab);
-        obj.transform.SetParent(prefab.transform.parent);
+
+        // prefab의 부모가 없으면 ObjectPool을 부모로 설정
+        if (prefab.transform.parent == null)
+        {
+            obj.transform.SetParent(transform);
+        }
+        else
+        {
+            obj.transform.SetParent(prefab.transform.parent);
+        }
+
         obj.SetActive(false);
         return obj;
     }
