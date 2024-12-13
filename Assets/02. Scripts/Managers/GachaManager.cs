@@ -26,11 +26,8 @@ public class GachaManager : Singleton<GachaManager>
         }
 
         UnitData selectedUnit = commonUnits[Random.Range(0, commonUnits.Count)];
+        InventoryManager.Instance.AddCharacterData(selectedUnit);
 
-        GameObject unitObject = new GameObject($"Unit_{selectedUnit.name}");
-        UnitInfo unitInfo = unitObject.AddComponent<UnitInfo>();
-        unitInfo.SetData(selectedUnit);
 
-        InventoryManager.Instance.AddCharacter(unitInfo);
     }
 }

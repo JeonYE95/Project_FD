@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using GSDatas;
 public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Transform _previousPosition;
@@ -54,16 +54,16 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
             if (_UIUnitSlot != null)
             {
-                UnitInfo currentUnit = _UIUnitSlot.GetUnitAtIndex(Index);
+                UnitData currentUnit = _UIUnitSlot.GetUnitAtIndex(Index);
                 if (currentUnit != null)
                 {
 
                     // 유닛 정보에 맞는 이미지로 업데이트
-                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{currentUnit._unitData.grade}/{currentUnit._unitData.name}");
+                    _draggedCharacterPreview.sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{currentUnit.grade}/{currentUnit.name}");
 
 
                     UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
-                    previewInfo.SetUnitInfo(currentUnit);
+                    previewInfo.SetUnitData(currentUnit);
                 }
 
             }
@@ -89,9 +89,20 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // preview 이미지 재활용
+        // preview 재활용
         if (_previewObject != null)
         {
+
+            // 유닛 정보 초기화
+            UnitPrevInfo previewInfo = _previewObject.GetComponent<UnitPrevInfo>();
+            if (previewInfo != null)
+            {
+                previewInfo.SetUnitData(null); // null을 전달하여 정보 초기화
+            }
+
+            // 이미지도 초기화
+            _draggedCharacterPreview.sprite = null;
+
             _previewObject.SetActive(false);
         }
 

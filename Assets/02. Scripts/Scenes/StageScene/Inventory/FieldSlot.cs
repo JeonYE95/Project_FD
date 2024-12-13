@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using GSDatas;
 
 public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDropHandler,
     IPointerEnterHandler, IDragHandler
@@ -97,7 +97,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
   
-    public void DropCharacter(UnitInfo unitInfo)
+    public void DropCharacter(UnitData unitInfo)
     {
 
         // 최대 소환 가능 수 도달하면 소환 불가
@@ -106,7 +106,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
-        _character = UnitManager.Instance.CreatePlayerUnit(unitInfo._unitData.ID);
+        _character = UnitManager.Instance.CreatePlayerUnit(unitInfo.ID);
 
 
         if (_character != null)
@@ -127,8 +127,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             // 초기 위치 저장
             _previousPosition = worldPosition;
 
-            InventoryManager.Instance.subtractCharacter(unitInfo._unitData.name, 1);
-            Debug.Log($"Unit {unitInfo._unitData.name} count decreased in inventory.");
+            // 인벤토리에서 차감
+            InventoryManager.Instance.subtractCharacter(unitInfo.name, 1);
+            Debug.Log($"Unit {unitInfo.name} count decreased in inventory.");
             InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
         }
 
@@ -186,8 +187,8 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)
             {
-                UnitInfo unitInfo = previewInfo.GetUnitInfo();
-                DropCharacter(unitInfo);
+                UnitData unitdata = previewInfo.GetUnitData();
+                DropCharacter(unitdata);
 
                 // PreviewObject 비활성화 
                 InventoryManager.Instance.PreviewObject.SetActive(false);

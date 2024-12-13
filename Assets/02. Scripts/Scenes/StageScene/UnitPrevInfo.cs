@@ -5,43 +5,39 @@ using GSDatas;
 
 public class UnitPrevInfo : MonoBehaviour
 {
-    private UnitInfo _unitInfo;
+    private UnitData _unitData;
 
-    public void SetUnitInfo(UnitInfo unit)
+    public void SetUnitData(UnitData data)
     {
-        // 새로운 UnitInfo 인스턴스 생성
-        _unitInfo = gameObject.AddComponent<UnitInfo>();
+        if (data == null) return;
 
-        // 데이터 복사
-        if (unit != null && unit._unitData != null)
+        // 깊은 복사
+        _unitData = new UnitData
         {
-            // UnitData 복사
-            UnitData newData = new UnitData
-            {
-                ID = unit._unitData.ID,
-                name = unit._unitData.name,
-                grade = unit._unitData.grade,
-             
-            };
-
-            _unitInfo.SetData(newData);
-        }
-
-        Debug.Log($"Preview Info set with unit: {unit?._unitData.name ?? "null"}");
+            ID = data.ID,
+            name = data.name,
+            attack = data.attack,
+            defense = data.defense,
+            health = data.health,
+            attackCooltime = data.attackCooltime,
+            skillCooltime = data.skillCooltime,
+            range = data.range,
+            grade = data.grade
+        };
     }
 
-    public UnitInfo GetUnitInfo()
+    public UnitData GetUnitData()
     {
-        return _unitInfo;
+        return _unitData;
     }
 
     private void OnDisable()
     {
         // 컴포넌트가 비활성화될 때 이전 UnitInfo 정리
-        if (_unitInfo != null)
+        if (_unitData != null)
         {
-            Destroy(_unitInfo);
-            _unitInfo = null;
+
+            _unitData = null;
         }
     }
 }
