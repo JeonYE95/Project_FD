@@ -27,9 +27,8 @@ public class BattleManager : Singleton<BattleManager>
     {
         base.Awake();
 
-        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
-
         targetingSystem = new TargetingSystem(this);
+        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
     }
 
     private void Start()
@@ -82,14 +81,14 @@ public class BattleManager : Singleton<BattleManager>
         //alivePlayerUnitsCount = 0;
     }
 
-    private IEnumerator Victory()
+    public IEnumerator Victory()
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Victroy();
     }
 
-    private IEnumerator Lose()
+    public IEnumerator Lose()
     {
         yield return _battleResultAndResetTimer;
         BattleEnd();
@@ -150,8 +149,10 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    public void BattleSetingAndStart()
+    public void SetAllUnits()
     {
+        allUnits.Clear();
+
         foreach (BaseUnit unit in players)
         {
             allUnits.Add(unit);
@@ -161,6 +162,11 @@ public class BattleManager : Singleton<BattleManager>
         {
             allUnits.Add(unit);
         }
+    }
+
+    public void BattleSetingAndStart()
+    {
+        SetAllUnits();
 
         foreach (BaseUnit unit in allUnits)
         {
@@ -181,6 +187,8 @@ public class BattleManager : Singleton<BattleManager>
         {
             enemies.Add(unit);
         }
+
+        SetAllUnits();
     }
 
     public void UnRegisterUnit(BaseUnit unit)
@@ -193,6 +201,8 @@ public class BattleManager : Singleton<BattleManager>
         {
             enemies.Remove(unit);
         }
+
+        SetAllUnits();
     }
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)

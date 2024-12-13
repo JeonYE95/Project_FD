@@ -1,28 +1,32 @@
 using Assets.HeroEditor.Common.Scripts.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillExecutor : MonoBehaviour
 {
-    public InGameSkillData _gameSkillData;
+    ActionHandler _handler;
     UnitSearchOptions _options;
+    
+    public InGameSkillData gameSkillData;
+
+    private void Awake()
+    {
+        _handler = GetComponent<ActionHandler>();
+    }
 
     private void Start()
     {
-        _options = new UnitSearchOptions()
-        {
-            Group = _gameSkillData.targetGroup,
-            Priority = _gameSkillData.targetPriority
-        };
+        _options = CreateSearchOptionsFromSkill();
     }
 
     public UnitSearchOptions CreateSearchOptionsFromSkill()
     {
         return new UnitSearchOptions()
         {
-            Group = _gameSkillData.targetGroup,
-            Priority = _gameSkillData.targetPriority
+            Group = gameSkillData.targetGroup,
+            Priority = gameSkillData.targetPriority
         };
     }
 
@@ -44,36 +48,41 @@ public class SkillExecutor : MonoBehaviour
             ApplySkillEffect(_myUnit, target);
         }
 
-        Debug.Log($"{gameObject.name}이(가) {_gameSkillData.skillName} 스킬을 실행했습니다.");
+        Debug.Log($"{gameObject.name}이(가) {gameSkillData.skillName} 스킬을 실행했습니다.");
     }
 
     private void ApplySkillEffect(BaseUnit caster, BaseUnit target)
     {
-        switch (_gameSkillData.skillEffect)
+        switch (gameSkillData.skillEffect)
         {
             case SkillEffect.DefenseBoost:
                 // 방어력 증가 효과
-                target.defense += (int)_gameSkillData.value;
-                StartCoroutine(ResetEffectAfterDuration(() => target.defense -= (int)_gameSkillData.value, _gameSkillData.duration));
+                target.defense += (int)gameSkillData.value;
+                StartCoroutine(ResetEffectAfterDuration(() => target.defense -= (int)gameSkillData.value, gameSkillData.duration));
                 break;
 
             case SkillEffect.HealAmount:
                 // 체력 회복 효과
-                target.healthSystem.TakeHealth((int)_gameSkillData.value);
+                target.healthSystem.TakeHealth((int)gameSkillData.value);
                 break;
 
             case SkillEffect.Damage:
                 // 데미지 효과
-                target.healthSystem.TakeDamage((int)(caster.attackDamage * _gameSkillData.value));
+                target.healthSystem.TakeDamage((int)(caster.attackDamage * gameSkillData.value));
+                break;
+
+            case SkillEffect.MultipleAttacks:
+                _handler.attackCount = (int)gameSkillData.value;
+                StartCoroutine(ResetEffectAfterDuration(() => { _handler.attackCount = 1; }, 3f));
                 break;
 
             default:
-                Debug.LogWarning($"알 수 없는 스킬 효과: {_gameSkillData.skillEffect}");
+                Debug.LogWarning($"알 수 없는 스킬 효과: {gameSkillData.skillEffect}");
                 break;
         }
     }
 
-    private IEnumerator ResetEffectAfterDuration(System.Action resetAction, float duration)
+    private IEnumerator ResetEffectAfterDuration(Action resetAction, float duration)
     {
         yield return new WaitForSeconds(duration);
         resetAction?.Invoke();
