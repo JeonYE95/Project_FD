@@ -67,7 +67,7 @@ public class UICombineInfo : UIBase
             button.onClick.AddListener(() =>
             {
                 CombineManager.Instance.ExecuteCombine(combineData.requiredunit1, combineData.requiredunit2);
-                Close();
+                //Close();
             });
         }
     }
