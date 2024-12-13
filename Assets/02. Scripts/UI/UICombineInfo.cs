@@ -27,37 +27,43 @@ public class UICombineInfo : UIBase
 
         if (combineDataList != null && combineDataList.Count > 0)
         {
-            UpdateUI(combineDataList);
+            UpdateUI(combineDataList, clickUnitId);
         }
     }
 
-    private void UpdateUI(List<CombineData> combineDataList)
+    private void UpdateUI(List<CombineData> combineDataList, int clickUnitId)
     {
         // 첫 번째 조합식 표시
         if (combineDataList.Count > 0)
         {
-            UpdateCombineSlot(combineDataList[0], _requiredUnit1Image1, _requiredUnit2Image1, _resultUnitImage1);
+            UpdateCombineSlot(combineDataList[0], _requiredUnit1Image1, _requiredUnit2Image1, _resultUnitImage1, clickUnitId);
         }
 
         // 두 번째 조합식 표시
         if (combineDataList.Count > 1)
         {
-            UpdateCombineSlot(combineDataList[1], _requiredUnit1Image2, _requiredUnit2Image2, _resultUnitImage2);
+            UpdateCombineSlot(combineDataList[1], _requiredUnit1Image2, _requiredUnit2Image2, _resultUnitImage2, clickUnitId);
         }
     }
 
-    private void UpdateCombineSlot(CombineData combineData, Image requiredUnit1Image, Image requiredUnit2Image, Image resultUnitImage)
+    private void UpdateCombineSlot(CombineData combineData, Image requiredUnit1Image, Image requiredUnit2Image, Image resultUnitImage, int clickUnitId)
     {
-        requiredUnit1Image.sprite = LoadUnitSprite(combineData.requiredunit1);
-        requiredUnit2Image.sprite = LoadUnitSprite(combineData.requiredunit2);
+        requiredUnit1Image.sprite = LoadUnitSprite(clickUnitId);
+        if (combineData.requiredunit1 == clickUnitId)
+        {
+            requiredUnit2Image.sprite = LoadUnitSprite(combineData.requiredunit2);
+        }
+        else if (combineData.requiredunit2 == clickUnitId)
+        {
+            requiredUnit2Image.sprite = LoadUnitSprite(combineData.requiredunit1);
+        }
         resultUnitImage.sprite = LoadUnitSprite(combineData.resultUnit);
 
         // 결과 유닛 이미지에 버튼 기능 추가
         var button = resultUnitImage.GetComponent<Button>();
         if (button != null)
         {
-            // 버튼 클릭 시 조합 실행
-            button.onClick.RemoveAllListeners(); // 이전 리스너 제거
+            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
                 CombineManager.Instance.ExecuteCombine(combineData.requiredunit1, combineData.requiredunit2);
@@ -74,12 +80,4 @@ public class UICombineInfo : UIBase
         string spritePath = $"Sprite/Unit/UpperBody/{unitdata.grade}/{unitdata.name}";
         return Resources.Load<Sprite>(spritePath);
     }
-
-    //private void OnResultUnitBtnCliked()
-    //{
-    //    if (curCombineData != null)
-    //    {
-    //        CombineManager.Instance.ExecuteCombine(curCombineData.requiredunit1, curCombineData.requiredunit2);
-    //    }
-    //}
 }
