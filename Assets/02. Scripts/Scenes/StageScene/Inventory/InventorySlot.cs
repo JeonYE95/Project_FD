@@ -15,23 +15,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             if (unitInfo != null)
             {
 
-                // 깊은 복사를 위한 새로운 GameObject와 UnitInfo 생성
- 
-          
-
                 // UnitData 깊은 복사
-                UnitData newData = new UnitData
-                {
-                    ID = unitInfo._unitData.ID,
-                    name = unitInfo._unitData.name,
-                    attack = unitInfo._unitData.attack,
-                    defense = unitInfo._unitData.defense,
-                    health = unitInfo._unitData.health,
-                    attackCooltime = unitInfo._unitData.attackCooltime,
-                    skillCooltime = unitInfo._unitData.skillCooltime,
-                    range = unitInfo._unitData.range,
-                    grade = unitInfo._unitData.grade
-                };
+                UnitData newData = unitInfo._unitData.Clone();
 
                 GameObject tempObject = new GameObject();
                 UnitInfo tempUnitInfo = tempObject.AddComponent<UnitInfo>();

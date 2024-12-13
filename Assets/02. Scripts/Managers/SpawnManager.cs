@@ -172,7 +172,7 @@ public class SpawnManager : Singleton<SpawnManager>
             ConfigureSpawnedEnemy(enemy, position, spawnPosition, enemyID);
 
         }
-     
+
     }
 
 
@@ -237,7 +237,7 @@ public class SpawnManager : Singleton<SpawnManager>
             enemyUnit.RegisterToBattleManager();
 
         }
-   
+
 
     }
 

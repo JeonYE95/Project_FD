@@ -26,7 +26,7 @@ public class GachaManager : Singleton<GachaManager>
         }
 
         UnitData selectedUnit = commonUnits[Random.Range(0, commonUnits.Count)];
-        InventoryManager.Instance.AddCharacterData(selectedUnit);
+        InventoryManager.Instance.AddCharacter(selectedUnit);
 
 
     }

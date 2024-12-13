@@ -12,18 +12,7 @@ public class UnitPrevInfo : MonoBehaviour
         if (data == null) return;
 
         // 깊은 복사
-        _unitData = new UnitData
-        {
-            ID = data.ID,
-            name = data.name,
-            attack = data.attack,
-            defense = data.defense,
-            health = data.health,
-            attackCooltime = data.attackCooltime,
-            skillCooltime = data.skillCooltime,
-            range = data.range,
-            grade = data.grade
-        };
+        _unitData = data.Clone();
     }
 
     public UnitData GetUnitData()

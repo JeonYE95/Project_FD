@@ -31,7 +31,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     {
         _slotIndex = index;
 
-        if (index >= 0 && index <=3)
+        if (index >= 0 && index <= 3)
             _groupIndex = 1;
         else if (index >= 4 && index <= 7)
             _groupIndex = 2;
@@ -96,7 +96,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
 
-  
+
     public void DropCharacter(UnitData unitInfo)
     {
 
@@ -120,7 +120,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
             // UI 요소의 월드 중심점 구하고 위치 설정
             Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-            
+
             // 위치 설정
             _character.transform.localPosition = worldPosition;
 
@@ -211,7 +211,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
                 // RectTransform의 월드 위치 구하기
                 Vector3 worldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-                
+
                 _character.transform.SetParent(FieldManager.Instance.CharactersParent);
                 _character.transform.position = worldPos;
 
