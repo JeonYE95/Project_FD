@@ -73,7 +73,8 @@ public class SkillExecutor : MonoBehaviour
 
             case SkillEffect.MultipleAttacks:
                 _handler.attackCount = (int)gameSkillData.value;
-                StartCoroutine(ResetEffectAfterDuration(() => { _handler.attackCount = 1; }, 3f));
+                StartCoroutine(ResetEffectAfterDuration(() => { _handler.attackCount = 1; }, gameSkillData.duration));
+                Debug.Log($"멀티플어택 발동 {(int)gameSkillData.value}");
                 break;
 
             default:
