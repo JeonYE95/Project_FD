@@ -16,8 +16,8 @@ public class WaveManager : Singleton<WaveManager>
     private int _endWave; // 마지막 웨이브
 
 
-    private const float preparationTime = 30f; //대기 시간
-    private const float waveCycleTime = 30f;// 한 웨이브 시간
+    private const float preparationTime = 60f; //대기 시간
+    private const float waveCycleTime = 5f;// 한 웨이브 시간
     public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
@@ -36,9 +36,6 @@ public class WaveManager : Singleton<WaveManager>
     //웨이브 보상 정보 저장
     private List<WaveRewardData> _AllWaveRewardata = new List<WaveRewardData>();
     private List<WaveRewardData> _currentWaveRewardData;
-
-
-
 
     public int CurrentWave
     {
@@ -241,9 +238,8 @@ public class WaveManager : Singleton<WaveManager>
             currentPreparationTime--;
         }
 
-        Debug.Log("시간 초과시 패배 처리");
-        // 시간 초과시 패배 처리
-        //BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
+     
+        BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
     }
 
 
