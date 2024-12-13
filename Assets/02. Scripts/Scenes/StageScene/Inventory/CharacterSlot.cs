@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using GSDatas;
-public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     private Transform _previousPosition;
     private Canvas _canvas; // Canvas 참조 캐싱용 변수 추가
@@ -126,6 +126,33 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
         InventoryManager.Instance.PreviewObject = _previewObject;
         _previewObject.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_UIUnitSlot != null)
+        {
+            UnitData clickedUnit = _UIUnitSlot.GetUnitAtIndex(Index); // 현재 슬롯에 있는 유닛 데이터 가져오기
+
+            if (clickedUnit != null)
+            {
+                // UICombineInfo를 활성화하고 클릭한 유닛의 ID 전달
+                UICombineInfo uiCombineInfo = FindObjectOfType<UICombineInfo>();
+                if (uiCombineInfo != null)
+                {
+                    uiCombineInfo.gameObject.SetActive(true); // UI 창 활성화
+                    uiCombineInfo.OnUnitClicked(clickedUnit.ID); // 유닛 ID 전달하여 조합식 업데이트
+                }
+                else
+                {
+                    Debug.LogWarning("UICombineInfo를 찾을 수 없습니다.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("슬롯에 유닛 데이터가 없습니다.");
+            }
+        }
     }
 
 }
