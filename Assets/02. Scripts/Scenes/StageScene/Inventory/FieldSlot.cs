@@ -208,12 +208,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 _character = fromSlot._character;
                 fromSlot._character = null;
 
+                //그룹으로 유닛 위치 이동
+                SetCharacter(_character);
 
-                // RectTransform의 월드 위치 구하기
-                Vector3 worldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-
-                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
-                _character.transform.position = worldPos;
 
             }
 
@@ -226,14 +223,8 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 fromSlot._character = tempCharacter;
 
                 //각 유닛 위치 업데이트
-                Vector3 thisWorldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-                Vector3 otherWorldPos = Extensions.GetUIWorldPosition(fromSlot.GetComponent<RectTransform>());
-
-                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
-                _character.transform.position = thisWorldPos;
-
-                tempCharacter.transform.SetParent(FieldManager.Instance.CharactersParent);
-                tempCharacter.transform.position = otherWorldPos;
+                SetCharacter(_character);
+                fromSlot.SetCharacter(tempCharacter);
             }
 
         }
