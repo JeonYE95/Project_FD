@@ -57,6 +57,25 @@ public enum SkillEffect
     MultipleAttacks     // 여러번 공격
 }
 
+
+
+public enum TargetGroup
+{
+    Ally,
+    Enemy,
+    AllAlly,
+    AllEnemy,
+    Self
+}
+
+public enum TargetPriority
+{
+    Closest,
+    Farthest,
+    Random,
+    All
+}
+
 public enum SpecialAttack
 {
     MultipleAttacks,
