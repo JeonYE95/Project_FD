@@ -272,4 +272,27 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             InventoryManager.Instance.UntrackFieldUnit(Index);
         }
     }
+
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    if (_character != null)
+    //    {
+    //        UnitInfo unitInfo = _character.GetComponent<UnitInfo>();
+    //        if (unitInfo != null)
+    //        {
+    //            UICombineInfo uiCombineInfo = FindObjectOfType<UICombineInfo>();
+    //            if (uiCombineInfo != null)
+    //            {
+    //                uiCombineInfo.gameObject.SetActive(true);
+    //                uiCombineInfo.OnUnitClicked(unitInfo._unitData.ID);
+    //            }
+    //            else
+    //            {
+    //                Debug.LogWarning("UICombineInfo가 씬에 없습니다.");
+    //            }
+    //        }
+    //    }
+    //}
+
+
 }

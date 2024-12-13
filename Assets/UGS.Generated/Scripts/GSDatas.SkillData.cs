@@ -56,8 +56,8 @@ namespace GSDatas
 
 /* Fields. */
 
-		public System.Int32 skillID;
 		public System.Int32 UnitID;
+		public System.Int32 skillID;
 		public System.String skillName;
 		public System.String SkillType;
 		public System.String SkillEffect;
@@ -184,7 +184,7 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.skillID, instance);
+                            Map.Add(instance.UnitID, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 

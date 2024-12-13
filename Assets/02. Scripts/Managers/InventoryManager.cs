@@ -50,8 +50,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
     public void Start()
     {
-
-
         _unitList = GetComponentInChildren<UIUnitSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
 

@@ -104,8 +104,11 @@ public class BaseUnit : MonoBehaviour
     //플레이어는 배치 해제시, 몬스터는 배틀 끝났을 시
     public void UnregisterFromBattleManager()
     {
-        OnDieEvent -= UnitDeActive;
-        OnDieEvent -= BattleManager.Instance.UnitDie;
+        if (OnDieEvent != null)
+        {
+            OnDieEvent -= UnitDeActive;
+            OnDieEvent -= BattleManager.Instance.UnitDie;
+        }
 
         if (this is PlayerUnit)
         {
@@ -216,7 +219,6 @@ public class BaseUnit : MonoBehaviour
     public void CallDieEvent()
     {
         OnDieEvent?.Invoke(this);
-        Debug.Log($"{gameObject.name} 콜다이이벤트");
     }
 
     public virtual void PlayWaitAnimation() {}

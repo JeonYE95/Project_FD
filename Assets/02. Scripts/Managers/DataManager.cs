@@ -7,9 +7,9 @@ using UnityEngine;
 public class DataManager : SingletonDontDestory<DataManager>
 {
     public UnitManager Units;
+    public CombineDataManager Combine;
 
     private static DataManager _instance;
-
 
     public void Initialize()
     {
