@@ -45,4 +45,19 @@ public class CombineDataManager : CombineData
         return null;
     }
 
+    public List<CombineData> GetRequiredUnitData(int unitId)
+    {
+        List<CombineData> resultList = new List<CombineData>();
+
+        foreach (var data in CombineDataList)
+        {
+            if (data.requiredunit1 == unitId ||  data.requiredunit2 == unitId)
+            {
+                resultList.Add(data);
+            }
+        }
+
+        return resultList;
+    }
+
 }
