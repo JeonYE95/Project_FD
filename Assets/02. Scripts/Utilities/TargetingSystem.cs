@@ -11,24 +11,7 @@ public class UnitSearchOptions
     public TargetGroup Group { get; set; } = TargetGroup.Enemy; // 기본값: 적군
     public TargetPriority Priority { get; set; } = TargetPriority.Closest; // 기본값: 가까운 순서
     public bool IncludeSelf { get; set; } = false;
-    
-}
 
-public enum TargetGroup
-{
-    Ally,
-    Enemy,
-    AllAlly,
-    AllEnemy,
-    Self
-}
-
-public enum TargetPriority
-{
-    Closest,
-    Farthest,
-    Random,
-    All
 }
 
 public class TargetingSystem
@@ -58,6 +41,11 @@ public class TargetingSystem
         else if (options.Group == TargetGroup.Ally || options.Group == TargetGroup.AllAlly)
         {
             candidates = standardUnit.isPlayerUnit ? players : enemies;
+        }
+        else if (options.Group == TargetGroup.Self) // 셀프기술일때
+        {
+            candidates.Add(standardUnit);
+            return candidates;
         }
 
         // 생존한 유닛만 포함
