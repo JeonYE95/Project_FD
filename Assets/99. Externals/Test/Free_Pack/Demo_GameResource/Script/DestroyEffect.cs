@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,8 @@ public class DestroyEffect : MonoBehaviour {
     IEnumerator DestroyEffect_Fuc()
     {
         yield return new WaitForSeconds (time);
-        DestroyObject(this.gameObject);
+        //DestroyObject(this.gameObject);
+        Destroy(this.gameObject);
 
 
        
