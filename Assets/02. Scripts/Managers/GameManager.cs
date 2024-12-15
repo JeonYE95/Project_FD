@@ -28,7 +28,8 @@ public class InGameItems
 
 public class GameManager : SingletonDontDestory<GameManager>
 {
-    public static readonly int EnemySortingOrder = 200;
+    public static readonly int BehindSortingOrder = 199;
+    public static readonly int EnemySortingOrder  = 200;
     public static readonly int PlayerSortingOrder = 201;
 
     public PlayerData playerData = new PlayerData();

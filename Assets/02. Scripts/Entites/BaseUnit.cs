@@ -38,9 +38,11 @@ public class BaseUnit : MonoBehaviour
 
     public Action <BaseUnit> OnDieEvent;
 
+    //캐릭터 에셋 참조 형식으로 저장
+    public GameObject unitAsset;
+    public GameObject[] unitAssetChildren;
 
     private StateMachine stateMachine;
-
 
     //For Debug
     [SerializeField] private string CurrentState;
@@ -219,6 +221,11 @@ public class BaseUnit : MonoBehaviour
     public void CallDieEvent()
     {
         OnDieEvent?.Invoke(this);
+    }
+
+    public void SetSortingOrder(int sortingOrderNumber)
+    {
+        unitAsset.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrderNumber;
     }
 
     public virtual void PlayWaitAnimation() {}
