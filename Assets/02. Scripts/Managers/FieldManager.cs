@@ -72,7 +72,7 @@ public class FieldManager : Singleton<FieldManager>
             if (slot.Character == null)
             {
                 slot.SetCharacter(unitInstance);
-
+                InventoryManager.Instance.TrackFieldUnit(slot.Index, unitData);
                 return;
             }
         }
@@ -80,6 +80,12 @@ public class FieldManager : Singleton<FieldManager>
 
     public bool CanAddUnitToField()
     {
+
+        if (_fieldSlots == null)
+        {
+            _fieldSlots = InventoryManager.Instance.FieldSlots;
+        }
+
         foreach (var slot in _fieldSlots)
         {
             if (slot.Character == null) return true;

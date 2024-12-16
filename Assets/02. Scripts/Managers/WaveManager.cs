@@ -17,7 +17,7 @@ public class WaveManager : Singleton<WaveManager>
 
 
     private const float preparationTime = 60f; //대기 시간
-    private const float waveCycleTime = 120f;// 한 웨이브 시간
+    private const float waveCycleTime = 10f;// 한 웨이브 시간
     public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
@@ -76,6 +76,8 @@ public class WaveManager : Singleton<WaveManager>
         GetRewardData(stageID);
         GetRewardData();
 
+
+        OnBattleStart += InventoryManager.Instance.AutoSummonUnits;
 
         OnClearWave += GetWaveData;
         OnClearWave += GetRewardData;
@@ -169,8 +171,8 @@ public class WaveManager : Singleton<WaveManager>
                 if (reward.RewardID == 3001)
                     StageManager.Instance.Gold += reward.count;
 
-              
-                    Debug.Log($" 추가 재화 : {reward.count} 획득");
+
+                Debug.Log($" 추가 재화 : {reward.count} 획득");
 
             }
 
@@ -186,16 +188,27 @@ public class WaveManager : Singleton<WaveManager>
     {
 
         IsRunningWave = true;
-        OnBattleStart?.Invoke(); // UI 비활성화
+        OnBattleStart?.Invoke(); // UI 비활성화 및 자동 유닛 소환
 
-      
-        //전투 시작
+        //유닛 소환이 완료된 후 전투 시작
+        StartCoroutine(StartBattleAfterSummon());
+
+    }
+
+
+    private IEnumerator StartBattleAfterSummon()
+    {
+        // 유닛 소환이 완료될 때까지 대기
+        yield return new WaitForEndOfFrame();
+
+        // 전투 시작
         BattleManager.Instance.BattleSetingAndStart();
 
         // 전투 시작과 함께 타이머 시작
         currentPreparationTime = waveCycleTime;
         _prepareCoroutine = StartCoroutine(BattleTimer());
     }
+
 
 
     //스테이지 끝나고 준비 시간 
@@ -212,7 +225,7 @@ public class WaveManager : Singleton<WaveManager>
 
 
         OnClearWave?.Invoke();
-       
+
         currentPreparationTime = preparationTime;
 
         while (currentPreparationTime > 0)
@@ -238,15 +251,8 @@ public class WaveManager : Singleton<WaveManager>
             currentPreparationTime--;
         }
 
-     
+        Debug.Log("타임 오버 / 패배");
         BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
-    }
-
-
-    public string GetCurrentPreparationTimeText()
-    {
-        int seconds = Mathf.FloorToInt(currentPreparationTime % 60);
-        return $"{seconds:00}";
     }
 
 
