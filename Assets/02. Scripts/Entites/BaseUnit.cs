@@ -114,7 +114,7 @@ public class BaseUnit : MonoBehaviour
 
         if (this is PlayerUnit)
         {
-            BattleManager.Instance.UnRegisterUnit(this);
+            BattleManager.Instance?.UnRegisterUnit(this);
         }
         
         //gameObject.SetActive(false);
@@ -135,6 +135,15 @@ public class BaseUnit : MonoBehaviour
 
         //GetComponentInChildren<CharacterAnimation>().
         //ResetTransformRecursive(transform);
+
+        if(this is PlayerUnit)
+        {
+            SetSortingOrder(GameManager.PlayerSortingOrder);
+        }
+        else if (this is EnemyUnit)
+        {
+            SetSortingOrder(GameManager.EnemySortingOrder);
+        }
     }
 
     private void ResetTransformRecursive(Transform parent)
@@ -216,6 +225,7 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
+        SetSortingOrder(GameManager.BehindSortingOrder);
     }
 
     public void CallDieEvent()
