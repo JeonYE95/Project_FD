@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
 using System.Linq;
+using Unity.VisualScripting;
+using static UnityEngine.UI.CanvasScaler;
 
 
 public class InventoryManager : Singleton<InventoryManager>
@@ -375,6 +377,15 @@ public class InventoryManager : Singleton<InventoryManager>
 
         // 소환 가능한 유닛만 필터링 (인벤토리에 있는)
         return units.Where(unit => GetUnitCount(unit.name) > 0).ToList();
+    }
+
+    public bool HasUnitInInventory(int unitId)
+    {
+        var unitData = UnitDataManager.Instance.GetUnitData(unitId);
+        if (unitData == null) return false;
+
+        string unitName = unitData.name;
+        return UnitHas.ContainsKey(unitName) && UnitHas[unitName] > 0;
     }
 
 

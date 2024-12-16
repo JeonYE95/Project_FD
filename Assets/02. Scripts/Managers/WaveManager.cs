@@ -17,7 +17,7 @@ public class WaveManager : Singleton<WaveManager>
 
 
     private const float preparationTime = 60f; //대기 시간
-    private const float waveCycleTime = 10f;// 한 웨이브 시간
+    private const float waveCycleTime = 120f;// 한 웨이브 시간
     public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
