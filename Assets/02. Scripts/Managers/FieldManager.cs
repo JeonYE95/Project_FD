@@ -7,6 +7,7 @@ public class FieldManager : Singleton<FieldManager>
 
     [SerializeField] private Transform _charactersParent; //실제 유닛 담을 빈 게임오브젝트
     private Dictionary<int, Vector3> _fieldPositions = new Dictionary<int, Vector3>(); // 인게임에서 보일 필드 위치 저장
+    private Dictionary<string, Transform> _characterGroups = new Dictionary<string, Transform>();
 
 
     public Transform CharactersParent => _charactersParent;
@@ -112,13 +113,14 @@ public class FieldManager : Singleton<FieldManager>
         int posZ = 14;
         foreach (string groupName in subGroups)
         {
-            Transform group = _charactersParent.Find(groupName); // 이미 있는지 확인
-            if (group == null)
+            if (!_characterGroups.ContainsKey(groupName))
             {
                 // 없으면 새로 생성
                 GameObject newGroup = new GameObject(groupName);
                 newGroup.transform.position = new Vector3(0, 0, posZ);
                 newGroup.transform.SetParent(_charactersParent);
+
+                _characterGroups[groupName] = newGroup.transform;
             }
             posZ -= 1;
         }
