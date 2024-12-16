@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
 using System.Linq;
-using UnityEditor.PackageManager;
 
 
 public class InventoryManager : Singleton<InventoryManager>
@@ -321,4 +320,62 @@ public class InventoryManager : Singleton<InventoryManager>
             UpdateUnitGrade(_currentSelectedGrade);
         }
     }
+
+
+    // 현재 소환 가능 유닛 수보다 필드 위의 유닛수가 작다면 유닛 자동 소환
+    public void AutoSummonUnits()
+    {
+
+    
+        //필드에 유닛 수 확인
+        if (SummonUnitCount > 0 && FieldManager.Instance.CanAddUnitToField()) return;
+
+        // 등급별로 유닛 확인 (높은 등급부터)
+        foreach (Defines.UnitGrade grade in new[] {
+        Defines.UnitGrade.Unique,
+        Defines.UnitGrade.rare,
+        Defines.UnitGrade.common
+    })
+        {
+
+            List<UnitData> summonableUnits = GetSummonableUnits(grade);
+            foreach (UnitData unitData in summonableUnits)
+            {
+                if (GetUnitCount(unitData.name) > 0)
+                {
+
+                    // 한 유닛만 소환
+                    FieldManager.Instance.AddUnitToField(unitData.ID);
+                    subtractCharacter(unitData.name);
+                    return; 
+                }
+
+            }
+        }
+    }
+
+
+    private List<UnitData> GetSummonableUnits(Defines.UnitGrade grade)
+    {
+
+        List<UnitData> units = new List<UnitData>();
+
+        switch (grade)
+        {
+            case Defines.UnitGrade.Unique:
+                units.AddRange(uniqueUnit);
+                break;
+            case Defines.UnitGrade.rare:
+                units.AddRange(rareUnit);
+                break;
+            case Defines.UnitGrade.common:
+                units.AddRange(commonUnit);
+                break;
+        }
+
+        // 소환 가능한 유닛만 필터링 (인벤토리에 있는)
+        return units.Where(unit => GetUnitCount(unit.name) > 0).ToList();
+    }
+
+
 }
