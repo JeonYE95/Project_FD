@@ -34,7 +34,7 @@ public class UnitMovement : MonoBehaviour
         }
 
         Vector2 myPosition = transform.position;
-        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, _myUnit.targetUnit.transform.position, _myUnit.attackRange);
+        Vector2 AdjustedTargetPosition = GetAdjustedTargetPosition(myPosition, _myUnit.targetUnit.transform.position, _myUnit.unitInfo.Range);
 
         moveDirection = (AdjustedTargetPosition - myPosition).normalized;
         moveDirection = moveDirection * moveSpeed;

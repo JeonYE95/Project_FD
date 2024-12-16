@@ -36,16 +36,11 @@ public class ActionHandler : MonoBehaviour
         if (_skillExecutor.gameSkillData == SkillDataManager.GetDefaultSkillData())
         {
             _haveSkill = false;
-            //Debug.Log($"{gameObject.name} 스킬 업슴");
         }
 
-        skillCoolTime = _myUnit.skillCooltime;
-        attackCoolTime = _myUnit.attackCooltime;
+        skillCoolTime = _myUnit.unitInfo.SkillCooltime;
+        attackCoolTime = _myUnit.unitInfo.AttackCooltime;
     }
-
-    //일단은 상태에서 공격,스킬중 어떤것을 할건지 결정하는데
-    //나중에 여기서 통합해서 그냥 스킬쿨 중이면 공격 나가게 할수도 있는데,
-    //스킬은 타겟이 범위 안에 있는지 체크 안할거라서 일단 상태에서
 
     public bool IsAttackCoolTimeComplete()
     {
@@ -131,7 +126,7 @@ public class ActionHandler : MonoBehaviour
     {
         if (_targetUnit.TryGetComponent(out HealthSystem healthSystem))
         {
-            healthSystem.TakeDamage(_myUnit.attackDamage);
+            healthSystem.TakeDamage(_myUnit.unitInfo.Attack);
         }
     }
 

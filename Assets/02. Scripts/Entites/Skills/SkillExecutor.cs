@@ -57,8 +57,8 @@ public class SkillExecutor : MonoBehaviour
         {
             case SkillEffect.DefenseBoost:
                 // 방어력 증가 효과
-                target.defense += (int)gameSkillData.value;
-                StartCoroutine(ResetEffectAfterDuration(() => target.defense -= (int)gameSkillData.value, gameSkillData.duration));
+                target.unitInfo.Defense += (int)gameSkillData.value;
+                StartCoroutine(ResetEffectAfterDuration(() => target.unitInfo.Defense -= (int)gameSkillData.value, gameSkillData.duration));
                 break;
 
             case SkillEffect.HealAmount:
@@ -68,7 +68,7 @@ public class SkillExecutor : MonoBehaviour
 
             case SkillEffect.Damage:
                 // 데미지 효과
-                target.healthSystem.TakeDamage((int)(caster.attackDamage * gameSkillData.value));
+                target.healthSystem.TakeDamage((int)(caster.unitInfo.Attack * gameSkillData.value));
                 break;
 
             case SkillEffect.MultipleAttacks:
