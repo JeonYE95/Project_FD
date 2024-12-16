@@ -14,6 +14,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     private GameObject _previewObject;
     [SerializeField]
     private UIUnitSlot _UIUnitSlot;
+    private UICombineInfo _uiCombineInfo;
 
 
     [SerializeField] private int _index;
@@ -137,22 +138,22 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             if (clickedUnit != null)
             {
                 // UICombineInfo를 활성화하고 클릭한 유닛의 ID 전달
-                UICombineInfo uiCombineInfo = FindObjectOfType<UICombineInfo>();
-                if (uiCombineInfo != null)
-                {
-                    uiCombineInfo.gameObject.SetActive(true); // UI 창 활성화
-                    uiCombineInfo.OnUnitClicked(clickedUnit.ID); // 유닛 ID 전달하여 조합식 업데이트
-                }
-                else
-                {
-                    Debug.LogWarning("UICombineInfo를 찾을 수 없습니다.");
-                }
+                OpenCombineInfoUI(); // UI 창 활성화
+                _uiCombineInfo.OnUnitClicked(clickedUnit.ID); // 유닛 ID 전달하여 조합식 업데이트
             }
             else
             {
                 Debug.LogWarning("슬롯에 유닛 데이터가 없습니다.");
             }
         }
+    }
+
+    private void OpenCombineInfoUI()
+    {
+        if (_uiCombineInfo == null)
+            _uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
+        
+        _uiCombineInfo.Open();
     }
 
 }

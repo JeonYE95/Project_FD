@@ -9,7 +9,6 @@ public class UIInGame : UIBase
     [SerializeField] private Button _unitGuideBtn;
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private Button _battleStartButton;
-    [SerializeField] private Button _combineInfoBtn;
     [SerializeField] private GameObject _spawnPointUI;
     [SerializeField] private TMP_Text _gold;
     [SerializeField] private TMP_Text _currentSummonUnitNum;
@@ -36,7 +35,6 @@ public class UIInGame : UIBase
 
         _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
         _unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
-        _combineInfoBtn.onClick.AddListener(() => { OpenCombineInfoUI(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
         // _timerText = GetComponentInChildren<TMP_Text>();
@@ -66,14 +64,6 @@ public class UIInGame : UIBase
             _uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
         
         _uiUnitGuide.Open();
-    }
-
-    private void OpenCombineInfoUI()
-    {
-        if (_uiCombineInfo == null)
-            _uiCombineInfo = UIManager.Instance.GetUI<UICombineInfo>();
-        
-        _uiCombineInfo.Open();
     }
 
     private void UpdateTimerText(float remainingTime)
