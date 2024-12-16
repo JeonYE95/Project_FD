@@ -45,7 +45,8 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void SetEnemyUnit(GameObject origin, GameObject assets, EnemyData data)
     {
-        origin.GetComponent<BaseUnit>().unitAsset = assets;
+        var baseUnit = origin.GetComponent<BaseUnit>();
+        baseUnit.unitAsset = assets;
 
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
@@ -80,6 +81,7 @@ public class EnemyManager : Singleton<EnemyManager>
             }
         }
 
-        origin.GetComponent<EnemyUnit>().SetUnitInfo();
+        baseUnit.unitInfo = unit;
+        //origin.GetComponent<EnemyUnit>().SetUnitInfo();
     }
 }
