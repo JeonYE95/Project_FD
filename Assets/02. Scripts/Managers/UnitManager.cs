@@ -60,6 +60,8 @@ public class UnitManager
 
     public void SetPlayerUnit(GameObject origin, GameObject assets, UnitData data)
     {
+        origin.GetComponent<BaseUnit>().unitAsset = assets;
+
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
 

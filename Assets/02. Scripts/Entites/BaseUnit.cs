@@ -38,9 +38,11 @@ public class BaseUnit : MonoBehaviour
 
     public Action <BaseUnit> OnDieEvent;
 
+    //캐릭터 에셋 참조 형식으로 저장
+    public GameObject unitAsset;
+    public GameObject[] unitAssetChildren;
 
     private StateMachine stateMachine;
-
 
     //For Debug
     [SerializeField] private string CurrentState;
@@ -112,7 +114,7 @@ public class BaseUnit : MonoBehaviour
 
         if (this is PlayerUnit)
         {
-            BattleManager.Instance.UnRegisterUnit(this);
+            BattleManager.Instance?.UnRegisterUnit(this);
         }
         
         //gameObject.SetActive(false);
@@ -133,6 +135,15 @@ public class BaseUnit : MonoBehaviour
 
         //GetComponentInChildren<CharacterAnimation>().
         //ResetTransformRecursive(transform);
+
+        if(this is PlayerUnit)
+        {
+            SetSortingOrder(GameManager.PlayerSortingOrder);
+        }
+        else if (this is EnemyUnit)
+        {
+            SetSortingOrder(GameManager.EnemySortingOrder);
+        }
     }
 
     private void ResetTransformRecursive(Transform parent)
@@ -214,11 +225,17 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
+        SetSortingOrder(GameManager.BehindSortingOrder);
     }
 
     public void CallDieEvent()
     {
         OnDieEvent?.Invoke(this);
+    }
+
+    public void SetSortingOrder(int sortingOrderNumber)
+    {
+        unitAsset.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrderNumber;
     }
 
     public virtual void PlayWaitAnimation() {}
