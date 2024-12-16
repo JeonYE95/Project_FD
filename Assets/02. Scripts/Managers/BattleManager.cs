@@ -23,13 +23,26 @@ public class BattleManager : Singleton<BattleManager>
     readonly int BattleResultAndResetTime = 3;
     WaitForSeconds _battleResultAndResetTimer;
 
+    bool _isBattleEnd = false;
+
+    public bool IsBattleEnd
+    {
+        get
+        {
+            return _isBattleEnd;
+        }
+        set
+        {
+            _isBattleEnd = value;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
 
-        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
-
         targetingSystem = new TargetingSystem(this);
+        _battleResultAndResetTimer = new WaitForSeconds((int)BattleResultAndResetTime);
     }
 
     private void Start()
@@ -78,19 +91,33 @@ public class BattleManager : Singleton<BattleManager>
             StartCoroutine(Lose());
         }
 
-        aliveEnemyUnitsCount = 0;
-        alivePlayerUnitsCount = 0;
+        //aliveEnemyUnitsCount = 0;
+        //alivePlayerUnitsCount = 0;
     }
 
-    private IEnumerator Victory()
+    public IEnumerator Victory()
     {
+        if (_isBattleEnd)
+        {
+            yield break;
+        }
+
+        _isBattleEnd = true;
+
         yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Victroy();
     }
 
-    private IEnumerator Lose()
+    public IEnumerator Lose()
     {
+        if (_isBattleEnd)
+        {
+            yield break;
+        }
+
+        _isBattleEnd = true;
+
         yield return _battleResultAndResetTimer;
         BattleEnd();
         WaveManager.Instance.Lose();
@@ -122,7 +149,7 @@ public class BattleManager : Singleton<BattleManager>
         foreach(BaseUnit unit in players)
         {
             unit.ReSetUnit();
-            unit.animController.ResetAnim();
+            //unit.animController.ResetAnim();
         }
         
         Debug.Log("ResetAllUnit");
@@ -150,8 +177,10 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    public void BattleSetingAndStart()
+    public void SetAllUnits()
     {
+        allUnits.Clear();
+
         foreach (BaseUnit unit in players)
         {
             allUnits.Add(unit);
@@ -161,6 +190,11 @@ public class BattleManager : Singleton<BattleManager>
         {
             allUnits.Add(unit);
         }
+    }
+
+    public void BattleSetingAndStart()
+    {
+        SetAllUnits();
 
         foreach (BaseUnit unit in allUnits)
         {
@@ -169,6 +203,8 @@ public class BattleManager : Singleton<BattleManager>
 
         alivePlayerUnitsCount = players.Count;
         aliveEnemyUnitsCount = enemies.Count;
+
+        _isBattleEnd = false;
     }
 
     public void RegisterUnit(BaseUnit unit)
@@ -181,6 +217,9 @@ public class BattleManager : Singleton<BattleManager>
         {
             enemies.Add(unit);
         }
+
+        SetAllUnits();
+
     }
 
     public void UnRegisterUnit(BaseUnit unit)
@@ -193,6 +232,8 @@ public class BattleManager : Singleton<BattleManager>
         {
             enemies.Remove(unit);
         }
+
+        SetAllUnits();
     }
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)

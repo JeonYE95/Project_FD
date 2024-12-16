@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class ActionHandler : MonoBehaviour
 {
+    public int attackCount = 1;
+
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
-
 
     public float skillCoolTime;
     public float attackCoolTime;
@@ -26,21 +27,16 @@ public class ActionHandler : MonoBehaviour
         _myUnit = GetComponent<BaseUnit>();
         _skillExecutor = GetComponent<SkillExecutor>();
         _controller = GetComponent<UnitAnimationController>();
-
-        if (_myUnit == null)
-        {
-            Debug.LogError("BaseUnit component is missing on this GameObject!");
-        }
     }
 
     private void Start()
     {
         firePoint = transform;
 
-        if (_skillExecutor._gameSkillData == SkillDataManager.GetDefaultSkillData())
+        if (_skillExecutor.gameSkillData == SkillDataManager.GetDefaultSkillData())
         {
             _haveSkill = false;
-            Debug.Log($"{gameObject.name} 스킬 업슴");
+            //Debug.Log($"{gameObject.name} 스킬 업슴");
         }
 
         skillCoolTime = _myUnit.skillCooltime;
@@ -70,6 +66,7 @@ public class ActionHandler : MonoBehaviour
             return false;
         }
 
+        //공격 애니메이션 재생
         _myUnit.PlayAttackAnimation();
 
         //액션핸들러가 들고있는 타겟 변경
@@ -109,13 +106,16 @@ public class ActionHandler : MonoBehaviour
 
     private void DoAttack()
     {
-        if (_myUnit.isRangedUnit)
+        for (int i = 0; i < attackCount; i++)
         {
-            PerformRangedAttack();
-        }
-        else
-        {
-            PerformMeleeAttack();
+            if (_myUnit.isRangedUnit)
+            {
+                PerformRangedAttack();
+            }
+            else
+            {
+                PerformMeleeAttack();
+            }
         }
     }
 
@@ -137,7 +137,7 @@ public class ActionHandler : MonoBehaviour
 
     private void UseSkill()
     {
-        //_skillExecutor.ExecuteSkill(_myUnit, skillData);
+        _skillExecutor.ExecuteSkill(_myUnit, skillData);
         Debug.Log($"{gameObject.name} 스킬 사용함");
     }
 

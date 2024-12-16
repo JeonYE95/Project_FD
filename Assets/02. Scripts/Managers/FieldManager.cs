@@ -72,8 +72,6 @@ public class FieldManager : Singleton<FieldManager>
             if (slot.Character == null)
             {
                 slot.SetCharacter(unitInstance);
-                unitInstance.transform.SetParent(slot.transform);
-                unitInstance.transform.localPosition = Vector3.zero;
 
                 return;
             }

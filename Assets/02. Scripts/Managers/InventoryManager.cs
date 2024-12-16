@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
 using System.Linq;
+using UnityEditor.PackageManager;
 
 
 public class InventoryManager : Singleton<InventoryManager>
@@ -22,7 +23,7 @@ public class InventoryManager : Singleton<InventoryManager>
     private Dictionary<string, int> UnitHas = new Dictionary<string, int>();
 
     //필드에 소환되어 있는 유닛 추적 : 필드 번호 / 유닛 정보
-    private Dictionary<int, UnitInfo> _fieldUnitHas = new Dictionary<int, UnitInfo>();
+    private Dictionary<int, UnitData> _fieldUnitHas = new Dictionary<int, UnitData>();
 
 
     // 필드에 소환되어 있는 유닛 수 
@@ -42,15 +43,13 @@ public class InventoryManager : Singleton<InventoryManager>
     private Defines.UnitGrade _currentSelectedGrade;
 
 
-    private List<UnitInfo> commonUnit = new List<UnitInfo>();
-    private List<UnitInfo> rareUnit = new List<UnitInfo>();
-    private List<UnitInfo> uniqueUnit = new List<UnitInfo>();
+    private List<UnitData> commonUnit = new List<UnitData>();
+    private List<UnitData> rareUnit = new List<UnitData>();
+    private List<UnitData> uniqueUnit = new List<UnitData>();
 
 
     public void Start()
     {
-
-
         _unitList = GetComponentInChildren<UIUnitSlot>();
         _characterButton = GetComponentInChildren<BindingGradeButton>();
 
@@ -76,7 +75,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
         _currentSelectedGrade = unitGrade; // 현재 등급 인벤토리 저장
 
-        List<UnitInfo> unitsToShow = new List<UnitInfo>();
+        List<UnitData> unitsToShow = new List<UnitData>();
 
         switch (unitGrade)
         {
@@ -93,8 +92,6 @@ public class InventoryManager : Singleton<InventoryManager>
                 break;
         }
 
-
-        // 오브젝트 풀링으로 추후 수정해야.
 
         if (_unitList != null)
         {
@@ -115,7 +112,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     // 필드 유닛 정보 추가
 
-    public void TrackFieldUnit(int fieldIndex, UnitInfo unitInfo)
+    public void TrackFieldUnit(int fieldIndex, UnitData unitInfo)
     {
         if (_fieldUnitHas.ContainsKey(fieldIndex))
         {
@@ -156,7 +153,9 @@ public class InventoryManager : Singleton<InventoryManager>
 
             if (characterPos.Character != null)
             {
-                characterPos.CharacterInit();
+                // 유닛 그룹 재설정 
+                characterPos.SetCharacter(characterPos.Character);
+
 
             }
 
@@ -164,47 +163,30 @@ public class InventoryManager : Singleton<InventoryManager>
 
     }
 
-    //합성 또는 뽑기를 통해 유닛이 인벤토리에 추가 되었을 때 분류
+
+    //합성 또는 필드에서 인벤토리로 유닛 추가할 때 분류
 
     public void AddCharacter(UnitInfo unitName, int amount = 1)
     {
-        if (UnitHas.ContainsKey(unitName._unitData.name))
-        {
-            UnitHas[unitName._unitData.name] += amount;
+        AddCharacter(unitName._unitData, amount);
 
-            Defines.UnitGrade addedUnitGrade = GetUnitGrade(unitName._unitData.grade);
-            if (addedUnitGrade == _currentSelectedGrade)
-            {
-                UpdateUnitGrade(_currentSelectedGrade);
-            }
+    }
+
+    //뽑기를 통해 유닛이 인벤토리에 추가 되었을 때 분류
+    public void AddCharacter(UnitData unitData, int amount = 1)
+    {
+        if (UnitHas.ContainsKey(unitData.name))
+        {
+            UnitHas[unitData.name] += amount;
+            UpdateGradeIfNeeded(GetUnitGrade(unitData.grade));
         }
         else
         {
-            UnitHas.Add(unitName._unitData.name, amount);
+            UnitHas.Add(unitData.name, amount);
 
-
-            Defines.UnitGrade addedUnitGrade = GetUnitGrade(unitName._unitData.grade);
-
-            switch (addedUnitGrade)
-            {
-                case Defines.UnitGrade.common:
-                    commonUnit.Add(unitName);
-                    break;
-                case Defines.UnitGrade.rare:
-                    rareUnit.Add(unitName);
-                    break;
-                case Defines.UnitGrade.Unique:
-                    uniqueUnit.Add(unitName);
-                    break;
-            }
-
-            // 현재 선택된 등급과 추가된 유닛의 등급이 같다면 UI 업데이트
-            if (addedUnitGrade == _currentSelectedGrade)
-            {
-                UpdateUnitGrade(_currentSelectedGrade);
-            }
+            UnitData newData = unitData.Clone();
+            AddToGradeList(newData);
         }
-
     }
 
 
@@ -221,7 +203,7 @@ public class InventoryManager : Singleton<InventoryManager>
                 UnitHas.Remove(itemName);
 
                 // 제거할 유닛 찾기
-                UnitInfo unitToRemove = null;
+                UnitData unitToRemove = null;
 
                 // 각 등급별 리스트에서 해당 유닛 찾기
                 switch (_currentSelectedGrade)
@@ -263,7 +245,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
 
     // 유닛 등급 문자열을 Defines.UnitGrade 변환
-    private Defines.UnitGrade GetUnitGrade(string grade)
+    public Defines.UnitGrade GetUnitGrade(string grade)
     {
         switch (grade.ToLower())
         {
@@ -278,9 +260,9 @@ public class InventoryManager : Singleton<InventoryManager>
         }
     }
 
-    private bool TryFindAndRemoveUnit(List<UnitInfo> unitList, string unitName, out UnitInfo removedUnit)
+    private bool TryFindAndRemoveUnit(List<UnitData> unitList, string unitName, out UnitData removedUnit)
     {
-        removedUnit = unitList.Find(unit => unit._unitData.name == unitName);
+        removedUnit = unitList.Find(unit => unit.name == unitName);
         if (removedUnit != null)
         {
             unitList.Remove(removedUnit);
@@ -311,4 +293,32 @@ public class InventoryManager : Singleton<InventoryManager>
         return 0;
     }
 
+
+    // 유닛 인벤토리 업데이트
+    private void AddToGradeList(UnitData unitData)
+    {
+        Defines.UnitGrade grade = GetUnitGrade(unitData.grade);
+        switch (grade)
+        {
+            case Defines.UnitGrade.common:
+                commonUnit.Add(unitData);
+                break;
+            case Defines.UnitGrade.rare:
+                rareUnit.Add(unitData);
+                break;
+            case Defines.UnitGrade.Unique:
+                uniqueUnit.Add(unitData);
+                break;
+        }
+        UpdateGradeIfNeeded(grade);
+    }
+
+    // 유닛 인벤토리 UI 업데이트
+    private void UpdateGradeIfNeeded(Defines.UnitGrade grade)
+    {
+        if (grade == _currentSelectedGrade)
+        {
+            UpdateUnitGrade(_currentSelectedGrade);
+        }
+    }
 }

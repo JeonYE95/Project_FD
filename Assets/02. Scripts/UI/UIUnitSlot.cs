@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using GSDatas;
 
 public class UIUnitSlot : MonoBehaviour
 {
@@ -10,9 +10,9 @@ public class UIUnitSlot : MonoBehaviour
 
     [SerializeField] private GameObject _unitSlotPrefab;
 
-    private List<UnitInfo> _inventoryUnits = new List<UnitInfo>();
+    private List<UnitData> _inventoryUnits = new List<UnitData>();
 
-    public List<UnitInfo> InventoryUnits
+    public List<UnitData> InventoryUnits
     {
         get => _inventoryUnits;
         private set => _inventoryUnits = value;
@@ -51,24 +51,24 @@ public class UIUnitSlot : MonoBehaviour
 
             if (unitNameTxt != null)
             {
-                unitNameTxt.text = unit._unitData.name;
+                unitNameTxt.text = unit.name;
             }
 
             if (unitCountTxt != null)
             {
-                unitCountTxt.text = $"x{InventoryManager.Instance.GetUnitCount(unit._unitData.name)}";
+                unitCountTxt.text = $"x{InventoryManager.Instance.GetUnitCount(unit.name)}";
             }
 
             if (unitImg != null)
             {
-                Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/Common/{unit._unitData.name}");      // 파일 경로 유닛 종류별로 다르게 설정해야함(좀이따가)
+                Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{unit.grade}/{unit.name}");      
                 unitImg.sprite = sprite;
             }
         }
 
     }
 
-    public void UpdateUnits(List<UnitInfo> units)
+    public void UpdateUnits(List<UnitData> units)
     {
         foreach (Transform child in _content)
         {
@@ -79,7 +79,7 @@ public class UIUnitSlot : MonoBehaviour
         CreateUnitSlots();
     }
 
-    public UnitInfo GetUnitAtIndex(int index)
+    public UnitData GetUnitAtIndex(int index)
     {
         if (index >= 0 && index < _inventoryUnits.Count)
         {

@@ -127,9 +127,13 @@ public class UnitAnimationController : MonoBehaviour
         {
             animator?.ResetTrigger(PlayerAnimData.Death);
         }
-        else if (_myUnit is EnemyUnit)
+    }
+
+    public void StartAnim()
+    {
+        if (_myUnit is PlayerUnit)
         {
-            animator?.ResetTrigger(EnemyAnimData.DeathState);
+            animator.ResetTrigger(PlayerAnimData.ResetAnim);
         }
     }
 

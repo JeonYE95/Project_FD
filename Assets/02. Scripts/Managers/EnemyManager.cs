@@ -45,6 +45,8 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void SetEnemyUnit(GameObject origin, GameObject assets, EnemyData data)
     {
+        origin.GetComponent<BaseUnit>().unitAsset = assets;
+
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
 
@@ -63,18 +65,18 @@ public class EnemyManager : Singleton<EnemyManager>
             var skillData = SkillDataManager.Instance.GetSkillByUnitID(data.ID);
 
             // _skillData 생성 (InGameSkillData)
-            if (skillExecutor._gameSkillData == null)
+            if (skillExecutor.gameSkillData == null)
             {
-                skillExecutor._gameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
+                skillExecutor.gameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
             }
 
             if (skillData == null) // 스킬 데이터가 없으면
             {
-                skillExecutor._gameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
+                skillExecutor.gameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
             }
             else
             {
-                skillExecutor._gameSkillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
+                skillExecutor.gameSkillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
             }
         }
 

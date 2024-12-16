@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using GSDatas;
 
 public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDropHandler,
     IPointerEnterHandler, IDragHandler
@@ -31,7 +31,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     {
         _slotIndex = index;
 
-        if (index >= 0 && index <=3)
+        if (index >= 0 && index <= 3)
             _groupIndex = 1;
         else if (index >= 4 && index <= 7)
             _groupIndex = 2;
@@ -96,8 +96,8 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
 
-  
-    public void DropCharacter(UnitInfo unitInfo)
+
+    public void DropCharacter(UnitData unitInfo)
     {
 
         // 최대 소환 가능 수 도달하면 소환 불가
@@ -106,7 +106,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
 
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
-        _character = UnitManager.Instance.CreatePlayerUnit(unitInfo._unitData.ID);
+        _character = UnitManager.Instance.CreatePlayerUnit(unitInfo.ID);
 
 
         if (_character != null)
@@ -120,15 +120,16 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
             // UI 요소의 월드 중심점 구하고 위치 설정
             Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-            
+
             // 위치 설정
             _character.transform.localPosition = worldPosition;
 
             // 초기 위치 저장
             _previousPosition = worldPosition;
 
-            InventoryManager.Instance.subtractCharacter(unitInfo._unitData.name, 1);
-            Debug.Log($"Unit {unitInfo._unitData.name} count decreased in inventory.");
+            // 인벤토리에서 차감
+            InventoryManager.Instance.subtractCharacter(unitInfo.name, 1);
+            Debug.Log($"Unit {unitInfo.name} count decreased in inventory.");
             InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
         }
 
@@ -186,8 +187,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             UnitPrevInfo previewInfo = InventoryManager.Instance.PreviewObject.GetComponent<UnitPrevInfo>();
             if (previewInfo != null)
             {
-                UnitInfo unitInfo = previewInfo.GetUnitInfo();
-                DropCharacter(unitInfo);
+                UnitData unitdata = previewInfo.GetUnitData();
+                DropCharacter(unitdata);
+
+                // PreviewObject 비활성화 
+                InventoryManager.Instance.PreviewObject.SetActive(false);
             }
 
         }
@@ -204,12 +208,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 _character = fromSlot._character;
                 fromSlot._character = null;
 
-
-                // RectTransform의 월드 위치 구하기
-                Vector3 worldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-                
-                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
-                _character.transform.position = worldPos;
+                //그룹으로 유닛 위치 이동
+                SetCharacter(_character);
+                fromSlot.SetCharacter(null);
 
             }
 
@@ -222,14 +223,8 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 fromSlot._character = tempCharacter;
 
                 //각 유닛 위치 업데이트
-                Vector3 thisWorldPos = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
-                Vector3 otherWorldPos = Extensions.GetUIWorldPosition(fromSlot.GetComponent<RectTransform>());
-
-                _character.transform.SetParent(FieldManager.Instance.CharactersParent);
-                _character.transform.position = thisWorldPos;
-
-                tempCharacter.transform.SetParent(FieldManager.Instance.CharactersParent);
-                tempCharacter.transform.position = otherWorldPos;
+                SetCharacter(_character);
+                fromSlot.SetCharacter(tempCharacter);
             }
 
         }
@@ -277,4 +272,27 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             InventoryManager.Instance.UntrackFieldUnit(Index);
         }
     }
+
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    if (_character != null)
+    //    {
+    //        UnitInfo unitInfo = _character.GetComponent<UnitInfo>();
+    //        if (unitInfo != null)
+    //        {
+    //            UICombineInfo uiCombineInfo = FindObjectOfType<UICombineInfo>();
+    //            if (uiCombineInfo != null)
+    //            {
+    //                uiCombineInfo.gameObject.SetActive(true);
+    //                uiCombineInfo.OnUnitClicked(unitInfo._unitData.ID);
+    //            }
+    //            else
+    //            {
+    //                Debug.LogWarning("UICombineInfo가 씬에 없습니다.");
+    //            }
+    //        }
+    //    }
+    //}
+
+
 }

@@ -16,7 +16,8 @@ public class WaveManager : Singleton<WaveManager>
     private int _endWave; // 마지막 웨이브
 
 
-    private const float preparationTime = 30f; //대기 시간
+    private const float preparationTime = 60f; //대기 시간
+    private const float waveCycleTime = 5f;// 한 웨이브 시간
     public event Action<float> OnPreparationTimeChanged;
     private float currentPreparationTime; // 남은 대기 시간
     private bool isPreparing;
@@ -35,9 +36,6 @@ public class WaveManager : Singleton<WaveManager>
     //웨이브 보상 정보 저장
     private List<WaveRewardData> _AllWaveRewardata = new List<WaveRewardData>();
     private List<WaveRewardData> _currentWaveRewardData;
-
-
-
 
     public int CurrentWave
     {
@@ -96,6 +94,12 @@ public class WaveManager : Singleton<WaveManager>
     // 웨이브에서 승리했을 때
     public void Victroy()
     {
+
+        if (_prepareCoroutine != null)
+        {
+            StopCoroutine(_prepareCoroutine);
+        }
+
         ClearWave();
 
     }
@@ -103,6 +107,11 @@ public class WaveManager : Singleton<WaveManager>
     // 웨이브에서 패했을 때
     public void Lose()
     {
+        if (_prepareCoroutine != null)
+        {
+            StopCoroutine(_prepareCoroutine);
+        }
+
         IsRunningWave = false;
         OnDead?.Invoke();
         StartCoroutine(NextWavePrepare());
@@ -179,8 +188,13 @@ public class WaveManager : Singleton<WaveManager>
         IsRunningWave = true;
         OnBattleStart?.Invoke(); // UI 비활성화
 
+      
         //전투 시작
         BattleManager.Instance.BattleSetingAndStart();
+
+        // 전투 시작과 함께 타이머 시작
+        currentPreparationTime = waveCycleTime;
+        _prepareCoroutine = StartCoroutine(BattleTimer());
     }
 
 
@@ -199,15 +213,7 @@ public class WaveManager : Singleton<WaveManager>
 
         OnClearWave?.Invoke();
        
-
-
-
-        //UI 활성화 필요
-        //
-
         currentPreparationTime = preparationTime;
-
-        Debug.Log(currentPreparationTime);
 
         while (currentPreparationTime > 0)
         {
@@ -220,6 +226,20 @@ public class WaveManager : Singleton<WaveManager>
         Debug.Log("게임 시작");
         StartWave();
 
+    }
+
+
+    private IEnumerator BattleTimer()
+    {
+        while (currentPreparationTime > 0)
+        {
+            OnPreparationTimeChanged?.Invoke(currentPreparationTime);
+            yield return new WaitForSeconds(1f);
+            currentPreparationTime--;
+        }
+
+     
+        BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
     }
 
 

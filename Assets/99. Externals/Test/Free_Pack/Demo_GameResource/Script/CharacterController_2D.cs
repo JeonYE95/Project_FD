@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -170,7 +170,7 @@ public class CharacterController_2D : MonoBehaviour {
 
 
     // character Filp 
-    bool B_Attack = false;
+    //bool B_Attack = false;
     bool B_FacingRight = true;
 
     void Filp()

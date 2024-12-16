@@ -22,11 +22,11 @@ public class CombineDataManager : CombineData
         return GetList();
     }
 
-    public CombineData GetCombineData(int combineId)
+    public CombineData GetCombineData(int ID)
     {
-        if (CombineDataMap.TryGetValue(combineId, out var combineData))
+        if (CombineDataMap.TryGetValue(ID, out var data))
         {
-            return combineData;
+            return data;
         }
         return null;
     }
@@ -43,6 +43,21 @@ public class CombineDataManager : CombineData
         }
 
         return null;
+    }
+
+    public List<CombineData> GetRequiredUnitData(int unitId)
+    {
+        List<CombineData> resultList = new List<CombineData>();
+
+        foreach (var data in CombineDataList)
+        {
+            if (data.requiredunit1 == unitId ||  data.requiredunit2 == unitId)
+            {
+                resultList.Add(data);
+            }
+        }
+
+        return resultList;
     }
 
 }

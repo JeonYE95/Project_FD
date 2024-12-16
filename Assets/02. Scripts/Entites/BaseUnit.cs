@@ -38,9 +38,11 @@ public class BaseUnit : MonoBehaviour
 
     public Action <BaseUnit> OnDieEvent;
 
+    //캐릭터 에셋 참조 형식으로 저장
+    public GameObject unitAsset;
+    public GameObject[] unitAssetChildren;
 
     private StateMachine stateMachine;
-
 
     //For Debug
     [SerializeField] private string CurrentState;
@@ -83,6 +85,9 @@ public class BaseUnit : MonoBehaviour
     {
         //Idle 상태로 바꾸는것도 다른 준비가 끝나고 하는게 좋을거같음
         stateMachine.ChangeState(stateMachine.IdleState);
+
+        //배틀스타트할때 초기화해야할것 해주는 함수
+        animController.StartAnim();
     }
 
     //유닛을 타일에 배치(셋팅) 햇을때
@@ -101,12 +106,15 @@ public class BaseUnit : MonoBehaviour
     //플레이어는 배치 해제시, 몬스터는 배틀 끝났을 시
     public void UnregisterFromBattleManager()
     {
-        OnDieEvent -= UnitDeActive;
-        OnDieEvent -= BattleManager.Instance.UnitDie;
+        if (OnDieEvent != null)
+        {
+            OnDieEvent -= UnitDeActive;
+            OnDieEvent -= BattleManager.Instance.UnitDie;
+        }
 
         if (this is PlayerUnit)
         {
-            BattleManager.Instance.UnRegisterUnit(this);
+            BattleManager.Instance?.UnRegisterUnit(this);
         }
         
         //gameObject.SetActive(false);
@@ -127,6 +135,15 @@ public class BaseUnit : MonoBehaviour
 
         //GetComponentInChildren<CharacterAnimation>().
         //ResetTransformRecursive(transform);
+
+        if(this is PlayerUnit)
+        {
+            SetSortingOrder(GameManager.PlayerSortingOrder);
+        }
+        else if (this is EnemyUnit)
+        {
+            SetSortingOrder(GameManager.EnemySortingOrder);
+        }
     }
 
     private void ResetTransformRecursive(Transform parent)
@@ -208,12 +225,17 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
+        SetSortingOrder(GameManager.BehindSortingOrder);
     }
 
     public void CallDieEvent()
     {
         OnDieEvent?.Invoke(this);
-        Debug.Log($"{gameObject.name} 콜다이이벤트");
+    }
+
+    public void SetSortingOrder(int sortingOrderNumber)
+    {
+        unitAsset.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrderNumber;
     }
 
     public virtual void PlayWaitAnimation() {}

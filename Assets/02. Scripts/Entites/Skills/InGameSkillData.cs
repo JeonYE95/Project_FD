@@ -53,8 +53,35 @@ public enum SkillEffect
     DefenseBoost,  // 방어력 증가
     HealAmount,    // 체력 회복
     Damage,         // 데미지
-    AttackBoost
+    AttackBoost,     // 공격속도
+    MultipleAttacks     // 여러번 공격
 }
+
+
+
+public enum TargetGroup
+{
+    Ally,
+    Enemy,
+    AllAlly,
+    AllEnemy,
+    Self
+}
+
+public enum TargetPriority
+{
+    Closest,
+    Farthest,
+    Random,
+    All
+}
+
+public enum SpecialAttack
+{
+    MultipleAttacks,
+
+}
+
 public static class EnumExtensions
 {
     public static T ToEnum<T>(this string value) where T : Enum
