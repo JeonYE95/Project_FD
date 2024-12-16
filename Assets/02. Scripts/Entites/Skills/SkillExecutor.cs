@@ -77,6 +77,12 @@ public class SkillExecutor : MonoBehaviour
                 Debug.Log($"멀티플어택 발동 {(int)gameSkillData.value}");
                 break;
 
+            case SkillEffect.AttackBoost:
+                var originAttackCollTime = _handler.attackCoolTime;
+                _handler.attackCoolTime -= (gameSkillData.value / 100) * originAttackCollTime;
+                StartCoroutine(ResetEffectAfterDuration(() => { _handler.attackCoolTime = originAttackCollTime; }, gameSkillData.duration));
+                break;
+
             default:
                 Debug.LogWarning($"알 수 없는 스킬 효과: {gameSkillData.skillEffect}");
                 break;
