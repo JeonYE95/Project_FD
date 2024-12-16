@@ -21,18 +21,27 @@ public class CombineManager : Singleton<CombineManager>
 
         if (combineData == null) return;
 
+        bool isInventoryUnit1 = InventoryManager.Instance.HasUnitInInventory(unit1ID);
+        bool isInventoryUnit2 = InventoryManager.Instance.HasUnitInInventory(unit2ID);
+
         bool isFieldUnit1 = FieldManager.Instance.HasUnitInField(unit1ID);
         bool isFieldUnit2 = FieldManager.Instance.HasUnitInField(unit2ID);
+
+        if (!((isFieldUnit1 || isInventoryUnit1) && (isFieldUnit2 || isInventoryUnit2)))
+        {
+            Debug.LogWarning("조합에 필요한 유닛이 부족합니다.");
+            return;
+        }
 
         if (isFieldUnit1 && isFieldUnit2)     // 둘 다 필드에 있는 경우
         {
             CombineFieldOnly(unit1ID, unit2ID, combineData);
         }
-        else if (isFieldUnit1 && !isFieldUnit2)       // unitId1은 필드, unitId2는 인벤토리
+        else if (isFieldUnit1 && isInventoryUnit2)       // unitId1은 필드, unitId2는 인벤토리
         {
             CombineFieldAndInventory(unit1ID, unit2ID, combineData);
         }
-        else if (!isFieldUnit1 && isFieldUnit2)       // unitId2는 필드, unitId1은 인벤토리
+        else if (isInventoryUnit1 && isFieldUnit2)       // unitId2는 필드, unitId1은 인벤토리
         {
             CombineFieldAndInventory(unit2ID, unit1ID, combineData);
         }
