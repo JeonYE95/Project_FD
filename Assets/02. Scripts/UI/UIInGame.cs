@@ -11,6 +11,9 @@ public class UIInGame : UIBase
     [SerializeField] private Button _battleStartButton;
     [SerializeField] private Button _combineInfoBtn;
     [SerializeField] private GameObject _spawnPointUI;
+    [SerializeField] private TMP_Text _gold;
+    [SerializeField] private TMP_Text _currentSummonUnitNum;
+    [SerializeField] private TMP_Text _maxSummonUnitNum;
 
     [SerializeField] private Image _mask1;
     [SerializeField] private Image _mask2;
@@ -53,6 +56,8 @@ public class UIInGame : UIBase
     private void Update()
     {
         SetStageHealth();   // 게임 종료 시마다(성공 또는 실패 시 마다) 호출하는게 더 나으려나
+        SetGold();
+        SetUnitLimit();
     }
 
     private void OpenUnitGuideUI()
@@ -116,4 +121,17 @@ public class UIInGame : UIBase
                 break;
         }
     }
+
+    private void SetGold()
+    {
+        _gold.text = StageManager.Instance.Gold.ToString();
+    }
+
+    private void SetUnitLimit()
+    {
+        _currentSummonUnitNum.text = InventoryManager.Instance.SummonUnitCount.ToString();
+        _maxSummonUnitNum.text = InventoryManager.Instance.MaxSummonUnitCount.ToString();
+    }
+
+    
 }
