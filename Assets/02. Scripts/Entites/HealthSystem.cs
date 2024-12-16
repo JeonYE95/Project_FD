@@ -70,6 +70,11 @@ public class HealthSystem : MonoBehaviour
         // HealthBar 위치 조정 
         _healthBarRectTransform = _healthBar.GetComponent<RectTransform>();
         _healthBarRectTransform.anchoredPosition = new Vector2(0, 1f);
+
+        if (unit.isPlayerUnit)
+        {
+            _healthBarRectTransform.anchoredPosition += new Vector2(0, 0.3f);
+        }
     }
 
     public void ResetHealth()
