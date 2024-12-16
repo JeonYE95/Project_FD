@@ -41,13 +41,10 @@ public class HealthSystem : MonoBehaviour
     {
         string unitStr;
         if (unit.isPlayerUnit)
-        {
             unitStr = "Player";
-        }
         else
-        {
             unitStr = "Enemy";
-        }
+
         GameObject healthBarPrefab = Resources.Load<GameObject>($"UI/UI{unitStr}HealthBar");
 
         if (healthBarPrefab == null)
