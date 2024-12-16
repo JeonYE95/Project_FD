@@ -39,7 +39,14 @@ public class HealthSystem : MonoBehaviour
 
     private void CreateHealthBar()
     {
-        GameObject healthBarPrefab = Resources.Load<GameObject>("UI/UIPlayerHealthBar");
+        string unitStr;
+        if (unit.isPlayerUnit)
+            unitStr = "Player";
+        else
+            unitStr = "Enemy";
+
+        GameObject healthBarPrefab = Resources.Load<GameObject>($"UI/UI{unitStr}HealthBar");
+
         if (healthBarPrefab == null)
         {
             Debug.LogError("HealthBar 프리팹을 Resources/Prefabs/UIHealthBar에서 찾을 수 없습니다!");
@@ -62,28 +69,7 @@ public class HealthSystem : MonoBehaviour
 
         // HealthBar 위치 조정 
         _healthBarRectTransform = _healthBar.GetComponent<RectTransform>();
-
-        UpdateHealthBarPosition();
-    }
-
-    private void UpdateHealthBarPosition()
-    {
-        // 캐릭터의 월드 좌표를 스크린 좌표로 변환
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2.0f, 0)); // 머리 위로 오프셋
-        Debug.Log(transform.position);
-
-        // 스크린 좌표를 HealthBar의 anchoredPosition에 적용
-        _healthBarRectTransform.localPosition = screenPos;
-
-        // Z값이 음수면 카메라 뒤쪽에 있으므로 HealthBar를 비활성화
-        if (screenPos.z < 0)
-        {
-            _healthBar.SetActive(false);
-        }
-        else
-        {
-            _healthBar.SetActive(true);
-        }
+        _healthBarRectTransform.anchoredPosition = new Vector2(0, 1f);
     }
 
     public void ResetHealth()

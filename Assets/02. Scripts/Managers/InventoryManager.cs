@@ -328,11 +328,9 @@ public class InventoryManager : Singleton<InventoryManager>
     public void AutoSummonUnits()
     {
 
-        // 소환 가능한 유닛 수 확인
-        int availableSummomUnitCount = MaxSummonUnitCount - SummonUnitCount;
-
+    
         //필드에 유닛 수 확인
-        if (availableSummomUnitCount <= 0 || !FieldManager.Instance.CanAddUnitToField()) return;
+        if (SummonUnitCount > 0 && FieldManager.Instance.CanAddUnitToField()) return;
 
         // 등급별로 유닛 확인 (높은 등급부터)
         foreach (Defines.UnitGrade grade in new[] {
@@ -345,19 +343,13 @@ public class InventoryManager : Singleton<InventoryManager>
             List<UnitData> summonableUnits = GetSummonableUnits(grade);
             foreach (UnitData unitData in summonableUnits)
             {
-                if (availableSummomUnitCount <= 0) break;
-
-                // 해당 유닛의 소환 가능 개수만큼 반복
-                int unitCount = GetUnitCount(unitData.name);
-
-                for (int i = 0; i < unitCount; i++)
+                if (GetUnitCount(unitData.name) > 0)
                 {
 
-                    // 유닛 소환
+                    // 한 유닛만 소환
                     FieldManager.Instance.AddUnitToField(unitData.ID);
                     subtractCharacter(unitData.name);
-                    availableSummomUnitCount--;
-
+                    return; 
                 }
 
             }
