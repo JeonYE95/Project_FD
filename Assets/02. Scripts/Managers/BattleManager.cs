@@ -25,6 +25,18 @@ public class BattleManager : Singleton<BattleManager>
 
     bool _isBattleEnd = false;
 
+    public bool IsBattleEnd
+    {
+        get
+        {
+            return _isBattleEnd;
+        }
+        set
+        {
+            _isBattleEnd = value;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
