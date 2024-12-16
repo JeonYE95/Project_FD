@@ -111,7 +111,7 @@ public class BattleManager : Singleton<BattleManager>
 
     public IEnumerator Lose()
     {
-        if (!_isBattleEnd)
+        if (_isBattleEnd)
         {
             yield break;
         }
