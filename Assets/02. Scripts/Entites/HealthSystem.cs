@@ -44,6 +44,7 @@ public class HealthSystem : MonoBehaviour
 
         if (currentHP < 0)
         {
+            currentHP = 0;
             unit.CallDieEvent();
         }
     }
