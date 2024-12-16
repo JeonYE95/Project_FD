@@ -50,18 +50,21 @@ public class BattleManager : Singleton<BattleManager>
         //Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
     }
 
-    private void Update()
+    public void BattleSetingAndStart()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        SetAllUnits();
+
+        foreach (BaseUnit unit in allUnits)
         {
-            BattleSetingAndStart();
+            unit.UnitBattleStart();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            TestSpawn();
-        }
+        alivePlayerUnitsCount = players.Count;
+        aliveEnemyUnitsCount = enemies.Count;
+
+        _isBattleEnd = false;
     }
+
     public void UnitDie(BaseUnit unit)
     {
         if (unit is PlayerUnit)
@@ -192,20 +195,7 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    public void BattleSetingAndStart()
-    {
-        SetAllUnits();
-
-        foreach (BaseUnit unit in allUnits)
-        {
-            unit.UnitBattleStart();
-        }
-
-        alivePlayerUnitsCount = players.Count;
-        aliveEnemyUnitsCount = enemies.Count;
-
-        _isBattleEnd = false;
-    }
+    
 
     public void RegisterUnit(BaseUnit unit)
     {

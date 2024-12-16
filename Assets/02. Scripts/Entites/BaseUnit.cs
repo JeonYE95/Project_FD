@@ -8,35 +8,25 @@ using Assets.HeroEditor.Common.Scripts.CharacterScripts;
 
 public class BaseUnit : MonoBehaviour
 {
+    //Unit's Field
+    public bool isLive;
+    public BaseUnit targetUnit;
+
+    public IUnitInfo unitInfo;
+
     //Unit's Component
     public HealthSystem healthSystem;
     public ActionHandler actionHandler;
     public UnitMovement UnitMovement;
     public UnitAnimationController animController;
 
-    //Unit's Field
-    public bool isLive;
-    public BaseUnit targetUnit;
-    public int defense;
-    public int attackDamage;
-    public int skillDamage;
-    public int maxHP;
-    public float skillCooltime;
-    public float attackCooltime;
-    public float attackRange;
-    public string unitGrade;
-
+    //공통된 이동속도
     float moveSpeed = 1.5f;
 
     //플레이어면 true , 적이면 false
     public bool isPlayerUnit = false;
     public bool isRangedUnit = false;
 
-    public GameObject attackProjectile;
-
-    private bool isSkillExecuting;
-
-    public Action <BaseUnit> OnDieEvent;
 
     //캐릭터 에셋 참조 형식으로 저장
     public GameObject unitAsset;
@@ -47,6 +37,7 @@ public class BaseUnit : MonoBehaviour
     //For Debug
     [SerializeField] private string CurrentState;
 
+    public Action <BaseUnit> OnDieEvent;
 
     protected virtual void Awake()
     {
@@ -68,10 +59,11 @@ public class BaseUnit : MonoBehaviour
     //Start 에서 호출됨
     public virtual void UnitInit()
     {
-        healthSystem.MaxHP = maxHP;
+        healthSystem.MaxHP = unitInfo.Health;
+
         UnitMovement.moveSpeed = moveSpeed;
 
-        if (attackRange >= 4f)
+        if (unitInfo.Range >= 4f)
         {
             isRangedUnit = true;
         }
@@ -158,7 +150,6 @@ public class BaseUnit : MonoBehaviour
         }
     }
 
-
     // Update is called once per frame
     void Update()
     {
@@ -189,8 +180,6 @@ public class BaseUnit : MonoBehaviour
             Debug.Log("스킬 사용시 타겟 캐릭터가 Null");
             return;
         }
-
-        isSkillExecuting = true;
     }
    
     public bool FindTarget()
@@ -216,7 +205,7 @@ public class BaseUnit : MonoBehaviour
             return false;
         }
 
-        return Vector2.Distance(transform.position, targetUnit.transform.position) < attackRange;
+        return Vector2.Distance(transform.position, targetUnit.transform.position) < unitInfo.Range;
     }
 
     
