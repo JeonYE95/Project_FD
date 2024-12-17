@@ -58,6 +58,7 @@ namespace GSDatas
 
 		public System.Int32 ID;
 		public System.String name;
+		public System.String Description;
   
 
 #region fuctions
