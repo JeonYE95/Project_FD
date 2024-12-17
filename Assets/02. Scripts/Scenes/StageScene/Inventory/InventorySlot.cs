@@ -28,6 +28,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
                 Destroy(tempObject);
 
+                //필드 정보 제거
+                InventoryManager.Instance.UntrackFieldUnit(fieldSlot.Index);
+
                 // 필드에서 유닛 제거
                 fieldSlot.RemoveCharacter();
 

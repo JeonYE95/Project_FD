@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-
 public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] private List<FieldSlot> _fieldSlots;
@@ -45,18 +44,26 @@ public class FieldManager : Singleton<FieldManager>
 
     public void RemoveUnitFromField(int unitID)     //특정 유닛ID 필드에서 제거
     {
+
         foreach (var slot in _fieldSlots)
         {
             if (slot.Character != null)
             {
+
                 var unitInfo = slot.Character.GetComponent<UnitInfo>();
                 if (unitInfo != null && unitInfo._unitData.ID == unitID)
                 {
+
+                    int slotIndex = slot.Index;
+
+                    InventoryManager.Instance.UntrackFieldUnit(slotIndex);
                     slot.RemoveCharacter();
+
                     return;
                 }
             }
         }
+     
     }
 
     public void AddUnitToField(int unitID)      // 필드에 유닛 생성 배치
@@ -76,8 +83,10 @@ public class FieldManager : Singleton<FieldManager>
         {
             if (slot.Character == null)
             {
+ 
                 slot.SetCharacter(unitInstance);
                 InventoryManager.Instance.TrackFieldUnit(slot.Index, unitData);
+
                 return;
             }
         }
