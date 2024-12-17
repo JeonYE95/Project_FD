@@ -104,11 +104,11 @@ public class StageManager : Singleton<StageManager>
         foreach (StageData reward in _currentStageData)
         {
 
-            RewardData rewardInfo = RewardDataManager.Instance.GetUnitData(reward.ID);
+            RewardData rewardInfo = RewardDataManager.Instance.GetUnitData(reward.RewardID);
 
             Debug.Log($" 스테이지 클리어 보상 : {rewardInfo.name} : {reward.count} 획득");
 
-            GameManager.Instance.AddItem(reward.ID, reward.count);
+            GameManager.Instance.AddItem(reward.RewardID, reward.count);
 
         }
 

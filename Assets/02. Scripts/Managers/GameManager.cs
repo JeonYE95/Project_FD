@@ -16,7 +16,7 @@ public class PlayerData
     public List<InGameItems> items = new List<InGameItems>();
 }
 
-
+[System.Serializable]
 public class InGameItems
 {
 
@@ -36,6 +36,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     private void Start()
     {
+        LoadPlayerDataFromJson();
         DataManager.Instance.Initialize();
         UnitManager.Instance.Initialize();
         UIManager.Instance.Initialize();
@@ -105,7 +106,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
 
         // 자동 저장
-        SavePlayerDataToJson();
+        //SavePlayerDataToJson();
     }
 
 
