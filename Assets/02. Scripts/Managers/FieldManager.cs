@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 
 public class FieldManager : Singleton<FieldManager>
 {
-    [SerializeField] private FieldSlot[] _fieldSlots;
+    [SerializeField] private List<FieldSlot> _fieldSlots;
 
     [SerializeField] private Transform _charactersParent; //실제 유닛 담을 빈 게임오브젝트
     private Dictionary<int, Vector3> _fieldPositions = new Dictionary<int, Vector3>(); // 인게임에서 보일 필드 위치 저장

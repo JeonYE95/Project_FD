@@ -13,7 +13,7 @@ public class InventoryManager : Singleton<InventoryManager>
     private int _maxSummonUnitCount = 5;
 
     [SerializeField] private List<FieldSlot> _fieldSlots = new List<FieldSlot>();
-    public FieldSlot[] FieldSlots => _fieldSlots.ToArray();
+    public List<FieldSlot> FieldSlots => _fieldSlots;
 
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
