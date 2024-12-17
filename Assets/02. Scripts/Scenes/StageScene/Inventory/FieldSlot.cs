@@ -208,6 +208,18 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 _character = fromSlot._character;
                 fromSlot._character = null;
 
+
+                // 필드 유닛 위치 정보 업데이트
+                var unitInfo = _character.GetComponent<UnitInfo>();
+                if (unitInfo != null)
+                {
+                    // 이전 위치의 유닛 정보 제거
+                    InventoryManager.Instance.UntrackFieldUnit(fromSlot.Index);
+                    // 새 위치에 유닛 정보 추가
+                    InventoryManager.Instance.TrackFieldUnit(Index, unitInfo._unitData);
+                }
+
+
                 //그룹으로 유닛 위치 이동
                 SetCharacter(_character);
                 fromSlot.SetCharacter(null);
@@ -221,6 +233,17 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 GameObject tempCharacter = _character;
                 _character = fromSlot._character;
                 fromSlot._character = tempCharacter;
+
+                // 필드 유닛 위치 정보 업데이트
+                var fromUnitInfo = _character.GetComponent<UnitInfo>();
+                var toUnitInfo = tempCharacter.GetComponent<UnitInfo>();
+                if (fromUnitInfo != null && toUnitInfo != null)
+                {
+                    // 각각의 새 위치에 유닛 정보 업데이트
+                    InventoryManager.Instance.TrackFieldUnit(Index, fromUnitInfo._unitData);
+                    InventoryManager.Instance.TrackFieldUnit(fromSlot.Index, toUnitInfo._unitData);
+                }
+
 
                 //각 유닛 위치 업데이트
                 SetCharacter(_character);
@@ -265,11 +288,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     {
         if (_character != null)
         {
+
             Destroy(_character);
 
             _character = null;
 
-            InventoryManager.Instance.UntrackFieldUnit(Index);
         }
     }
 
