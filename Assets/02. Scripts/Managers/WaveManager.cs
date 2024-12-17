@@ -63,9 +63,8 @@ public class WaveManager : Singleton<WaveManager>
     public void Start()
     {
 
-        //임시로 스테이지 ID 넣음  -> 나중에 스테이지 진입시 정보를 받아와야 함.
-
-        int stageID = 101;
+       
+        int stageID = StageManager.Instance.StageId;
         CurrentWave = 1;
 
         // 해당 스테이지/웨이브에 맞게 재분류
