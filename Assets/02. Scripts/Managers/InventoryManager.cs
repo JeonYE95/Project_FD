@@ -196,45 +196,52 @@ public class InventoryManager : Singleton<InventoryManager>
 
 
     // 유닛 조합 / 필드로 내보낼 때 인벤토리에서 개수 감소
-    public bool subtractCharacter(string itemName, int amount = 1)
+    public bool subtractCharacter(UnitData unit, int amount = 1)
     {
-        if (UnitHas.ContainsKey(itemName) && UnitHas[itemName] >= amount)
+        if (UnitHas.ContainsKey(unit.name) && UnitHas[unit.name] >= amount)
         {
-            UnitHas[itemName] -= amount;
+            UnitHas[unit.name] -= amount;
 
             // 개수가 0이 되면 딕셔너리에서 제거
-            if (UnitHas[itemName] <= 0)
+            if (UnitHas[unit.name] <= 0)
             {
-                UnitHas.Remove(itemName);
+                UnitHas.Remove(unit.name);
 
                 // 제거할 유닛 찾기
                 UnitData unitToRemove = null;
 
-                // 각 등급별 리스트에서 해당 유닛 찾기
-                switch (_currentSelectedGrade)
+                // 유닛의 실제 등급 확인 
+                var unitData = UnitDataManager.Instance.GetUnitData(unit.ID);
+                if (unitData != null)
                 {
-                    case Defines.UnitGrade.common:
-                        if (TryFindAndRemoveUnit(commonUnit, itemName, out unitToRemove))
-                        {
-                            UpdateUnitGrade(_currentSelectedGrade);
-                        }
-                        break;
+                    Defines.UnitGrade actualGrade = GetUnitGrade(unitData.grade);
 
-                    case Defines.UnitGrade.rare:
-                        if (TryFindAndRemoveUnit(rareUnit, itemName, out unitToRemove))
-                        {
-                            UpdateUnitGrade(_currentSelectedGrade);
-                        }
-                        break;
-
-                    case Defines.UnitGrade.Unique:
-                        if (TryFindAndRemoveUnit(uniqueUnit, itemName, out unitToRemove))
-                        {
-                            UpdateUnitGrade(_currentSelectedGrade);
-                        }
-                        break;
+                    // 실제 등급에 따라 해당하는 리스트에서 제거
+                    switch (actualGrade)
+                    {
+                        case Defines.UnitGrade.common:
+                            if (TryFindAndRemoveUnit(commonUnit, unit.name, out unitToRemove))
+                            {
+                                if (actualGrade == _currentSelectedGrade)
+                                    UpdateUnitGrade(_currentSelectedGrade);
+                            }
+                            break;
+                        case Defines.UnitGrade.rare:
+                            if (TryFindAndRemoveUnit(rareUnit, unit.name, out unitToRemove))
+                            {
+                                if (actualGrade == _currentSelectedGrade)
+                                    UpdateUnitGrade(_currentSelectedGrade);
+                            }
+                            break;
+                        case Defines.UnitGrade.Unique:
+                            if (TryFindAndRemoveUnit(uniqueUnit, unit.name, out unitToRemove))
+                            {
+                                if (actualGrade == _currentSelectedGrade)
+                                    UpdateUnitGrade(_currentSelectedGrade);
+                            }
+                            break;
+                    }
                 }
-
             }
             else
             {
@@ -352,7 +359,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
                     // 한 유닛만 소환
                     FieldManager.Instance.AddUnitToField(unitData.ID);
-                    subtractCharacter(unitData.name);
+                    subtractCharacter(unitData);
                     return; 
                 }
 

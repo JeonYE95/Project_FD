@@ -128,7 +128,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             _previousPosition = worldPosition;
 
             // 인벤토리에서 차감
-            InventoryManager.Instance.subtractCharacter(unitInfo.name, 1);
+            InventoryManager.Instance.subtractCharacter(unitInfo, 1);
             Debug.Log($"Unit {unitInfo.name} count decreased in inventory.");
             InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
         }

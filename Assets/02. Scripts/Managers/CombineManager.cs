@@ -55,7 +55,7 @@ public class CombineManager : Singleton<CombineManager>
     {
         FieldManager.Instance.RemoveUnitFromField(fieldUnitID);
 
-        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(InventoryUnitID).name, 1);
+        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(InventoryUnitID), 1);
 
         var resultUnitInfo = new UnitInfo();
         resultUnitInfo.SetData(UnitDataManager.Instance.GetUnitData(combineData.resultUnit));
@@ -80,8 +80,8 @@ public class CombineManager : Singleton<CombineManager>
 
     private void CombineInvetoryOnly(int unit1ID, int unit2ID, CombineData combineData)
     {
-        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(unit1ID).name, 1);
-        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(unit2ID).name, 1);
+        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(unit1ID), 1);
+        InventoryManager.Instance.subtractCharacter(UnitDataManager.Instance.GetUnitData(unit2ID), 1);
 
         var resultUnit = new UnitInfo();
         resultUnit.SetData(UnitDataManager.Instance.GetUnitData(combineData.resultUnit));
