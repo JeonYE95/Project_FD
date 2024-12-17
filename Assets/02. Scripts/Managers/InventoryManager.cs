@@ -26,6 +26,10 @@ public class InventoryManager : Singleton<InventoryManager>
     //필드에 소환되어 있는 유닛 추적 : 필드 번호 / 유닛 정보
     private Dictionary<int, UnitData> _fieldUnitHas = new Dictionary<int, UnitData>();
 
+    public Dictionary<int, UnitData> FieldUnitHas
+    {
+        get { return _fieldUnitHas; }
+    }
 
     // 필드에 소환되어 있는 유닛 수 
     public int SummonUnitCount => _fieldUnitHas.Count;
