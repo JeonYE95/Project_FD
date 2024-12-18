@@ -1,0 +1,17 @@
+How to use the prefab?
+
+1. Inside file "Effects", Drag & Drop whole file of the desired effect (e.g."Boost") to your project
+2. Inside desired effect file (e.g."Boost"), there are the Prefab
+3. The Prefab can be used by drag & drop to scene, or spawn it with script
+4. A Demo is made to showcase how the effect could be spawn using script
+
+What is included in each Effect file?
+
+1. Prefab(GameObject): Main Gameobject to be used
+2. Sprite Sheet(.png): Sliced sprite sheet
+2. Audio Clip(.mp3): Sound effect
+3. Vector file(.svg): For Edit and Modification of original effect with vector editor(e.g. Adobe Illustrator)
+
+How to get more/customized effects with the same art style?
+
+If the are any issues or art requests, feel free to contact me: huberthart2d@gmail.com

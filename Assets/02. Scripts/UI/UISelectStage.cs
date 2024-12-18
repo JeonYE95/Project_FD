@@ -1,3 +1,4 @@
+using GSDatas;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,17 +23,19 @@ public class UISelectStage : UIBase
         //스테이지 순서에 맞는 ID 등록
         for (int i = 0; i < _stageBtn.Length; i++)
         {
-
-            int stageId = GameManager.Instance.TotalStageID[i].ID;
+            int index = i;  
+            StageData stageId = GameManager.Instance.TotalStageID[index];
 
             _stageBtn[i].onClick.AddListener(() =>
             {
-                GameManager.Instance.StageID = stageId;
+
+                GameManager.Instance.StageID = stageId.ID;
 
                 //해당 스테이지 입장 필요 에너지 충족 시 입장.
-                if (GameManager.Instance.EnterEnergy >= GameManager.Instance.TotalStageID[i].cost)
+                if (GameManager.Instance.EnterEnergy >= stageId.cost)
                 {
-                    GameManager.Instance.EnterEnergy -= GameManager.Instance.TotalStageID[i].cost;
+             
+                    GameManager.Instance.EnterEnergy -= stageId.cost;
                     LoadInGameScene();
 
                 }
