@@ -162,7 +162,7 @@ public class BaseUnit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        stateMachine.Update();
+        stateMachine?.Update();
 
         //For Debug
         CurrentState = stateMachine?.GetState();

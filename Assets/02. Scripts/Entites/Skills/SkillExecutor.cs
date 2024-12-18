@@ -27,8 +27,6 @@ public class SkillExecutor : MonoBehaviour
             //인클루트 셀프도 곧 추가
         };
 
-        Debug.Log($"{gameSkillData.unitID} : {gameSkillData.targetGroup}");
-
         return _options; // 필요시 반환
     }
 
