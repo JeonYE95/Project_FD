@@ -139,11 +139,11 @@ public class BaseUnit : MonoBehaviour
 
         if(this is PlayerUnit)
         {
-            SetSortingOrder(GameManager.PlayerSortingOrder);
+            SetSortingOrder(Defines.PlayerSortingOrder);
         }
         else if (this is EnemyUnit)
         {
-            SetSortingOrder(GameManager.EnemySortingOrder);
+            SetSortingOrder(Defines.EnemySortingOrder);
         }
     }
 
@@ -225,7 +225,7 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
-        SetSortingOrder(GameManager.BehindSortingOrder);
+        SetSortingOrder(Defines.BehindSortingOrder);
     }
 
     public void CallDieEvent()
