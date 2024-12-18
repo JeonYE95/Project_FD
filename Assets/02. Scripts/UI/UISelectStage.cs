@@ -10,9 +10,6 @@ public class UISelectStage : UIBase
 
     [SerializeField] private Button _exitBtn;
 
-    private UIInGame _uiInGame;
-    private UISelectStage _uiSelectStage;
-
     void Start()
     {
 
@@ -46,14 +43,6 @@ public class UISelectStage : UIBase
         }
 
         _exitBtn.onClick.AddListener(() => { Close(); });
-    }
-
-    private void OpenInGameUI()
-    {
-        if (_uiInGame == null)
-            _uiInGame = UIManager.Instance.GetUI<UIInGame>();
-
-        _uiInGame.Open();
     }
 
     private void LoadInGameScene()
