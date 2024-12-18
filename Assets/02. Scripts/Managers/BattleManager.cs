@@ -9,21 +9,22 @@ using Random = UnityEngine.Random;
 
 public class BattleManager : Singleton<BattleManager>
 {
+    bool _isBattleEnd = false;
+    readonly int BattleResultAndResetTime = 3;
+
+    private TargetingSystem targetingSystem;
+    WaitForSeconds _battleResultAndResetTimer;
+
     private List<BaseUnit> allUnits = new List<BaseUnit>();
     public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
+    // 버프 딕셔너리 : <유닛, <버프 이름, 리셋 액션>>
+    //private Dictionary<BaseUnit, Dictionary<string, Action>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, Action>>();
+    private Dictionary<BaseUnit, Dictionary<string, BuffInfo>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, BuffInfo>>();
+
     public int alivePlayerUnitsCount;
     public int aliveEnemyUnitsCount;
-
-    private TargetingSystem targetingSystem;
-    
-    private int totalUnitCount => players.Count + enemies.Count;  // 전체 캐릭터 수
-
-    readonly int BattleResultAndResetTime = 3;
-    WaitForSeconds _battleResultAndResetTimer;
-
-    bool _isBattleEnd = false;
 
     public bool IsBattleEnd
     {
@@ -143,6 +144,9 @@ public class BattleManager : Singleton<BattleManager>
         //몬스터는 걍 죽을때마다 지가 해제해
         //ㄴㄴ 여기서 하는게 맞는데 구현만 분리해
 
+        //모든 버프 해제
+        ResetAllBuff();
+
         allUnits.RemoveAll(unit => enemies.Contains(unit));
         enemies.Clear();
     }
@@ -154,8 +158,6 @@ public class BattleManager : Singleton<BattleManager>
             unit.ReSetUnit();
             //unit.animController.ResetAnim();
         }
-        
-        Debug.Log("ResetAllUnit");
     }
 
     private void TestSpawn()
@@ -224,6 +226,72 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         SetAllUnits();
+    }
+
+    public void ApplyBuff(BaseUnit target, string buffKey, float duration, Action applyAction, Action resetAction)
+    {
+        if (target == null)
+        {
+            Debug.Log($"{buffKey} 의 대상 타겟이 null 입니다");
+            return;
+        }
+
+        // 타겟 유닛이 딕셔너리에 없으면 새로 생성
+        if (!activeBuffs.ContainsKey(target))
+        {
+            activeBuffs[target] = new Dictionary<string, BuffInfo>();
+        }
+
+        // 기존 버프가 있다면 기존 리셋 액션 호출 및 코루틴 중단
+        if (activeBuffs[target].ContainsKey(buffKey))
+        {
+            var existingBuff = activeBuffs[target][buffKey]; //리셋 액션 추출
+
+            existingBuff.ResetAction?.Invoke(); // 리셋 액션 실행
+            StopCoroutine(existingBuff.Timer);  // 기존 코루틴 중단
+            activeBuffs[target].Remove(buffKey); // 딕셔너리에서 제거
+
+            Debug.Log($"{target.gameObject.name} 기존 {buffKey} 버프 제거됨");
+        }
+
+        // 새 버프 적용
+        applyAction?.Invoke();
+        Debug.Log($"{target.gameObject.name}에게 {buffKey} 버프 적용됨.");
+
+        // 새로운 타이머 및 리셋 액션 등록
+        Coroutine timer = StartCoroutine(BuffTimer(target, buffKey, duration));
+        activeBuffs[target][buffKey] = new BuffInfo(timer, resetAction);
+    }
+
+
+    //버프 코루틴 함수
+    private IEnumerator BuffTimer(BaseUnit target, string buffKey, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        if (activeBuffs.ContainsKey(target) && activeBuffs[target].ContainsKey(buffKey))
+        {
+            var buffInfo = activeBuffs[target][buffKey];
+
+            buffInfo.ResetAction?.Invoke(); // 버프 리셋 실행
+            activeBuffs[target].Remove(buffKey); // 버프 제거
+
+            // 유닛의 모든 버프가 제거되면 유닛 자체 딕셔너리에서 제거
+            if (activeBuffs[target].Count == 0)
+            {
+                activeBuffs.Remove(target);
+                Debug.Log($"{target.gameObject.name}의 모든 버프가 정리되었습니다.");
+            }
+        }
+        else
+        {
+            Debug.Log($"{target?.gameObject.name ?? "삭제된 유닛"}의 {buffKey} 버프 리셋 처리 완료 (null 상태 포함).");
+        }
+    }
+
+    private void ResetAllBuff()
+    {
+        //activeBuffs.Clear();
     }
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)

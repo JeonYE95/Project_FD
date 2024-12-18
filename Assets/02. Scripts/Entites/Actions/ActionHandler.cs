@@ -133,7 +133,7 @@ public class ActionHandler : MonoBehaviour
     private void UseSkill()
     {
         _skillExecutor.ExecuteSkill(_myUnit, skillData);
-        Debug.Log($"{gameObject.name} 스킬 사용함");
+        Debug.Log($"{_myUnit.ID} 스킬 사용함");
     }
 
     

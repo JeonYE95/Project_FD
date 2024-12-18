@@ -36,6 +36,8 @@ public class BaseUnit : MonoBehaviour
 
     //For Debug
     [SerializeField] private string CurrentState;
+    public int ID;
+    public int Defense;
 
     public Action <BaseUnit> OnDieEvent;
 
@@ -70,6 +72,8 @@ public class BaseUnit : MonoBehaviour
 
         //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
         stateMachine = new StateMachine(this);
+
+        //unitOriginInfo = new IUnitInfo(unitInfo);
     }
 
     //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틀매니저가 호출
@@ -157,6 +161,8 @@ public class BaseUnit : MonoBehaviour
 
         //For Debug
         CurrentState = stateMachine?.GetState();
+        ID = unitInfo.ID;
+        Defense = unitInfo.Defense;
     }
 
     public bool IsAttackReady()

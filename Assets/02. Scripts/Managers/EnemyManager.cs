@@ -82,6 +82,8 @@ public class EnemyManager : Singleton<EnemyManager>
         }
 
         baseUnit.unitInfo = unit;
+
+        skillExecutor.CreateSearchOptionsFromSkill();
         //origin.GetComponent<EnemyUnit>().SetUnitInfo();
     }
 }

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3432520801611503364}
   - component: {fileID: 4771365355612730492}
   - component: {fileID: 8052276028434916293}
+  - component: {fileID: 1249538480134989608}
   m_Layer: 6
   m_Name: PlayerBasePrefab
   m_TagString: Untagged
@@ -124,24 +125,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff082567ca901a4394cd717dd7d0011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLive: 0
+  targetUnit: {fileID: 0}
   healthSystem: {fileID: 0}
   actionHandler: {fileID: 0}
   UnitMovement: {fileID: 0}
   animController: {fileID: 0}
-  isLive: 0
-  targetUnit: {fileID: 0}
-  defense: 0
-  attackDamage: 0
-  skillDamage: 0
-  maxHP: 0
-  skillCooltime: 0
-  attackCooltime: 0
-  attackRange: 0
-  unitGrade: 
   isPlayerUnit: 1
   isRangedUnit: 0
-  attackProjectile: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
+  unitAsset: {fileID: 0}
+  unitAssetChildren: []
   CurrentState: 
+  ID: 0
+  Defense: 0
 --- !u!114 &3459946797341866766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79861e34cf5802d4d9693b160258c53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCollTime: 10
+  attackCount: 1
+  skillCoolTime: 0
   attackCoolTime: 2
   firePoint: {fileID: 0}
 --- !u!114 &5477164207797427926
@@ -220,5 +217,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1867e2e73aae10d4a86be28abe1cda29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSkillData:
+    skillID: 0
+    unitID: 0
+    skillName: 
+    skillType: 0
+    skillEffect: 0
+    value: 0
+    duration: 0
+    skillCoolDown: 0
+    targetGroup: 0
+    targetPriority: 0
+    targetCount: 0
+--- !u!114 &1249538480134989608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513022264666009415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ead650032d85604fafff5cb9d1998ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

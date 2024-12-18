@@ -33,6 +33,14 @@ public class TargetingSystem
     {
         List<BaseUnit> candidates = new List<BaseUnit>();
 
+        if (standardUnit.unitInfo.ID == 1051)
+        {
+            foreach (var unit in candidates)
+            {
+                Debug.Log($"{unit.gameObject.name} : {unit.gameObject.transform.position}");
+            }
+        }
+
         // 그룹에 따른 후보군 설정
         if (options.Group == TargetGroup.Enemy || options.Group == TargetGroup.AllEnemy)
         {
@@ -70,6 +78,8 @@ public class TargetingSystem
         {
             return GetTopUnits(candidates, options.Number);
         }
+
+        
 
         return candidates;
     }
