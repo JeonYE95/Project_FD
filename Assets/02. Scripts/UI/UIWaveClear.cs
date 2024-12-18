@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class UIWaveClear : UIBase
 
     private void Start()
     {
-        _nextWaveBtn.onClick.AddListener(() => {  });     // 다음 웨이브 이동 로직 연결
+        _nextWaveBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIWaveClear>(); });     // 다음 웨이브 이동 로직 연결
         _stageBtn.onClick.AddListener(() => { LoadMainScene(); });  
 
         _gold.text = WaveManager.Instance._currentWaveGold.ToString();
