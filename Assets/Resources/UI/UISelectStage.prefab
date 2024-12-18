@@ -810,11 +810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39dc322f877242dc8827d1701ba697d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stageBtn1_1: {fileID: 8504379621346955150}
-  _stageBtn1_2: {fileID: 0}
-  _stageBtn1_3: {fileID: 0}
-  _stageBtn1_4: {fileID: 0}
-  _stageBtn1_5: {fileID: 0}
+  _stageBtn: []
+  _stageSelectButtonParent: {fileID: 3336811218883291051}
   _exitBtn: {fileID: 7227123893686825896}
 --- !u!1 &4761828425251987017
 GameObject:

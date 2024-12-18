@@ -51,7 +51,7 @@ public class EnemyManager : Singleton<EnemyManager>
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
 
-        assets.GetComponentInChildren<SortingGroup>().sortingOrder = GameManager.EnemySortingOrder;
+        assets.GetComponentInChildren<SortingGroup>().sortingOrder = Defines.EnemySortingOrder;
 
         EnemyInfo unit = origin.GetComponent<EnemyInfo>();
         SkillExecutor skillExecutor = origin.GetComponent<SkillExecutor>();

@@ -66,7 +66,7 @@ public class UnitManager
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
 
-        assets.GetComponentInChildren<SortingGroup>().sortingOrder = GameManager.PlayerSortingOrder;
+        assets.GetComponentInChildren<SortingGroup>().sortingOrder = Defines.PlayerSortingOrder;
 
         UnitInfo unit = origin.GetComponent<UnitInfo>();
         SkillExecutor skillExecutor = origin.GetComponent<SkillExecutor>();
