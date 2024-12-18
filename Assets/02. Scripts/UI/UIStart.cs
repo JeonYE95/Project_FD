@@ -26,7 +26,7 @@ public class UIStart : UIBase
         SceneManager.sceneLoaded += (scene, mode) =>
         {
             if (SceneManager.GetActiveScene().buildIndex == 1)    
-                OpenMainUI();
+                UIManager.Instance.OpenUI<UIMain>();
         };
 
         UIManager.Instance.Clear();

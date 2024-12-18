@@ -68,9 +68,8 @@ public class StageManager : Singleton<StageManager>
         // 체력이 다 깎였을때 - 게임 오버 UI 불러오기
         if (StageHealth <= 0)
         {
-
+            UIManager.Instance.OpenUI<UIGameOver>();
             return;
-
         }
 
 
@@ -81,6 +80,7 @@ public class StageManager : Singleton<StageManager>
     public void GameClear()
     {
         // 게임 클리어 시 UI 불러오기 - 보상 받음
+        UIManager.Instance.OpenUI<UIStageClear>();
 
 
         // 보상 획득
@@ -95,9 +95,5 @@ public class StageManager : Singleton<StageManager>
 
 
  
-
-
-
-  
 
 }

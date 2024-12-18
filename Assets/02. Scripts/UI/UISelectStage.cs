@@ -62,10 +62,10 @@ public class UISelectStage : UIBase
         {
             // 씬 로드 후 UI 오픈
             if (SceneManager.GetActiveScene().buildIndex == 2)
-                OpenInGameUI();
+                UIManager.Instance.OpenUI<UIInGame>();
         };
 
-        UIManager.Instance.Clear();
+
         SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
     }
 }
