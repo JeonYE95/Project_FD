@@ -105,16 +105,21 @@ public class BaseUnit : MonoBehaviour
         if (OnDieEvent != null)
         {
             OnDieEvent -= UnitDeActive;
-            OnDieEvent -= BattleManager.Instance.UnitDie;
+
+            if (BattleManager.Instance != null)
+            {
+                OnDieEvent -= BattleManager.Instance.UnitDie;
+            }
         }
 
-        if (this is PlayerUnit)
+        if (this is PlayerUnit && BattleManager.Instance != null)
         {
-            BattleManager.Instance?.UnRegisterUnit(this);
+            BattleManager.Instance.UnRegisterUnit(this);
         }
-        
+
         //gameObject.SetActive(false);
     }
+
 
     public void ReSetUnit()
     {

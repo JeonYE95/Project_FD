@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 public class BattleManager : Singleton<BattleManager>
@@ -216,17 +217,18 @@ public class BattleManager : Singleton<BattleManager>
 
     public void UnRegisterUnit(BaseUnit unit)
     {
-        if (unit.isPlayerUnit)
+        if (unit.isPlayerUnit && players.Contains(unit))
         {
             players.Remove(unit);
         }
-        else
+        else if (enemies.Contains(unit))
         {
             enemies.Remove(unit);
         }
 
         SetAllUnits();
     }
+
 
     public void ApplyBuff(BaseUnit target, string buffKey, float duration, Action applyAction, Action resetAction)
     {
@@ -291,7 +293,21 @@ public class BattleManager : Singleton<BattleManager>
 
     private void ResetAllBuff()
     {
-        //activeBuffs.Clear();
+        foreach (var unit in activeBuffs.Keys)
+        {
+            foreach (var buff in activeBuffs[unit].Values)
+            {
+                if (buff.Timer != null)
+                {
+                    StopCoroutine(buff.Timer);
+                }
+
+                buff.ResetAction?.Invoke();
+            }
+        }
+
+        activeBuffs.Clear();
+        Debug.Log("모든 버프 초기화 됨");
     }
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)

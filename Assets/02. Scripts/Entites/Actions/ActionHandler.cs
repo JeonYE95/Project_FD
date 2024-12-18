@@ -10,8 +10,8 @@ public class ActionHandler : MonoBehaviour
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
 
-    public float skillCoolTime;
-    public float attackCoolTime;
+    public float skillCoolTime => _myUnit.unitInfo?.SkillCooltime?? 10f;
+    public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
 
     bool _haveSkill = true;
     float _lastSkillTime = -Mathf.Infinity;
@@ -38,8 +38,8 @@ public class ActionHandler : MonoBehaviour
             _haveSkill = false;
         }
 
-        skillCoolTime = _myUnit.unitInfo.SkillCooltime;
-        attackCoolTime = _myUnit.unitInfo.AttackCooltime;
+        //skillCoolTime = _myUnit.unitInfo.SkillCooltime;
+        //attackCoolTime = _myUnit.unitInfo.AttackCooltime;
     }
 
     public bool IsAttackCoolTimeComplete()
