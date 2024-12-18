@@ -13,10 +13,10 @@ public class PlayerData
     public int level;
     public int gold;
     public int diamond;
-    public List<InGameItems> items;
+    public List<InGameItems> items = new List<InGameItems>();
 }
 
-
+[System.Serializable]
 public class InGameItems
 {
 
@@ -36,6 +36,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     private void Start()
     {
+        LoadPlayerDataFromJson();
         DataManager.Instance.Initialize();
         UnitManager.Instance.Initialize();
         UIManager.Instance.Initialize();
@@ -73,4 +74,41 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
 
     }
+
+
+    public void AddItem(int itemId, int count)
+    {
+
+        if (itemId == 3001)
+        {
+            playerData.gold += count;
+            SavePlayerDataToJson();
+            return;
+
+        }
+
+
+        // 기존 아이템이 있는지 확인
+        var existingItem = playerData.items.Find(item => item.id == itemId);
+
+        if (existingItem != null)
+        {
+            existingItem.count += count;
+        }
+        else
+        {
+            var newItem = new InGameItems
+            {
+                id = itemId,
+                count = count
+            };
+            playerData.items.Add(newItem);
+        }
+
+        // 자동 저장
+        //SavePlayerDataToJson();
+    }
+
+
+ 
 }
