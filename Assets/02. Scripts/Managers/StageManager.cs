@@ -44,7 +44,7 @@ public class StageManager : Singleton<StageManager>
     protected override void Awake()
     {
         base.Awake();
-        _StageId = GameManager.Instance.stageID;
+        _StageId = GameManager.Instance.StageID;
    
     }
 
