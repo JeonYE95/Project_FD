@@ -66,7 +66,7 @@ public class UnitManager
         assets.transform.SetParent(origin.transform, true);
         assets.transform.localPosition = Vector3.zero;
 
-        assets.GetComponentInChildren<SortingGroup>().sortingOrder = GameManager.PlayerSortingOrder;
+        assets.GetComponentInChildren<SortingGroup>().sortingOrder = Defines.PlayerSortingOrder;
 
         UnitInfo unit = origin.GetComponent<UnitInfo>();
         SkillExecutor skillExecutor = origin.GetComponent<SkillExecutor>();
@@ -86,7 +86,8 @@ public class UnitManager
                 skillExecutor.gameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
             }
 
-            if (skillData == null) // 스킬 데이터가 없으면
+            // 읽어온 스킬 데이터가 없으면
+            if (skillData == null) 
             {
                 skillExecutor.gameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
             }
@@ -97,6 +98,8 @@ public class UnitManager
         }
 
         baseUnit.unitInfo = unit;
+
+        skillExecutor.CreateSearchOptionsFromSkill();
         //origin.GetComponent<PlayerUnit>().SetUnitInfo();
     }
 

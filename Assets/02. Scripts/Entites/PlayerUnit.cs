@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerUnit : BaseUnit
 {
-    UnitInfo unitInfo;
-
     protected override void Awake()
     {
         base.Awake();
@@ -35,8 +34,14 @@ public class PlayerUnit : BaseUnit
 
     private void OnDestroy()
     {
+        if (!Application.isPlaying || BattleManager.Instance == null)
+        {
+            return;
+        }
+
         UnregisterFromBattleManager();
     }
+
 
     public override void PlayWaitAnimation()
     {

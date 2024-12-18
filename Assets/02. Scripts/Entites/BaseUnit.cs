@@ -36,6 +36,8 @@ public class BaseUnit : MonoBehaviour
 
     //For Debug
     [SerializeField] private string CurrentState;
+    public int ID;
+    public int Defense;
 
     public Action <BaseUnit> OnDieEvent;
 
@@ -70,6 +72,8 @@ public class BaseUnit : MonoBehaviour
 
         //애니컨트롤러 때문에 여기로 이동 나중에 생각해보기
         stateMachine = new StateMachine(this);
+
+        //unitOriginInfo = new IUnitInfo(unitInfo);
     }
 
     //캐릭터 활동 시작 = 배틀 시작 = 지금은 배틀매니저가 호출
@@ -101,16 +105,21 @@ public class BaseUnit : MonoBehaviour
         if (OnDieEvent != null)
         {
             OnDieEvent -= UnitDeActive;
-            OnDieEvent -= BattleManager.Instance.UnitDie;
+
+            if (BattleManager.Instance != null)
+            {
+                OnDieEvent -= BattleManager.Instance.UnitDie;
+            }
         }
 
-        if (this is PlayerUnit)
+        if (this is PlayerUnit && BattleManager.Instance != null)
         {
-            BattleManager.Instance?.UnRegisterUnit(this);
+            BattleManager.Instance.UnRegisterUnit(this);
         }
-        
+
         //gameObject.SetActive(false);
     }
+
 
     public void ReSetUnit()
     {
@@ -130,11 +139,11 @@ public class BaseUnit : MonoBehaviour
 
         if(this is PlayerUnit)
         {
-            SetSortingOrder(GameManager.PlayerSortingOrder);
+            SetSortingOrder(Defines.PlayerSortingOrder);
         }
         else if (this is EnemyUnit)
         {
-            SetSortingOrder(GameManager.EnemySortingOrder);
+            SetSortingOrder(Defines.EnemySortingOrder);
         }
     }
 
@@ -153,10 +162,12 @@ public class BaseUnit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        stateMachine.Update();
+        stateMachine?.Update();
 
         //For Debug
         CurrentState = stateMachine?.GetState();
+        ID = unitInfo.ID;
+        Defense = unitInfo.Defense;
     }
 
     public bool IsAttackReady()
@@ -214,7 +225,7 @@ public class BaseUnit : MonoBehaviour
     {
         isLive = false;
         stateMachine.ChangeState(stateMachine.DeathState);
-        SetSortingOrder(GameManager.BehindSortingOrder);
+        SetSortingOrder(Defines.BehindSortingOrder);
     }
 
     public void CallDieEvent()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyUnit : BaseUnit
 {
-    EnemyInfo unitInfo;
-
     protected override void Awake()
     {
         base.Awake();

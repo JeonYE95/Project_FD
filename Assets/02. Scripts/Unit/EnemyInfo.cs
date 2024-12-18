@@ -5,9 +5,46 @@ public class EnemyInfo : MonoBehaviour, IUnitInfo
 {
     public EnemyData _enemyData;
 
+    public EnemyInfo()
+    { 
+        _enemyData = new EnemyData();
+    }
+
+    /*public EnemyInfo (EnemyInfo info)
+    {
+        if (info != null)
+        {
+            _enemyData = new EnemyData
+            {
+                range = info.Range,
+                attack = info.Attack,
+                health = info.Health,
+                defense = info.Defense,
+                skillCooltime = info.SkillCooltime,
+                attackCooltime = info.AttackCooltime,
+            };
+        }
+    }*/
+
     public void SetData(EnemyData enemyData)
     {
-        _enemyData = enemyData;
+        if (enemyData != null)
+        {
+            _enemyData = new EnemyData
+            {
+                range = enemyData.range,
+                attack = enemyData.attack,
+                health = enemyData.health,
+                defense = enemyData.defense,
+                skillCooltime = enemyData.skillCooltime,
+                attackCooltime = enemyData.attackCooltime,
+            };
+        }
+    }
+
+    public int ID
+    {
+        get => _enemyData.ID;
     }
 
     public int Attack
