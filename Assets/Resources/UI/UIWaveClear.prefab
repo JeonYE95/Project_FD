@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 741481202311551040}
   - component: {fileID: 4590371433255570351}
   m_Layer: 5
-  m_Name: HomeBtn
+  m_Name: StageBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 472f61e35276fb742812e77b362628ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4ef6aecf09a9458491fa7c5dd83dfe8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1348,7 +1348,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Home
+  m_text: Stage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -1962,4 +1962,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextWaveBtn: {fileID: 6213383777876508997}
-  _homeBtn: {fileID: 4590371433255570351}
+  _stageBtn: {fileID: 4590371433255570351}
+  _gold: {fileID: 9120142349700710898}

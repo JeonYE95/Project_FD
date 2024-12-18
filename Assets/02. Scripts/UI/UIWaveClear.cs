@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -5,14 +6,18 @@ using UnityEngine.UI;
 public class UIWaveClear : UIBase
 {
     [SerializeField] private Button _nextWaveBtn;
-    [SerializeField] private Button _homeBtn;
+    [SerializeField] private Button _stageBtn;
+    [SerializeField] private TMP_Text _gold;
 
     private UIMain _uiMain;
+    private UISelectStage _uiSelectStage;
 
     private void Start()
     {
         _nextWaveBtn.onClick.AddListener(() => {  });     // 다음 웨이브 이동 로직 연결
-        _homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
+        _stageBtn.onClick.AddListener(() => { LoadMainScene(); });  
+
+        _gold.text = WaveManager.Instance._currentWaveGold.ToString();
     }
 
     private void OpenMainUI()
@@ -23,12 +28,21 @@ public class UIWaveClear : UIBase
         _uiMain.Open();
     }
 
+    private void OpenStageSelectUI()
+    {
+        if (_uiSelectStage == null)
+            _uiSelectStage = UIManager.Instance.GetUI<UISelectStage>();
+        
+        _uiSelectStage.Open();
+    }
+
     private void LoadMainScene()
     {
         SceneManager.sceneLoaded += (scene, mode) =>
         {
             if (SceneManager.GetActiveScene().buildIndex == 1)    
                 OpenMainUI();
+                OpenStageSelectUI();
         };
 
         UIManager.Instance.Clear();

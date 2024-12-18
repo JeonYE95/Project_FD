@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -35,6 +36,8 @@ public class StageManager : Singleton<StageManager>
 
     }
 
+    private UIGameOver _uiGameOver;
+
 
 
     public void StopGame()
@@ -56,9 +59,9 @@ public class StageManager : Singleton<StageManager>
         // 체력이 다 깎였을때 - 게임 오버 UI 불러오기
         if (StageHealth <= 0)
         {
+            UIManager.Instance.OpenUI<UIGameOver>();
 
             return;
-
         }
 
 
@@ -69,7 +72,7 @@ public class StageManager : Singleton<StageManager>
     public void GameClear()
     {
         // 게임 클리어 시 UI 불러오기 - 보상 받음
-
+        UIManager.Instance.OpenUI<UIStageClear>();
 
         // DataManager.Instance.PlayerData.gold += DB에서 값 불러오기
         // DataManager.Instacne.PlayerData.

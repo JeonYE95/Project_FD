@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -36,6 +37,7 @@ public class WaveManager : Singleton<WaveManager>
     //웨이브 보상 정보 저장
     private List<WaveRewardData> _AllWaveRewardata = new List<WaveRewardData>();
     private List<WaveRewardData> _currentWaveRewardData;
+    public int _currentWaveGold;
 
     public int CurrentWave
     {
@@ -134,7 +136,7 @@ public class WaveManager : Singleton<WaveManager>
 
     }
 
-    private void ClearWave()
+    private async void ClearWave()
     {
 
         IsRunningWave = false;
@@ -148,10 +150,6 @@ public class WaveManager : Singleton<WaveManager>
 
         CurrentWave++;
         //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
-
-
-
-        //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
 
 
         //5스테이지 마다 중간 보스?
@@ -169,16 +167,19 @@ public class WaveManager : Singleton<WaveManager>
             {
 
                 if (reward.RewardID == 3001)
+                    _currentWaveGold = reward.count;
                     StageManager.Instance.Gold += reward.count;
 
 
                 Debug.Log($" 추가 재화 : {reward.count} 획득");
 
             }
-
-
         }
 
+        //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
+        UIManager.Instance.OpenUI<UIWaveClear>();
+        await Task.Delay(5000);
+        UIManager.Instance.CloseUI<UIWaveClear>();
 
         _prepareCoroutine = StartCoroutine(NextWavePrepare());
 
@@ -280,9 +281,7 @@ public class WaveManager : Singleton<WaveManager>
 
     private void GetRewardData()
     {
-
         _currentWaveRewardData = _AllWaveRewardata.Where(data => data.wave == CurrentWave).ToList();
-
     }
 
 
