@@ -63,8 +63,8 @@ public class WaveManager : Singleton<WaveManager>
     public void Start()
     {
 
-       
-        int stageID = StageManager.Instance.StageId;
+        //현재는 GameManager에서 StageID 임의로 주입
+        int stageID = GameManager.Instance.stageID;
         CurrentWave = 1;
 
         // 해당 스테이지/웨이브에 맞게 재분류
