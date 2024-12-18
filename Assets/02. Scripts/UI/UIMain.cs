@@ -14,9 +14,8 @@ public class UIMain : UIBase
 
     private void Start()
     {
-        _startBtn.onClick.AddListener(() => { OpenSelectStageUI(); });
-        _settingBtn.onClick.AddListener(() => { OpenSettingUI(); });
-        // exitBtn.onClick.AddListener(() => { OpenExitUI(); });
+        _startBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UISelectStage>(); });
+        _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UISetting>(); });
     }
 
     private void OpenSelectStageUI()
@@ -34,12 +33,4 @@ public class UIMain : UIBase
         
         _uiSetting.Open();
     }
-
-    // private void OpenExitUI()
-    // {
-    //     if (uiExit == null)
-    //         uiExit = UIManager.Instance.GetUI<UIExit>();
-        
-    //     uiExit.Open();
-    // }
 }

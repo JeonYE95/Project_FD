@@ -16,10 +16,7 @@ public class UISelectStage : UIBase
 
     void Start()
     {
-        _stageBtn1_1.onClick.AddListener(() => 
-        { 
-            LoadInGameScene();
-        });
+        _stageBtn1_1.onClick.AddListener(() => { LoadInGameScene(); });
         
         _exitBtn.onClick.AddListener(() => { Close(); });
     }
@@ -38,10 +35,10 @@ public class UISelectStage : UIBase
         {
             // 씬 로드 후 UI 오픈
             if (SceneManager.GetActiveScene().buildIndex == 2)
-                OpenInGameUI();
+                UIManager.Instance.OpenUI<UIInGame>();
         };
 
-        UIManager.Instance.Clear();
+
         SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
     }
 }

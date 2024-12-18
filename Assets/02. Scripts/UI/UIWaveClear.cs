@@ -42,11 +42,10 @@ public class UIWaveClear : UIBase
         SceneManager.sceneLoaded += (scene, mode) =>
         {
             if (SceneManager.GetActiveScene().buildIndex == 1)    
-                OpenMainUI();
-                OpenStageSelectUI();
+                UIManager.Instance.OpenUI<UIMain>();
+                UIManager.Instance.OpenUI<UISelectStage>();
         };
 
-        UIManager.Instance.Clear();
         SceneManager.LoadScene("MainScene");
     }
 }
