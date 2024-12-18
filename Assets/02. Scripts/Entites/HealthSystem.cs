@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    BaseUnit _unit;
+
     private GameObject _healthBar;
     private RectTransform _healthBarRectTransform;
 
@@ -26,10 +28,9 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    BaseUnit unit;
     private void Awake()
     {
-        unit = GetComponent<BaseUnit>();
+        _unit = GetComponent<BaseUnit>();
     }
 
     private void Start()
@@ -40,7 +41,7 @@ public class HealthSystem : MonoBehaviour
     private void CreateHealthBar()
     {
         string unitStr;
-        if (unit.isPlayerUnit)
+        if (_unit.isPlayerUnit)
             unitStr = "Player";
         else
             unitStr = "Enemy";
@@ -71,7 +72,7 @@ public class HealthSystem : MonoBehaviour
         _healthBarRectTransform = _healthBar.GetComponent<RectTransform>();
         _healthBarRectTransform.anchoredPosition = new Vector2(0, 1f);
 
-        if (unit.isPlayerUnit)
+        if (_unit.isPlayerUnit)
         {
             _healthBarRectTransform.anchoredPosition += new Vector2(0, 0.3f);
         }
@@ -89,12 +90,17 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        //단순한 식 데미지 = 공격력 - 방어력
+        //최소 데미지 1 구현
+
+        damage = (int)MathF.Max(1, damage - _unit.unitInfo.Defense);
+
         currentHP -= damage;
 
         if (currentHP < 0)
         {
             currentHP = 0;
-            unit.CallDieEvent();
+            _unit.CallDieEvent();
         }
     }
 }

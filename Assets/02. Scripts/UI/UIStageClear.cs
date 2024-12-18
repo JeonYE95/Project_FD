@@ -8,6 +8,7 @@ public class UIStageClear : UIBase
     [SerializeField] private Button _homeBtn;
 
     private UIMain _uiMain;
+    private UISelectStage _uiSelectStage;
 
     private void Start()
     {
@@ -23,15 +24,23 @@ public class UIStageClear : UIBase
         _uiMain.Open();
     }
 
+    private void OpenStageSelectUI()
+    {
+        if (_uiSelectStage == null)
+            _uiSelectStage = UIManager.Instance.GetUI<UISelectStage>();
+        
+        _uiSelectStage.Open();
+    }
+
     private void LoadMainScene()
     {
         SceneManager.sceneLoaded += (scene, mode) =>
         {
             if (SceneManager.GetActiveScene().buildIndex == 1)    
-                OpenMainUI();
+                UIManager.Instance.OpenUI<UIMain>();
+                UIManager.Instance.OpenUI<UISelectStage>();
         };
 
-        UIManager.Instance.Clear();
         SceneManager.LoadScene("MainScene");
     }
 }
