@@ -61,6 +61,7 @@ namespace GSDatas
 		public System.String name;
 		public System.Int32 RewardID;
 		public System.Int32 count;
+		public System.Int32 cost;
   
 
 #region fuctions
