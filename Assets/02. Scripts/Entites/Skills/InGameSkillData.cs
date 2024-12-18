@@ -50,10 +50,10 @@ public enum SkillType
 
 public enum SkillEffect
 {
-    DefenseBoost,  // 방어력 증가
-    HealAmount,    // 체력 회복
+    Heal,    // 체력 회복
     Damage,         // 데미지
     AttackBoost,     // 공격속도
+    DefenseBoost,  // 방어력 증가
     MultipleAttacks     // 여러번 공격
 }
 

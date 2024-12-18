@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerUnit : BaseUnit
@@ -35,8 +36,14 @@ public class PlayerUnit : BaseUnit
 
     private void OnDestroy()
     {
+        if (!Application.isPlaying || BattleManager.Instance == null)
+        {
+            return;
+        }
+
         UnregisterFromBattleManager();
     }
+
 
     public override void PlayWaitAnimation()
     {

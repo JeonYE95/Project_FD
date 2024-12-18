@@ -2,6 +2,7 @@ using GSDatas;
 using UnityEngine;
 public interface IUnitInfo
 {
+    int ID { get; }
     int Attack { get; set; }
     int Defense { get; set; }
     int Health { get; set; }
@@ -16,11 +17,41 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
 {
     public UnitData _unitData;
 
+    public UnitInfo ()
+    {
+        _unitData = new UnitData();
+    }
+
     public void SetData(GSDatas.UnitData data)
     {
-        _unitData = data;
+        if (data != null)
+        {
+            if (_unitData != null)
+            {
+                _unitData = new UnitData();
+            }
 
-        //Debug.Log($"유닛 데이터 적용: ID={_unitData.ID}, Name={_unitData.name}, Attack={_unitData.attack}, Defense={_unitData.defense}, Health={_unitData.health}");
+            //_unitData = data;
+
+            //_unitData = data.Clone();
+
+            _unitData.ID = data.ID;
+            _unitData.name = data.name;
+            _unitData.range = data.range;
+            _unitData.grade = data.grade;
+            _unitData.weight = data.weight;
+            _unitData.attack = data.attack;
+            _unitData.health = data.health;
+            _unitData.defense = data.defense;
+            _unitData.skillCooltime = data.skillCooltime;
+            _unitData.attackCooltime = data.attackCooltime;
+
+        }
+    }
+
+    public int ID
+    {
+        get => _unitData.ID;
     }
 
     public int Attack
