@@ -68,6 +68,10 @@ public class TargetingSystem
         {
             SortByDistance(candidates, standardUnit, false, true); // 먼 순
         }
+        else if (options.Priority == TargetPriority.LowestHP)
+        {
+            SortByHP(candidates); // 체력 적은 순 (주로 힐 스킬에 사용)
+        }
         else if (options.Priority == TargetPriority.Random)
         {
             ShuffleList(candidates); // 랜덤
@@ -79,9 +83,18 @@ public class TargetingSystem
             return GetTopUnits(candidates, options.Number);
         }
 
-        
-
         return candidates;
+    }
+
+    private void SortByHP(List<BaseUnit> candidates, bool isDescending = false)
+    {
+        candidates.Sort((a, b) =>
+        {
+            float HPA = a.healthSystem.currentHP;
+            float HPB = b.healthSystem.currentHP;
+
+            return isDescending ? HPB.CompareTo(HPA) : HPA.CompareTo(HPB);
+        });
     }
 
     private void SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference, bool isDescending = false)

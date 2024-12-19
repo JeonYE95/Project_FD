@@ -10,35 +10,21 @@ public class EnemyInfo : MonoBehaviour, IUnitInfo
         _enemyData = new EnemyData();
     }
 
-    /*public EnemyInfo (EnemyInfo info)
-    {
-        if (info != null)
-        {
-            _enemyData = new EnemyData
-            {
-                range = info.Range,
-                attack = info.Attack,
-                health = info.Health,
-                defense = info.Defense,
-                skillCooltime = info.SkillCooltime,
-                attackCooltime = info.AttackCooltime,
-            };
-        }
-    }*/
-
     public void SetData(EnemyData enemyData)
     {
         if (enemyData != null)
         {
-            _enemyData = new EnemyData
+            if (_enemyData != null)
             {
-                range = enemyData.range,
-                attack = enemyData.attack,
-                health = enemyData.health,
-                defense = enemyData.defense,
-                skillCooltime = enemyData.skillCooltime,
-                attackCooltime = enemyData.attackCooltime,
-            };
+                _enemyData = new EnemyData();
+            }
+
+            _enemyData.range = enemyData.range;
+            _enemyData.attack = enemyData.attack;
+            _enemyData.health = enemyData.health;
+            _enemyData.defense = enemyData.defense;
+            _enemyData.skillCooltime = enemyData.skillCooltime;
+            _enemyData.attackCooltime = enemyData.attackCooltime;
         }
     }
 

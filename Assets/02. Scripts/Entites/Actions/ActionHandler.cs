@@ -18,7 +18,6 @@ public class ActionHandler : MonoBehaviour
     float _lastAttackTime = -Mathf.Infinity;
 
     public Transform firePoint;
-    InGameSkillData skillData;
     SkillExecutor _skillExecutor;
     UnitAnimationController _controller;
 
@@ -132,7 +131,7 @@ public class ActionHandler : MonoBehaviour
 
     private void UseSkill()
     {
-        _skillExecutor.ExecuteSkill(_myUnit, skillData);
+        _skillExecutor.ExecuteSkill(_myUnit, _skillExecutor.inGameSkillData);
         Debug.Log($"{_myUnit.ID} 스킬 사용함");
     }
 

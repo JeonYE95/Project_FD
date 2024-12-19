@@ -49,3 +49,7 @@ MonoBehaviour:
     prefab: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
     size: 50
     canExpand: 1
+  - tag: HealEffect
+    prefab: {fileID: 5043573985140183233, guid: 9cfbf8c43fbbaf246bacbda02f4288f9, type: 3}
+    size: 20
+    canExpand: 0
