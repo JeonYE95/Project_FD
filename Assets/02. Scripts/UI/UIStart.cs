@@ -6,19 +6,9 @@ public class UIStart : UIBase
 {
     [SerializeField] private Button _startBtn;
 
-    private UIMain uiMain;
-
     private void Start()
     {
         _startBtn.onClick.AddListener(() => { LoadMainScene(); });
-    }
-
-    private void OpenMainUI()
-    {
-        if (uiMain == null)
-            uiMain = UIManager.Instance.GetUI<UIMain>();
-        
-        uiMain.Open();
     }
 
     private void LoadMainScene()
