@@ -26,6 +26,9 @@ public class BattleManager : Singleton<BattleManager>
     public int alivePlayerUnitsCount;
     public int aliveEnemyUnitsCount;
 
+    //For Debug
+    public bool noDamageMode = false;
+
     public bool IsBattleEnd
     {
         get

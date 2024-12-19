@@ -72,6 +72,7 @@ public enum TargetPriority
 {
     Closest,
     Farthest,
+    LowestHP,
     Random,
     All
 }
