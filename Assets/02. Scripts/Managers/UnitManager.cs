@@ -81,19 +81,19 @@ public class UnitManager
             var skillData = SkillDataManager.Instance.GetSkillByUnitID(data.ID);
 
             // _skillData 생성 (InGameSkillData)
-            if (skillExecutor.gameSkillData == null)
+            if (skillExecutor.inGameSkillData == null)
             {
-                skillExecutor.gameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
+                skillExecutor.inGameSkillData = new InGameSkillData(); // _skillData가 null인 경우 초기화
             }
 
             // 읽어온 스킬 데이터가 없으면
             if (skillData == null) 
             {
-                skillExecutor.gameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
+                skillExecutor.inGameSkillData = SkillDataManager.GetDefaultSkillData(); // 디폴트 스킬 데이터 할당
             }
             else
             {
-                skillExecutor.gameSkillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
+                skillExecutor.inGameSkillData.SetInGameSkillData(skillData); // 기존 _skillData에 값 설정
             }
         }
 

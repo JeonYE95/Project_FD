@@ -201,7 +201,7 @@ public class WaveManager : Singleton<WaveManager>
         yield return new WaitForEndOfFrame();
 
         // 전투 시작
-        BattleManager.Instance.BattleSetingAndStart();
+        BattleManager.Instance.BattleSettingAndStart();
 
         // 전투 시작과 함께 타이머 시작
         currentPreparationTime = waveCycleTime;
