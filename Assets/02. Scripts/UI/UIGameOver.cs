@@ -17,11 +17,14 @@ public class UIGameOver : UIBase
     {
         SceneManager.sceneLoaded += (scene, mode) =>
         {
-            if (SceneManager.GetActiveScene().buildIndex == 1)    
+            if (SceneManager.GetActiveScene().buildIndex == 1)  
+            {  
                 UIManager.Instance.OpenUI<UIMain>();
                 UIManager.Instance.OpenUI<UISelectStage>();
+            }
         };
         
+        UIManager.Instance.Clear();
         SceneManager.LoadScene("MainScene");
     }
 }

@@ -54,7 +54,7 @@ public class UISelectStage : UIBase
                 UIManager.Instance.OpenUI<UIInGame>();
         };
 
-
+        UIManager.Instance.Clear();
         SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
     }
 }
