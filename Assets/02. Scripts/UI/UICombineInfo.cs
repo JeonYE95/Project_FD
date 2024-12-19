@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UICombineInfo : UIBase
 {
     [SerializeField] private Button _closeBtn;
+
     [SerializeField] private Image _resultUnitImage1;
     [SerializeField] private Image _requiredUnit1Image1;
     [SerializeField] private Image _requiredUnit2Image1;
@@ -13,6 +14,14 @@ public class UICombineInfo : UIBase
     [SerializeField] private Image _resultUnitImage2;
     [SerializeField] private Image _requiredUnit1Image2;
     [SerializeField] private Image _requiredUnit2Image2;
+
+    [SerializeField] private Image _resultUnitImage3;
+    [SerializeField] private Image _requiredUnit1Image3;
+    [SerializeField] private Image _requiredUnit2Image3;
+
+    [SerializeField] private Image _resultUnitImage4;
+    [SerializeField] private Image _requiredUnit1Image4;
+    [SerializeField] private Image _requiredUnit2Image4;
 
     private CombineData curCombineData;
         
@@ -43,6 +52,18 @@ public class UICombineInfo : UIBase
         if (combineDataList.Count > 1)
         {
             UpdateCombineSlot(combineDataList[1], _requiredUnit1Image2, _requiredUnit2Image2, _resultUnitImage2, clickUnitId);
+        }
+
+        // 세 번째 조합식 표시
+        if (combineDataList.Count > 2)
+        {
+            UpdateCombineSlot(combineDataList[2], _requiredUnit1Image3, _requiredUnit2Image3, _resultUnitImage3, clickUnitId);
+        }
+
+        // 네 번째 조합식 표시
+        if (combineDataList.Count > 3)
+        {
+            UpdateCombineSlot(combineDataList[3], _requiredUnit1Image4, _requiredUnit2Image4, _resultUnitImage4, clickUnitId);
         }
     }
 
