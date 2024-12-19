@@ -33,7 +33,7 @@ public class ActionHandler : MonoBehaviour
     {
         firePoint = transform;
 
-        if (_skillExecutor.gameSkillData == SkillDataManager.GetDefaultSkillData())
+        if (_skillExecutor.inGameSkillData == SkillDataManager.GetDefaultSkillData())
         {
             _haveSkill = false;
         }
