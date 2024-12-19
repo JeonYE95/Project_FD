@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class BattleManager : Singleton<BattleManager>
 {
     bool _isBattleEnd = false;
-    readonly int BattleResultAndResetTime = 3;
+    readonly int BattleResultAndResetTime = 1;
 
     private TargetingSystem targetingSystem;
     WaitForSeconds _battleResultAndResetTimer;
@@ -20,8 +20,7 @@ public class BattleManager : Singleton<BattleManager>
     public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
-    // 버프 딕셔너리 : <유닛, <버프 이름, 리셋 액션>>
-    //private Dictionary<BaseUnit, Dictionary<string, Action>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, Action>>();
+    // 버프 딕셔너리 : <유닛, <버프이름, 버프 정보 >>
     private Dictionary<BaseUnit, Dictionary<string, BuffInfo>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, BuffInfo>>();
 
     public int alivePlayerUnitsCount;
@@ -52,7 +51,7 @@ public class BattleManager : Singleton<BattleManager>
         //Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
     }
 
-    public void BattleSetingAndStart()
+    public void BattleSettingAndStart()
     {
         SetAllUnits();
 
@@ -202,11 +201,11 @@ public class BattleManager : Singleton<BattleManager>
 
     public void RegisterUnit(BaseUnit unit)
     {
-        if(unit as PlayerUnit)
+        if (unit is PlayerUnit)
         {
             players.Add(unit);
         }
-        else if (unit as EnemyUnit)
+        else if (unit is EnemyUnit)
         {
             enemies.Add(unit);
         }
