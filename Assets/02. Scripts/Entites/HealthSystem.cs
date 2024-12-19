@@ -95,6 +95,11 @@ public class HealthSystem : MonoBehaviour
 
         damage = (int)MathF.Max(1, damage - _unit.unitInfo.Defense);
 
+        if (BattleManager.Instance.noDamageMode)
+        {
+            damage = 1;
+        }
+
         currentHP -= damage;
 
         if (currentHP < 0)

@@ -42,18 +42,30 @@ public class TargetingSystem
         }
 
         // 그룹에 따른 후보군 설정
-        if (options.Group == TargetGroup.Enemy || options.Group == TargetGroup.AllEnemy)
+        
+        switch (options.Group)
         {
-            candidates = standardUnit.isPlayerUnit ? enemies : players;
-        }
-        else if (options.Group == TargetGroup.Ally || options.Group == TargetGroup.AllAlly)
-        {
-            candidates = standardUnit.isPlayerUnit ? players : enemies;
-        }
-        else if (options.Group == TargetGroup.Self) // 셀프기술일때
-        {
-            candidates.Add(standardUnit);
-            return candidates;
+            case TargetGroup.Enemy:
+                candidates = standardUnit.isPlayerUnit ? enemies : players;
+                candidates.Remove(standardUnit);
+                break;
+
+            case TargetGroup.AllEnemy:
+                candidates = standardUnit.isPlayerUnit ? enemies : players;
+                break;
+
+            case TargetGroup.Ally:
+                candidates = standardUnit.isPlayerUnit ? players : enemies;
+                candidates.Remove(standardUnit);
+                break;
+
+            case TargetGroup.AllAlly:
+                candidates = standardUnit.isPlayerUnit ? players : enemies;
+                break;
+
+            case TargetGroup.Self:
+                candidates.Add(standardUnit);
+                return candidates;
         }
 
         // 생존한 유닛만 포함
@@ -68,6 +80,10 @@ public class TargetingSystem
         {
             SortByDistance(candidates, standardUnit, false, true); // 먼 순
         }
+        else if (options.Priority == TargetPriority.LowestHP)
+        {
+            SortByHP(candidates); // 체력 적은 순 (주로 힐 스킬에 사용)
+        }
         else if (options.Priority == TargetPriority.Random)
         {
             ShuffleList(candidates); // 랜덤
@@ -79,9 +95,18 @@ public class TargetingSystem
             return GetTopUnits(candidates, options.Number);
         }
 
-        
-
         return candidates;
+    }
+
+    private void SortByHP(List<BaseUnit> candidates, bool isDescending = false)
+    {
+        candidates.Sort((a, b) =>
+        {
+            float HPA = a.healthSystem.currentHP;
+            float HPB = b.healthSystem.currentHP;
+
+            return isDescending ? HPB.CompareTo(HPA) : HPA.CompareTo(HPB);
+        });
     }
 
     private void SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference, bool isDescending = false)

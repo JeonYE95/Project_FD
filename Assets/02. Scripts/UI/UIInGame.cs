@@ -17,10 +17,6 @@ public class UIInGame : UIBase
     [SerializeField] private Image _mask1;
     [SerializeField] private Image _mask2;
     [SerializeField] private Image _mask3;
-    
-
-    private UIUnitGuide _uiUnitGuide;
-    private UICombineInfo _uiCombineInfo;
 
     private Canvas _canvas;
     private Camera _mainCamera;
@@ -34,7 +30,7 @@ public class UIInGame : UIBase
         _canvas.worldCamera = _mainCamera;
 
         _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
-        _unitGuideBtn.onClick.AddListener(() => { OpenUnitGuideUI(); });  
+        _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
         // _timerText = GetComponentInChildren<TMP_Text>();
@@ -56,14 +52,6 @@ public class UIInGame : UIBase
         SetStageHealth();   // 게임 종료 시마다(성공 또는 실패 시 마다) 호출하는게 더 나으려나
         SetGold();
         SetUnitLimit();
-    }
-
-    private void OpenUnitGuideUI()
-    {
-        if (_uiUnitGuide == null)
-            _uiUnitGuide = UIManager.Instance.GetUI<UIUnitGuide>();
-        
-        _uiUnitGuide.Open();
     }
 
     private void UpdateTimerText(float remainingTime)

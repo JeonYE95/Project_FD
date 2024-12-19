@@ -7,9 +7,9 @@ using UnityEngine;
 public class SkillExecutor : MonoBehaviour
 {
     ActionHandler _handler;
-    [SerializeField] UnitSearchOptions _options;
+    UnitSearchOptions _options;
     
-    public InGameSkillData gameSkillData;
+    public InGameSkillData inGameSkillData;
 
     private void Awake()
     {
@@ -21,9 +21,9 @@ public class SkillExecutor : MonoBehaviour
     {
         _options = new UnitSearchOptions()
         {
-            Number = gameSkillData.targetCount,
-            Group = gameSkillData.targetGroup,
-            Priority = gameSkillData.targetPriority
+            Number = inGameSkillData.targetCount,
+            Group = inGameSkillData.targetGroup,
+            Priority = inGameSkillData.targetPriority
             //인클루트 셀프도 곧 추가
         };
 
@@ -55,19 +55,22 @@ public class SkillExecutor : MonoBehaviour
             ApplySkillType(_myUnit, target);
         }
 
-        Debug.Log($"{gameObject.name}이(가) {gameSkillData.skillName} 스킬을 실행했습니다.");
+        Debug.Log($"{gameObject.name}이(가) {inGameSkillData.skillName} 스킬을 실행했습니다.");
     }
 
     private void ApplySkillType(BaseUnit caster, BaseUnit target)
     {
-        switch (gameSkillData.skillType)
+        switch (inGameSkillData.skillType)
         {
             case SkillType.Damage:
 
                 break;
 
             case SkillType.Heal:
-
+                target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
+                HealEffect.transform.position = target.transform.position;
+                //HealEffect.GetComponent<Animator>().pl
                 break;
 
             case SkillType.Buff:
@@ -84,7 +87,7 @@ public class SkillExecutor : MonoBehaviour
     {
         float originPropertyValue;
 
-        switch (gameSkillData.skillEffect)
+        switch (inGameSkillData.skillEffect)
         {
             case SkillEffect.AttackBoost:
 
@@ -92,9 +95,9 @@ public class SkillExecutor : MonoBehaviour
 
                 BattleManager.Instance.ApplyBuff(
                     target,
-                    gameSkillData.skillEffect.ToString(),
-                    gameSkillData.duration,
-                    () => AttackSpeedBuff(target, target.unitInfo.AttackCooltime - (gameSkillData.value / 100)),
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => AttackSpeedBuff(target, target.unitInfo.AttackCooltime - (inGameSkillData.value / 100)),
                     () => AttackSpeedBuff(target, originPropertyValue));
 
                 break;
@@ -103,10 +106,10 @@ public class SkillExecutor : MonoBehaviour
 
                 BattleManager.Instance.ApplyBuff(
                     target,
-                    gameSkillData.skillEffect.ToString(),
-                    gameSkillData.duration,
-                    () => DefenseBuff(target, gameSkillData.value),
-                    () => DefenseBuff(target, -gameSkillData.value));
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => DefenseBuff(target, inGameSkillData.value),
+                    () => DefenseBuff(target, -inGameSkillData.value));
 
                 break;
 
@@ -118,7 +121,7 @@ public class SkillExecutor : MonoBehaviour
             
 
             default:
-                Debug.LogWarning($"알 수 없는 스킬 효과: {gameSkillData.skillEffect}");
+                Debug.LogWarning($"알 수 없는 스킬 효과: {inGameSkillData.skillEffect}");
                 break;
         }
 
