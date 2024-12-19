@@ -156,4 +156,13 @@ public class FieldManager : Singleton<FieldManager>
         return worldPos;
     }
 
+    public Transform GetGroupTransform(string groupName)
+    {
+        if (_characterGroups.TryGetValue(groupName, out Transform group))
+        {
+            return group;
+        }
+        return null;
+    }
+
 }
