@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 8973961011381624403}
   - component: {fileID: 798707772632935600}
   - component: {fileID: 8706841485535894204}
-  - component: {fileID: 1891390877741811518}
+  - component: {fileID: 3478472031776512173}
   m_Layer: 5
   m_Name: UICombineInfo_4
   m_TagString: Untagged
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1891390877741811518
+--- !u!114 &3478472031776512173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1274205734066051469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cd82f49468b7486783414c82102f13d, type: 3}
+  m_Script: {fileID: 11500000, guid: 55313abf4bf364e949ba14ab7d8ada81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _closeBtn: {fileID: 3128777520139780898}
@@ -613,6 +613,12 @@ MonoBehaviour:
   _resultUnitImage2: {fileID: 6872099594989180205}
   _requiredUnit1Image2: {fileID: 8317364941099961536}
   _requiredUnit2Image2: {fileID: 9207086088472043321}
+  _resultUnitImage3: {fileID: 5872413916640001565}
+  _requiredUnit1Image3: {fileID: 1643281839036226700}
+  _requiredUnit2Image3: {fileID: 7308030862878064587}
+  _resultUnitImage4: {fileID: 5723606288049707140}
+  _requiredUnit1Image4: {fileID: 7401235183088084681}
+  _requiredUnit2Image4: {fileID: 5228460404419195460}
 --- !u!1 &1367968322768026619
 GameObject:
   m_ObjectHideFlags: 0
