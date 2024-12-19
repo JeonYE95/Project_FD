@@ -14,33 +14,33 @@ public class PlayerData
     public int level;
     public int gold;
     public int diamond;
+    public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitInforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 횟수
-}
-
-[System.Serializable]
-public class InGameItems
-{
-
-    public int id;
-    public int count;
-
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
 {
 
     private int _EnterStageID = 101;
+    private int _EnterEnergy = 100;
 
-   public int StageID
+
+    public int StageID
     {
         get { return _EnterStageID; }
         set { _EnterStageID = value; }
 
     }
 
+    public int EnterEnergy
+    {
 
-    public int EnterEnergy = 100;
+        get { return _EnterEnergy; }
+        set { _EnterEnergy = value; }
+
+    }
+    
 
     // 모든 스테이지 정보 저장
     private List<StageData> _AllStageData = new List<StageData>();
@@ -55,7 +55,6 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
-
     public PlayerData playerData = new PlayerData();
 
     private void Start()
@@ -67,6 +66,9 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         GetAllStatgeData();
         StageCount();
+
+
+        StartCoroutine(RecoverEnergyRoutine());
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -105,7 +107,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     public void AddItemSave(int itemId, int count)
     {
 
-        if (itemId == 3001)
+        if (itemId == 3002)
         {
             playerData.gold += count;
             SavePlayerDataToJson();
@@ -218,6 +220,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     }
 
 
+    //스테이지 수 파악
     public void StageCount()
     {
         _TotalStageID = _AllStageData.GroupBy(data => data.ID).Select(group => group.First()).ToList(); ;
@@ -225,4 +228,17 @@ public class GameManager : SingletonDontDestory<GameManager>
     }
 
 
+    // 시간에 따른 에너지 증가 
+    private IEnumerator RecoverEnergyRoutine()
+    {
+        while (true)
+        {
+            if (playerData.energy < Defines.MAX_ENERGY)
+            {
+                yield return new WaitForSeconds(Defines.ENERGY_RECOVERY_TIME);
+                EnterEnergy = Mathf.Min(playerData.energy + 1, Defines.MAX_ENERGY);
+            }
+            yield return null;
+        }
+    }
 }

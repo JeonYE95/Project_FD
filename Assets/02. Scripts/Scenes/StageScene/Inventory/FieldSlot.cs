@@ -74,27 +74,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
                 return;
             }
 
-            // 그룹 
-            string groupName = $"Group{_groupIndex}";
-            Transform group = FieldManager.Instance.CharactersParent.Find(groupName);
-
-            if (group == null)
-            {
-                Debug.LogError($"Group '{groupName}' not found under 'Characters'.");
-                return;
-            }
-
-            // 유닛을 그룹에 배치
-            character.transform.SetParent(group);
-
-            character.transform.SetSiblingIndex(_groupIndex);
-
-            // UI 요소의 월드 중심점 구하기
-            character.transform.position = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+            Vector3 position = GetComponent<RectTransform>().GetUIWorldPosition();
+            SetupUnitPosition(character, position);
         }
+           
     }
-
-
 
 
     public void DropCharacter(UnitData unitInfo)
@@ -111,18 +95,11 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
         if (_character != null)
         {
-            string groupName = $"Group{_groupIndex}";
-            Transform group = FieldManager.Instance.CharactersParent.Find(groupName);
-
-            // 부모-자식 관계 설정
-            _character.transform.SetParent(group);
 
 
-            // UI 요소의 월드 중심점 구하고 위치 설정
-            Vector3 worldPosition = Extensions.GetUIWorldPosition(GetComponent<RectTransform>());
+            Vector3 worldPosition = GetComponent<RectTransform>().GetUIWorldPosition();
 
-            // 위치 설정
-            _character.transform.localPosition = worldPosition;
+            SetupUnitPosition(_character, worldPosition);
 
             // 초기 위치 저장
             _previousPosition = worldPosition;
@@ -131,6 +108,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             InventoryManager.Instance.subtractCharacter(unitInfo, 1);
             Debug.Log($"Unit {unitInfo.name} count decreased in inventory.");
             InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
+
         }
 
 
@@ -143,14 +121,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         if (_character != null)
         {
             _previousPosition = _character.transform.position;
-
-            if (_canvas == null)
-            {
-                _canvas = GetComponentInParent<Canvas>();
-            }
-
-            // UI 요소의 월드 중심점 구하기
-            _character.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
+            UpdateDragPosition(eventData);
         }
 
 
@@ -160,17 +131,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
     public void OnDrag(PointerEventData eventData)
     {
 
-        if (_character != null)
-        {
-
-            if (_canvas == null)
-            {
-                _canvas = GetComponentInParent<Canvas>();
-            }
-
-
-            _character.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
-        }
+        UpdateDragPosition(eventData);
 
     }
 
@@ -316,5 +277,42 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
         }
     }
 
+    private void UpdateDragPosition(PointerEventData eventData)
+    {
+        if (_character != null)
+        {
+            if (_canvas == null)
+            {
+                _canvas = GetComponentInParent<Canvas>();
+            }
+            _character.transform.position = _canvas.GetMouseWorldPosition(eventData.position);
+        }
+    }
+
+
+    // 유닛 그룹 위치 분류
+    private void SetupUnitPosition(GameObject character, Vector3 position)
+    {
+        if (character == null) return;
+
+        // 그룹 
+        string groupName = $"Group{_groupIndex}";
+        Transform group = FieldManager.Instance.GetGroupTransform(groupName);
+
+
+        if (group != null)
+        {
+            // 유닛을 그룹에 배치
+            character.transform.SetParent(group);
+
+            character.transform.SetSiblingIndex(_groupIndex);
+            
+            character.transform.position = position;
+
+            // 위치 설정
+            _character.transform.localPosition = position;
+
+        }
+    }
 
 }

@@ -67,7 +67,10 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             case SkillType.Heal:
-
+                target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
+                HealEffect.transform.position = target.transform.position;
+                //HealEffect.GetComponent<Animator>().pl
                 break;
 
             case SkillType.Buff:
