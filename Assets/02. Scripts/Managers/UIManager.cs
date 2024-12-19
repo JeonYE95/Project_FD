@@ -1,21 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class UIManager : SingletonDontDestory<UIManager>
 {
     private Dictionary<string, UIBase> _uiDic = new Dictionary<string, UIBase>();
-
-    // private void Start()
-    // {
-    //     if (SceneManager.GetActiveScene().buildIndex == 3)
-    //     {
-    //         OpenUI<UIStart>();
-    //     }
-    // }
 
     public void Initialize()
     {
