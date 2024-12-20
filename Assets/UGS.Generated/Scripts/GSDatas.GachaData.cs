@@ -17,39 +17,39 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class UnitData : ITable
+    public partial class GachaData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<UnitData> loadedList, Dictionary<int, UnitData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<GachaData> loadedList, Dictionary<int, GachaData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "741895290"; // it is sheet id
+        static string sheetID = "2024189847"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, UnitData> UnitDataMap = new Dictionary<int, UnitData>();  
-        public static List<UnitData> UnitDataList = new List<UnitData>();   
+        public static Dictionary<int, GachaData> GachaDataMap = new Dictionary<int, GachaData>();  
+        public static List<GachaData> GachaDataList = new List<GachaData>();   
 
         /// <summary>
-        /// Get UnitData List 
+        /// Get GachaData List 
         /// Auto Load
         /// </summary>
-        public static List<UnitData> GetList()
+        public static List<GachaData> GetList()
         {{
            if (isLoaded == false) Load();
-           return UnitDataList;
+           return GachaDataList;
         }}
 
         /// <summary>
-        /// Get UnitData Dictionary, keyType is your sheet A1 field type.
+        /// Get GachaData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, UnitData>  GetDictionary()
+        public static Dictionary<int, GachaData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return UnitDataMap;
+           return GachaDataMap;
         }}
 
     
@@ -58,13 +58,11 @@ namespace GSDatas
 
 		public System.Int32 ID;
 		public System.String name;
-		public System.Int32 attack;
-		public System.Int32 defense;
-		public System.Int32 health;
-		public System.Single attackCooltime;
-		public System.Single skillCooltime;
-		public System.Single range;
+		public System.String system;
 		public System.String grade;
+		public System.Int32 weight;
+		public System.Int32 pieceamount;
+		public System.String classtype;
   
 
 #region fuctions
@@ -75,7 +73,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("UnitData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("GachaData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -91,7 +89,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<UnitData>, Dictionary<int, UnitData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<GachaData>, Dictionary<int, GachaData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -119,14 +117,14 @@ namespace GSDatas
                
 
 
-    public static (List<UnitData> list, Dictionary<int, UnitData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, UnitData> Map = new Dictionary<int, UnitData>();
-            List<UnitData> List = new List<UnitData>();     
+    public static (List<GachaData> list, Dictionary<int, GachaData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, GachaData> Map = new Dictionary<int, GachaData>();
+            List<GachaData> List = new List<GachaData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(GachaData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["UnitData"];
+            var sheet = jsonObject["GachaData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -145,7 +143,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            UnitData instance = new UnitData();
+                            GachaData instance = new GachaData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -186,8 +184,8 @@ namespace GSDatas
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            UnitDataList = List;
-                            UnitDataMap = Map;
+                            GachaDataList = List;
+                            GachaDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -197,10 +195,10 @@ namespace GSDatas
 
  
 
-        public static void Write(UnitData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(GachaData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UnitData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(GachaData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
