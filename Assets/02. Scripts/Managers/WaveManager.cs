@@ -154,12 +154,9 @@ public class WaveManager : Singleton<WaveManager>
 
         }
 
-        CurrentWave++;
-        //DB에서 불러온 최종 웨이브 값과 비교해서 로직 실행
 
-
-        //5스테이지 마다 중간 보스?
-        if (_currentWave % 5 == 0)
+        //5스테이지 마다 중간 보스 때 추후 보상 선택 로직 추가 예정 
+        if (CurrentWave % 5 == 0)
         {
 
 
@@ -181,6 +178,10 @@ public class WaveManager : Singleton<WaveManager>
 
             }
         }
+
+        CurrentWave++;
+       
+
 
         //웨이브 클리어 보상 UI - 중간 보스일때는 3개 선택 창, 일반의 경우 일반 보상 
         UIManager.Instance.OpenUI<UIWaveClear>();
