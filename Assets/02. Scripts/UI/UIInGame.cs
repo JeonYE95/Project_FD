@@ -29,7 +29,7 @@ public class UIInGame : UIBase
 
         _canvas.worldCamera = _mainCamera;
 
-        _drawBtn.onClick.AddListener(() => { GachaManager.Instance.PlayGacha(); });  
+        _drawBtn.onClick.AddListener(() => { IngameGacha.Instance.PlayGacha(); });  
         _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });  
 
         // _battleStartButton = GetComponentInChildren<Button>();
