@@ -28,6 +28,7 @@ public class WaveManager : Singleton<WaveManager>
     public event Action OnClearWave; // 웨이브 클리어 확인 
     public event Action OnWaveAllClear; // 모든 웨이브 클리어 확인 
     public event Action OnDead; // 스테이지 라이프가 다해 죽었을 때
+    public event Action<int> OnWaveChanged; // CurrentWave 변경 확인
 
 
     //웨이브 정보 저장 - 몬스터 소환 위치 및 정보
@@ -42,7 +43,14 @@ public class WaveManager : Singleton<WaveManager>
     public int CurrentWave
     {
         get { return _currentWave; }
-        private set { _currentWave = value; }
+        set 
+        { 
+            if (_currentWave != value)
+            {
+                _currentWave = value; 
+                OnWaveChanged?.Invoke(_currentWave);
+            }
+        }
 
     }
 
@@ -139,7 +147,7 @@ public class WaveManager : Singleton<WaveManager>
 
         IsRunningWave = false;
 
-        if (CurrentWave == _endWave)
+        if (_currentWave == _endWave)
         {
             OnWaveAllClear?.Invoke();
             return;
@@ -268,7 +276,7 @@ public class WaveManager : Singleton<WaveManager>
     // wave별로 데이터 가져오기
     private void GetWaveData()
     {
-        _currentWaveData = _AllWaveData.Where(data => data.wave == CurrentWave).ToList();
+        _currentWaveData = _AllWaveData.Where(data => data.wave == _currentWave).ToList();
     }
 
 
@@ -280,7 +288,7 @@ public class WaveManager : Singleton<WaveManager>
 
     private void GetRewardData()
     {
-        _currentWaveRewardData = _AllWaveRewardata.Where(data => data.wave == CurrentWave).ToList();
+        _currentWaveRewardData = _AllWaveRewardata.Where(data => data.wave == _currentWave).ToList();
     }
 
 
