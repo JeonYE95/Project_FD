@@ -24,6 +24,22 @@ public class CombineManager : Singleton<CombineManager>
         bool isInventoryUnit1 = InventoryManager.Instance.HasUnitInInventory(unit1ID);
         bool isInventoryUnit2 = InventoryManager.Instance.HasUnitInInventory(unit2ID);
 
+
+        // 전투 중일 때는 인벤토리에 있는 유닛들만 조합 가능
+        if (WaveManager.Instance.IsRunningWave)
+        {
+            if (isInventoryUnit1 && isInventoryUnit2)
+            {
+                CombineInvetoryOnly(unit1ID, unit2ID, combineData);
+            }
+            else
+            {
+                Debug.LogWarning("전투 중에는 인벤토리의 유닛들만 조합할 수 있습니다.");
+            }
+            return;
+        }
+
+
         bool isFieldUnit1 = FieldManager.Instance.HasUnitInField(unit1ID);
         bool isFieldUnit2 = FieldManager.Instance.HasUnitInField(unit2ID);
 
@@ -32,6 +48,8 @@ public class CombineManager : Singleton<CombineManager>
             Debug.LogWarning("조합에 필요한 유닛이 부족합니다.");
             return;
         }
+
+
 
         if (isFieldUnit1 && isFieldUnit2)     // 둘 다 필드에 있는 경우
         {

@@ -14,13 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/InGameBattleScene.unity
     guid: e29e1a3a1fe8bf94d9ee5c03fa2acbea
-  - enabled: 0
-    path: Assets/01. Scenes/DevScene/KYM/KYM_LoadingScene.unity
-    guid: a480d40333fcd40e893275ecd3d65f22
-  - enabled: 0
-    path: Assets/01. Scenes/DevScene/KYM/KYM_MainScene.unity
-    guid: 6776e3f393f61418a97e59626975699c
-  - enabled: 0
-    path: Assets/01. Scenes/DevScene/KYM/KYM_InGameScene.unity
-    guid: c103d199d416742c09791f0afee8a19b
   m_configObjects: {}
