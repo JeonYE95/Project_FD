@@ -2,7 +2,6 @@
 public interface IState
 {
     public void Enter();
-    public void PhysicsUpdate();
     public void Update();
     public void Exit();
 
@@ -44,11 +43,6 @@ public class StateMachine
     public void Update()
     {
         currentState?.Update();
-    }
-
-    public void PhysicsUpdate()
-    {
-        currentState?.PhysicsUpdate();
     }
 
     //For Debug

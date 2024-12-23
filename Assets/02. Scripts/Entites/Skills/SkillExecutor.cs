@@ -67,9 +67,10 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             case SkillType.Heal:
-                target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                /*target.healthSystem.TakeHealth((int)inGameSkillData.value);
                 GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
-                HealEffect.transform.position = target.transform.position;
+                HealEffect.transform.position = target.transform.position;*/
+
                 //HealEffect.GetComponent<Animator>().pl
                 break;
 
@@ -114,9 +115,15 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             case SkillEffect.MultipleAttacks:
-                /*target.actionHandler.attackCount = (int)gameSkillData.value;
-                StartCoroutine(ResetEffectAfterDuration(() => { target.actionHandler.attackCount = 1; }, gameSkillData.duration));
-                Debug.Log($"멀티플어택 발동 {(int)gameSkillData.value}");*/
+
+                originPropertyValue = target.actionHandler.attackCount;
+
+                BattleManager.Instance.ApplyBuff(
+                    target,
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => SetAttackCount(target, (int)inGameSkillData.value),
+                    () => SetAttackCount(target, (int)originPropertyValue));
                 break;
             
 
@@ -136,16 +143,16 @@ public class SkillExecutor : MonoBehaviour
 
     public void DefenseBuff(BaseUnit target, float value)
     {
-        if (value < 0)
-        {
-            Debug.Log("리셋");
-        }
-
         target.unitInfo.Defense += (int)value;
     }
 
     public void AttackSpeedBuff(BaseUnit target, float value)
     {
         target.unitInfo.AttackCooltime = value;
+    }
+
+    public void SetAttackCount(BaseUnit target, int Count)
+    {
+        target.actionHandler.attackCount = Count;
     }
 }
