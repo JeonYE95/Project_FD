@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnforceMaterialDataManager : EnforceMaterialData
+public class EnforceMaterialDataManager : UnitEnforceMaterialData
 {
     private static EnforceMaterialDataManager _instance;
     public static EnforceMaterialDataManager Instance
@@ -20,14 +20,14 @@ public class EnforceMaterialDataManager : EnforceMaterialData
 
     private EnforceMaterialDataManager() { }
 
-    public List<EnforceMaterialData> GetItemDatas()
+    public List<UnitEnforceMaterialData> GetItemDatas()
     {
         return GetList();
     }
 
-    public EnforceMaterialData GetUnitData(int id)
+    public UnitEnforceMaterialData GetUnitData(int id)
     {
-        if (EnforceMaterialDataMap.TryGetValue(id, out var data))
+        if (UnitEnforceMaterialDataMap.TryGetValue(id, out var data))
         {
             return data;
         }

@@ -17,48 +17,52 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class EnforceMaterialData : ITable
+    public partial class ClassEnforceData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<EnforceMaterialData> loadedList, Dictionary<int, EnforceMaterialData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<ClassEnforceData> loadedList, Dictionary<int, ClassEnforceData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "1919930553"; // it is sheet id
+        static string sheetID = "2072033249"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, EnforceMaterialData> EnforceMaterialDataMap = new Dictionary<int, EnforceMaterialData>();  
-        public static List<EnforceMaterialData> EnforceMaterialDataList = new List<EnforceMaterialData>();   
+        public static Dictionary<int, ClassEnforceData> ClassEnforceDataMap = new Dictionary<int, ClassEnforceData>();  
+        public static List<ClassEnforceData> ClassEnforceDataList = new List<ClassEnforceData>();   
 
         /// <summary>
-        /// Get EnforceMaterialData List 
+        /// Get ClassEnforceData List 
         /// Auto Load
         /// </summary>
-        public static List<EnforceMaterialData> GetList()
+        public static List<ClassEnforceData> GetList()
         {{
            if (isLoaded == false) Load();
-           return EnforceMaterialDataList;
+           return ClassEnforceDataList;
         }}
 
         /// <summary>
-        /// Get EnforceMaterialData Dictionary, keyType is your sheet A1 field type.
+        /// Get ClassEnforceData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, EnforceMaterialData>  GetDictionary()
+        public static Dictionary<int, ClassEnforceData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return EnforceMaterialDataMap;
+           return ClassEnforceDataMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 ID;
-		public System.Int32 requireItemID;
-		public System.Int32 requireItemCount;
+		public System.Int32 Enchant;
+		public System.Int32 attack;
+		public System.Int32 defense;
+		public System.Int32 health;
+		public System.Single attackCooltime;
+		public System.Single skillCooltime;
+		public System.Single range;
   
 
 #region fuctions
@@ -69,7 +73,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("EnforceMaterialData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("ClassEnforceData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -85,7 +89,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<EnforceMaterialData>, Dictionary<int, EnforceMaterialData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<ClassEnforceData>, Dictionary<int, ClassEnforceData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -113,14 +117,14 @@ namespace GSDatas
                
 
 
-    public static (List<EnforceMaterialData> list, Dictionary<int, EnforceMaterialData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, EnforceMaterialData> Map = new Dictionary<int, EnforceMaterialData>();
-            List<EnforceMaterialData> List = new List<EnforceMaterialData>();     
+    public static (List<ClassEnforceData> list, Dictionary<int, ClassEnforceData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, ClassEnforceData> Map = new Dictionary<int, ClassEnforceData>();
+            List<ClassEnforceData> List = new List<ClassEnforceData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(EnforceMaterialData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(ClassEnforceData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["EnforceMaterialData"];
+            var sheet = jsonObject["ClassEnforceData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -139,7 +143,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            EnforceMaterialData instance = new EnforceMaterialData();
+                            ClassEnforceData instance = new ClassEnforceData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -176,12 +180,12 @@ namespace GSDatas
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.ID, instance);
+                            Map.Add(instance.Enchant, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            EnforceMaterialDataList = List;
-                            EnforceMaterialDataMap = Map;
+                            ClassEnforceDataList = List;
+                            ClassEnforceDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -191,10 +195,10 @@ namespace GSDatas
 
  
 
-        public static void Write(EnforceMaterialData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(ClassEnforceData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(EnforceMaterialData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(ClassEnforceData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

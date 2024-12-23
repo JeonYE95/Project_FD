@@ -36,38 +36,15 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
 
             //_unitData = data.Clone();
 
-
-            //강화 단계에 맞는 유닛 데이터 가져오기
-            int currentLevel = EnforceManager.Instance.GetCurrentUnitEnforceLevel(data.ID);
-            int enforcedUnitID = (data.ID * 10) + currentLevel;
-
-            EnforceData enforcedData = EnforceDataManager.Instance.GetUnitData(enforcedUnitID);
-
-            // 강화 정보가 있으면 강화된 스탯 적용, 없으면 기본 스탯 적용
-
             _unitData.ID = data.ID;
             _unitData.name = data.name;
             _unitData.grade = data.grade;
-
-            if (enforcedData != null)
-            {
-                _unitData.range = enforcedData.range;
-                _unitData.attack = enforcedData.attack;
-                _unitData.health = enforcedData.health;
-                _unitData.defense = enforcedData.defense;
-                _unitData.skillCooltime = enforcedData.skillCooltime;
-                _unitData.attackCooltime = enforcedData.attackCooltime;
-            }
-            else
-            {
-                _unitData.range = data.range;
-                _unitData.attack = data.attack;
-                _unitData.health = data.health;
-                _unitData.defense = data.defense;
-                _unitData.skillCooltime = data.skillCooltime;
-                _unitData.attackCooltime = data.attackCooltime;
-
-            }
+            _unitData.range = data.range;
+            _unitData.attack = data.attack;
+            _unitData.health = data.health;
+            _unitData.defense = data.defense;
+            _unitData.skillCooltime = data.skillCooltime;
+            _unitData.attackCooltime = data.attackCooltime;
         }
 
     }

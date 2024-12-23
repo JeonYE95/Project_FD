@@ -2,7 +2,7 @@ using GSDatas;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnforceDataManager : EnforceData
+public class EnforceDataManager : MonoBehaviour
 {
     private static EnforceDataManager _instance;
     public static EnforceDataManager Instance
@@ -19,19 +19,5 @@ public class EnforceDataManager : EnforceData
 
     private EnforceDataManager() { }
 
-    public List<EnforceData> GetItemDatas()
-    {
-        return GetList();
-    }
-
-    public EnforceData GetUnitData(int id)
-    {
-        if (EnforceDataMap.TryGetValue(id, out var data))
-        {
-            return data;
-        }
-
-        return null;
-    }
 
 }

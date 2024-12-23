@@ -13,6 +13,9 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
         int EnforceUnitID = GetNextUnitEnforceUnitID(baseUnitID);
 
         // 강화 데이터 조회
+
+        /*
+         
         EnforceMaterialData enforceData = EnforceMaterialDataManager.Instance.GetUnitData(EnforceUnitID);
         if (enforceData == null)
         {
@@ -30,6 +33,8 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
             return currentCount >= requireCount;
         }
 
+         */
+
 
         Debug.LogWarning("강화에 필요한 재료가 부족합니다.");
 
@@ -45,6 +50,8 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
             return;
         }
 
+        /*
+         
         int nextEnforceUnitID = GetNextUnitEnforceUnitID(baseUnitID);
         EnforceMaterialData enforceData = EnforceMaterialDataManager.Instance.GetUnitData(nextEnforceUnitID);
 
@@ -55,6 +62,9 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
         GameManager.Instance.EnforceUnitSave(baseUnitID);
 
         Debug.Log($"유닛 {baseUnitID} 강화 성공! (다음 강화 ID: {nextEnforceUnitID})" );
+         
+         */
+
     }
 
     //유닛 강화 ID 정보 찾기
