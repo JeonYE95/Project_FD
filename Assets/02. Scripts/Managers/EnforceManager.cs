@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnforceManager : MonoBehaviour
+public class EnforceManager : SingletonDontDestory<EnforceManager>
 {
 
-
+    // 강화 가능 여부 체크
     public bool CanEnforce(int baseUnitID)
     {
         // 다음 강화 단계에 맞는 강화 ID 정보 찾기
         int EnforceUnitID = GetNextEnforceUnitID(baseUnitID);
 
         // 강화 데이터 조회
-        EnforceData enforceData = EnforceDataManager.Instance.GetUnitData(EnforceUnitID);
+        EnforceMaterialData enforceData = EnforceMaterialDataManager.Instance.GetUnitData(EnforceUnitID);
         if (enforceData == null)
         {
             Debug.Log("강화 최대치에 도달하여 강화 할 수 없습니다");
@@ -30,6 +30,9 @@ public class EnforceManager : MonoBehaviour
             return currentCount >= requireCount;
         }
 
+
+        Debug.LogWarning("강화에 필요한 재료가 부족합니다.");
+
         return false;
     }
 
@@ -39,12 +42,11 @@ public class EnforceManager : MonoBehaviour
     {
         if (!CanEnforce(baseUnitID))
         {
-            Debug.LogWarning("강화에 필요한 재료가 부족합니다.");
             return;
         }
 
         int nextEnforceUnitID = GetNextEnforceUnitID(baseUnitID);
-        EnforceData enforceData = EnforceDataManager.Instance.GetUnitData(nextEnforceUnitID);
+        EnforceMaterialData enforceData = EnforceMaterialDataManager.Instance.GetUnitData(nextEnforceUnitID);
 
         //아이템 소모
         GameManager.Instance.substractItemSave(enforceData.requireItemID, enforceData.requireItemCount);
@@ -67,7 +69,7 @@ public class EnforceManager : MonoBehaviour
     }
 
     // 현재 강화 횟수 확인
-    private int GetCurrentEnforceLevel(int baseUnitID)
+    public int GetCurrentEnforceLevel(int baseUnitID)
     {
         //현재 강화 횟수 확인
         if (GameManager.Instance.playerData.UnitInforce.TryGetValue(baseUnitID, out int level))
@@ -75,6 +77,27 @@ public class EnforceManager : MonoBehaviour
             return level;
         }
         return 0; // 강화하지 않은 상태 : 0번 시작
+    }
+
+
+    // 유닛의 강화된 스탯 정보 반환
+    public UnitData GetEnforcedUnitData(UnitData baseData)
+    {
+        if (baseData == null) return null;
+
+        // 현재 강화 레벨로 강화된 유닛 ID 계산
+        int currentLevel = GetCurrentEnforceLevel(baseData.ID);
+        int enforcedUnitID = (baseData.ID * 10) + currentLevel;
+
+        // 강화된 유닛 데이터 가져오기
+        UnitData enforcedData = UnitDataManager.Instance.GetUnitData(enforcedUnitID);
+        if (enforcedData == null)
+        {
+            Debug.LogWarning($"강화된 유닛 데이터를 찾을 수 없습니다. ID: {enforcedUnitID}");
+            return baseData;  // 데이터가 없으면 기본 데이터 반환
+        }
+
+        return enforcedData;
     }
 
 }

@@ -1,5 +1,4 @@
 using GSDatas;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,6 +33,5 @@ public class EnforceDataManager : EnforceData
 
         return null;
     }
-
 
 }

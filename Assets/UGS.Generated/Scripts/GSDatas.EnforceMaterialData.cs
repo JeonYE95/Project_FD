@@ -17,39 +17,39 @@ using UnityEngine;
 namespace GSDatas
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class EnforceData : ITable
+    public partial class EnforceMaterialData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<EnforceData> loadedList, Dictionary<int, EnforceData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<EnforceMaterialData> loadedList, Dictionary<int, EnforceMaterialData> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "939076190"; // it is sheet id
+        static string sheetID = "1919930553"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, EnforceData> EnforceDataMap = new Dictionary<int, EnforceData>();  
-        public static List<EnforceData> EnforceDataList = new List<EnforceData>();   
+        public static Dictionary<int, EnforceMaterialData> EnforceMaterialDataMap = new Dictionary<int, EnforceMaterialData>();  
+        public static List<EnforceMaterialData> EnforceMaterialDataList = new List<EnforceMaterialData>();   
 
         /// <summary>
-        /// Get EnforceData List 
+        /// Get EnforceMaterialData List 
         /// Auto Load
         /// </summary>
-        public static List<EnforceData> GetList()
+        public static List<EnforceMaterialData> GetList()
         {{
            if (isLoaded == false) Load();
-           return EnforceDataList;
+           return EnforceMaterialDataList;
         }}
 
         /// <summary>
-        /// Get EnforceData Dictionary, keyType is your sheet A1 field type.
+        /// Get EnforceMaterialData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, EnforceData>  GetDictionary()
+        public static Dictionary<int, EnforceMaterialData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return EnforceDataMap;
+           return EnforceMaterialDataMap;
         }}
 
     
@@ -57,12 +57,8 @@ namespace GSDatas
 /* Fields. */
 
 		public System.Int32 ID;
-		public System.Int32 attack;
-		public System.Int32 defense;
-		public System.Int32 health;
-		public System.Single attackCooltime;
-		public System.Single skillCooltime;
-		public System.Single range;
+		public System.Int32 requireItemID;
+		public System.Int32 requireItemCount;
   
 
 #region fuctions
@@ -73,7 +69,7 @@ namespace GSDatas
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("EnforceData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("EnforceMaterialData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -89,7 +85,7 @@ namespace GSDatas
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<EnforceData>, Dictionary<int, EnforceData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<EnforceMaterialData>, Dictionary<int, EnforceMaterialData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -117,14 +113,14 @@ namespace GSDatas
                
 
 
-    public static (List<EnforceData> list, Dictionary<int, EnforceData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, EnforceData> Map = new Dictionary<int, EnforceData>();
-            List<EnforceData> List = new List<EnforceData>();     
+    public static (List<EnforceMaterialData> list, Dictionary<int, EnforceMaterialData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, EnforceMaterialData> Map = new Dictionary<int, EnforceMaterialData>();
+            List<EnforceMaterialData> List = new List<EnforceMaterialData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(EnforceData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(EnforceMaterialData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["EnforceData"];
+            var sheet = jsonObject["EnforceMaterialData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -143,7 +139,7 @@ namespace GSDatas
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            EnforceData instance = new EnforceData();
+                            EnforceMaterialData instance = new EnforceMaterialData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -184,8 +180,8 @@ namespace GSDatas
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            EnforceDataList = List;
-                            EnforceDataMap = Map;
+                            EnforceMaterialDataList = List;
+                            EnforceMaterialDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -195,10 +191,10 @@ namespace GSDatas
 
  
 
-        public static void Write(EnforceData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(EnforceMaterialData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(EnforceData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(EnforceMaterialData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
