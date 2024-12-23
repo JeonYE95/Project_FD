@@ -73,7 +73,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             _previewObject.SetActive(true);
 
             //캔버스 UI 공간 좌표에 맞게 변환
-            _previewObject.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
+            _previewObject.transform.position = _canvas.GetMouseWorldPosition(eventData.position);
 
         }
     }
@@ -83,7 +83,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         if (_previewObject != null && _previewObject.activeSelf)
         {
             // 캔버스 공간으로 변환
-            _previewObject.transform.position = Extensions.GetMouseWorldPosition(_canvas, eventData.position);
+            _previewObject.transform.position = _canvas.GetMouseWorldPosition(eventData.position);
         }
 
     }
