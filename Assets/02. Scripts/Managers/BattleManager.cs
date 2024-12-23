@@ -17,8 +17,21 @@ public class BattleManager : Singleton<BattleManager>
     WaitForSeconds _battleResultAndResetTimer;
 
     private List<BaseUnit> allUnits = new List<BaseUnit>();
-    public List<BaseUnit> players = new List<BaseUnit>();
+    private List<BaseUnit> _players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
+
+    //현재 1005 (힐러) 가 비활성화 되는 버그가 있어서 디버깅을 위한 프로퍼티
+    public List<BaseUnit> players
+    {
+        get
+        {
+            return _players;
+        }
+        set
+        {
+            _players = value;
+        }
+    }
 
     // 버프 딕셔너리 : <유닛, <버프이름, 버프 정보 >>
     private Dictionary<BaseUnit, Dictionary<string, BuffInfo>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, BuffInfo>>();
