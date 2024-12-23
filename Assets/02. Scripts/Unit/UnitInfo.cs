@@ -38,7 +38,7 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
 
 
             //강화 단계에 맞는 유닛 데이터 가져오기
-            int currentLevel = EnforceManager.Instance.GetCurrentEnforceLevel(data.ID);
+            int currentLevel = EnforceManager.Instance.GetCurrentUnitEnforceLevel(data.ID);
             int enforcedUnitID = (data.ID * 10) + currentLevel;
 
             EnforceData enforcedData = EnforceDataManager.Instance.GetUnitData(enforcedUnitID);

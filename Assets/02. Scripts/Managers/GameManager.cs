@@ -16,7 +16,8 @@ public class PlayerData
     public int diamond;
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
-    public Dictionary<int, int> UnitInforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 횟수
+    public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 횟수
+    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -133,6 +134,16 @@ public class GameManager : SingletonDontDestory<GameManager>
     public void substractItemSave(int itemId, int count)
     {
 
+
+        if (itemId == 3002)
+        {
+            playerData.gold -= count;
+            SavePlayerDataToJson();
+            return;
+
+        }
+
+
         // 기존 아이템이 충분히 있는지 확인해서 감소 후 저장
 
         if (playerData.items.TryGetValue(itemId, out int currentCount))
@@ -205,14 +216,34 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
 
         // 기존 유닛의 강화 정보가 있는지 확인
-        if (playerData.UnitInforce.TryGetValue(unitID, out int currentEnforce))
+        if (playerData.UnitEnforce.TryGetValue(unitID, out int currentEnforce))
         {
-            playerData.UnitInforce[unitID] = currentEnforce + 1;
+            playerData.UnitEnforce[unitID] = currentEnforce + 1;
         }
         else
         {
-            // 처음 강화하는 유닛이면 1부터 시작 - 임의로 1 넣음 추후 UGS 데이터에 맞게 숫자 조정
-            playerData.UnitInforce.Add(unitID, 1);
+            // 처음 강화하는 유닛이면 1부터 시작 
+            playerData.UnitEnforce.Add(unitID, 1);
+        }
+
+        SavePlayerDataToJson();
+
+    }
+
+    // 클래스 강화 정보 저장
+    public void EnforceClassSave(string unitClass)
+    {
+
+
+        // 기존 클래스의 강화 정보가 있는지 확인
+        if (playerData.ClassEnforce.TryGetValue(unitClass, out int currentEnforce))
+        {
+            playerData.ClassEnforce[unitClass] = currentEnforce + 1;
+        }
+        else
+        {
+            // 처음 강화하는 유닛이면 1부터 시작 
+            playerData.ClassEnforce.Add(unitClass, 1);
         }
 
         SavePlayerDataToJson();
