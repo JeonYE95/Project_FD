@@ -27,9 +27,9 @@ public static class Defines
     public const float ENERGY_RECOVERY_TIME = 180f; // 에너지 충전 시간 3분
 
 
-    public const int CHARACTER_ENFORCE_MAX_LEVEL = 100; // 유닛 강화 레벨 지정
-    public const int CLASS_ENFORCE_MAX_LEVEL = 100; // 클래스 강화 레벨 지정
-    public const int CLASS_ENFORCE_COST = 1000; // 클래스 강화 비용  * 레벨
+    public const int CHARACTER_ENFORCE_MAX_LEVEL = 100; // 유닛 강화 최대 레벨 지정
+    public const int CLASS_ENFORCE_MAX_LEVEL = 100; // 클래스 강화 최대 레벨 지정
+    public const int CLASS_ENFORCE_COST = 100; // 기본 클래스 강화 비용 +  레벨 * 10 
 
 
     public static readonly int BehindSortingOrder = 199;
