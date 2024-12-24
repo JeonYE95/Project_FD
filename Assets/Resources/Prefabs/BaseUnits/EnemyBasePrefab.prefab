@@ -124,24 +124,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff74853b15cbde4390b749a343c4972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLive: 0
+  targetUnit: {fileID: 0}
   healthSystem: {fileID: 0}
   actionHandler: {fileID: 0}
   UnitMovement: {fileID: 0}
   animController: {fileID: 0}
-  isLive: 0
-  targetUnit: {fileID: 0}
-  defense: 0
-  attackDamage: 0
-  skillDamage: 0
-  maxHP: 0
-  skillCooltime: 0
-  attackCooltime: 0
-  attackRange: 0
-  unitGrade: 
   isPlayerUnit: 0
   isRangedUnit: 0
-  attackProjectile: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
+  unitAsset: {fileID: 0}
+  unitAssetChildren: []
   CurrentState: 
+  ID: 0
+  Defense: 0
 --- !u!114 &7359023658341526361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,9 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79861e34cf5802d4d9693b160258c53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCollTime: 10
-  attackCoolTime: 2
-  firePoint: {fileID: 0}
+  attackCount: 1
+  _lifeSteal: 0
+  skillCoolTime: 0
 --- !u!114 &3820379539235696041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,3 +217,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1867e2e73aae10d4a86be28abe1cda29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inGameSkillData:
+    unitID: 0
+    skillID: 0
+    skillName: 
+    skillType: 0
+    skillEffect: 0
+    value: 0
+    duration: 0
+    skillCoolDown: 0
+    targetGroup: 0
+    targetPriority: 0
+    targetCount: 0

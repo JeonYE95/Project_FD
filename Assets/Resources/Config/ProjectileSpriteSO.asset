@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1876d8b96d7372f46962e589262a1935, type: 3}
+  m_Name: ProjectileSpriteSO
+  m_EditorClassIdentifier: 
+  projectilePrefabs:
+  - unitID: 0
+    unitName: DefaultProjectile
+    projectilePrefab: {fileID: 8404376929036876713, guid: abd3491c6124c1047aaaad04e275cb8e, type: 3}
+  - unitID: 1002
+    unitName: Archer
+    projectilePrefab: {fileID: 8404376929036876713, guid: 1a4eb616b52ed9d4099a2a636ef2eb38, type: 3}
+  - unitID: 1003
+    unitName: Mage
+    projectilePrefab: {fileID: 8404376929036876713, guid: 58a416bfcb7d37d49a39087983da8e14, type: 3}
+  - unitID: 1005
+    unitName: Healer
+    projectilePrefab: {fileID: 8404376929036876713, guid: 0a7fc0760496f9f4c9a200e952c207e5, type: 3}
