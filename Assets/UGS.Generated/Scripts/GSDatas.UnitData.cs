@@ -67,6 +67,7 @@ namespace GSDatas
 		public System.String grade;
 		public System.Int32 level;
 		public System.Int32 maxLevel;
+		public System.String classtype;
   
 
 #region fuctions

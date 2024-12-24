@@ -70,6 +70,28 @@ public class GameManager : SingletonDontDestory<GameManager>
 
 
         StartCoroutine(RecoverEnergyRoutine());
+
+
+        // 테스트 코드 
+        {
+            //EnforceClassSave("Knight");
+            //EnforceClassSave("Archer");
+            //EnforceClassSave("Maze");
+            //EnforceClassSave("Rouge");
+            //EnforceClassSave("Healer");
+            //EnforceClassSave("Worrior");
+           
+
+            //EnforceUnitSave(1001);
+            //EnforceUnitSave(1002);
+            //EnforceUnitSave(1003);
+            //EnforceUnitSave(1004);
+            //EnforceUnitSave(1005);
+            //EnforceUnitSave(1006);
+
+        }
+
+
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -127,7 +149,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
 
         // 자동 저장
-        //SavePlayerDataToJson();
+        SavePlayerDataToJson();
     }
 
     // 아이템 소비 시 저장
@@ -173,7 +195,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
 
         // 자동 저장
-        //SavePlayerDataToJson();
+        SavePlayerDataToJson();
     }
 
 

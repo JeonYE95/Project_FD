@@ -63,6 +63,7 @@ namespace GSDatas
 		public System.Single attackCooltime;
 		public System.Single skillCooltime;
 		public System.Single range;
+		public System.Int32 requiredCost;
   
 
 #region fuctions
