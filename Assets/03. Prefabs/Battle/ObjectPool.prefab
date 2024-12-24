@@ -57,6 +57,14 @@ MonoBehaviour:
     prefab: {fileID: 8404376929036876713, guid: 58a416bfcb7d37d49a39087983da8e14, type: 3}
     size: 10
     canExpand: 1
+  - tag: Hunter
+    prefab: {fileID: 8404376929036876713, guid: ab61e2353655a1044b0ffd0d52a0693d, type: 3}
+    size: 10
+    canExpand: 1
+  - tag: Elementalist
+    prefab: {fileID: 8404376929036876713, guid: 51fe1c724b6092b49a8660c084504dd3, type: 3}
+    size: 15
+    canExpand: 1
   - tag: Healer
     prefab: {fileID: 8404376929036876713, guid: 0a7fc0760496f9f4c9a200e952c207e5, type: 3}
     size: 10

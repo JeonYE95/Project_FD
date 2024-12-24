@@ -724,66 +724,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[3].tag
-      value: Elementalist
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[4].tag
-      value: Healer
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[5].tag
-      value: HealEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[6].tag
-      value: SmallThunder
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[3].size
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[4].size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[6].size
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[3].prefab
-      value: 
-      objectReference: {fileID: 8404376929036876713, guid: 51fe1c724b6092b49a8660c084504dd3, type: 3}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[4].prefab
-      value: 
-      objectReference: {fileID: 8404376929036876713, guid: 0a7fc0760496f9f4c9a200e952c207e5, type: 3}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[5].prefab
-      value: 
-      objectReference: {fileID: 5043573985140183233, guid: 9cfbf8c43fbbaf246bacbda02f4288f9, type: 3}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[6].prefab
-      value: 
-      objectReference: {fileID: 5043573985140183233, guid: e2a228a99958ce0489ded0e87b18ff64, type: 3}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[4].canExpand
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[5].canExpand
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[6].canExpand
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5106557631465554496, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
       propertyPath: m_Name
       value: ObjectPool
@@ -2123,8 +2063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 857271189}
-  _stageBtn: {fileID: 1115783800}
   _gold: {fileID: 1540117259}
 --- !u!114 &622506327
 MonoBehaviour:
@@ -2877,12 +2815,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23be58305a899624bab5933253a33552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterEnergy: 100
   playerData:
     name: 
     level: 0
     gold: 0
     diamond: 0
+    energy: 0
 --- !u!4 &799159126
 Transform:
   m_ObjectHideFlags: 0
@@ -5484,8 +5422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 491754512}
-  _stageBtn: {fileID: 1414659897}
   _gold: {fileID: 689020304}
 --- !u!114 &1171427384
 MonoBehaviour:
@@ -7773,7 +7709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e2997734a1ac14c99fd57cdaf9892d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: []
   enemies: []
   skillProjectileSO: {fileID: 0}
   skillVisualEffectSO: {fileID: 0}
@@ -8068,8 +8003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 1467661213}
-  _stageBtn: {fileID: 1007321093}
   _gold: {fileID: 374397664}
 --- !u!114 &1871768624
 MonoBehaviour:
