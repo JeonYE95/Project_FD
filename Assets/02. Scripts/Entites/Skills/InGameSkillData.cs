@@ -50,24 +50,22 @@ public enum SkillType
 
 public enum SkillEffect
 {
-    None,
-    LifeSteal,
-    SkillValue,
+    Heal,    // 체력 회복
+    Damage,         // 데미지
     AttackBoost,     // 공격속도
     DefenseBoost,  // 방어력 증가
-    MultipleAttacks,     // 여러번 공격
-    BasicAttackMultiplier
+    MultipleAttacks     // 여러번 공격
 }
+
 
 
 public enum TargetGroup
 {
-    Self,
-    Target,
     Ally,
     Enemy,
     AllAlly,
     AllEnemy,
+    Self
 }
 
 public enum TargetPriority

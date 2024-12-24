@@ -103,7 +103,7 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
         // 현재 강화 레벨로 강화된 유닛 ID 계산
         int currentLevel = GetCurrentUnitEnforceLevel(baseData.ID);
 
-        UnitEnforceData enforceData = UnitEnforceDataManager.Instance.GetUnitData(currentLevel);
+        ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentLevel);
 
         // 강화된 유닛 데이터 가져오기
 

@@ -33,44 +33,40 @@ public class TargetingSystem
     {
         List<BaseUnit> candidates = new List<BaseUnit>();
 
-        if (standardUnit.unitInfo.ID == 1001)
+        if (standardUnit.unitInfo.ID == 1051)
         {
-            Debug.Log("");
+            foreach (var unit in candidates)
+            {
+                Debug.Log($"{unit.gameObject.name} : {unit.gameObject.transform.position}");
+            }
         }
 
         // 그룹에 따른 후보군 설정
-
+        
         switch (options.Group)
         {
             case TargetGroup.Enemy:
-                candidates = (standardUnit.isPlayerUnit ? enemies : players)
-                    .Where(unit => unit != standardUnit)
-                    .ToList();
+                candidates = standardUnit.isPlayerUnit ? enemies : players;
+                candidates.Remove(standardUnit);
                 break;
 
             case TargetGroup.AllEnemy:
-                candidates = (standardUnit.isPlayerUnit ? enemies : players).ToList();
+                candidates = standardUnit.isPlayerUnit ? enemies : players;
                 break;
 
             case TargetGroup.Ally:
-                candidates = (standardUnit.isPlayerUnit ? players : enemies)
-                    .Where(unit => unit != standardUnit)
-                    .ToList();
+                candidates = standardUnit.isPlayerUnit ? players : enemies;
+                candidates.Remove(standardUnit);
                 break;
 
             case TargetGroup.AllAlly:
-                candidates = (standardUnit.isPlayerUnit ? players : enemies).ToList();
+                candidates = standardUnit.isPlayerUnit ? players : enemies;
                 break;
 
             case TargetGroup.Self:
                 candidates.Add(standardUnit);
                 return candidates;
-
-            case TargetGroup.Target:
-                candidates.Add(standardUnit.targetUnit);
-                return candidates;
         }
-
 
         // 생존한 유닛만 포함
         candidates = candidates.Where(unit => unit.isLive).ToList();
@@ -128,24 +124,6 @@ public class TargetingSystem
             return isDescending ? distanceB.CompareTo(distanceA) : distanceA.CompareTo(distanceB);
         });
     }
-
-    /*private List<BaseUnit> SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference, bool isDescending = false)
-    {
-        Transform referenceTransform = useTargetAsReference && standardUnit.targetUnit != null
-            ? standardUnit.targetUnit.transform
-            : standardUnit.transform;
-
-        candidates.Sort((a, b) =>
-        {
-            float distanceA = Vector2.Distance(referenceTransform.position, a.transform.position);
-            float distanceB = Vector2.Distance(referenceTransform.position, b.transform.position);
-
-            return isDescending ? distanceB.CompareTo(distanceA) : distanceA.CompareTo(distanceB);
-        });
-
-        return candidates; // 정렬된 리스트 반환
-    }*/
-
 
     private void ShuffleList(List<BaseUnit> candidates)
     {

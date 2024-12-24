@@ -6,7 +6,6 @@ using UnityEngine;
 public class ActionHandler : MonoBehaviour
 {
     public int attackCount = 1;
-    public bool _lifeSteal = false;
 
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
@@ -15,7 +14,6 @@ public class ActionHandler : MonoBehaviour
     public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
 
     bool _haveSkill = true;
-    int _damageDealt = 0;
     float _lastSkillTime = -Mathf.Infinity;
     float _lastAttackTime = -Mathf.Infinity;
 
@@ -127,12 +125,7 @@ public class ActionHandler : MonoBehaviour
     {
         if (_targetUnit.TryGetComponent(out HealthSystem healthSystem))
         {
-            _damageDealt = healthSystem.TakeDamage(_myUnit.unitInfo.Attack);
-
-            if (_lifeSteal)
-            {
-                _myUnit.healthSystem.TakeHealth((int)_damageDealt / 2);
-            }
+            healthSystem.TakeDamage(_myUnit.unitInfo.Attack);
         }
     }
 
