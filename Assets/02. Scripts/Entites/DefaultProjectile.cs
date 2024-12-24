@@ -15,8 +15,9 @@ public class DefaultProjectile : MonoBehaviour
         //Destroy(gameObject, 7f);
     }
 
-    public void SetTarget(BaseUnit targetUnit, Vector2 direction)
+    public void SetProjectile(BaseUnit targetUnit, Vector2 direction, int damage)
     {
+        this.damage = damage;
         this.direction = direction;
         this.targetUnit = targetUnit;
     }

@@ -129,31 +129,32 @@ public class ActionHandler : MonoBehaviour
         Vector3 firePoint = transform.position;
         firePoint += new Vector3(0.15f, 0.35f, 0); // 발사 위치 조정
 
-        GameObject attackProjectile;
+        GameObject attackProjectileGameObject;
 
-        attackProjectile = ObjectPool.Instance.SpawnFromPool(_myUnit.unitInfo.Name, firePoint);
+        attackProjectileGameObject = ObjectPool.Instance.SpawnFromPool(_myUnit.unitInfo.Name, firePoint);
 
         //풀에 없을시 기본 투사체 설정
-        if (attackProjectile == null)
+        if (attackProjectileGameObject == null)
         {
-            attackProjectile = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint);
+            attackProjectileGameObject = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint);
         }
 
         Vector2 direction = (_targetUnit.transform.position - firePoint).normalized;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        attackProjectile.transform.rotation = Quaternion.Euler(0, 0, angle);
+        attackProjectileGameObject.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        var projectileSpriteRenderer = attackProjectile.GetComponent<SpriteRenderer>();
+        var projectileSpriteRenderer = attackProjectileGameObject.GetComponent<SpriteRenderer>();
 
         if (_myUnit.transform.position.x < _targetUnit.transform.position.x)
         {
             projectileSpriteRenderer.flipX = true;
         }
 
+        var projectileScript = attackProjectileGameObject.GetComponent<DefaultProjectile>();
 
-        attackProjectile.GetComponent<DefaultProjectile>().SetTarget(_targetUnit, direction);
+        projectileScript.SetProjectile(_targetUnit, direction, _myUnit.unitInfo.Attack);
     }
 
     private void PerformMeleeAttack()
