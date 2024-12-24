@@ -59,8 +59,6 @@ public enum SkillEffect
     BasicAttackMultiplier
 }
 
-
-
 public enum TargetGroup
 {
     Self,

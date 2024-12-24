@@ -334,7 +334,7 @@ public class BattleManager : Singleton<BattleManager>
     {
         // Resources 폴더에서 SkillVisualEffectSO 로드
         skillVisualEffectSO = Resources.Load<SkillVisualEffectPoolConfigSO>("Config/SkillVisualEffectSO");
-        skillProjectileSO = Resources.Load<ProjectileSO>("Config/SkillVisualProjectileSO");
+        //skillProjectileSO = Resources.Load<ProjectileSO>("Config/SkillVisualProjectileSO");
 
         if (skillVisualEffectSO == null)
         {

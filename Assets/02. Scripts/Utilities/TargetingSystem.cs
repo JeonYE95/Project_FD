@@ -33,36 +33,40 @@ public class TargetingSystem
     {
         List<BaseUnit> candidates = new List<BaseUnit>();
 
-        if (standardUnit.unitInfo.ID == 1051)
-        {
-            //Debug.Log("");
-        }
-
         // 그룹에 따른 후보군 설정
-        
         switch (options.Group)
         {
             case TargetGroup.Enemy:
-                candidates = standardUnit.isPlayerUnit ? enemies : players;
-                candidates.Remove(standardUnit);
+                candidates = (standardUnit.isPlayerUnit ? enemies : players)
+                    .Where(unit => options.IncludeSelf || unit != standardUnit) // IncludeSelf 옵션 처리
+                    .ToList();
                 break;
 
             case TargetGroup.AllEnemy:
-                candidates = standardUnit.isPlayerUnit ? enemies : players;
+                candidates = (standardUnit.isPlayerUnit ? enemies : players).ToList();
                 break;
 
             case TargetGroup.Ally:
-                candidates = standardUnit.isPlayerUnit ? players : enemies;
-                candidates.Remove(standardUnit);
+                candidates = (standardUnit.isPlayerUnit ? players : enemies)
+                    .Where(unit => options.IncludeSelf || unit != standardUnit) // IncludeSelf 옵션 처리
+                    .ToList();
                 break;
 
             case TargetGroup.AllAlly:
-                candidates = standardUnit.isPlayerUnit ? players : enemies;
+                candidates = (standardUnit.isPlayerUnit ? players : enemies).ToList();
                 break;
 
             case TargetGroup.Self:
                 candidates.Add(standardUnit);
                 return candidates;
+
+            case TargetGroup.Target:
+                candidates.Add(standardUnit.targetUnit);
+                return candidates;
+
+            default:
+                Debug.LogWarning($"Unhandled TargetGroup: {options.Group}");
+                return new List<BaseUnit>();
         }
 
         // 생존한 유닛만 포함
