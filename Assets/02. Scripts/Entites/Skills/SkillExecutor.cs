@@ -71,15 +71,29 @@ public class SkillExecutor : MonoBehaviour
         {
             case SkillType.Damage:
 
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue) // 단순 스킬 데미지
+                {
+                    target.healthSystem.TakeDamage((int)inGameSkillData.value);
+                }
+                else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
+                {
+                    target.healthSystem.TakeDamage(caster.unitInfo.Attack * (int)inGameSkillData.value);
+                }
+
+
+
                 break;
 
             case SkillType.Heal:
-                Debug.Log("힐 발동");
-                /*target.healthSystem.TakeHealth((int)inGameSkillData.value);
-                GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
-                HealEffect.transform.position = target.transform.position;*/
 
-                //HealEffect.GetComponent<Animator>().pl
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
+                {
+                    target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                }
+
+                GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
+                HealEffect.transform.position = target.transform.position;
+
                 break;
 
             case SkillType.Buff:

@@ -65,6 +65,10 @@ public class TargetingSystem
             case TargetGroup.Self:
                 candidates.Add(standardUnit);
                 return candidates;
+
+            case TargetGroup.Target:
+                candidates.Add(standardUnit.targetUnit);
+                return candidates;
         }
 
 
@@ -124,6 +128,24 @@ public class TargetingSystem
             return isDescending ? distanceB.CompareTo(distanceA) : distanceA.CompareTo(distanceB);
         });
     }
+
+    /*private List<BaseUnit> SortByDistance(List<BaseUnit> candidates, BaseUnit standardUnit, bool useTargetAsReference, bool isDescending = false)
+    {
+        Transform referenceTransform = useTargetAsReference && standardUnit.targetUnit != null
+            ? standardUnit.targetUnit.transform
+            : standardUnit.transform;
+
+        candidates.Sort((a, b) =>
+        {
+            float distanceA = Vector2.Distance(referenceTransform.position, a.transform.position);
+            float distanceB = Vector2.Distance(referenceTransform.position, b.transform.position);
+
+            return isDescending ? distanceB.CompareTo(distanceA) : distanceA.CompareTo(distanceB);
+        });
+
+        return candidates; // 정렬된 리스트 반환
+    }*/
+
 
     private void ShuffleList(List<BaseUnit> candidates)
     {
