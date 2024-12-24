@@ -8,6 +8,7 @@ public class UnitUpgrade : MonoBehaviour
         // 유닛 데이터 가져오기
         UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);
         Debug.Log($"유닛 레벨 : {unit.level}, 최대 레벨 : {unit.maxLevel}");
+        Debug.Log($"유닛 : {unit.name}, 현재 레벨 : {unit.level}, 공격력 : {unit.attack}, 방어력 : {unit.defense}, 체력 : {unit.health}");
 
         // 강화 레벨 조건 확인
         if (unit.level >= unit.maxLevel)
@@ -41,6 +42,6 @@ public class UnitUpgrade : MonoBehaviour
         GameManager.Instance.substractItemSave(unitId, requiredPieces);
         UnitDataManager.Instance.SaveUnitData(unit);
 
-        Debug.Log($"업그레이드 완료. 유닛 : {unit.name}, 현재 레벨 : {unit.level}, 남은 조각 개수 : {curPieces}");
+        Debug.Log($"업그레이드 완료, 유닛 : {unit.name}, 현재 레벨 : {unit.level}, 공격력 : {unit.attack}, 방어력 : {unit.defense}, 체력 : {unit.health}");
     }
 }
