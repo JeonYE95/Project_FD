@@ -65,6 +65,8 @@ namespace GSDatas
 		public System.Single skillCooltime;
 		public System.Single range;
 		public System.String grade;
+		public System.Int32 level;
+		public System.Int32 maxLevel;
   
 
 #region fuctions
