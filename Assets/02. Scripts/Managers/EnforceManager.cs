@@ -2,9 +2,21 @@ using GSDatas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnforceManager : SingletonDontDestory<EnforceManager>
 {
+
+    private List<UnitEnforceData> _currentGradeEnforceData;
+    private List<ClassEnforceData> _AllClassEnforceData;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GetClassEnforceData();
+
+    }
 
     //유닛 강화 가능 여부 체크
     public bool CanUnitEnforce(int baseUnitID)
@@ -96,21 +108,24 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
 
 
     // 유닛의 강화된 스탯 정보 반환
-    public UnitData GetUnitEnforcedData(UnitData baseData)
+    public void GetUnitEnforcedData(UnitData baseData)
     {
-        if (baseData == null) return null;
+        if (baseData == null) return;
 
         // 현재 강화 레벨로 강화된 유닛 ID 계산
         int currentLevel = GetCurrentUnitEnforceLevel(baseData.ID);
+        if (currentLevel == 0) return;
 
-        ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentLevel);
+        GetGradeEnforceData(baseData.grade);
 
-        // 강화된 유닛 데이터 가져오기
+        baseData.range += _currentGradeEnforceData[currentLevel -1].range;
+        baseData.attack += _currentGradeEnforceData[currentLevel - 1].attack;
+        baseData.health += _currentGradeEnforceData[currentLevel - 1].health;
+        baseData.defense += _currentGradeEnforceData[currentLevel - 1].defense;
+        baseData.skillCooltime += _currentGradeEnforceData[currentLevel - 1].skillCooltime;
+        baseData.attackCooltime += _currentGradeEnforceData[currentLevel - 1].attackCooltime;
 
-
-
-        return null;
-
+       
     }
 
     //클래스 강화 여부 체크
@@ -180,20 +195,22 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
 
 
     // 클래스의 강화된 스탯 정보 반환
-    public UnitData GetClassEnforcedData(UnitData baseData)
+    public void GetClassEnforcedData(UnitData baseData)
     {
-        if (baseData == null) return null;
+        if (baseData == null) return;
 
         // 현재 강화 레벨로 강화된 유닛 ID 계산
-        int currentLevel = GetCurrentUnitEnforceLevel(baseData.ID);
-
-        ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentLevel);
+        //int currentLevel = GetCurrentClassEnforceLevel(baseData.classtype);
+        // ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentLevel);
 
         // 강화된 유닛 데이터 가져오기
 
-
-
-        return null;
+        //baseData.range += _AllClassEnforceData[currentLevel - 1].range;
+        //baseData.attack += _AllClassEnforceData[currentLevel - 1].attack;
+        //baseData.health += _AllClassEnforceData[currentLevel - 1].health;
+        //baseData.defense += _AllClassEnforceData[currentLevel - 1].defense;
+        //baseData.skillCooltime += _AllClassEnforceData[currentLevel - 1].skillCooltime;
+        //baseData.attackCooltime += _AllClassEnforceData[currentLevel - 1].attackCooltime;
 
     }
 
@@ -214,5 +231,18 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
         }
     }
 
+
+    private void GetGradeEnforceData(string grade)
+    {
+        _currentGradeEnforceData = UnitEnforceData.GetList().Where(data => data.grade == grade).ToList();
+
+    }
+
+    private void GetClassEnforceData()
+    {
+
+        _AllClassEnforceData = ClassEnforceData.GetList();
+
+    }
 
 }
