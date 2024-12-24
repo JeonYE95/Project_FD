@@ -75,6 +75,15 @@ public class SkillExecutor : MonoBehaviour
         {
             case SkillType.Damage:
 
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue) // 단순 스킬 데미지
+                {
+                    target.healthSystem.TakeDamage((int)inGameSkillData.value);
+                }
+                else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
+                {
+                    target.healthSystem.TakeDamage(caster.unitInfo.Attack * (int)inGameSkillData.value);
+                }
+
                 break;
 
             //case SkillType.Heal:
