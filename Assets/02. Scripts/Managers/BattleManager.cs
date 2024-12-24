@@ -33,6 +33,9 @@ public class BattleManager : Singleton<BattleManager>
         }
     }*/
 
+    public ProjectileSO skillProjectileSO;
+    public SkillVisualEffectPoolConfigSO skillVisualEffectSO;
+
     // 버프 딕셔너리 : <유닛, <버프이름, 버프 정보 >>
     private Dictionary<BaseUnit, Dictionary<string, BuffInfo>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, BuffInfo>>();
 
@@ -64,7 +67,7 @@ public class BattleManager : Singleton<BattleManager>
 
     private void Start()
     {
-        //Debug.Log(SkillDataManager.Instance.GetSkillByUnitID(1001).SkillType);
+        LoadSkillVisualEffectPoolConfig();
     }
 
     public void BattleSettingAndStart()
@@ -182,13 +185,13 @@ public class BattleManager : Singleton<BattleManager>
 
         foreach (BaseUnit unit in players)
         {
-            Debug.Log($"SetAllUnits - Players 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
+            //Debug.Log($"SetAllUnits - Players 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
             allUnits.Add(unit);
         }
 
         foreach (BaseUnit unit in enemies)
         {
-            Debug.Log($"SetAllUnits - Enemies 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
+            //Debug.Log($"SetAllUnits - Enemies 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
             allUnits.Add(unit);
         }
     }
@@ -306,6 +309,46 @@ public class BattleManager : Singleton<BattleManager>
 
         Debug.Log("모든 버프 초기화 됨");
     }
+
+    private void LoadSkillVisualEffectPoolConfig()
+    {
+        // Resources 폴더에서 SkillVisualEffectSO 로드
+        skillVisualEffectSO = Resources.Load<SkillVisualEffectPoolConfigSO>("Config/SkillVisualEffectSO");
+        skillProjectileSO = Resources.Load<ProjectileSO>("Config/SkillVisualProjectileSO");
+
+        if (skillVisualEffectSO == null)
+        {
+            Debug.LogError("스킬 SO 읽어오기 실패");
+        }
+        else
+        {
+            Debug.Log("스킬 SO 읽어오기 성공");
+        }
+    }
+
+    // SkillEffectEntry를 가져오는 메서드
+    public SkillVisualEffectPoolConfigSO.SkillVisualEffectEntry GetSkillEffect(int skillID)
+    {
+        if (skillVisualEffectSO == null)
+        {
+            Debug.LogError("SkillEffectPoolConfig is not loaded!");
+            return null;
+        }
+
+        return skillVisualEffectSO.skillEffects.Find(effect => effect.skillID == skillID);
+    }
+
+    /*// ProjectileSprite 가져오는 메서드
+    public ProjectileSpriteSO.ProjectileSprite GetProjectileSprite(int unitID)
+    {
+        if (skillVisualEffectSO == null)
+        {
+            Debug.LogError("ProjectileSprite is not loaded!");
+            return null;
+        }
+
+        return skillProjectileSO.projectileSprites.Find(projectile => projectile.unitID == unitID);
+    }*/
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {

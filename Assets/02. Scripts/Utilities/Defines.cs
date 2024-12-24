@@ -36,6 +36,6 @@ public static class Defines
     public static readonly int EnemySortingOrder = 200;
     public static readonly int PlayerSortingOrder = 201;
 
-
+    public static readonly string DefaultProejectileTag = "DefaultProjectile";
 
 }

@@ -11,7 +11,8 @@ public class ActionHandler : MonoBehaviour
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
 
-    public float skillCoolTime => _myUnit.unitInfo?.SkillCooltime?? 10f;
+    //스킬쿨타임 현재는 스킬데이터껄로 씀 2024.12.24
+    public float skillCoolTime;
     public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
 
     bool _haveSkill = true;
@@ -19,7 +20,7 @@ public class ActionHandler : MonoBehaviour
     float _lastSkillTime = -Mathf.Infinity;
     float _lastAttackTime = -Mathf.Infinity;
 
-    public Transform firePoint;
+    //public Vector3 firePoint;
     SkillExecutor _skillExecutor;
     UnitAnimationController _controller;
 
@@ -32,15 +33,22 @@ public class ActionHandler : MonoBehaviour
 
     private void Start()
     {
-        firePoint = transform;
-
         if (_skillExecutor.inGameSkillData == SkillDataManager.GetDefaultSkillData())
         {
             _haveSkill = false;
         }
+        else
+        {
+            skillCoolTime = _skillExecutor.inGameSkillData.skillCoolDown;
+        }
 
         //skillCoolTime = _myUnit.unitInfo.SkillCooltime;
         //attackCoolTime = _myUnit.unitInfo.AttackCooltime;
+    }
+
+    private void Update()
+    {
+        
     }
 
     public bool IsAttackCoolTimeComplete()
@@ -115,12 +123,39 @@ public class ActionHandler : MonoBehaviour
         }
     }
 
+    //원거리 투사체 공격
     private void PerformRangedAttack()
     {
-        //GameObject attackProjectile = Instantiate(_myUnit.attackProjectile, firePoint.position, Quaternion.identity);
-        GameObject attackProjectile = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint.position);
-        Vector2 direction = (_targetUnit.transform.position - firePoint.position).normalized;
-        attackProjectile.GetComponent<DefaultProjectile>().Initialize(_targetUnit, direction);
+        //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식으로
+        //쓰기때문에 불가
+        Vector3 firePoint = transform.position;
+        firePoint += new Vector3(0.15f, 0.35f, 0); // 발사 위치 조정
+
+        GameObject attackProjectile;
+
+        attackProjectile = ObjectPool.Instance.SpawnFromPool(_myUnit.unitInfo.Name, firePoint);
+
+        //풀에 없을시 기본 투사체 설정
+        if (attackProjectile == null)
+        {
+            attackProjectile = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint);
+        }
+
+        Vector2 direction = (_targetUnit.transform.position - firePoint).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        attackProjectile.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        var projectileSpriteRenderer = attackProjectile.GetComponent<SpriteRenderer>();
+
+        if (_myUnit.transform.position.x < _targetUnit.transform.position.x)
+        {
+            projectileSpriteRenderer.flipX = true;
+        }
+
+
+        attackProjectile.GetComponent<DefaultProjectile>().SetTarget(_targetUnit, direction);
     }
 
     private void PerformMeleeAttack()
