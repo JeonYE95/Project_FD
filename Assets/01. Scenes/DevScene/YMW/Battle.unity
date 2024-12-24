@@ -725,16 +725,64 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[1].size
-      value: 10
+      propertyPath: pools.Array.size
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
-      propertyPath: pools.Array.data[2].size
-      value: 10
+      propertyPath: pools.Array.data[3].tag
+      value: Elementalist
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[4].tag
+      value: Healer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[5].tag
+      value: HealEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[6].tag
+      value: SmallThunder
       objectReference: {fileID: 0}
     - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
       propertyPath: pools.Array.data[3].size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[4].size
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[6].size
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 8404376929036876713, guid: 51fe1c724b6092b49a8660c084504dd3, type: 3}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[4].prefab
+      value: 
+      objectReference: {fileID: 8404376929036876713, guid: 0a7fc0760496f9f4c9a200e952c207e5, type: 3}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[5].prefab
+      value: 
+      objectReference: {fileID: 5043573985140183233, guid: 9cfbf8c43fbbaf246bacbda02f4288f9, type: 3}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 5043573985140183233, guid: e2a228a99958ce0489ded0e87b18ff64, type: 3}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[4].canExpand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[5].canExpand
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[6].canExpand
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5106557631465554496, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
       propertyPath: m_Name

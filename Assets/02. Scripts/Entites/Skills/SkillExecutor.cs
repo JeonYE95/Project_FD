@@ -18,9 +18,6 @@ public class SkillExecutor : MonoBehaviour
 
         UnitInfo unitstat = new UnitInfo();
 
-
-
-        //f.Attack += 4;
     }
     
 
@@ -71,6 +68,7 @@ public class SkillExecutor : MonoBehaviour
 
         if (targetVisualEffectTag != null)
         {
+            Debug.Log(targetVisualEffectTag.ToString());
             PlayVisualEffect(target, targetVisualEffectTag);
         }
 
@@ -178,7 +176,11 @@ public class SkillExecutor : MonoBehaviour
     public void PlayVisualEffect(BaseUnit target, string ObjectTag)
     {
         GameObject skillVisualEffect = ObjectPool.Instance.SpawnFromPool(ObjectTag);
-        skillVisualEffect.transform.position = target.transform.position;
+
+        if (skillVisualEffect != null)
+        {
+            skillVisualEffect.transform.position = target.transform.position;
+        }
     }
 
     public void DefenseBuff(BaseUnit target, float value)

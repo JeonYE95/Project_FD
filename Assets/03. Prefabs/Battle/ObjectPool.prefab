@@ -51,17 +51,21 @@ MonoBehaviour:
     canExpand: 1
   - tag: Archer
     prefab: {fileID: 8404376929036876713, guid: 1a4eb616b52ed9d4099a2a636ef2eb38, type: 3}
-    size: 5
+    size: 10
     canExpand: 1
   - tag: Mage
     prefab: {fileID: 8404376929036876713, guid: 58a416bfcb7d37d49a39087983da8e14, type: 3}
-    size: 5
+    size: 10
     canExpand: 1
   - tag: Healer
     prefab: {fileID: 8404376929036876713, guid: 0a7fc0760496f9f4c9a200e952c207e5, type: 3}
-    size: 5
+    size: 10
     canExpand: 1
   - tag: HealEffect
     prefab: {fileID: 5043573985140183233, guid: 9cfbf8c43fbbaf246bacbda02f4288f9, type: 3}
     size: 20
     canExpand: 0
+  - tag: SmallThunder
+    prefab: {fileID: 5043573985140183233, guid: e2a228a99958ce0489ded0e87b18ff64, type: 3}
+    size: 20
+    canExpand: 1

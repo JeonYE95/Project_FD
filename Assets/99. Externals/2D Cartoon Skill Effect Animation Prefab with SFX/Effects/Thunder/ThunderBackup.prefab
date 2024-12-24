@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5444062580471042354}
   - component: {fileID: 2894753257353427789}
   m_Layer: 0
-  m_Name: Thunder
+  m_Name: ThunderBackup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2983090718515566234, guid: 8c515aa9f558ba443b54cc35aadfbe3e, type: 3}
-  m_Color: {r: 0.9150943, g: 0.90214485, b: 0.90214485, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,7 +119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 790c592b22444fe40a19efeb2fdf22d4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

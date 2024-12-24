@@ -24,7 +24,7 @@ namespace GSDatas
 
         static bool isLoaded = false;
         static string spreadSheetID = "185QJmIaABWqKy6Oodjrr2V3rDDj2Kz7hBJY1EelSP4c"; // it is file id
-        static string sheetID = "939076190"; // it is sheet id
+        static string sheetID = "2106254924"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
@@ -58,13 +58,11 @@ namespace GSDatas
 
 		public System.Int32 Key;
 		public System.String grade;
-		public System.Int32 Enchant;
+		public System.Int32 enchant;
 		public System.Int32 attack;
 		public System.Int32 defense;
 		public System.Int32 health;
-		public System.Single attackCooltime;
-		public System.Single skillCooltime;
-		public System.Single range;
+		public System.Int32 requiredPiece;
   
 
 #region fuctions

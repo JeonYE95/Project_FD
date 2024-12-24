@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillEffects:
   - skillID: 1
+    haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
   - skillID: 4
+    haveProjectile: 0
     casterEffectTag: 
-    targetEffectTag: MagicExplotion
+    targetEffectTag: SmallThunder
   - skillID: 0
+    haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: 
   - skillID: 0
+    haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: 
