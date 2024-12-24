@@ -54,7 +54,8 @@ public enum SkillEffect
     Damage,         // 데미지
     AttackBoost,     // 공격속도
     DefenseBoost,  // 방어력 증가
-    MultipleAttacks     // 여러번 공격
+    MultipleAttacks,     // 여러번 공격
+    BasicAttackMultiplier,
 }
 
 
@@ -64,8 +65,7 @@ public enum TargetGroup
     Ally,
     Enemy,
     AllAlly,
-    AllEnemy,
-    Self
+    AllEnemy
 }
 
 public enum TargetPriority
@@ -74,7 +74,7 @@ public enum TargetPriority
     Farthest,
     LowestHP,
     Random,
-    All
+    All,
 }
 
 public static class EnumExtensions
