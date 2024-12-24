@@ -127,7 +127,16 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
 
         // 자동 저장
-        //SavePlayerDataToJson();
+        SavePlayerDataToJson();
+    }
+
+    public int GetItemCount(int itemId)
+    {
+        if (playerData.items.TryGetValue(itemId, out int count))
+        {
+            return count;
+        }
+        return 0;
     }
 
     // 아이템 소비 시 저장

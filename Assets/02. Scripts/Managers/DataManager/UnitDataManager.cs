@@ -32,4 +32,12 @@ public class UnitDataManager : UnitData
         
         return null;
     }
+
+    public void SaveUnitData(UnitData unit)
+    {
+        if (UnitDataMap.ContainsKey(unit.ID))
+        {
+            UnitDataMap[unit.ID] = unit;
+        }
+    }
 }

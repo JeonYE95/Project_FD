@@ -102,6 +102,4 @@ public class UnitManager
         skillExecutor.CreateSearchOptionsFromSkill();
         //origin.GetComponent<PlayerUnit>().SetUnitInfo();
     }
-
-    
 }
