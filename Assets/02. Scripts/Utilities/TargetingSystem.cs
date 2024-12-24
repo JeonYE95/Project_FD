@@ -35,10 +35,7 @@ public class TargetingSystem
 
         if (standardUnit.unitInfo.ID == 1051)
         {
-            foreach (var unit in candidates)
-            {
-                Debug.Log($"{unit.gameObject.name} : {unit.gameObject.transform.position}");
-            }
+            //Debug.Log("");
         }
 
         // 그룹에 따른 후보군 설정
@@ -82,7 +79,7 @@ public class TargetingSystem
         }
         else if (options.Priority == TargetPriority.LowestHP)
         {
-            SortByHP(candidates); // 체력 적은 순 (주로 힐 스킬에 사용)
+            SortUnitsByHealthRatio(candidates); // 체력 적은 순 (주로 힐 스킬에 사용)
         }
         else if (options.Priority == TargetPriority.Random)
         {
@@ -98,12 +95,12 @@ public class TargetingSystem
         return candidates;
     }
 
-    private void SortByHP(List<BaseUnit> candidates, bool isDescending = false)
+    private void SortUnitsByHealthRatio(List<BaseUnit> candidates, bool isDescending = false)
     {
         candidates.Sort((a, b) =>
         {
-            float HPA = a.healthSystem.currentHP;
-            float HPB = b.healthSystem.currentHP;
+            float HPA = (float)a.healthSystem.currentHP / (float)a.healthSystem.MaxHP;
+            float HPB = (float)b.healthSystem.currentHP / (float)b.healthSystem.MaxHP;
 
             return isDescending ? HPB.CompareTo(HPA) : HPA.CompareTo(HPB);
         });

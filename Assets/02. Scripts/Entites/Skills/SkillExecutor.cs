@@ -14,6 +14,9 @@ public class SkillExecutor : MonoBehaviour
     private void Awake()
     {
         _handler = GetComponent<ActionHandler>();
+
+        UnitInfo unitstat = new UnitInfo();
+
     }
     
 
@@ -60,18 +63,36 @@ public class SkillExecutor : MonoBehaviour
 
     private void ApplySkillType(BaseUnit caster, BaseUnit target)
     {
+        var targetVisualEffectTag = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID).targetEffectTag;
+
+        if (targetVisualEffectTag != null)
+        {
+            Debug.Log(targetVisualEffectTag.ToString());
+            PlayVisualEffect(target, targetVisualEffectTag);
+        }
+
         switch (inGameSkillData.skillType)
         {
             case SkillType.Damage:
 
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue) // 단순 스킬 데미지
+                {
+                    target.healthSystem.TakeDamage((int)inGameSkillData.value);
+                }
+                else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
+                {
+                    target.healthSystem.TakeDamage(caster.unitInfo.Attack * (int)inGameSkillData.value);
+                }
+
                 break;
 
             case SkillType.Heal:
-                /*target.healthSystem.TakeHealth((int)inGameSkillData.value);
-                GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
-                HealEffect.transform.position = target.transform.position;*/
 
-                //HealEffect.GetComponent<Animator>().pl
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
+                {
+                    target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                }
+
                 break;
 
             case SkillType.Buff:
@@ -135,10 +156,14 @@ public class SkillExecutor : MonoBehaviour
         Debug.Log($"{caster.ID} 가 {target.ID} 에게 스킬 사용");
     }
 
-    private IEnumerator ResetEffectAfterDuration(Action resetAction, float duration)
+    public void PlayVisualEffect(BaseUnit target, string ObjectTag)
     {
-        yield return new WaitForSeconds(duration);
-        resetAction?.Invoke();
+        GameObject skillVisualEffect = ObjectPool.Instance.SpawnFromPool(ObjectTag);
+
+        if (skillVisualEffect != null)
+        {
+            skillVisualEffect.transform.position = target.transform.position;
+        }
     }
 
     public void DefenseBuff(BaseUnit target, float value)

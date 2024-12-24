@@ -22,7 +22,7 @@ public class StageManager : Singleton<StageManager>
 
 
     [Header("스테이지 내 재화 관리")]
-    private int _gold = 15;
+    private int _gold = 99999;
 
 
     public int Gold
