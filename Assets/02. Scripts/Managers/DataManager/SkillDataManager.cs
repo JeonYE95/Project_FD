@@ -78,7 +78,7 @@ public class SkillDataManager
         unitID = 0,
         skillName = "Default Action",
         skillType = SkillType.Buff, // 또는 다른 기본 타입
-        skillEffect = SkillEffect.Damage, // 또는 다른 기본 효과
+        skillEffect = SkillEffect.None, // 또는 다른 기본 효과
         value = 0, // 기본값
         duration = 0, // 지속 시간 없음
         skillCoolDown = 0, // 쿨타임 없음
