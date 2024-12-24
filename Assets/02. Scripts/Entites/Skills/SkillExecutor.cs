@@ -85,8 +85,6 @@ public class SkillExecutor : MonoBehaviour
                     target.healthSystem.TakeDamage(caster.unitInfo.Attack * (int)inGameSkillData.value);
                 }
 
-
-
                 break;
 
             case SkillType.Heal:
