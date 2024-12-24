@@ -76,7 +76,7 @@ public enum TargetPriority
     Farthest,
     LowestHP,
     Random,
-    All,
+    All
 }
 
 public static class EnumExtensions
