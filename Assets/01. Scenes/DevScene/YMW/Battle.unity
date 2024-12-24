@@ -1628,8 +1628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 857271189}
-  _stageBtn: {fileID: 1115783800}
   _gold: {fileID: 1540117259}
 --- !u!114 &622506327
 MonoBehaviour:
@@ -2153,12 +2151,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23be58305a899624bab5933253a33552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnterEnergy: 100
   playerData:
     name: 
     level: 0
     gold: 0
     diamond: 0
+    energy: 0
 --- !u!4 &799159126
 Transform:
   m_ObjectHideFlags: 0
@@ -4105,8 +4103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 491754512}
-  _stageBtn: {fileID: 1414659897}
   _gold: {fileID: 689020304}
 --- !u!114 &1171427384
 MonoBehaviour:
@@ -5523,7 +5519,7 @@ MonoBehaviour:
   enemies: []
   alivePlayerUnitsCount: 0
   aliveEnemyUnitsCount: 0
-  noDamageMode: 1
+  noDamageMode: 0
 --- !u!4 &1702835421
 Transform:
   m_ObjectHideFlags: 0
@@ -5812,8 +5808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bdee5a30a9c4572baaf387788ff84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextWaveBtn: {fileID: 1467661213}
-  _stageBtn: {fileID: 1007321093}
   _gold: {fileID: 374397664}
 --- !u!114 &1871768624
 MonoBehaviour:

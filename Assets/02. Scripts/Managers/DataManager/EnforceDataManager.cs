@@ -1,4 +1,4 @@
-using GSDatas;
+/*using GSDatas;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,3 +21,4 @@ public class EnforceDataManager : MonoBehaviour
 
 
 }
+*/

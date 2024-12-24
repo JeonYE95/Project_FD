@@ -83,15 +83,21 @@ public class HealthSystem : MonoBehaviour
         currentHP = maxHP;
     }
 
-    public void TakeHealth(int heal)
+    public int TakeHealth(int heal)
     {
+        int BeforeHP = currentHP;
+
         currentHP = Mathf.Min(currentHP + heal, maxHP);
+
+        return currentHP - BeforeHP;
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
         //단순한 식 데미지 = 공격력 - 방어력
         //최소 데미지 1 구현
+
+        int BeforeHP = currentHP;
 
         damage = (int)MathF.Max(1, damage - _unit.unitInfo.Defense);
 
@@ -107,5 +113,7 @@ public class HealthSystem : MonoBehaviour
             currentHP = 0;
             _unit.CallDieEvent();
         }
+
+        return BeforeHP - currentHP;
     }
 }
