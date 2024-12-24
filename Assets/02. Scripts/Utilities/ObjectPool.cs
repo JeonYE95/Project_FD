@@ -79,7 +79,7 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            Debug.LogError($"Pool with tag {tag} doesn't exist.");
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
             return null;
         }
 
