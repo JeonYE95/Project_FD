@@ -7,6 +7,7 @@ public class UnitUpgrade : MonoBehaviour
     {
         // 유닛 데이터 가져오기
         UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);
+        Debug.Log($"Unit ID: {unitId}");
 
         // 강화 레벨 조건 확인
         if (unit.level >= unit.maxLevel)
