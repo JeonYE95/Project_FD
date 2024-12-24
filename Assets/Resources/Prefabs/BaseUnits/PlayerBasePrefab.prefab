@@ -164,9 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCount: 1
+  _lifeSteal: 0
   skillCoolTime: 0
-  attackCoolTime: 2
-  firePoint: {fileID: 0}
 --- !u!114 &5477164207797427926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,9 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1867e2e73aae10d4a86be28abe1cda29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSkillData:
-    skillID: 0
+  inGameSkillData:
     unitID: 0
+    skillID: 0
     skillName: 
     skillType: 0
     skillEffect: 0
@@ -243,3 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ead650032d85604fafff5cb9d1998ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  name: 
+  range: 0
+  attack: 0
+  health: 0
+  defense: 0
+  skillCooltime: 0
+  attackCooltime: 0

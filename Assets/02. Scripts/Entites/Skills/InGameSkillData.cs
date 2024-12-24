@@ -5,8 +5,8 @@ using System;
 [System.Serializable]
 public class InGameSkillData
 {
-    public int skillID;                // 스킬 고유 ID
     public int unitID;
+    public int skillID;                // 스킬 고유 ID
     public string skillName;           // 스킬 이름
     public SkillType skillType;        // 스킬 동작 유형 (Buff, Heal, Damage 등)
     public SkillEffect skillEffect;         // 효과 이름 (DefenseBoost, HealAmount 등)

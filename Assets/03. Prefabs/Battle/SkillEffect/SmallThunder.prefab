@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4019684141809434574}
   - component: {fileID: 5444062580471042354}
   - component: {fileID: 2894753257353427789}
+  - component: {fileID: -5688465712446702711}
   m_Layer: 0
-  m_Name: Thunder
+  m_Name: SmallThunder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.13, y: -4.425, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.2, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 202
   m_Sprite: {fileID: -2983090718515566234, guid: 8c515aa9f558ba443b54cc35aadfbe3e, type: 3}
-  m_Color: {r: 0.9150943, g: 0.90214485, b: 0.90214485, a: 1}
+  m_Color: {r: 0.990566, g: 0.7335796, b: 0.7335796, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -203,3 +204,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-5688465712446702711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5043573985140183233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df91bdc6eb36ce74aaccc8013f1428c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disableTime: 0.8

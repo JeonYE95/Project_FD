@@ -15,7 +15,7 @@ public class DefaultProjectile : MonoBehaviour
         //Destroy(gameObject, 7f);
     }
 
-    public void Initialize(BaseUnit targetUnit, Vector2 direction)
+    public void SetTarget(BaseUnit targetUnit, Vector2 direction)
     {
         this.direction = direction;
         this.targetUnit = targetUnit;
@@ -30,8 +30,7 @@ public class DefaultProjectile : MonoBehaviour
         }
         else
         {
-            //Destroy(gameObject);
-            gameObject.SetActive(false);
+            DeActiveThis();
         }
 
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
@@ -48,7 +47,13 @@ public class DefaultProjectile : MonoBehaviour
         if (collision.TryGetComponent(out HealthSystem healthSystem))
         {
             healthSystem.TakeDamage(damage);
-            gameObject.SetActive(false);
+            DeActiveThis();
         }
+    }
+
+    protected virtual void DeActiveThis()
+    {
+        ObjectPool.Instance.ReturnToPool(this.gameObject, Defines.DefaultProejectileTag);
+
     }
 }
