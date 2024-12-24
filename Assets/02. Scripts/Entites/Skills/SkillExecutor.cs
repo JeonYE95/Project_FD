@@ -11,16 +11,9 @@ public class SkillExecutor : MonoBehaviour
     
     public InGameSkillData inGameSkillData;
 
-    
     private void Awake()
     {
         _handler = GetComponent<ActionHandler>();
-
-        UnitInfo unitstat = new UnitInfo();
-
-
-
-        //f.Attack += 4;
     }
     
 
@@ -74,7 +67,6 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             case SkillType.Heal:
-                Debug.Log("힐 발동");
                 /*target.healthSystem.TakeHealth((int)inGameSkillData.value);
                 GameObject HealEffect = ObjectPool.Instance.SpawnFromPool("HealEffect");
                 HealEffect.transform.position = target.transform.position;*/
@@ -94,24 +86,10 @@ public class SkillExecutor : MonoBehaviour
 
     private void ApplySkillEffect(BaseUnit caster, BaseUnit target)
     {
-        float originPropertyValue = 0f;
+        float originPropertyValue;
 
         switch (inGameSkillData.skillEffect)
         {
-            case SkillEffect.LifeSteal:
-
-                BattleManager.Instance.ApplyBuff(
-                    target,
-                    inGameSkillData.skillEffect.ToString(),
-                    inGameSkillData.duration,
-                    () => 
-                    { 
-                        SetLifeSteal(target, true);
-                    },
-                    () => SetLifeSteal(target, false));
-
-                break;
-
             case SkillEffect.AttackBoost:
 
                 originPropertyValue = target.unitInfo.AttackCooltime;
@@ -176,10 +154,5 @@ public class SkillExecutor : MonoBehaviour
     public void SetAttackCount(BaseUnit target, int Count)
     {
         target.actionHandler.attackCount = Count;
-    }
-
-    public void SetLifeSteal(BaseUnit target, bool lifeSteal)
-    {
-        target.actionHandler._lifeSteal = lifeSteal;
     }
 }

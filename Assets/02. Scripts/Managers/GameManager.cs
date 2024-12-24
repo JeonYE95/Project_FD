@@ -182,7 +182,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
 
         // 자동 저장
-        //SavePlayerDataToJson();
+        SavePlayerDataToJson();
     }
 
 

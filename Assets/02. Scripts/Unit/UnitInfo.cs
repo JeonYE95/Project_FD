@@ -45,6 +45,12 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
             _unitData.defense = data.defense;
             _unitData.skillCooltime = data.skillCooltime;
             _unitData.attackCooltime = data.attackCooltime;
+            _unitData.level = data.level;
+            _unitData.maxLevel = data.maxLevel;
+            _unitData.classtype = data.classtype;
+
+            EnforceManager.Instance.GetUnitEnforcedData(_unitData);
+            EnforceManager.Instance.GetClassEnforcedData(_unitData);
         }
 
     }

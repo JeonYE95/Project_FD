@@ -10,7 +10,6 @@ using UnityEngine;
 public class WaveManager : Singleton<WaveManager>
 {
 
-
     private Coroutine _prepareCoroutine;
 
     private int _currentWave; // 현재 웨이브 
@@ -80,10 +79,8 @@ public class WaveManager : Singleton<WaveManager>
         GetAllWaveData(stageID);
         GetWaveData();
 
-
         GetRewardData(stageID);
         GetRewardData();
-
 
         OnBattleStart += InventoryManager.Instance.AutoSummonUnits;
 
@@ -95,9 +92,13 @@ public class WaveManager : Singleton<WaveManager>
         OnDead += StageManager.Instance.GameOver;
 
 
+        //시작 시 기본으로 유닛 한명 인벤토리 제공 
+        //UnitDataMap 초기 로드하기 위해 호출
+        var _ = GSDatas.UnitData.GetDictionary();
+        IngameGacha.Instance.PlayGacha();
+
         // 게임 시작 시 자동으로 대기 시간 시작
         _prepareCoroutine = StartCoroutine(NextWavePrepare());
-
     }
 
 

@@ -38,14 +38,15 @@ public class UnitEnforceDataManager : UnitEnforceData
     public UnitEnforceData GetEnforceData(string grade, int curLevel)
     {
         foreach (var data in _enforceDataList)
-        {
+    {
             if (data.grade == grade && data.enchant == curLevel + 1)
-            {
-                return data;
-            }
+        {
+            return data;
+        }
         }
 
         return null;
     }
+
 
 }
