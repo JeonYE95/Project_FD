@@ -17,11 +17,11 @@ public class BattleManager : Singleton<BattleManager>
     WaitForSeconds _battleResultAndResetTimer;
 
     private List<BaseUnit> allUnits = new List<BaseUnit>();
-    private List<BaseUnit> _players = new List<BaseUnit>();
+    public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
     //현재 1005 (힐러) 가 비활성화 되는 버그가 있어서 디버깅을 위한 프로퍼티
-    public List<BaseUnit> players
+    /*public List<BaseUnit> _players
     {
         get
         {
@@ -31,7 +31,7 @@ public class BattleManager : Singleton<BattleManager>
         {
             _players = value;
         }
-    }
+    }*/
 
     // 버프 딕셔너리 : <유닛, <버프이름, 버프 정보 >>
     private Dictionary<BaseUnit, Dictionary<string, BuffInfo>> activeBuffs = new Dictionary<BaseUnit, Dictionary<string, BuffInfo>>();
@@ -176,44 +176,25 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    private void TestSpawn()
-    {
-        for (int i = 0; i < 1; i++)
-        {
-            var PlayerUnitList = UnitDataManager.GetList();
-
-            //int randomNumber = PlayerUnitList[Random.Range(0, PlayerUnitList.Count)].ID;
-            int randomNumber = Random.Range(1001, 1006);
-
-            GameObject obj = UnitManager.Instance.CreatePlayerUnit(randomNumber);
-            obj.transform.position = new Vector2(-5, 0);
-
-            var EnemyUnitList = EnemyDataManager.GetList();
-
-            randomNumber = EnemyUnitList[Random.Range(0, EnemyUnitList.Count)].ID;
-
-            GameObject obj2 = EnemyManager.Instance.CreateEnemy(randomNumber);
-            obj2.GetComponent<EnemyUnit>().RegisterToBattleManager();
-            obj2.transform.position = new Vector2(5, 0);
-        }
-    }
-
     public void SetAllUnits()
     {
         allUnits.Clear();
 
         foreach (BaseUnit unit in players)
         {
+            Debug.Log($"SetAllUnits - Players 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
             allUnits.Add(unit);
         }
 
         foreach (BaseUnit unit in enemies)
         {
+            Debug.Log($"SetAllUnits - Enemies 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
             allUnits.Add(unit);
         }
     }
 
-    
+
+
 
     public void RegisterUnit(BaseUnit unit)
     {
@@ -322,6 +303,7 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         activeBuffs.Clear();
+
         Debug.Log("모든 버프 초기화 됨");
     }
 
