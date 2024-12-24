@@ -77,12 +77,6 @@ public enum TargetPriority
     All
 }
 
-public enum SpecialAttack
-{
-    MultipleAttacks,
-
-}
-
 public static class EnumExtensions
 {
     public static T ToEnum<T>(this string value) where T : Enum
