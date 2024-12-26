@@ -51,6 +51,7 @@ public enum SkillType
 public enum SkillEffect
 {
     None,
+    Shield,
     LifeSteal,            // 공격 흡혈
     SkillValue,           // 스킬 데미지
     AttackBoost,          // 공격속도

@@ -124,35 +124,32 @@ public class ActionHandler : MonoBehaviour
     //원거리 투사체 공격
     private void PerformRangedAttack()
     {
-        //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식으로
-        //쓰기때문에 불가
+        //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식으로 
+        //동작하는 코드가 있기 때문에 불가
         Vector3 firePoint = transform.position;
         firePoint += new Vector3(0.15f, 0.35f, 0); // 발사 위치 조정
 
-        GameObject attackProjectileGameObject;
+        //GameObject attackProjectileGO;
 
-        attackProjectileGameObject = ObjectPool.Instance.SpawnFromPool(_myUnit.unitInfo.Name, firePoint);
+        GameObject attackProjectileGO = ObjectPool.Instance.SpawnFromPool(Defines.DefaultProejectileTag, firePoint);
 
-        //풀에 없을시 기본 투사체 설정
-        if (attackProjectileGameObject == null)
-        {
-            attackProjectileGameObject = ObjectPool.Instance.SpawnFromPool("DefaultProjectile", firePoint);
-        }
+        var projectileScript = attackProjectileGO.GetComponent<DefaultProjectile>();
+        var projectileSpriteRenderer = attackProjectileGO.GetComponent<SpriteRenderer>();
+        var ProjectileData = BattleManager.Instance.GetProjectileSprite(_myUnit.unitInfo.ID);
+
+        projectileSpriteRenderer.sprite = ProjectileData.sprite;
+        projectileSpriteRenderer.color = ProjectileData.color;
 
         Vector2 direction = (_targetUnit.transform.position - firePoint).normalized;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        attackProjectileGameObject.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        var projectileSpriteRenderer = attackProjectileGameObject.GetComponent<SpriteRenderer>();
+        attackProjectileGO.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         if (_myUnit.transform.position.x < _targetUnit.transform.position.x)
         {
             projectileSpriteRenderer.flipX = true;
         }
-
-        var projectileScript = attackProjectileGameObject.GetComponent<DefaultProjectile>();
 
         projectileScript.SetProjectile(_targetUnit, direction, _myUnit.unitInfo.Attack);
     }

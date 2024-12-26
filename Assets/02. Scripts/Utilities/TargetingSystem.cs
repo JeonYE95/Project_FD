@@ -10,8 +10,6 @@ public class UnitSearchOptions
     public int Number { get; set; } = 1; // 기본값 : 한명
     public TargetGroup Group { get; set; } = TargetGroup.Enemy; // 기본값: 적군
     public TargetPriority Priority { get; set; } = TargetPriority.Closest; // 기본값: 가까운 순서
-    public bool IncludeSelf { get; set; } = false;
-
 }
 
 public class TargetingSystem
@@ -38,7 +36,7 @@ public class TargetingSystem
         {
             case TargetGroup.Enemy:
                 candidates = (standardUnit.isPlayerUnit ? enemies : players)
-                    .Where(unit => options.IncludeSelf || unit != standardUnit) // IncludeSelf 옵션 처리
+                    .Where(unit => unit != standardUnit)
                     .ToList();
                 break;
 
@@ -48,7 +46,7 @@ public class TargetingSystem
 
             case TargetGroup.Ally:
                 candidates = (standardUnit.isPlayerUnit ? players : enemies)
-                    .Where(unit => options.IncludeSelf || unit != standardUnit) // IncludeSelf 옵션 처리
+                    .Where(unit => unit != standardUnit)
                     .ToList();
                 break;
 
