@@ -4,13 +4,7 @@
   "gold": 0,
   "diamond": 0,
   "energy": 0,
-  "items": {
-    "1051": 15,
-    "1005": 30,
-    "1053": 5,
-    "1002": 10,
-    "1003": 20
-  },
+  "items": {},
   "UnitEnforce": {},
   "ClassEnforce": {}
 }

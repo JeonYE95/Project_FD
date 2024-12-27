@@ -104,6 +104,16 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
+    [ContextMenu("Reset Json Data")]
+    void ResetPlayerData()
+    {
+        // 데이터 리셋
+        playerData = new PlayerData();
+
+        SavePlayerDataToJson();
+        Debug.Log("Reset Player Data Complete");
+    }
+
     //보상 획득 시 저장 
     public void AddItemSave(int itemId, int count)
     {
@@ -142,8 +152,6 @@ public class GameManager : SingletonDontDestory<GameManager>
     // 아이템 소비 시 저장
     public void substractItemSave(int itemId, int count)
     {
-
-
         if (itemId == 3002)
         {
             playerData.gold -= count;
@@ -152,9 +160,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         }
 
-
         // 기존 아이템이 충분히 있는지 확인해서 감소 후 저장
-
         if (playerData.items.TryGetValue(itemId, out int currentCount))
         {
             if (currentCount >= count)
@@ -179,7 +185,6 @@ public class GameManager : SingletonDontDestory<GameManager>
         {
             Debug.LogWarning($"해당 아이템이 없습니다: {itemId}");
         }
-
 
         // 자동 저장
         SavePlayerDataToJson();
