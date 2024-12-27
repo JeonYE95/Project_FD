@@ -1,4 +1,5 @@
 using GSDatas;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ChallengeDataManager : challengeData
@@ -14,5 +15,23 @@ public class ChallengeDataManager : challengeData
             }
             return _instance;
         }
+    }
+
+
+    private ChallengeDataManager() { }
+
+    public List<challengeData> GetItemDatas()
+    {
+        return GetList();
+    }
+
+    public challengeData GetItemData(int id)
+    {
+        if (challengeDataMap.TryGetValue(id, out var data))
+        {
+            return data;
+        }
+
+        return null;
     }
 }

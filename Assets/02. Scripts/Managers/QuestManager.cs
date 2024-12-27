@@ -104,7 +104,7 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         // GameManager를 통해 저장
-        GameManager.Instance.QuestprogressSave();
+        GameManager.Instance.progressSave();
     }
 
 
