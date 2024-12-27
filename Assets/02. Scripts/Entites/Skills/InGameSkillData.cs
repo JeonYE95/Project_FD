@@ -51,6 +51,9 @@ public enum SkillType
 public enum SkillEffect
 {
     None,
+    Stun,                 // 상태이상 : 스턴
+    Shield,               // 쉴드 : 도입 안할 가능성 높음
+    Freeze,               // 빙결 : 스턴과 동일하나 충돌방지로 미리추가
     LifeSteal,            // 공격 흡혈
     SkillValue,           // 스킬 데미지
     AttackBoost,          // 공격속도

@@ -30,7 +30,7 @@ MonoBehaviour:
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: SmallThunder
-  - skillID: 0
+  - skillID: 15
     haveProjectile: 0
     casterEffectTag: 
-    targetEffectTag: 
+    targetEffectTag: Freeze
