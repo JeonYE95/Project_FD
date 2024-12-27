@@ -124,4 +124,17 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+
+    // 현재 활성화된 모든 퀘스트 반환
+    public List<Quest> GetCurrentQuests()
+    {
+        return questDictionary.Values.ToList();
+    }
+
+    //퀘스트 반환 (일간/주간/업적)
+    public List<Quest> GetQuestsByType(QuestType type)
+    {
+        return questDictionary.Values.Where(q => q.questData.questType == type.ToString()).ToList();
+    }
+
 }
