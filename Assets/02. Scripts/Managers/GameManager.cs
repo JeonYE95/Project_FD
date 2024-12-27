@@ -18,6 +18,7 @@ public class PlayerData
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 횟수
     public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
+    public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -255,6 +256,13 @@ public class GameManager : SingletonDontDestory<GameManager>
             playerData.ClassEnforce.Add(unitClass, 1);
         }
 
+        SavePlayerDataToJson();
+
+    }
+
+    //퀘스트 저장
+    public void QuestprogressSave()
+    {
         SavePlayerDataToJson();
 
     }
