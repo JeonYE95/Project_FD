@@ -16,7 +16,7 @@ public class PlayerData
     public int diamond;
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
-    public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 횟수
+    public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
     public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
 }
 
@@ -60,10 +60,10 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     private void Start()
     {
-        LoadPlayerDataFromJson();
         DataManager.Instance.Initialize();
         UnitManager.Instance.Initialize();
         UIManager.Instance.Initialize();
+        LoadPlayerDataFromJson();
 
         GetAllStatgeData();
         StageCount();
@@ -100,6 +100,20 @@ public class GameManager : SingletonDontDestory<GameManager>
             // 이 Json데이터를 역직렬화하여 playerData에 넣어줌
             playerData = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayerData>(jsonData);
 
+            if (playerData.UnitEnforce != null)
+            {
+                foreach (var keyValuePair in playerData.UnitEnforce)
+                {
+                    int unitId = keyValuePair.Key;
+                    int level = keyValuePair.Value;
+
+                    UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);
+                    if (unit != null)
+                    {
+                        unit.level = level; // 유닛 레벨 동기화
+                    }
+                }
+            }
         }
 
     }

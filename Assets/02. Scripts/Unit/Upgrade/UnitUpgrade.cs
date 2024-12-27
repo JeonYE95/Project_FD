@@ -39,8 +39,8 @@ public class UnitUpgrade : MonoBehaviour
         unit.level++;
 
         // 조각 차감 및 저장
-        GameManager.Instance.substractItemSave(unitId, requiredPieces);
         UnitDataManager.Instance.SaveUnitData(unit);
+        GameManager.Instance.substractItemSave(unitId, requiredPieces);
 
         Debug.Log($"업그레이드 완료, 유닛 : {unit.name}, 현재 레벨 : {unit.level}, 공격력 : {unit.attack}, 방어력 : {unit.defense}, 체력 : {unit.health}");
     }
