@@ -45,16 +45,10 @@ public class SkillExecutor : MonoBehaviour
             return;
         }
 
-        
 
         // 타겟에 스킬 효과 적용
         foreach (var target in targets)
         {
-            /*if (gameSkillData.unitID == 1001)
-            {
-                Debug.Log(target.gameObject.name);
-            }*/
-
             ApplySkillType(_myUnit, target);
         }
 
@@ -65,9 +59,9 @@ public class SkillExecutor : MonoBehaviour
     {
         var targetVisualEffectTag = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID).targetEffectTag;
 
-        if (targetVisualEffectTag != null)
+        if (targetVisualEffectTag == "NoneEffect")
         {
-            Debug.Log(targetVisualEffectTag.ToString());
+            //Debug.Log(targetVisualEffectTag.ToString());
             PlayVisualEffect(target, targetVisualEffectTag);
         }
 

@@ -349,14 +349,33 @@ public class BattleManager : Singleton<BattleManager>
     // SkillEffectEntry를 가져오는 메서드
     public SkillVisualEffectPoolConfigSO.SkillVisualEffectEntry GetSkillEffect(int skillID)
     {
+        // SkillVisualEffectPoolConfigSO가 null인지 확인
         if (skillVisualEffectSO == null)
         {
             Debug.LogError("SkillEffectPoolConfig is not loaded!");
             return null;
         }
 
-        return skillVisualEffectSO.skillEffects.Find(effect => effect.skillID == skillID);
+        // skillEffects 리스트가 null이거나 비어 있는지 확인
+        if (skillVisualEffectSO.skillEffects == null || skillVisualEffectSO.skillEffects.Count == 0)
+        {
+            Debug.LogError("SkillEffects list is null or empty!");
+            return null;
+        }
+
+        // 스킬 ID로 효과를 찾기
+        var effect = skillVisualEffectSO.skillEffects.Find(e => e.skillID == skillID);
+
+        // 효과가 null인지 확인
+        if (effect == null)
+        {
+            Debug.Log($"No skill visual effect found for skillID: {skillID}");
+            effect = skillVisualEffectSO.NoneEffect;
+        }
+
+        return effect;
     }
+
 
     /*// ProjectileSprite 가져오는 메서드
     public ProjectileSpriteSO.ProjectileSprite GetProjectileSprite(int unitID)

@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "VisualEffect", menuName = "Config/SkillVisualEffectPoolConfig")]
 public class SkillVisualEffectPoolConfigSO : ScriptableObject
 {
+    public SkillVisualEffectEntry NoneEffect;
+
     [System.Serializable]
     public class SkillVisualEffectEntry
     {

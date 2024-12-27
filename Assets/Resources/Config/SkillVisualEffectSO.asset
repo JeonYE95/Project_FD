@@ -12,7 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2b32f8d493c94290e29d523b2489b, type: 3}
   m_Name: SkillVisualEffectSO
   m_EditorClassIdentifier: 
+  NoneEffect:
+    skillID: 0
+    haveProjectile: 0
+    casterEffectTag: NoneEffect
+    targetEffectTag: NoneEffect
   skillEffects:
+  - skillID: 0
+    haveProjectile: 0
+    casterEffectTag: NoneEffect
+    targetEffectTag: NoneEffect
   - skillID: 1
     haveProjectile: 0
     casterEffectTag: 
@@ -21,10 +30,6 @@ MonoBehaviour:
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: SmallThunder
-  - skillID: 0
-    haveProjectile: 0
-    casterEffectTag: 
-    targetEffectTag: 
   - skillID: 0
     haveProjectile: 0
     casterEffectTag: 
