@@ -80,14 +80,14 @@ public class SkillExecutor : MonoBehaviour
 
                 break;
 
-            case SkillType.Heal:
+            //case SkillType.Heal:
 
-                if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
-                {
-                    target.healthSystem.TakeHealth((int)inGameSkillData.value);
-                }
+            //    if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
+            //    {
+            //        target.healthSystem.TakeHealth((int)inGameSkillData.value);
+            //    }
 
-                break;
+            //    break;
 
             case SkillType.Buff:
                 ApplySkillEffect(caster, target);

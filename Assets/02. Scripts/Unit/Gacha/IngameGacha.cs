@@ -22,6 +22,7 @@ public class IngameGacha : Singleton<IngameGacha>
         if (selectedUnit != null)
         {
             InventoryManager.Instance.AddCharacter(selectedUnit);
+            Debug.Log($"유닛 : {selectedUnit.name}, 현재 레벨 : {selectedUnit.level}, 공격력 : {selectedUnit.attack}, 방어력 : {selectedUnit.defense}, 체력 : {selectedUnit.health}");
         }
     }
 }
