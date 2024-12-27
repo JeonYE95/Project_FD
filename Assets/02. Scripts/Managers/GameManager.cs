@@ -100,20 +100,7 @@ public class GameManager : SingletonDontDestory<GameManager>
             // 이 Json데이터를 역직렬화하여 playerData에 넣어줌
             playerData = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayerData>(jsonData);
 
-            if (playerData.UnitEnforce != null)
-            {
-                foreach (var keyValuePair in playerData.UnitEnforce)
-                {
-                    int unitId = keyValuePair.Key;
-                    int level = keyValuePair.Value;
-
-                    UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);
-                    if (unit != null)
-                    {
-                        unit.level = level; // 유닛 레벨 동기화
-                    }
-                }
-            }
+            UpdateUnitEnforceData();
         }
 
     }
@@ -298,6 +285,42 @@ public class GameManager : SingletonDontDestory<GameManager>
                 EnterEnergy = Mathf.Min(playerData.energy + 1, Defines.MAX_ENERGY);
             }
             yield return null;
+        }
+    }
+
+    // 데이터 동기화
+    private void UpdateUnitEnforceData()
+    {
+        if (playerData.UnitEnforce != null)
+        {
+            foreach (var keyValuePair in playerData.UnitEnforce)
+            {
+                int unitId = keyValuePair.Key;
+                int level = keyValuePair.Value;
+
+                UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);
+                if (unit != null)
+                {
+                    unit.level = level; // 레벨 동기화
+
+                    for (int i = 1; i <= level; i++) // 레벨에 따른 유닛 스탯 반영
+                    {
+                        UnitEnforceData enforceData = UnitEnforceDataManager.Instance.GetEnforceData(unit.grade, i);
+                        if (enforceData != null)
+                        {
+                            unit.attack += enforceData.attack;
+                            unit.defense += enforceData.defense;
+                            unit.health += enforceData.health;
+                        }
+                    }
+
+                    Debug.Log($"Unit {unit.name} 동기화 완료 - 레벨: {unit.level}, 공격력: {unit.attack}, 방어력: {unit.defense}, 체력: {unit.health}");
+                }
+                else
+                {
+                    Debug.LogWarning($"Unit ID {unitId}에 해당하는 데이터가 없습니다.");
+                }
+            }
         }
     }
 }
