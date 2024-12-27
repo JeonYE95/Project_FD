@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
 public class UnitSearchOptions
 {
     public int Number { get; set; } = 1; // 기본값 : 한명

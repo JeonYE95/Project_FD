@@ -7,20 +7,21 @@ public class ActionHandler : MonoBehaviour
 {
     public int attackCount = 1;
 
-    BaseUnit _myUnit;
-    BaseUnit _targetUnit;
-
-    //스킬쿨타임 현재는 스킬데이터껄로 씀 2024.12.24
-    public float skillCoolTime;
-    public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
-
     bool _haveSkill = true;
     float _lastSkillTime = -Mathf.Infinity;
     float _lastAttackTime = -Mathf.Infinity;
 
-    //public Vector3 firePoint;
+    Vector3 firePointAdjust = new Vector3(0.15f, 0.35f, 0);
+
+    BaseUnit _myUnit;
+    BaseUnit _targetUnit;
+
     SkillExecutor _skillExecutor;
     UnitAnimationController _controller;
+
+    //스킬쿨타임 현재는 스킬데이터껄로 씀 2024.12.24
+    public float skillCoolTime;
+    public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
 
     private void Awake()
     {
@@ -68,14 +69,14 @@ public class ActionHandler : MonoBehaviour
             return false;
         }
 
-        //공격 애니메이션 재생
-        _myUnit.PlayAttackAnimation();
-
         //액션핸들러가 들고있는 타겟 변경
         this._targetUnit = targetUnit;
 
         if (IsSkillCoolTimeComplete() && _haveSkill)
         {
+            //액션 애니메이션 재생
+            _myUnit.PlayAttackAnimation();
+
             //스킬 사용
             UseSkill();
             ResetSkillCoolTime();
@@ -84,6 +85,9 @@ public class ActionHandler : MonoBehaviour
         {
             if (targetUnit.isLive && _myUnit.IsTargetInRange())
             {
+                //액션 애니메이션 재생
+                _myUnit.PlayAttackAnimation();
+
                 DoAttack();
                 //평타 공격
             }
@@ -127,7 +131,7 @@ public class ActionHandler : MonoBehaviour
         //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식으로 
         //동작하는 코드가 있기 때문에 불가
         Vector3 firePoint = transform.position;
-        firePoint += new Vector3(0.15f, 0.35f, 0); // 발사 위치 조정
+        firePoint += firePointAdjust; // 발사 위치 조정
 
         //GameObject attackProjectileGO;
 

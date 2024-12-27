@@ -6,7 +6,7 @@ public class UnitInfoInInspector : MonoBehaviour
 
     [Header("Unit Info (Inspector Only)")]
     [SerializeField] private int id;
-    [SerializeField] private string name;
+    [SerializeField] private string unitName;
     [SerializeField] private float range;
     [SerializeField] private int attack;
     [SerializeField] private int health;
@@ -30,7 +30,7 @@ public class UnitInfoInInspector : MonoBehaviour
         if (unitInfo == null) return;
 
         id = unitInfo.ID;
-        name = unitInfo.Name;
+        unitName = unitInfo.Name;
         range = unitInfo.Range;
         attack = unitInfo.Attack;
         health = unitInfo.Health;
