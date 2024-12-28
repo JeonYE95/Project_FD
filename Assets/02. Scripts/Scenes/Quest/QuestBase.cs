@@ -1,61 +1,33 @@
 using System;
 using GSDatas;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-
-
-[System.Serializable]
-public class QuestSaveData
+public abstract class QuestBase : MonoBehaviour
 {
-    public int questId;
-    public int progress;
+    public QuestData questData;
     public bool isCompleted;
-    public string nextResetTimeUTC; // DateTime을 string으로 저장
-}
+    public DateTime nextResetTimeUTC;
+    protected IKillQuestCondition condition;
 
-
-public enum QuestType
-{
-    Daily,
-    Weekly,
-    Achievement
-}
-
-
-public class Quest : QuestBase
-{
-    private IQuestCondition condition;
-  
-
-    public Quest(QuestData questData) : base(questData)
+    protected QuestBase(QuestData data)
     {
-
-        InitializeCondition();
-
+        this.questData = data;
+        this.isCompleted = false;
+        UpdateNextResetTime(DateTime.UtcNow);
+        InitializeCondition();  
     }
 
-
-    protected override void InitializeCondition()
+    public bool IsTimeLimitExceeded()
     {
-        switch (questData.questType)
-        {
-            case "Kill":
-                //condition = new KillQuestCondition(questData.requireCount);
-                break;
-            case "Collect":
-                //condition = new CollectQuestCondition(questData.itemId, questData.requireCount);
-                break;
-        }
+        return DateTime.UtcNow > nextResetTimeUTC;
     }
 
-
-    public void Reset()
+    public virtual void Reset()
     {
      
         isCompleted = false;
-
+        condition.Reset();
 
         QuestType type;
 
@@ -87,9 +59,7 @@ public class Quest : QuestBase
     }
 
 
-    public int GetProgress()
-    {
-        return condition.GetCurrentProgress();  // IQuestCondition에 이 메서드 추가 필요
-    }
+    // 각 퀘스트 타입에서 자신의 condition을 초기화
+    protected abstract void InitializeCondition();
 
 }

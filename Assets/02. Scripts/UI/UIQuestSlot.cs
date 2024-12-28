@@ -38,19 +38,37 @@ public class UIQuestSlot : MonoBehaviour
     private void UpdateUI()
     {
         titleText.text = _currentQuest.questData.description;
-        progressText.text = $"{_currentQuest.progress}/{_currentQuest.questData.count}";
+
+
+        var progress = _currentQuest.GetProgress();  // Quest 클래스에 이 메서드 추가 필요
+        var requireCount = _currentQuest.questData.requireCount;
+
+        progressText.text = $"{progress}/{requireCount}";
 
         // 진행도 바 업데이트
-        float progress = (float)_currentQuest.progress / _currentQuest.questData.count;
-        progressBar.fillAmount = progress;
+        float progressBarText = (float)progress / requireCount;
+        progressBar.fillAmount = progressBarText;
 
         // 보상 정보 표시
-        rewardAmountText.text = _currentQuest.questData.count.ToString();
+        rewardAmountText.text = _currentQuest.questData.rewarCount.ToString();
         // 보상 아이콘은 RewardData에서 가져와서 설정
+
 
         // 버튼 상태 및 완료 표시 업데이트
         bool isCompleted = _currentQuest.isCompleted;
-        bool hasReceivedReward = GameManager.Instance.playerData.questData[_currentQuest.questData.ID].isCompleted;
+        bool hasReceivedReward = false;
+
+        if (GameManager.Instance.playerData.questData.ContainsKey(_currentQuest.questData.ID))
+        {
+            hasReceivedReward = GameManager.Instance.playerData.questData[_currentQuest.questData.ID].isCompleted;
+        }
+        else
+        {
+          
+            QuestManager.Instance.CreateNewQuestSaveData(_currentQuest.questData.ID);
+            hasReceivedReward = false;
+        }
+
 
         rewardButton.interactable = isCompleted && !hasReceivedReward;
         completeMark.SetActive(hasReceivedReward);

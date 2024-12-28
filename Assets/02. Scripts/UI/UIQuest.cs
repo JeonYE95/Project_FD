@@ -9,12 +9,14 @@ public class UIQuest : UIBase
     public Transform questContent;  // 퀘스트 슬롯들이 들어갈 부모 Transform
     public UIQuestSlot questSlotPrefab;
     public Button batchRewardButton;
-
+    public Button closeButton;
+        
     private List<UIQuestSlot> questSlots = new List<UIQuestSlot>();
 
     private void Start()
     {
         batchRewardButton.onClick.AddListener(OnBatchRewardButtonClick);
+        closeButton.onClick.AddListener(() => { Close(); });
     }
 
     protected override void OpenProcedure()
