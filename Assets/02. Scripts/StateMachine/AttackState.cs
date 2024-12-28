@@ -48,7 +48,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-
+        stateMachine.unit.targetUnit = null;
     }
 
     public bool CheckTargetInRange(BaseUnit targetUnit)

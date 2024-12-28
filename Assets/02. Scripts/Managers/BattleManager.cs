@@ -33,7 +33,7 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    public ProjectileSO skillProjectileSO;
+    public ProjectileSO unitProjectileSO;
     public SkillVisualEffectPoolConfigSO skillVisualEffectSO;
 
     // 버프 딕셔너리 : <유닛, <버프이름, 버프 정보 >>
@@ -334,9 +334,9 @@ public class BattleManager : Singleton<BattleManager>
     {
         // Resources 폴더에서 SkillVisualEffectSO 로드
         skillVisualEffectSO = Resources.Load<SkillVisualEffectPoolConfigSO>("Config/SkillVisualEffectSO");
-        //skillProjectileSO = Resources.Load<ProjectileSO>("Config/SkillVisualProjectileSO");
+        unitProjectileSO = Resources.Load<ProjectileSO>("Config/ProjectileSO");
 
-        if (skillVisualEffectSO == null)
+        if (skillVisualEffectSO == null || unitProjectileSO == null)
         {
             Debug.LogError("스킬 SO 읽어오기 실패");
         }
@@ -377,17 +377,24 @@ public class BattleManager : Singleton<BattleManager>
     }
 
 
-    /*// ProjectileSprite 가져오는 메서드
-    public ProjectileSpriteSO.ProjectileSprite GetProjectileSprite(int unitID)
+    // ProjectileSprite 가져오는 메서드
+    public ProjectileSO.ProjectileData GetProjectileSprite(int unitID)
     {
-        if (skillVisualEffectSO == null)
+        if (unitProjectileSO.projectileDatas == null || unitProjectileSO.projectileDatas.Count == 0)
         {
             Debug.LogError("ProjectileSprite is not loaded!");
-            return null;
+            return unitProjectileSO?.defaultProjectile;
         }
 
-        return skillProjectileSO.projectileSprites.Find(projectile => projectile.unitID == unitID);
-    }*/
+        var unitProjectile = unitProjectileSO.projectileDatas.Find(p => p.unitID == unitID);
+
+        if (unitProjectile == null)
+        {
+            unitProjectile = unitProjectileSO.defaultProjectile;
+        }
+
+        return unitProjectile;
+    }
 
     public BaseUnit GetTargetClosestOpponent(BaseUnit standardUnit)
     {

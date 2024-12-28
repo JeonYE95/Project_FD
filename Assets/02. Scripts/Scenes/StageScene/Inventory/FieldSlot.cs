@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using GSDatas;
+using Unity.VisualScripting;
 
 public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDropHandler,
     IPointerEnterHandler, IDragHandler, IPointerClickHandler
@@ -83,22 +84,16 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     public void DropCharacter(UnitData unitInfo)
     {
-
         // 최대 소환 가능 수 도달하면 소환 불가
         if (!InventoryManager.Instance.CanSummonUnit())
             return;
 
-
         //인벤토리에 있는 Unit 정보 받아서 필드에 소환
         _character = UnitManager.Instance.CreatePlayerUnit(unitInfo.ID);
 
-
         if (_character != null)
         {
-
-
             Vector3 worldPosition = GetComponent<RectTransform>().GetUIWorldPosition();
-
             SetupUnitPosition(_character, worldPosition);
 
             // 초기 위치 저장
@@ -108,10 +103,7 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             InventoryManager.Instance.subtractCharacter(unitInfo, 1);
             Debug.Log($"Unit {unitInfo.name} count decreased in inventory.");
             InventoryManager.Instance.TrackFieldUnit(Index, unitInfo);
-
         }
-
-
     }
 
     public void OnBeginDrag(PointerEventData eventData)
