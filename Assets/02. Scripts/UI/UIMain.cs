@@ -11,6 +11,6 @@ public class UIMain : UIBase
     {
         _startBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UISelectStage>(); });
         _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UISetting>(); });
-        _heroesBtn.onClick.AddListener(() => {UIManager.Instance.OpenUI<>(); });
+        _heroesBtn.onClick.AddListener(() => {UIManager.Instance.OpenUI<UIHeroes>(); });
     }
 }
