@@ -17,11 +17,11 @@ public class BattleManager : Singleton<BattleManager>
     WaitForSeconds _battleResultAndResetTimer;
 
     private List<BaseUnit> allUnits = new List<BaseUnit>();
-    private List<BaseUnit> _players = new List<BaseUnit>();
+    public List<BaseUnit> players = new List<BaseUnit>();
     public List<BaseUnit> enemies = new List<BaseUnit>();
 
     //현재 1005 (힐러) 가 비활성화 되는 버그가 있어서 디버깅을 위한 프로퍼티
-    public List<BaseUnit> players
+    public List<BaseUnit> _players
     {
         get
         {
@@ -83,6 +83,8 @@ public class BattleManager : Singleton<BattleManager>
         aliveEnemyUnitsCount = enemies.Count;
 
         _isBattleEnd = false;
+
+        CheckBattleResult();
     }
 
     public void UnitDie(BaseUnit unit)

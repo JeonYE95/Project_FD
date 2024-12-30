@@ -58,6 +58,8 @@ public enum SkillEffect
     SkillValue,           // 스킬 데미지
     AttackBoost,          // 공격속도
     DefenseBoost,         // 방어력 증가
+    AttackModifier,       // 공격력 조정
+    DefenseModifier,      // 방어력 조정 dev 올린후 이걸로 시트 변경
     MultipleAttacks,      // 여러번 공격
     BasicAttackMultiplier // 평타 데미지 기반 스킬 데미지
 }
