@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
@@ -94,6 +95,24 @@ public class BattleManager : Singleton<BattleManager>
         else if (unit is EnemyUnit)
         {
             aliveEnemyUnitsCount--;
+
+
+            // 킬 퀘스트 업데이트
+            int enemyId = unit.unitInfo.ID;
+            var currentQuests = QuestManager.Instance.GetCurrentQuests();
+
+            foreach (var quest in currentQuests)
+            {
+           
+                if (quest is KillQuest killQuest &&
+                    killQuest.questData.requireConditionID == enemyId)
+                {
+                    // 퀘스트 진행도 업데이트
+                    QuestManager.Instance.UpdateQuestProgress(quest.questData.ID, enemyId, 1);
+                }
+            }
+
+
         }
 
         CheckBattleResult();
