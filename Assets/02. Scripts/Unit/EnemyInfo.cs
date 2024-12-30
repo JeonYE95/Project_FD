@@ -19,6 +19,7 @@ public class EnemyInfo : MonoBehaviour, IUnitInfo
                 _enemyData = new EnemyData();
             }
 
+            _enemyData.ID = enemyData.ID;
             _enemyData.range = enemyData.range;
             _enemyData.attack = enemyData.attack;
             _enemyData.health = enemyData.health;

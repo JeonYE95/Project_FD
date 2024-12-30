@@ -18,6 +18,8 @@ public class PlayerData
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
     public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
+    public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
+    public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -265,6 +267,14 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
+    //퀘스트 및 도전과제 저장
+    public void progressSave()
+    {
+        SavePlayerDataToJson();
+
+    }
+
+   
 
     //스테이지 수 파악
     public void StageCount()
