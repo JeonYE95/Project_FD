@@ -6,5 +6,7 @@
   "energy": 0,
   "items": {},
   "UnitEnforce": {},
-  "ClassEnforce": {}
+  "ClassEnforce": {},
+  "questData": {},
+  "ChallengeProgress": {}
 }
