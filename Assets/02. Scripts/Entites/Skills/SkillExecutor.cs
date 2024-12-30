@@ -173,7 +173,7 @@ public class SkillExecutor : MonoBehaviour
                     inGameSkillData.skillEffect.ToString(),
                     inGameSkillData.duration,
                     () => SetAttackValue(target, (int)originPropertyValue + (int)inGameSkillData.value),
-                    () => SetAttackCount(target, (int)originPropertyValue));
+                    () => SetAttackValue(target, (int)originPropertyValue));
                 break;
 
 

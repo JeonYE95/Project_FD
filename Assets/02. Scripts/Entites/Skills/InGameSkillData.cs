@@ -1,6 +1,7 @@
 using Assets.HeroEditor.Common.Scripts.Common;
 using GSDatas;
 using System;
+using System.Diagnostics;
 
 [System.Serializable]
 public class InGameSkillData
@@ -21,6 +22,11 @@ public class InGameSkillData
 
     public void SetInGameSkillData(SkillData skillData)
     {
+        if (skillData.skillID == 20)
+        {
+            Debug.WriteLine("");
+        }
+
         if (skillData == null)
         {
             return;

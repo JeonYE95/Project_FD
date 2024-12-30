@@ -105,7 +105,7 @@ public class BattleManager : Singleton<BattleManager>
 
             foreach (var quest in currentQuests)
             {
-           
+
                 if (quest is KillQuest killQuest &&
                     killQuest.questData.requireConditionID == enemyId)
                 {
@@ -238,16 +238,15 @@ public class BattleManager : Singleton<BattleManager>
             allUnits.Add(unit);
         }
     }
-
     
 
     public void RegisterUnit(BaseUnit unit)
     {
-        if (unit is PlayerUnit)
+        if (unit.isPlayerUnit)
         {
             players.Add(unit);
         }
-        else if (unit is EnemyUnit)
+        else
         {
             enemies.Add(unit);
         }
