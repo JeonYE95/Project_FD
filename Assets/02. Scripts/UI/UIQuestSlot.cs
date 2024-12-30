@@ -32,10 +32,10 @@ public class UIQuestSlot : MonoBehaviour
     public void SetQuestData(QuestBase quest)
     {
         _currentQuest = quest;
-        UpdateUI();
+     
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         titleText.text = _currentQuest.questData.description;
 
@@ -78,7 +78,7 @@ public class UIQuestSlot : MonoBehaviour
     {
         if (_currentQuest != null && _currentQuest.isCompleted)
         {
-            QuestManager.Instance.CheckQuestCompletion(_currentQuest.questData.ID);
+            QuestManager.Instance.QuestCompletion(_currentQuest.questData.ID);
             UpdateUI();
         }
     }

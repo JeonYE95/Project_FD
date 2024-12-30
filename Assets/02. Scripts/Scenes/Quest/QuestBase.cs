@@ -30,7 +30,7 @@ public enum QuestType
    Gacha
 }
 
-public abstract class QuestBase : MonoBehaviour
+public abstract class QuestBase 
 {
     public QuestData questData;
     public bool isCompleted;
