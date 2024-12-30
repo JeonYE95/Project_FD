@@ -95,4 +95,25 @@ public abstract class QuestBase : MonoBehaviour
         return condition.GetCurrentProgress();
     
     }
+
+    public void UpdateConditionProgress(int targetId, int count)
+    {
+        if (condition is ITargetQuset targetCondition)
+        {
+            targetCondition.UpdateProgress(targetId, count);
+        }
+        else if (condition is ICountQuest countCondition)
+        {
+            countCondition.UpdateProgress(count);
+        }
+
+         
+
+        if (GetProgress() >= questData.requireCount)
+        {
+            isCompleted = true;
+        }
+
+    }
+
 }

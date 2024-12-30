@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class QuestClearCondition : IQustClearCondition
+public class QuestClearCondition : ITargetQuset
 {
 
     private readonly QuestData questData;

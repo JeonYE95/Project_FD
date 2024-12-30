@@ -1,7 +1,7 @@
 using UnityEngine;
 using GSDatas;
 
-public class ConsumeQuestCondition : IConsumeCondition
+public class ConsumeQuestCondition : ITargetQuset
 {
 
     private readonly QuestData questData;

@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class EnforceQuestCondition : IEnforceCondition
+public class EnforceQuestCondition : ICountQuest
 {
     private readonly QuestData questData;
     private int requiredCount;

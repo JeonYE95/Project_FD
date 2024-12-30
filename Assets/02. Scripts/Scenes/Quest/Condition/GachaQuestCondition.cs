@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GachaQuestCondition : IGachaQuestCondition
+public class GachaQuestCondition : ICountQuest
 {
     private readonly QuestData questData;
     private int currentCount;
@@ -15,19 +15,12 @@ public class GachaQuestCondition : IGachaQuestCondition
 
     }
 
-
-
     public int GetCurrentProgress()
     {
         return currentCount;
     }
 
-    public void UpdateProgress(int target, int killCount)
-    {
-        if (questData.requireConditionID == target)
-            currentCount += killCount;
-    }
-
+  
     public void Reset()
     {
         currentCount = 0;

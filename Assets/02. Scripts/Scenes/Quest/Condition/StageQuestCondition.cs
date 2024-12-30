@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class StageQuestCondition :IStageCondition
+public class StageQuestCondition : ITargetQuset
 {
     private readonly QuestData questData;
     private int currentCount;

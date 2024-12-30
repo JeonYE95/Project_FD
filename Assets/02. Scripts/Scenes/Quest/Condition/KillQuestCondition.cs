@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillQuestCondition : IKillQuestCondition
+public class KillQuestCondition : ITargetQuset
 {
     private readonly QuestData questData;
     private int targetCount;
