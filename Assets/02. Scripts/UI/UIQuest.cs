@@ -37,7 +37,7 @@ public class UIQuest : UIBase
         questSlots.Clear();
 
         // 새로운 퀘스트 슬롯 생성
-        List<Quest> questList = QuestManager.Instance.GetCurrentQuests();
+        List<QuestBase> questList = QuestManager.Instance.GetCurrentQuests();
         foreach (var quest in questList)
         {
             UIQuestSlot slot = Instantiate(questSlotPrefab, questContent);

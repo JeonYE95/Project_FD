@@ -1,5 +1,5 @@
 
 public interface IKillQuestCondition : IQuestCondition
 {
-    void UpdateProgress(int killCount);
+    void UpdateProgress(int targetID, int killCount);
 }

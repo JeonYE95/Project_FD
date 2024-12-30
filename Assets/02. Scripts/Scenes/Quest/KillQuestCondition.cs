@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class KillQuestCondition : QuestBase, IKillQuestCondition
 {
+
+    private int targetID;
     private int targetCount;
     private int currentCount;
 
@@ -16,21 +18,18 @@ public class KillQuestCondition : QuestBase, IKillQuestCondition
 
     public int GetCurrentProgress()
     {
-        throw new System.NotImplementedException();
+        return currentCount;
     }
 
-    public void UpdateProgress(int killCount)
+    public void UpdateProgress(int target, int killCount)
     {
+        if(targetID == target)
         currentCount += killCount;
     }
 
-    public void UpdateProgress()
-    {
-        throw new System.NotImplementedException();
-    }
 
     protected override void InitializeCondition()
     {
-        throw new System.NotImplementedException();
+        // 연계 퀘스트가 있다면 다음 퀘스트 추가
     }
 }

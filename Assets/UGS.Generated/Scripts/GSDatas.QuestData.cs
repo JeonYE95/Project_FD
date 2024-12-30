@@ -66,6 +66,7 @@ namespace GSDatas
 		public System.Int32 resetHourUTC;
 		public System.Int32 resetDayOfWeek;
 		public System.String questReseyType;
+		public System.Int32 nextQuestID;
   
 
 #region fuctions

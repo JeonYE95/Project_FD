@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
 
-public class ConsumeQuestCondition : QuestBase, IKillQuestCondition
+public class ConsumeQuestCondition : QuestBase, IConsumeCondition
 {
     private int itemId;
     private int requiredCount;
-
+    private int currentCount;
 
     public ConsumeQuestCondition(QuestData data) : base(data){}
 
@@ -19,19 +19,14 @@ public class ConsumeQuestCondition : QuestBase, IKillQuestCondition
     public bool CheckCondition() =>
         GameManager.Instance.GetItemCount(itemId) >= requiredCount;
 
-    public void UpdateProgress(int killCount)
+    public void UpdateProgress(int itemId, int count)
     {
-        // 수집 퀘스트는 아이템 획득/소비 시 자동으로 체크되므로
-        // 별도의 progress 업데이트 불필요
+        
     }
 
-    public void UpdateProgress()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public int GetCurrentProgress()
     {
-        throw new System.NotImplementedException();
+        return currentCount;
     }
 }

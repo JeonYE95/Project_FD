@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnforceQuestCondition : QuestBase, IKillQuestCondition
+public class EnforceQuestCondition : QuestBase, IEnforceCondition
 {
     private int itemId;
     private int requiredCount;
+    private int currentCount;
 
     public EnforceQuestCondition(QuestData data) : base(data)
     {
@@ -17,22 +18,16 @@ public class EnforceQuestCondition : QuestBase, IKillQuestCondition
 
     public int GetCurrentProgress()
     {
-        throw new System.NotImplementedException();
+        return currentCount;
     }
-
-    public void UpdateProgress()
+    public void UpdateProgress(int Upgrade)
     {
-        // 수집 퀘스트는 아이템 획득/소비 시 자동으로 체크되므로
-        // 별도의 progress 업데이트 불필요
-    }
-
-    public void UpdateProgress(int killCount)
-    {
-        throw new System.NotImplementedException();
+        currentCount += Upgrade;
     }
 
     protected override void InitializeCondition()
     {
-        throw new System.NotImplementedException();
+       // 다음 퀘스트 아이디가 있다면 다음 퀘스트 추가
+
     }
 }

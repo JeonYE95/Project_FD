@@ -87,9 +87,9 @@ public class Quest : QuestBase
     }
 
 
-    public int GetProgress()
+    public override int GetProgress()
     {
-        return condition.GetCurrentProgress();  // IQuestCondition에 이 메서드 추가 필요
+        return condition.GetCurrentProgress();  
     }
 
 }

@@ -9,7 +9,7 @@ public class QuestManager : Singleton<QuestManager>
 {
 
     public List<QuestData> questDataList = new List<QuestData>();
-    private Dictionary<int, Quest> questDictionary = new Dictionary<int, Quest>();
+    private Dictionary<int, QuestBase> questDictionary = new Dictionary<int, QuestBase>();
 
     protected override void Awake()
     { 
@@ -40,7 +40,7 @@ public class QuestManager : Singleton<QuestManager>
         {
             if (!questDictionary.ContainsKey(questData.ID))
             {
-                Quest quest = new Quest(questData);
+                QuestBase quest = CreateQuestCondition(questData);
                 questDictionary.Add(questData.ID, quest);
 
                
@@ -69,7 +69,7 @@ public class QuestManager : Singleton<QuestManager>
     }
 
 
-    public Quest GetQuest(int questID)
+    public QuestBase GetQuest(int questID)
     {
         if (questDictionary.ContainsKey(questID))
         {
@@ -81,7 +81,7 @@ public class QuestManager : Singleton<QuestManager>
     // 퀘스트 진행도 업데이트
     public void UpdateQuestProgress(int questID, int amount)
     {
-        Quest quest = GetQuest(questID);
+        QuestBase quest = GetQuest(questID);
         if (quest != null)
         {
             //quest.UpdateProgress(amount);
@@ -92,7 +92,7 @@ public class QuestManager : Singleton<QuestManager>
     // 퀘스트 클리어시 보상 획득 - UI 버튼과 연동 필요
     public void CheckQuestCompletion(int questID)
     {
-        Quest quest = GetQuest(questID);
+        QuestBase quest = GetQuest(questID);
         if (quest != null && quest.isCompleted)
         {
             GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.requireCount);
@@ -116,12 +116,12 @@ public class QuestManager : Singleton<QuestManager>
 
 
     // 개별 퀘스트 저장
-    private void SaveQuestData(Quest quest)
+    private void SaveQuestData(QuestBase quest)
     {
         QuestSaveData saveData = new QuestSaveData
         {
             questId = quest.questData.ID,
-            //progress = quest.progress,
+            progress = quest.GetProgress(),
             isCompleted = quest.isCompleted,
             nextResetTimeUTC = quest.nextResetTimeUTC.ToString()
         };
@@ -146,7 +146,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         foreach (KeyValuePair<int, QuestSaveData> questPair in GameManager.Instance.playerData.questData)
         {
-            Quest quest = GetQuest(questPair.Key);
+            QuestBase quest = GetQuest(questPair.Key);
             if (quest != null)
             {
                 QuestSaveData savedQuest = questPair.Value; 
@@ -159,28 +159,27 @@ public class QuestManager : Singleton<QuestManager>
 
 
     // 현재 활성화된 모든 퀘스트 반환
-    public List<Quest> GetCurrentQuests()
+    public List<QuestBase> GetCurrentQuests()
     {
         return questDictionary.Values.ToList();
     }
 
     //퀘스트 반환 (일간/주간/업적)
-    public List<Quest> GetQuestsByType(QuestType type)
+    public List<QuestBase> GetQuestsByType(QuestType type)
     {
         return questDictionary.Values.Where(q => q.questData.questType == type.ToString()).ToList();
     }
 
-    private Quest CreateCondition(QuestData data)
+    private QuestBase CreateQuestCondition(QuestData data)
     {
         switch (data.questType)
         {
-            
-            //case "Kill": 
-            //    return new KillQuestCondition(questData.requireCount);
-            //case "Collect": return new CollectQuestCondition(questData.itemId, questData.requireCount);
-            //// 다른 퀘스트 타입들...
-            //
-            default: return null;
+            case "Kill":
+                return new KillQuestCondition(data);
+            case "Consume":
+                return new ConsumeQuestCondition(data);
+            default:
+                throw new ArgumentException($"Unknown quest type: {data.questType}");
         }
     }
 

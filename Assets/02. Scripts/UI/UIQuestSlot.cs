@@ -17,8 +17,8 @@ public class UIQuestSlot : MonoBehaviour
     public Image rewardIcon;            
     public GameObject completeMark;      
 
-    private Quest _currentQuest;
-    public Quest CurrentQuest => _currentQuest;
+    private QuestBase _currentQuest;
+    public QuestBase CurrentQuest => _currentQuest;
 
 
 
@@ -29,7 +29,7 @@ public class UIQuestSlot : MonoBehaviour
 
     }
 
-    public void SetQuestData(Quest quest)
+    public void SetQuestData(QuestBase quest)
     {
         _currentQuest = quest;
         UpdateUI();
@@ -40,7 +40,7 @@ public class UIQuestSlot : MonoBehaviour
         titleText.text = _currentQuest.questData.description;
 
 
-        var progress = _currentQuest.GetProgress();  // Quest 클래스에 이 메서드 추가 필요
+        var progress = _currentQuest.GetProgress();  
         var requireCount = _currentQuest.questData.requireCount;
 
         progressText.text = $"{progress}/{requireCount}";

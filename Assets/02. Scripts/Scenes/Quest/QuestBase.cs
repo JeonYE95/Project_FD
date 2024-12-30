@@ -62,4 +62,10 @@ public abstract class QuestBase : MonoBehaviour
     // 각 퀘스트 타입에서 자신의 condition을 초기화
     protected abstract void InitializeCondition();
 
+    public virtual int GetProgress()
+    { 
+    
+        return condition.GetCurrentProgress();
+    
+    }
 }
