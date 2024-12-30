@@ -63,7 +63,7 @@ namespace GSDatas
 		public System.Int32 requireConditionID;
 		public System.Int32 rewardID;
 		public System.Int32 requireCount;
-		public System.Int32 rewarCount;
+		public System.Int32 rewardCount;
 		public System.Int32 resetHourUTC;
 		public System.Int32 resetDayOfWeek;
 		public System.String questResetType;

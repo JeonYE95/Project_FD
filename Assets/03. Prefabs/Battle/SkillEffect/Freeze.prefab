@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4019684141809434574}
   - component: {fileID: 5444062580471042354}
   - component: {fileID: 7411489429841394439}
+  - component: {fileID: 3546085779041625367}
   m_Layer: 0
   m_Name: Freeze
   m_TagString: Untagged
@@ -119,7 +120,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7dbbdd5d95c163b4397b573370871dfb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -203,3 +204,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3546085779041625367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5043573985140183233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df91bdc6eb36ce74aaccc8013f1428c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disableTime: 3
