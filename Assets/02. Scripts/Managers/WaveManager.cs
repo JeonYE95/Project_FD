@@ -82,7 +82,6 @@ public class WaveManager : Singleton<WaveManager>
         GetRewardData(stageID);
         GetRewardData();
 
-        OnBattleStart += InventoryManager.Instance.AutoSummonUnits;
 
         OnClearWave += GetWaveData;
         OnClearWave += GetRewardData;
@@ -96,6 +95,9 @@ public class WaveManager : Singleton<WaveManager>
         //UnitDataMap 초기 로드하기 위해 호출
         var _ = GSDatas.UnitData.GetDictionary();
         IngameGacha.Instance.PlayGacha();
+
+        //시작 시 필드에 유닛이 한명도 없다면 자동 소환
+        OnBattleStart += InventoryManager.Instance.AutoSummonUnits;
 
         // 게임 시작 시 자동으로 대기 시간 시작
         _prepareCoroutine = StartCoroutine(NextWavePrepare());

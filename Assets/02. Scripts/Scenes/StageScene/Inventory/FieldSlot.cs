@@ -259,21 +259,14 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
             {
                 if (unitInfo._unitData.grade == "Rare") 
                 {
+                    UIManager.Instance.CloseUI<UICombineInfo>();
                     UIManager.Instance.OpenUI<UICombineInfo_4>().OnUnitClicked(unitInfo._unitData.ID);
                 }
                 else
                 {
-                    UIManager.Instance.OpenUI<UICombineInfo>().OnUnitClicked(unitInfo._unitData.ID);;
+                    UIManager.Instance.CloseUI<UICombineInfo_4>();
+                    UIManager.Instance.OpenUI<UICombineInfo>().OnUnitClicked(unitInfo._unitData.ID);
                 }
-                
-                // if (uiCombineInfo != null)
-                // {
-                //     uiCombineInfo.OnUnitClicked(unitInfo._unitData.ID);
-                // }
-                // else
-                // {
-                //     Debug.LogWarning("UICombineInfo를 찾을 수 없습니다.");
-                // }
             }
         }
     }

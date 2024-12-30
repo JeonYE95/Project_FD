@@ -13,7 +13,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     [SerializeField]
     private GameObject _previewObject;
     [SerializeField]
-    private UIUnitSlot _UIUnitSlot;
+    private UIUnitSlot _uiUnitSlot;
     private UICombineInfo _uiCombineInfo;
 
 
@@ -28,7 +28,7 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
     private void Start()
     {
 
-        _UIUnitSlot = GetComponentInParent<UIUnitSlot>();
+        _uiUnitSlot = GetComponentInParent<UIUnitSlot>();
         _canvas = GetComponentInParent<Canvas>(); // Start에서 한 번만 가져오기
 
 
@@ -53,9 +53,9 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
         {
 
             // 현재 슬롯 인덱스에 해당하는 유닛 정보 가져오기
-            if (_UIUnitSlot != null)
+            if (_uiUnitSlot != null)
             {
-                UnitData currentUnit = _UIUnitSlot.GetUnitAtIndex(Index);
+                UnitData currentUnit = _uiUnitSlot.GetUnitAtIndex(Index);
                 if (currentUnit != null)
                 {
 
@@ -131,15 +131,23 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_UIUnitSlot != null)
+        if (_uiUnitSlot != null)
         {
-            UnitData clickedUnit = _UIUnitSlot.GetUnitAtIndex(Index); // 현재 슬롯에 있는 유닛 데이터 가져오기
+            UnitData clickedUnit = _uiUnitSlot.GetUnitAtIndex(Index); // 현재 슬롯에 있는 유닛 데이터 가져오기
 
+            // UICombineInfo를 활성화하고 클릭한 유닛의 ID 전달
             if (clickedUnit != null)
             {
-                // UICombineInfo를 활성화하고 클릭한 유닛의 ID 전달
-                OpenCombineInfoUI(); // UI 창 활성화
-                _uiCombineInfo.OnUnitClicked(clickedUnit.ID); // 유닛 ID 전달하여 조합식 업데이트
+                if (clickedUnit.grade == "Rare")
+                {
+                    UIManager.Instance.CloseUI<UICombineInfo>();
+                    UIManager.Instance.OpenUI<UICombineInfo_4>().OnUnitClicked(clickedUnit.ID);
+                }
+                else
+                {
+                    UIManager.Instance.CloseUI<UICombineInfo_4>();
+                    UIManager.Instance.OpenUI<UICombineInfo>().OnUnitClicked(clickedUnit.ID);;
+                }
             }
             else
             {
