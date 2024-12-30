@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 1751594817127399750}
   - component: {fileID: 4259155821973608423}
   m_Layer: 5
-  m_Name: Quest
+  m_Name: QuestBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,7 +637,7 @@ GameObject:
   - component: {fileID: 4033097574393639317}
   - component: {fileID: 2445481129191337231}
   m_Layer: 5
-  m_Name: Gacha
+  m_Name: GachaBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1740,7 +1740,7 @@ GameObject:
   - component: {fileID: 9047526509560462261}
   - component: {fileID: 2067692717976944013}
   m_Layer: 5
-  m_Name: Reward
+  m_Name: RewardBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1999,7 +1999,7 @@ GameObject:
   - component: {fileID: 8795213170059965223}
   - component: {fileID: 2153828386255434186}
   m_Layer: 5
-  m_Name: Heroes
+  m_Name: HeroesBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2519,7 +2519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startBtn: {fileID: 3125198786760559217}
   _settingBtn: {fileID: 8572388887470538951}
-  _unitStateBtn: {fileID: 0}
+  _heroesBtn: {fileID: 2153828386255434186}
+  _questBtn: {fileID: 4259155821973608423}
 --- !u!1 &3544286827160203416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,7 +3870,7 @@ GameObject:
   - component: {fileID: 6633233928406845711}
   - component: {fileID: 8910306114932020269}
   m_Layer: 5
-  m_Name: Upgrade
+  m_Name: UpgradeBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
