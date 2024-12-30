@@ -75,19 +75,19 @@ public class SkillExecutor : MonoBehaviour
                 }
                 else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
                 {
-                    target.healthSystem.TakeDamage(caster.unitInfo.Attack * (int)inGameSkillData.value);
+                    target.healthSystem.TakeDamage((int)(caster.unitInfo.Attack * (float)inGameSkillData.value));
                 }
 
                 break;
 
-            case SkillType.Heal:
+            //case SkillType.Heal:
 
-                if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
-                {
-                    target.healthSystem.TakeHealth((int)inGameSkillData.value);
-                }
+            //    if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
+            //    {
+            //        target.healthSystem.TakeHealth((int)inGameSkillData.value);
+            //    }
 
-                break;
+            //    break;
 
             case SkillType.Buff:
                 ApplySkillEffect(caster, target);
@@ -105,6 +105,19 @@ public class SkillExecutor : MonoBehaviour
 
         switch (inGameSkillData.skillEffect)
         {
+            case SkillEffect.Stun:
+
+                Debug.Log("Stun");
+
+                BattleManager.Instance.ApplyBuff(
+                    target,
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => SetTargetSten(target),
+                    () => SetTargetIdle(target));
+
+                break;
+
             case SkillEffect.AttackBoost:
 
                 originPropertyValue = target.unitInfo.AttackCooltime;
@@ -173,5 +186,15 @@ public class SkillExecutor : MonoBehaviour
     public void SetAttackCount(BaseUnit target, int Count)
     {
         target.actionHandler.attackCount = Count;
+    }
+
+    public void SetTargetSten(BaseUnit target)
+    {
+        target.SetStun();
+    }
+
+    public void SetTargetIdle(BaseUnit target)
+    {
+        target.SetIdle();
     }
 }

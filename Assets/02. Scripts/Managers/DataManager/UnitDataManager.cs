@@ -35,9 +35,18 @@ public class UnitDataManager : UnitData
 
     public void SaveUnitData(UnitData unit)
     {
-        if (UnitDataMap.ContainsKey(unit.ID))
+        if (GameManager.Instance.playerData.UnitEnforce == null)
         {
-            UnitDataMap[unit.ID] = unit;
+            GameManager.Instance.playerData.UnitEnforce = new Dictionary<int, int>();
+        }
+
+        if (GameManager.Instance.playerData.UnitEnforce.ContainsKey(unit.ID))
+        {
+            GameManager.Instance.playerData.UnitEnforce[unit.ID] = unit.level;
+        }
+        else
+        {
+            GameManager.Instance.playerData.UnitEnforce.Add(unit.ID, unit.level);
         }
     }
 }

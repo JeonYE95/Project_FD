@@ -27,7 +27,7 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
     {
         if (data != null)
         {
-            if (_unitData != null)
+            if (_unitData == null)
             {
                 _unitData = new UnitData();
             }
@@ -49,8 +49,8 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
             _unitData.maxLevel = data.maxLevel;
             _unitData.classtype = data.classtype;
 
-            EnforceManager.Instance.GetUnitEnforcedData(_unitData);
-            EnforceManager.Instance.GetClassEnforcedData(_unitData);
+            //EnforceManager.Instance.GetUnitEnforcedData(_unitData);
+            //EnforceManager.Instance.GetClassEnforcedData(_unitData);
         }
 
     }
