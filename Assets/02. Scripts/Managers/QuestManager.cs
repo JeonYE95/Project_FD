@@ -103,7 +103,7 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         if (quest != null && quest.isCompleted)
         {
 
-            GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.requireCount);
+            GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.rewardCount);
 
 
             // 완료 상태를 저장 데이터에 기록
@@ -114,6 +114,10 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
                 if (quest.questData.nextQuestID != 0)
                 {
+
+
+                    questDictionary.Remove(questID);
+
                     QuestData nextQuestData = QuestDataManager.Instance.GetQuestData(quest.questData.nextQuestID);
 
                     // 다음 연계 퀘스트 활성화
@@ -128,6 +132,8 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
                 }
             }
+
+
 
         }
    
