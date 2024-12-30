@@ -60,12 +60,13 @@ namespace GSDatas
 		public System.String name;
 		public System.String description;
 		public System.String questType;
+		public System.Int32 requireConditionID;
 		public System.Int32 rewardID;
 		public System.Int32 requireCount;
 		public System.Int32 rewarCount;
 		public System.Int32 resetHourUTC;
 		public System.Int32 resetDayOfWeek;
-		public System.String questReseyType;
+		public System.String questResetType;
 		public System.Int32 nextQuestID;
   
 

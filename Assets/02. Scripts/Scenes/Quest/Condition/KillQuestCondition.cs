@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillQuestCondition : QuestBase, IKillQuestCondition
+public class KillQuestCondition : IKillQuestCondition
 {
-
-    private int targetID;
+    private readonly QuestData questData;
     private int targetCount;
     private int currentCount;
-
-    public KillQuestCondition(QuestData data) : base(data)
+   
+    public KillQuestCondition(QuestData data)
     {
+        this.questData = data;
+        this.targetCount = data.requireCount;
+        this.currentCount = 0;
     }
 
     public bool CheckCondition() => currentCount >= targetCount;
@@ -23,13 +25,12 @@ public class KillQuestCondition : QuestBase, IKillQuestCondition
 
     public void UpdateProgress(int target, int killCount)
     {
-        if(targetID == target)
+        if(questData.requireConditionID == target)
         currentCount += killCount;
     }
 
-
-    protected override void InitializeCondition()
+    public void Reset()
     {
-        // 연계 퀘스트가 있다면 다음 퀘스트 추가
+        currentCount = 0;
     }
 }

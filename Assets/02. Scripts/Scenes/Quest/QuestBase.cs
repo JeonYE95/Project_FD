@@ -3,12 +3,39 @@ using GSDatas;
 using UnityEditor;
 using UnityEngine;
 
+
+[System.Serializable]
+public class QuestSaveData
+{
+    public int questId;
+    public int progress;
+    public bool isCompleted;
+    public string nextResetTimeUTC; // DateTime을 string으로 저장
+}
+
+
+public enum QuestResetType
+{
+    Daily,
+    Weekly,
+    Achievement
+}
+
+public enum QuestType
+{
+   consume,
+   Enforce,
+   StageClear,
+   Quest,
+   Gacha
+}
+
 public abstract class QuestBase : MonoBehaviour
 {
     public QuestData questData;
     public bool isCompleted;
     public DateTime nextResetTimeUTC;
-    protected IKillQuestCondition condition;
+    protected IQuestCondition condition;
 
     protected QuestBase(QuestData data)
     {
@@ -29,16 +56,16 @@ public abstract class QuestBase : MonoBehaviour
         isCompleted = false;
         condition.Reset();
 
-        QuestType type;
+        QuestResetType type;
 
         // 다음 초기화 시간 설정
         if (Enum.TryParse(questData.questType, out type))
         {
-            if (type == QuestType.Daily)
+            if (type == QuestResetType.Daily)
             {
                 nextResetTimeUTC = nextResetTimeUTC.AddDays(1);
             }
-            else if (type == QuestType.Weekly)
+            else if (type == QuestResetType.Weekly)
             {
                 nextResetTimeUTC = nextResetTimeUTC.AddDays(7);
             }

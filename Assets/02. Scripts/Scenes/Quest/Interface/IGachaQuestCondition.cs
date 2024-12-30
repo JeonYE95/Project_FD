@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnforceCondition : IQuestCondition
+public interface IGachaQuestCondition : IQuestCondition
 {
     void UpdateProgress(int count);
-
-
 }

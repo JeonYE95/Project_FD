@@ -29,8 +29,8 @@ public class QuestManager : Singleton<QuestManager>
         InitializeNewQuests();
 
         //퀘스트 리셋 체크
-        ResetQuests(QuestType.Daily);
-        ResetQuests(QuestType.Weekly);
+        ResetQuests(QuestResetType.Daily);
+        ResetQuests(QuestResetType.Weekly);
     }
 
 
@@ -68,7 +68,6 @@ public class QuestManager : Singleton<QuestManager>
         GameManager.Instance.playerData.questData.Add(questId, saveData);
     }
 
-
     public QuestBase GetQuest(int questID)
     {
         if (questDictionary.ContainsKey(questID))
@@ -101,7 +100,7 @@ public class QuestManager : Singleton<QuestManager>
 
     }
 
-    public void ResetQuests(QuestType questType)
+    public void ResetQuests(QuestResetType questType)
     {
         // 현재 시간 기준으로 리셋이 필요한 퀘스트들 확인
         var questsToReset = questDictionary.Values
@@ -165,19 +164,27 @@ public class QuestManager : Singleton<QuestManager>
     }
 
     //퀘스트 반환 (일간/주간/업적)
-    public List<QuestBase> GetQuestsByType(QuestType type)
+    public List<QuestBase> GetQuestsByType(QuestResetType type)
     {
-        return questDictionary.Values.Where(q => q.questData.questType == type.ToString()).ToList();
+        return questDictionary.Values.Where(q => q.questData.questResetType == type.ToString()).ToList();
     }
 
     private QuestBase CreateQuestCondition(QuestData data)
     {
         switch (data.questType)
         {
-            case "Kill":
-                return new KillQuestCondition(data);
-            case "Consume":
-                return new ConsumeQuestCondition(data);
+            case "kill":
+                return new KillQuest(data);
+            case "consume":
+                return new ConsumeQuest(data);
+            case "Enforce":
+                return new EnforceQuest(data);
+            case "StageClear":
+                return new StageQuest(data);
+            case "Gacha":
+                return new GachaQuest(data);
+            case "Quest":
+                return new QuestClearQuest(data);
             default:
                 throw new ArgumentException($"Unknown quest type: {data.questType}");
         }
