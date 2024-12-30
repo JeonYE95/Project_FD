@@ -36,9 +36,17 @@ public class QuestManager : Singleton<QuestManager>
 
     private void InitializeNewQuests()
     {
+        //대표 퀘스트 찾기 = 각 그룹에서 첫번째 ID 선택
+
+        var mainQuestIds = questDataList
+       .GroupBy(q => q.ID / 10)  
+       .Select(g => g.Min(q => q.ID)) 
+       .ToList();
+
+
         foreach (QuestData questData in questDataList)
         {
-            if (!questDictionary.ContainsKey(questData.ID))
+            if (mainQuestIds.Contains(questData.ID) && !questDictionary.ContainsKey(questData.ID))
             {
                 QuestBase quest = CreateQuestCondition(questData);
                 questDictionary.Add(questData.ID, quest);
@@ -78,12 +86,12 @@ public class QuestManager : Singleton<QuestManager>
     }
 
     // 퀘스트 진행도 업데이트
-    public void UpdateQuestProgress(int questID, int amount)
+    public void UpdateQuestProgress(int questID, int targetID, int amount)
     {
         QuestBase quest = GetQuest(questID);
         if (quest != null)
         {
-            //quest.UpdateProgress(amount);
+            quest.UpdateConditionProgress(targetID, amount);
             SaveQuestData(quest);
         }
     }
@@ -95,6 +103,21 @@ public class QuestManager : Singleton<QuestManager>
         if (quest != null && quest.isCompleted)
         {
             GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.requireCount);
+
+
+
+            QuestData nextQuestData = QuestDataManager.Instance.GetQuestData(questID);
+
+            // 다음 연계 퀘스트 활성화
+            if (nextQuestData != null && !questDictionary.ContainsKey(quest.questData.nextQuestID))
+            {
+
+                QuestBase nextQuest = CreateQuestCondition(nextQuestData);
+                questDictionary.Add(nextQuestData.ID, nextQuest);
+                CreateNewQuestSaveData(nextQuestData.ID);
+
+            }
+
 
         }
 

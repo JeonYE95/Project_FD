@@ -15,4 +15,15 @@ public class QuestDataManager : QuestData
             return _instance;
         }
     }
+
+
+    public QuestData GetQuestData(int id)
+    {
+        if (QuestDataMap.TryGetValue(id, out var data))
+        {
+            return data;
+        }
+
+        return null;
+    }
 }
