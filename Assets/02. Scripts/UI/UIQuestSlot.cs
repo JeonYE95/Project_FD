@@ -50,7 +50,7 @@ public class UIQuestSlot : MonoBehaviour
         progressBar.fillAmount = progressBarText;
 
         // 보상 정보 표시
-        //rewardAmountText.text = _currentQuest.questData.rewardCount.ToString();
+        rewardAmountText.text = _currentQuest.questData.rewarCount.ToString();
         // 보상 아이콘은 RewardData에서 가져와서 설정
 
         rewardButton.interactable = _currentQuest.isCompleted;

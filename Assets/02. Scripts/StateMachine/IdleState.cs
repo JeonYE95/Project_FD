@@ -14,6 +14,12 @@ public class IdleState : BaseState
     {
         if (stateMachine.unit.FindTarget())
         {
+            if (stateMachine.unit.IsTargetInRange())
+            {
+                stateMachine.ChangeState(stateMachine.AttackState);
+                return;
+            }
+
             stateMachine.ChangeState(stateMachine.MoveState);
         }
     }

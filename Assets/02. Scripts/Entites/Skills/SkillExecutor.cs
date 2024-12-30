@@ -59,11 +59,21 @@ public class SkillExecutor : MonoBehaviour
     {
         var targetVisualEffectTag = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID).targetEffectTag;
 
-        if (targetVisualEffectTag == "NoneEffect")
+        if (inGameSkillData.skillID == 15)
+        {
+            Debug.Log("");
+        }
+
+        PlayVisualEffect(target, targetVisualEffectTag);
+
+        /*if (targetVisualEffectTag == "NoneEffect")
         {
             //Debug.Log(targetVisualEffectTag.ToString());
-            PlayVisualEffect(target, targetVisualEffectTag);
         }
+        else
+        {
+            PlayVisualEffect(target, targetVisualEffectTag);
+        }*/
 
         switch (inGameSkillData.skillType)
         {
@@ -80,14 +90,14 @@ public class SkillExecutor : MonoBehaviour
 
                 break;
 
-            //case SkillType.Heal:
+            case SkillType.Heal:
 
-            //    if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
-            //    {
-            //        target.healthSystem.TakeHealth((int)inGameSkillData.value);
-            //    }
+                if (inGameSkillData.skillEffect == SkillEffect.SkillValue)
+                {
+                    target.healthSystem.TakeHealth((int)inGameSkillData.value);
+                }
 
-            //    break;
+                break;
 
             case SkillType.Buff:
                 ApplySkillEffect(caster, target);
@@ -126,8 +136,8 @@ public class SkillExecutor : MonoBehaviour
                     target,
                     inGameSkillData.skillEffect.ToString(),
                     inGameSkillData.duration,
-                    () => AttackSpeedBuff(target, target.unitInfo.AttackCooltime - (inGameSkillData.value / 100)),
-                    () => AttackSpeedBuff(target, originPropertyValue));
+                    () => SetAttackSpeed(target, target.unitInfo.AttackCooltime - (inGameSkillData.value / 100)),
+                    () => SetAttackSpeed(target, originPropertyValue));
 
                 break;
 
@@ -153,7 +163,19 @@ public class SkillExecutor : MonoBehaviour
                     () => SetAttackCount(target, (int)inGameSkillData.value),
                     () => SetAttackCount(target, (int)originPropertyValue));
                 break;
-            
+
+            case SkillEffect.AttackModifier:
+
+                originPropertyValue = target.unitInfo.Attack;
+
+                BattleManager.Instance.ApplyBuff(
+                    target,
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => SetAttackValue(target, (int)originPropertyValue + (int)inGameSkillData.value),
+                    () => SetAttackValue(target, (int)originPropertyValue));
+                break;
+
 
             default:
                 Debug.LogWarning($"알 수 없는 스킬 효과: {inGameSkillData.skillEffect}");
@@ -176,9 +198,19 @@ public class SkillExecutor : MonoBehaviour
     public void DefenseBuff(BaseUnit target, float value)
     {
         target.unitInfo.Defense += (int)value;
+
+        if (target.unitInfo.Defense < 0)
+        {
+            target.unitInfo.Defense = 0;
+        }
     }
 
-    public void AttackSpeedBuff(BaseUnit target, float value)
+    public void SetAttackValue(BaseUnit target, int value)
+    {
+        target.unitInfo.Attack = value;
+    }
+
+    public void SetAttackSpeed(BaseUnit target, float value)
     {
         target.unitInfo.AttackCooltime = value;
     }
