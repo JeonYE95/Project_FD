@@ -10,6 +10,7 @@ public class QuestClearCondition : ITargetQuset
     public QuestClearCondition(QuestData data)
     {
         this.questData = data;
+
         this.currentCount = 0;
     }
 
@@ -29,6 +30,11 @@ public class QuestClearCondition : ITargetQuset
         {
             currentCount += 1;
         }
+    }
+
+    public void SetProgress(int progress)
+    {
+        currentCount = progress;
     }
 
 }

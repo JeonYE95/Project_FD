@@ -41,7 +41,10 @@ public class GameManager : SingletonDontDestory<GameManager>
         set { playerData.energy = value; }
 
     }
-    
+
+
+    //초기 데이터 로드
+    public bool IsInitialized { get; private set; }
 
     // 모든 스테이지 정보 저장
     private List<StageData> _AllStageData = new List<StageData>();
@@ -68,6 +71,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         GetAllStatgeData();
         StageCount();
 
+        IsInitialized = true;  // 초기화 완료 표시
 
         StartCoroutine(RecoverEnergyRoutine());
     }
@@ -102,7 +106,13 @@ public class GameManager : SingletonDontDestory<GameManager>
 
             UpdateUnitEnforceData();
         }
-
+        else
+        {
+            // 파일이 없을 때 초기값 설정
+            playerData = new PlayerData();
+            playerData.energy = 10; 
+            SavePlayerDataToJson(); 
+        }
     }
 
     [ContextMenu("Reset Json Data")]
@@ -110,6 +120,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
         // 데이터 리셋
         playerData = new PlayerData();
+        playerData.energy = 10;
 
         SavePlayerDataToJson();
         Debug.Log("Reset Player Data Complete");

@@ -91,10 +91,23 @@ public abstract class QuestBase
 
     public virtual int GetProgress()
     { 
-    
         return condition.GetCurrentProgress();
     
     }
+
+    // 데이터 로딩 후 각 퀘스트 컨디션 동기화
+    public void SetProgress(int progress)
+    {
+        if (condition != null)
+        {
+            condition.SetProgress(progress);
+            if (progress >= questData.requireCount)
+            {
+                isCompleted = true;
+            }
+        }
+    }
+
 
     public void UpdateConditionProgress(int targetId, int count)
     {

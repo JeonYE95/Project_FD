@@ -14,6 +14,21 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     protected override void Awake()
     {
         base.Awake();
+    }
+
+
+    private void Start()
+    {
+        StartCoroutine(WaitForGameManagerInitialize());
+    }
+
+
+    // GameManager에서 JSON 불러올 때까지 대기
+    private IEnumerator WaitForGameManagerInitialize()
+    {
+        // GameManager가 JSON을 로드할 때까지 대기
+        yield return new WaitUntil(() => GameManager.Instance != null && GameManager.Instance.IsInitialized);
+
         Initialize();
     }
 
@@ -22,11 +37,11 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     {
         questDataList = QuestDataManager.GetList();
 
-        // 저장된 퀘스트 데이터 로드
-        LoadQuestData();
-
         //새로운 퀘스트라면 초기 데이터 생성
         InitializeNewQuests();
+
+        // 저장된 퀘스트 데이터 로드
+        LoadQuestData();
 
         //퀘스트 리셋 체크
         ResetQuests(QuestResetType.Daily);
@@ -46,7 +61,8 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
         foreach (QuestData questData in questDataList)
         {
-            if (mainQuestIds.Contains(questData.ID) && !questDictionary.ContainsKey(questData.ID))
+
+            if (ShouldAddQuest(questData, mainQuestIds))
             {
                 QuestBase quest = CreateQuestCondition(questData);
                 questDictionary.Add(questData.ID, quest);
@@ -61,6 +77,25 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
         //저장
         GameManager.Instance.progressSave();
+    }
+
+
+
+    private bool ShouldAddQuest(QuestData questData, List<int> mainQuestIds)
+    {
+        // 메인 퀘스트인지 확인
+        if (!mainQuestIds.Contains(questData.ID)) return false;
+
+        // 이미 딕셔너리에 있는지 확인
+        if (questDictionary.ContainsKey(questData.ID)) return false;
+
+        // 저장된 데이터가 있고 완료된 퀘스트인지 확인
+        if (GameManager.Instance.playerData.questData.ContainsKey(questData.ID))
+        {
+            return !GameManager.Instance.playerData.questData[questData.ID].isCompleted;
+        }
+
+        return true;
     }
 
 
@@ -110,13 +145,10 @@ public class QuestManager : SingletonDontDestory<QuestManager>
             if (GameManager.Instance.playerData.questData.ContainsKey(questID))
             {
                 GameManager.Instance.playerData.questData[questID].isCompleted = true;
-                SaveQuestData(quest);
+
 
                 if (quest.questData.nextQuestID != 0)
                 {
-
-
-                    questDictionary.Remove(questID);
 
                     QuestData nextQuestData = QuestDataManager.Instance.GetQuestData(quest.questData.nextQuestID);
 
@@ -129,14 +161,16 @@ public class QuestManager : SingletonDontDestory<QuestManager>
                         CreateNewQuestSaveData(nextQuestData.ID);
 
                     }
-
                 }
+
+                questDictionary.Remove(questID);
+                SaveQuestData(quest);
             }
 
 
 
         }
-   
+
     }
 
     public void ResetQuests(QuestResetType questType)
@@ -165,6 +199,8 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         };
 
 
+        Debug.Log($"Saving Quest {quest.questData.ID} - Progress: {saveData.progress}, Completed: {saveData.isCompleted}");
+
         if (GameManager.Instance.playerData.questData.ContainsKey(quest.questData.ID))
         {
             GameManager.Instance.playerData.questData[quest.questData.ID] = saveData;
@@ -185,12 +221,19 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         foreach (KeyValuePair<int, QuestSaveData> questPair in GameManager.Instance.playerData.questData)
         {
             QuestBase quest = GetQuest(questPair.Key);
+
+            Debug.Log($"Loading quest {questPair.Key} - Saved progress: {questPair.Value.progress}"); // 저장된 데이터 로그
+
+
             if (quest != null)
             {
                 QuestSaveData savedQuest = questPair.Value;
-                //quest.progress = savedQuest.progress;
+                quest.SetProgress(savedQuest.progress);
                 quest.isCompleted = savedQuest.isCompleted;
                 quest.nextResetTimeUTC = DateTime.Parse(savedQuest.nextResetTimeUTC);
+
+
+                Debug.Log($"Quest {questPair.Key} loaded - Progress: {savedQuest.progress}, Completed: {savedQuest.isCompleted}");
             }
         }
     }
@@ -268,7 +311,7 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         foreach (var quest in currentQuests)
         {
             if (quest is T typedQuest &&
-                typedQuest.questData.requireConditionID == targetId)
+                (typedQuest.questData.requireConditionID == targetId || typedQuest.questData.requireConditionID == 0))
             {
                 UpdateQuestProgress(quest.questData.ID, targetId, amount);
             }
