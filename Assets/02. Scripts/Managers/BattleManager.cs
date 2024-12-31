@@ -98,21 +98,8 @@ public class BattleManager : Singleton<BattleManager>
         {
             aliveEnemyUnitsCount--;
 
-
-            // 킬 퀘스트 업데이트
-            int enemyId = unit.unitInfo.ID;
-            var currentQuests = QuestManager.Instance.GetCurrentQuests();
-
-            foreach (var quest in currentQuests)
-            {
-
-                if (quest is KillQuest killQuest &&
-                    killQuest.questData.requireConditionID == enemyId)
-                {
-                    // 퀘스트 진행도 업데이트
-                    QuestManager.Instance.UpdateQuestProgress(quest.questData.ID, enemyId, 1);
-                }
-            }
+            // 적 처치 시 퀘스트 조건 확인
+            QuestManager.Instance.UpdateKillQuests(unit.unitInfo.ID);
 
 
         }

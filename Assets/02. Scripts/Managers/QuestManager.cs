@@ -230,4 +230,50 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     }
 
 
+    public void UpdateKillQuests(int enemyId, int amount = 1)
+    {
+        UpdateQuestsByType<KillQuest>(enemyId, amount);
+    }
+
+    public void UpdateConsumeQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<ConsumeQuest>(itemId, amount);
+    }
+
+
+    public void UpdateStageQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<StageQuest>(itemId, amount);
+    }
+
+    public void UpdateGachaQuest(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<GachaQuest>(itemId, amount);
+    }
+
+    public void UpdateEnforceQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<EnforceQuest>(itemId, amount);
+    }
+
+    public void UpdateQuestClearQuest(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<QuestClearQuest>(itemId, amount);
+    }
+
+
+    private void UpdateQuestsByType<T>(int targetId, int amount = 1) where T : QuestBase
+    {
+        var currentQuests = GetCurrentQuests();
+        foreach (var quest in currentQuests)
+        {
+            if (quest is T typedQuest &&
+                typedQuest.questData.requireConditionID == targetId)
+            {
+                UpdateQuestProgress(quest.questData.ID, targetId, amount);
+            }
+        }
+    }
+
+
 }

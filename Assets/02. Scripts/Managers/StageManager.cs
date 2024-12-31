@@ -3,7 +3,7 @@ using GSDatas;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor.SceneManagement;
+
 
 public class StageManager : Singleton<StageManager>
 {
@@ -86,6 +86,8 @@ public class StageManager : Singleton<StageManager>
         // 보상 획득
         GameManager.Instance.ClearReward(_StageId);
 
+        //스테이지 퀘스트 업데이트
+        QuestManager.Instance.UpdateStageQuests(_StageId);
 
         _stageHealth = 3;
 
