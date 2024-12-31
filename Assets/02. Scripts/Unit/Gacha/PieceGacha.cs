@@ -54,12 +54,6 @@ public class PieceGacha : MonoBehaviour
     private Dictionary<string, int> gradeCount = new Dictionary<string, int>();
     private int totalGachaCount = 0;
 
-    public void ResetGachaStats()
-    {
-        gradeCount.Clear();
-        totalGachaCount = 0;
-    }
-
     public void TrackGachaResult(GachaData selectedUnit)
     {
         if (selectedUnit != null)
