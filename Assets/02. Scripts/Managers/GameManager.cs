@@ -25,7 +25,8 @@ public class PlayerData
 public class GameManager : SingletonDontDestory<GameManager>
 {
 
-    private int _EnterStageID;
+    // 테스트를 위해 임시로 101 기입 - 추후 제거 예정
+    private int _EnterStageID = 101;
 
     public int StageID
     {
