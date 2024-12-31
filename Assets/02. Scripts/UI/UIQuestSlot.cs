@@ -25,23 +25,23 @@ public class UIQuestSlot : MonoBehaviour
     private void Start()
     {
         _canvas = GetComponentInParent<Canvas>();
-        rewardButton.onClick.AddListener(OnRewardButtonClick); 
-
+        rewardButton.onClick.AddListener(OnRewardButtonClick);
+        
     }
 
     public void SetQuestData(QuestBase quest)
     {
         _currentQuest = quest;
-        UpdateUI();
+        UpdateQuestProgress();
     }
 
-    private void UpdateUI()
+    public void UpdateQuestProgress()
     {
         titleText.text = _currentQuest.questData.description;
 
 
-        var progress = _currentQuest.GetProgress();  
-        var requireCount = _currentQuest.questData.requireCount;
+        int progress = _currentQuest.GetProgress();  
+        int requireCount = _currentQuest.questData.requireCount;
 
         progressText.text = $"{progress}/{requireCount}";
 
@@ -50,11 +50,16 @@ public class UIQuestSlot : MonoBehaviour
         progressBar.fillAmount = progressBarText;
 
         // 보상 정보 표시
-        //rewardAmountText.text = _currentQuest.questData.rewarCount.ToString();
+        rewardAmountText.text = _currentQuest.questData.rewardCount.ToString();
         // 보상 아이콘은 RewardData에서 가져와서 설정
 
+        rewardButton.interactable = _currentQuest.isCompleted;
+    }
 
-        // 버튼 상태 및 완료 표시 업데이트
+
+    // 완료 상태와 보상 버튼 관련 업데이트
+    public void UpdateRewardState()
+    {
         bool isCompleted = _currentQuest.isCompleted;
         bool hasReceivedReward = false;
 
@@ -64,11 +69,9 @@ public class UIQuestSlot : MonoBehaviour
         }
         else
         {
-          
             QuestManager.Instance.CreateNewQuestSaveData(_currentQuest.questData.ID);
             hasReceivedReward = false;
         }
-
 
         rewardButton.interactable = isCompleted && !hasReceivedReward;
         completeMark.SetActive(hasReceivedReward);
@@ -78,8 +81,8 @@ public class UIQuestSlot : MonoBehaviour
     {
         if (_currentQuest != null && _currentQuest.isCompleted)
         {
-            QuestManager.Instance.CheckQuestCompletion(_currentQuest.questData.ID);
-            UpdateUI();
+            QuestManager.Instance.QuestCompletion(_currentQuest.questData.ID);
+            UpdateRewardState();
         }
     }
 

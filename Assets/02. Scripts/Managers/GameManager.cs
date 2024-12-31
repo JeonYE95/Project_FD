@@ -25,9 +25,7 @@ public class PlayerData
 public class GameManager : SingletonDontDestory<GameManager>
 {
 
-    private int _EnterStageID = 101;
-    private int _EnterEnergy = 100;
-
+    private int _EnterStageID;
 
     public int StageID
     {
@@ -39,8 +37,8 @@ public class GameManager : SingletonDontDestory<GameManager>
     public int EnterEnergy
     {
 
-        get { return _EnterEnergy; }
-        set { _EnterEnergy = value; }
+        get { return playerData.energy; }
+        set { playerData.energy = value; }
 
     }
     
@@ -121,6 +119,14 @@ public class GameManager : SingletonDontDestory<GameManager>
     public void AddItemSave(int itemId, int count)
     {
 
+        if (itemId == 3000)
+        { 
+            playerData.energy += count;
+            SavePlayerDataToJson();
+            return;
+        
+        }
+
         if (itemId == 3002)
         {
             playerData.gold += count;
@@ -128,6 +134,8 @@ public class GameManager : SingletonDontDestory<GameManager>
             return;
 
         }
+
+
 
         // 기존 아이템이 있는지 확인
         if (playerData.items.TryGetValue(itemId, out int currentCount))
@@ -158,6 +166,10 @@ public class GameManager : SingletonDontDestory<GameManager>
         if (itemId == 3002)
         {
             playerData.gold -= count;
+
+            // 소비 퀘스트 조건 확인
+            QuestManager.Instance.UpdateConsumeQuests(itemId, count);
+
             SavePlayerDataToJson();
             return;
 
@@ -177,6 +189,10 @@ public class GameManager : SingletonDontDestory<GameManager>
                 {
                     playerData.items[itemId] = remainCount;
                 }
+
+                // 소비 퀘스트 조건 확인
+                QuestManager.Instance.UpdateConsumeQuests(itemId, count);
+
                 SavePlayerDataToJson();
             }
             else

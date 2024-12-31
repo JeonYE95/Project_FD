@@ -33,6 +33,8 @@ public class UISelectStage : UIBase
                 {
              
                     GameManager.Instance.EnterEnergy -= stageId.cost;
+
+                    QuestManager.Instance.UpdateConsumeQuests(stageId.ID, stageId.cost);
                     LoadInGameScene();
 
                 }
