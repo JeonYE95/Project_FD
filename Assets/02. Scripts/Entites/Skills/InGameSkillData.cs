@@ -45,6 +45,77 @@ public class InGameSkillData
         targetCount = skillData.targetCount;
     }
 
+    public string GetSkillDiscription()
+    {
+        string discription = "";
+
+        switch(targetGroup)
+        {
+            case TargetGroup.Self:
+                discription += "자신에게";
+                break;
+
+            case TargetGroup.Target:
+                discription += "목표에게";
+                break;
+
+            case TargetGroup.Enemy:
+            case TargetGroup.AllEnemy:
+                discription += "다수의 적에게";
+                break;
+
+
+            case TargetGroup.Ally:
+            case TargetGroup.AllAlly:
+                discription += "아군에게";
+                break;
+        }
+
+        discription += " ";
+
+        if (skillType == SkillType.Damage)
+        {
+            discription += "데미지";
+        }
+        else if (skillType == SkillType.Heal)
+        {
+            discription += "힐";
+        }
+        else if (skillType == SkillType.Buff)
+        {
+            switch(skillEffect)
+            {
+                case SkillEffect.Stun:
+                    discription += "스턴";
+                    break;
+
+                case SkillEffect.LifeSteal:
+                    discription += "흡혈";
+                    break;
+
+                case SkillEffect.AttackBoost:
+                    discription += "공격속도";
+                    break;
+
+                case SkillEffect.DefenseBoost:
+                case SkillEffect.DefenseModifier:
+                    discription += "방어력 증감";
+                    break;
+
+                case SkillEffect.AttackModifier:
+                    discription += "공격력 증감";
+                    break;
+
+                case SkillEffect.MultipleAttacks:
+                    discription += "멀티플 공격";
+                    break;
+            }
+        }
+
+        discription += " 적용";
+
+        return discription;
+    }
 }
 
 public enum SkillType
