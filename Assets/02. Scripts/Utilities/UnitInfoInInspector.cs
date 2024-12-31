@@ -3,6 +3,7 @@ using UnityEngine;
 public class UnitInfoInInspector : MonoBehaviour
 {
     private IUnitInfo unitInfo;
+    private InGameSkillData skillData;
 
     [Header("Unit Info (Inspector Only)")]
     [SerializeField] private int id;
@@ -13,10 +14,13 @@ public class UnitInfoInInspector : MonoBehaviour
     [SerializeField] private int defense;
     [SerializeField] private float skillCooltime;
     [SerializeField] private float attackCooltime;
-
+    [SerializeField] private string skillDiscription;
     private void Start()
     {
         unitInfo = GetComponent<UnitInfo>();
+        skillData = GetComponent<SkillExecutor>().inGameSkillData;
+        //GetComponent<SkillExecutor>().inGameSkillData.GetSkillDiscription();
+
         SyncUnitInfo(); // 초기 값 동기화
     }
 
@@ -37,5 +41,6 @@ public class UnitInfoInInspector : MonoBehaviour
         defense = unitInfo.Defense;
         skillCooltime = unitInfo.SkillCooltime;
         attackCooltime = unitInfo.AttackCooltime;
+        skillDiscription = skillData.GetSkillDiscription();
     }
 }
