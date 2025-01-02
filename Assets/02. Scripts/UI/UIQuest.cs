@@ -6,14 +6,12 @@ using System.Linq;
 public class UIQuest : UIBase
 {
 
-    public Transform questContent;  // 퀘스트 슬롯들이 들어갈 부모 Transform
-    public UIQuestSlot questSlotPrefab;
+    public UIScrollRecycle questScrollView;
     public Toggle weekQuest;
     public Toggle dayQuest;
     public Button batchRewardButton;
     public Button closeButton;
         
-    private List<UIQuestSlot> questSlots = new List<UIQuestSlot>();
     private QuestResetType currentQuestType = QuestResetType.Daily;
     private ToggleGroup toggleGroup;
 
@@ -22,7 +20,12 @@ public class UIQuest : UIBase
     {
         batchRewardButton.onClick.AddListener(OnBatchRewardButtonClick);
         closeButton.onClick.AddListener(() => { Close(); });
+        InitializeToggleGroup();
 
+    }
+
+    private void InitializeToggleGroup()
+    {
         toggleGroup = dayQuest.transform.parent.GetComponent<ToggleGroup>();
         if (toggleGroup == null)
         {
@@ -53,6 +56,7 @@ public class UIQuest : UIBase
 
     }
 
+
     protected override void OpenProcedure()
     {
 
@@ -69,23 +73,9 @@ public class UIQuest : UIBase
     private void RefreshQuestList()
     {
         
-        foreach (UIQuestSlot slot in questSlots)
-        {
-            Destroy(slot.gameObject);
-        }
-        questSlots.Clear();
-
         // 새로운 퀘스트 슬롯 생성
         List<QuestBase> questList = QuestManager.Instance.GetQuestsByType(currentQuestType);
-
-
-        foreach (var quest in questList)
-        {
-            UIQuestSlot slot = Instantiate(questSlotPrefab, questContent);
-            slot.SetQuestData(quest);
-            questSlots.Add(slot);
-        }
-
+        questScrollView.SetQuestList(questList);
         UpdateBatchRewardButton();
     }
 
@@ -93,20 +83,24 @@ public class UIQuest : UIBase
     //일괄 수령 - 각 슬롯의 보상 버튼 클릭 메서드 호출
     private void OnBatchRewardButtonClick()
     {
-        foreach (UIQuestSlot slot in questSlots)
+        var questList = QuestManager.Instance.GetQuestsByType(currentQuestType);
+        foreach (var quest in questList)
         {
-            slot.OnRewardButtonClick();  
+            if (quest.isCompleted && !GameManager.Instance.playerData.questData[quest.questData.ID].isCompleted)
+            {
+                QuestManager.Instance.QuestCompletion(quest.questData.ID);
+            }
         }
-        RefreshQuestList(); 
+        RefreshQuestList();
     }
 
     // 수령 가능한 퀘스트가 있는지 체크
     private void UpdateBatchRewardButton()
     {
-
-        bool hasCompletedQuest = questSlots.Any(slot =>
-            slot.CurrentQuest.isCompleted &&
-            !GameManager.Instance.playerData.questData[slot.CurrentQuest.questData.ID].isCompleted);
+        var questList = QuestManager.Instance.GetQuestsByType(currentQuestType);
+        bool hasCompletedQuest = questList.Any(quest =>
+            quest.isCompleted &&
+            !GameManager.Instance.playerData.questData[quest.questData.ID].isCompleted);
 
         batchRewardButton.interactable = hasCompletedQuest;
     }
