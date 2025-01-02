@@ -42,6 +42,10 @@ public class UnitUpgrade : MonoBehaviour
         UnitDataManager.Instance.SaveUnitData(unit);
         GameManager.Instance.substractItemSave(unitId, requiredPieces);
 
+        // 강화 퀘스트 진행
+        QuestManager.Instance.UpdateEnforceQuests(0);
+
+
         Debug.Log($"업그레이드 완료, 유닛 : {unit.name}, 현재 레벨 : {unit.level}, 공격력 : {unit.attack}, 방어력 : {unit.defense}, 체력 : {unit.health}");
     }
 }

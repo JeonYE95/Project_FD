@@ -27,6 +27,9 @@ public class PieceGacha : MonoBehaviour
             Debug.Log($"뽑힌 유닛: {selectedUnit.name}, 등급: {selectedUnit.grade}, 조각 수: {pieceAmount}");
 
             GameManager.Instance.AddItemSave(selectedUnit.ID, pieceAmount);
+
+            //뽑기 퀘스트 진행
+            QuestManager.Instance.UpdateGachaQuest(0);
         }
 
     }

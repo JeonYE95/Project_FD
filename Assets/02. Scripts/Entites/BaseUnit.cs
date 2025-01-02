@@ -104,18 +104,13 @@ public class BaseUnit : MonoBehaviour
         {
             OnDieEvent -= UnitDeActive;
 
-            if (BattleManager.Instance != null)
-            {
-                OnDieEvent -= BattleManager.Instance.UnitDie;
-            }
+            OnDieEvent -= BattleManager.Instance.UnitDie;
         }
 
-        if (this is PlayerUnit && BattleManager.Instance != null)
+        if (isPlayerUnit)
         {
             BattleManager.Instance.UnRegisterUnit(this);
         }
-
-        //gameObject.SetActive(false);
     }
 
 
@@ -224,7 +219,7 @@ public class BaseUnit : MonoBehaviour
             return false;
         }
 
-        return Vector2.Distance(transform.position, targetUnit.transform.position) < unitInfo.Range;
+        return Vector2.Distance(transform.position, targetUnit.transform.position) < unitInfo.Range + Defines.RANGEADJUST;
     }
 
     

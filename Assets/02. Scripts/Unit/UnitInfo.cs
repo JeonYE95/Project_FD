@@ -106,4 +106,6 @@ public class UnitInfo : MonoBehaviour, IUnitInfo
 
     // 플레이어 전용 데이터
     public string GetGrade() => _unitData?.grade ?? "None";
+
+
 }

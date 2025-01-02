@@ -1,6 +1,7 @@
 using Assets.HeroEditor.Common.Scripts.Common;
 using GSDatas;
 using System;
+using System.Diagnostics;
 
 [System.Serializable]
 public class InGameSkillData
@@ -21,6 +22,11 @@ public class InGameSkillData
 
     public void SetInGameSkillData(SkillData skillData)
     {
+        if (skillData.skillID == 20)
+        {
+            Debug.WriteLine("");
+        }
+
         if (skillData == null)
         {
             return;
@@ -39,6 +45,77 @@ public class InGameSkillData
         targetCount = skillData.targetCount;
     }
 
+    public string GetSkillDiscription()
+    {
+        string discription = "";
+
+        switch(targetGroup)
+        {
+            case TargetGroup.Self:
+                discription += "자신에게";
+                break;
+
+            case TargetGroup.Target:
+                discription += "목표에게";
+                break;
+
+            case TargetGroup.Enemy:
+            case TargetGroup.AllEnemy:
+                discription += "다수의 적에게";
+                break;
+
+
+            case TargetGroup.Ally:
+            case TargetGroup.AllAlly:
+                discription += "아군에게";
+                break;
+        }
+
+        discription += " ";
+
+        if (skillType == SkillType.Damage)
+        {
+            discription += "데미지";
+        }
+        else if (skillType == SkillType.Heal)
+        {
+            discription += "힐";
+        }
+        else if (skillType == SkillType.Buff)
+        {
+            switch(skillEffect)
+            {
+                case SkillEffect.Stun:
+                    discription += "스턴";
+                    break;
+
+                case SkillEffect.LifeSteal:
+                    discription += "흡혈";
+                    break;
+
+                case SkillEffect.AttackBoost:
+                    discription += "공격속도";
+                    break;
+
+                case SkillEffect.DefenseBoost:
+                case SkillEffect.DefenseModifier:
+                    discription += "방어력 증감";
+                    break;
+
+                case SkillEffect.AttackModifier:
+                    discription += "공격력 증감";
+                    break;
+
+                case SkillEffect.MultipleAttacks:
+                    discription += "멀티플 공격";
+                    break;
+            }
+        }
+
+        discription += " 적용";
+
+        return discription;
+    }
 }
 
 public enum SkillType
@@ -58,6 +135,8 @@ public enum SkillEffect
     SkillValue,           // 스킬 데미지
     AttackBoost,          // 공격속도
     DefenseBoost,         // 방어력 증가
+    AttackModifier,       // 공격력 조정
+    DefenseModifier,      // 방어력 조정 dev 올린후 이걸로 시트 변경
     MultipleAttacks,      // 여러번 공격
     BasicAttackMultiplier // 평타 데미지 기반 스킬 데미지
 }

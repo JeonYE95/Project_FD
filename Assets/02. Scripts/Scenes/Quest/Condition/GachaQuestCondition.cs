@@ -30,4 +30,9 @@ public class GachaQuestCondition : ICountQuest
     {
         currentCount += 1;
     }
+
+    public void SetProgress(int progress)
+    {
+        currentCount = progress;
+    }
 }

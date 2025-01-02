@@ -29,8 +29,14 @@ public class StageQuestCondition : ITargetQuset
     {
         if (questData.requireConditionID == 0 ||  StageID == questData.requireConditionID)
         {
-            currentCount += 1;
+            currentCount += ClearCount;
         }
       
     }
+
+    public void SetProgress(int progress)
+    {
+        currentCount = progress;
+    }
+
 }

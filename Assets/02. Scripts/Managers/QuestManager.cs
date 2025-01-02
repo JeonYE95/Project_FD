@@ -5,15 +5,30 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class QuestManager : Singleton<QuestManager>
+public class QuestManager : SingletonDontDestory<QuestManager>
 {
 
     public List<QuestData> questDataList = new List<QuestData>();
     private Dictionary<int, QuestBase> questDictionary = new Dictionary<int, QuestBase>();
 
     protected override void Awake()
-    { 
+    {
         base.Awake();
+    }
+
+
+    private void Start()
+    {
+        StartCoroutine(WaitForGameManagerInitialize());
+    }
+
+
+    // GameManager에서 JSON 불러올 때까지 대기
+    private IEnumerator WaitForGameManagerInitialize()
+    {
+        // GameManager가 JSON을 로드할 때까지 대기
+        yield return new WaitUntil(() => GameManager.Instance != null && GameManager.Instance.IsInitialized);
+
         Initialize();
     }
 
@@ -22,11 +37,11 @@ public class QuestManager : Singleton<QuestManager>
     {
         questDataList = QuestDataManager.GetList();
 
-        // 저장된 퀘스트 데이터 로드
-        LoadQuestData();
-
         //새로운 퀘스트라면 초기 데이터 생성
         InitializeNewQuests();
+
+        // 저장된 퀘스트 데이터 로드
+        LoadQuestData();
 
         //퀘스트 리셋 체크
         ResetQuests(QuestResetType.Daily);
@@ -39,19 +54,20 @@ public class QuestManager : Singleton<QuestManager>
         //대표 퀘스트 찾기 = 각 그룹에서 첫번째 ID 선택
 
         var mainQuestIds = questDataList
-       .GroupBy(q => q.ID / 10)  
-       .Select(g => g.Min(q => q.ID)) 
+       .GroupBy(q => q.ID / 10)
+       .Select(g => g.Min(q => q.ID))
        .ToList();
 
 
         foreach (QuestData questData in questDataList)
         {
-            if (mainQuestIds.Contains(questData.ID) && !questDictionary.ContainsKey(questData.ID))
+
+            if (ShouldAddQuest(questData, mainQuestIds))
             {
                 QuestBase quest = CreateQuestCondition(questData);
                 questDictionary.Add(questData.ID, quest);
 
-               
+
                 if (!GameManager.Instance.playerData.questData.ContainsKey(questData.ID))
                 {
                     CreateNewQuestSaveData(questData.ID);
@@ -61,6 +77,25 @@ public class QuestManager : Singleton<QuestManager>
 
         //저장
         GameManager.Instance.progressSave();
+    }
+
+
+
+    private bool ShouldAddQuest(QuestData questData, List<int> mainQuestIds)
+    {
+        // 메인 퀘스트인지 확인
+        if (!mainQuestIds.Contains(questData.ID)) return false;
+
+        // 이미 딕셔너리에 있는지 확인
+        if (questDictionary.ContainsKey(questData.ID)) return false;
+
+        // 저장된 데이터가 있고 완료된 퀘스트인지 확인
+        if (GameManager.Instance.playerData.questData.ContainsKey(questData.ID))
+        {
+            return !GameManager.Instance.playerData.questData[questData.ID].isCompleted;
+        }
+
+        return true;
     }
 
 
@@ -97,26 +132,41 @@ public class QuestManager : Singleton<QuestManager>
     }
 
     // 퀘스트 클리어시 보상 획득 - UI 버튼과 연동 필요
-    public void CheckQuestCompletion(int questID)
+    public void QuestCompletion(int questID)
     {
         QuestBase quest = GetQuest(questID);
         if (quest != null && quest.isCompleted)
         {
-            GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.requireCount);
+
+            GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.rewardCount);
 
 
-
-            QuestData nextQuestData = QuestDataManager.Instance.GetQuestData(questID);
-
-            // 다음 연계 퀘스트 활성화
-            if (nextQuestData != null && !questDictionary.ContainsKey(quest.questData.nextQuestID))
+            // 완료 상태를 저장 데이터에 기록
+            if (GameManager.Instance.playerData.questData.ContainsKey(questID))
             {
+                GameManager.Instance.playerData.questData[questID].isCompleted = true;
 
-                QuestBase nextQuest = CreateQuestCondition(nextQuestData);
-                questDictionary.Add(nextQuestData.ID, nextQuest);
-                CreateNewQuestSaveData(nextQuestData.ID);
 
+                if (quest.questData.nextQuestID != 0)
+                {
+
+                    QuestData nextQuestData = QuestDataManager.Instance.GetQuestData(quest.questData.nextQuestID);
+
+                    // 다음 연계 퀘스트 활성화
+                    if (nextQuestData != null && !questDictionary.ContainsKey(quest.questData.nextQuestID))
+                    {
+
+                        QuestBase nextQuest = CreateQuestCondition(nextQuestData);
+                        questDictionary.Add(nextQuestData.ID, nextQuest);
+                        CreateNewQuestSaveData(nextQuestData.ID);
+
+                    }
+                }
+
+                questDictionary.Remove(questID);
+                SaveQuestData(quest);
             }
+
 
 
         }
@@ -148,7 +198,9 @@ public class QuestManager : Singleton<QuestManager>
             nextResetTimeUTC = quest.nextResetTimeUTC.ToString()
         };
 
-  
+
+        Debug.Log($"Saving Quest {quest.questData.ID} - Progress: {saveData.progress}, Completed: {saveData.isCompleted}");
+
         if (GameManager.Instance.playerData.questData.ContainsKey(quest.questData.ID))
         {
             GameManager.Instance.playerData.questData[quest.questData.ID] = saveData;
@@ -169,12 +221,19 @@ public class QuestManager : Singleton<QuestManager>
         foreach (KeyValuePair<int, QuestSaveData> questPair in GameManager.Instance.playerData.questData)
         {
             QuestBase quest = GetQuest(questPair.Key);
+
+            Debug.Log($"Loading quest {questPair.Key} - Saved progress: {questPair.Value.progress}"); // 저장된 데이터 로그
+
+
             if (quest != null)
             {
-                QuestSaveData savedQuest = questPair.Value; 
-                //quest.progress = savedQuest.progress;
+                QuestSaveData savedQuest = questPair.Value;
+                quest.SetProgress(savedQuest.progress);
                 quest.isCompleted = savedQuest.isCompleted;
                 quest.nextResetTimeUTC = DateTime.Parse(savedQuest.nextResetTimeUTC);
+
+
+                Debug.Log($"Quest {questPair.Key} loaded - Progress: {savedQuest.progress}, Completed: {savedQuest.isCompleted}");
             }
         }
     }
@@ -196,9 +255,9 @@ public class QuestManager : Singleton<QuestManager>
     {
         switch (data.questType)
         {
-            case "kill":
+            case "Kill":
                 return new KillQuest(data);
-            case "consume":
+            case "Consume":
                 return new ConsumeQuest(data);
             case "Enforce":
                 return new EnforceQuest(data);
@@ -210,6 +269,52 @@ public class QuestManager : Singleton<QuestManager>
                 return new QuestClearQuest(data);
             default:
                 throw new ArgumentException($"Unknown quest type: {data.questType}");
+        }
+    }
+
+
+    public void UpdateKillQuests(int enemyId, int amount = 1)
+    {
+        UpdateQuestsByType<KillQuest>(enemyId, amount);
+    }
+
+    public void UpdateConsumeQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<ConsumeQuest>(itemId, amount);
+    }
+
+
+    public void UpdateStageQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<StageQuest>(itemId, amount);
+    }
+
+    public void UpdateGachaQuest(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<GachaQuest>(itemId, amount);
+    }
+
+    public void UpdateEnforceQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<EnforceQuest>(itemId, amount);
+    }
+
+    public void UpdateQuestClearQuest(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<QuestClearQuest>(itemId, amount);
+    }
+
+
+    private void UpdateQuestsByType<T>(int targetId, int amount = 1) where T : QuestBase
+    {
+        var currentQuests = GetCurrentQuests();
+        foreach (var quest in currentQuests)
+        {
+            if (quest is T typedQuest &&
+                (typedQuest.questData.requireConditionID == targetId || typedQuest.questData.requireConditionID == 0))
+            {
+                UpdateQuestProgress(quest.questData.ID, targetId, amount);
+            }
         }
     }
 

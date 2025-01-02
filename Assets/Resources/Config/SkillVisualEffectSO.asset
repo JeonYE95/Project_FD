@@ -30,7 +30,15 @@ MonoBehaviour:
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: SmallThunder
+  - skillID: 6
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: HealEffect
   - skillID: 15
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: Freeze
+  - skillID: 19
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: HealEffect
