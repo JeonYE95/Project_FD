@@ -399,5 +399,13 @@ public class InventoryManager : Singleton<InventoryManager>
         return UnitHas.ContainsKey(unitName) && UnitHas[unitName] > 0;
     }
 
+    public void AddAllUnits()
+    {
+        var units = UnitDataManager.Instance.GetUnitDatas();
 
+        foreach (var unit in units)
+        {
+            AddCharacter(unit);
+        }
+    }
 }
