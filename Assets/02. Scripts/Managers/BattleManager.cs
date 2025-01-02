@@ -70,6 +70,14 @@ public class BattleManager : SingletonDontDestory<BattleManager>
         LoadBattleInfoConfig();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            InventoryManager.Instance.AddAllUnits();
+        }
+    }
+
     public void BattleSettingAndStart()
     {
         SetAllUnits();

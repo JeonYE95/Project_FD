@@ -227,6 +227,14 @@ public class SkillExecutor : MonoBehaviour
 
     public void SetTargetIdle(BaseUnit target)
     {
-        target.SetIdle();
+        if (!BattleManager.Instance.IsBattleEnd)
+        {
+            target.SetIdle();
+        }
+    }
+
+    public string GetSkillDescription()
+    {
+        return inGameSkillData.GetSkillDescription();
     }
 }
