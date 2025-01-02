@@ -14,6 +14,7 @@ public class InGameSkillData
     public float value;                // 효과 값 (스킬의 강도, 배율, 회복량 등)
     public float duration;             // 지속 시간 (스킬 효과가 유지되는 시간, 초 단위)
     public float skillCoolDown;             // 쿨타임 (스킬 재사용 대기 시간, 초 단위)
+    public string skillDescription;         // 스킬 설명
 
     // 타겟팅 관련
     public TargetGroup targetGroup;    // 스킬 타겟 그룹 (Self, Ally, Enemy 등)
@@ -43,9 +44,15 @@ public class InGameSkillData
         targetGroup = EnumExtensions.ToEnum<TargetGroup>(skillData.TargetGroup);
         targetPriority = EnumExtensions.ToEnum<TargetPriority>(skillData.TargetPriority);
         targetCount = skillData.targetCount;
+        skillDescription = skillData.SkillDescription;
     }
 
     public string GetSkillDescription()
+    {
+        return skillDescription;
+    }
+
+    /*public string GetSkillDescription()
     {
         string discription = "";
 
@@ -112,10 +119,15 @@ public class InGameSkillData
             }
         }
 
-        discription += " 적용";
+        *//*if (skillType != SkillType.Buff)
+        {
+
+        }*//*
+        
+        discription += " 이(가) 적용 됩니다.";
 
         return discription;
-    }
+    }*/
 }
 
 public enum SkillType

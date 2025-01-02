@@ -67,6 +67,7 @@ namespace GSDatas
 		public System.String TargetGroup;
 		public System.String TargetPriority;
 		public System.Int32 targetCount;
+		public System.String SkillDescription;
   
 
 #region fuctions
