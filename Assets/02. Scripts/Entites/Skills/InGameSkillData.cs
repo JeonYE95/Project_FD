@@ -45,7 +45,7 @@ public class InGameSkillData
         targetCount = skillData.targetCount;
     }
 
-    public string GetSkillDiscription()
+    public string GetSkillDescription()
     {
         string discription = "";
 
