@@ -66,6 +66,8 @@ public class UIQuestSlot : MonoBehaviour
         if (GameManager.Instance.playerData.questData.ContainsKey(_currentQuest.questData.ID))
         {
             hasReceivedReward = GameManager.Instance.playerData.questData[_currentQuest.questData.ID].isCompleted;
+
+            QuestManager.Instance.UpdateQuestClearQuest(0);
         }
         else
         {

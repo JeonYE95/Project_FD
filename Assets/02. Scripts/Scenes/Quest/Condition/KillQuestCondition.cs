@@ -33,4 +33,9 @@ public class KillQuestCondition : ITargetQuset
     {
         currentCount = 0;
     }
+
+    public void SetProgress(int progress)
+    {
+        currentCount = progress;
+    }
 }
