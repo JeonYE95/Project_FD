@@ -3,15 +3,15 @@
   "level": 0,
   "gold": 0,
   "diamond": 0,
-  "energy": 10,
+  "energy": 9,
   "items": {},
   "UnitEnforce": {},
   "ClassEnforce": {},
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 1,
+      "isCompleted": true,
       "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
     },
     "4010": {
@@ -46,7 +46,7 @@
     },
     "4061": {
       "questId": 4061,
-      "progress": 0,
+      "progress": 7,
       "isCompleted": false,
       "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
     }
