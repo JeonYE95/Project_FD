@@ -37,8 +37,8 @@ public class UIQuestSlot : MonoBehaviour
 
     public void UpdateQuestProgress()
     {
-        titleText.text = _currentQuest.questData.description;
-
+        titleText.text = _currentQuest.questData.name;
+        descriptionText.text = _currentQuest.questData.description;
 
         int progress = _currentQuest.GetProgress();  
         int requireCount = _currentQuest.questData.requireCount;
