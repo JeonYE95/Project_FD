@@ -14,7 +14,7 @@ public class UnitInfoInInspector : MonoBehaviour
     [SerializeField] private int defense;
     [SerializeField] private float skillCooltime;
     [SerializeField] private float attackCooltime;
-    [SerializeField] private string skillDiscription;
+    [SerializeField] private string skillDescription;
     private void Start()
     {
         unitInfo = GetComponent<UnitInfo>();
@@ -41,6 +41,6 @@ public class UnitInfoInInspector : MonoBehaviour
         defense = unitInfo.Defense;
         skillCooltime = unitInfo.SkillCooltime;
         attackCooltime = unitInfo.AttackCooltime;
-        skillDiscription = skillData.GetSkillDiscription();
+        skillDescription = skillData.GetSkillDescription();
     }
 }
