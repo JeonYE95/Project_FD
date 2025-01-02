@@ -21,7 +21,6 @@ public class UIQuestSlot : MonoBehaviour
     public QuestBase CurrentQuest => _currentQuest;
 
 
-
     private void Start()
     {
         _canvas = GetComponentInParent<Canvas>();

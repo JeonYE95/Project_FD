@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 1619838069977300017}
   - component: {fileID: 3392002061445970477}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: DayQuestBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,6 +521,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questContent: {fileID: 1000932351067849103}
   questSlotPrefab: {fileID: 7734024974941791244, guid: d2a88088fca003843833f36c00f4f0f8, type: 3}
+  weekQuest: {fileID: 6605991864667450123}
+  dayQuest: {fileID: 3392002061445970477}
   batchRewardButton: {fileID: 6600947926640957736}
   closeButton: {fileID: 233295972026700802}
 --- !u!1 &2872785596503378270
@@ -534,7 +536,7 @@ GameObject:
   - component: {fileID: 4210230522789466210}
   - component: {fileID: 6605991864667450123}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: WeekQuestBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

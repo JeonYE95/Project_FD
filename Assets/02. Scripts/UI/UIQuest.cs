@@ -8,19 +8,58 @@ public class UIQuest : UIBase
 
     public Transform questContent;  // 퀘스트 슬롯들이 들어갈 부모 Transform
     public UIQuestSlot questSlotPrefab;
+    public Toggle weekQuest;
+    public Toggle dayQuest;
     public Button batchRewardButton;
     public Button closeButton;
         
     private List<UIQuestSlot> questSlots = new List<UIQuestSlot>();
+    private QuestResetType currentQuestType = QuestResetType.Daily;
+    private ToggleGroup toggleGroup;
+
 
     private void Start()
     {
         batchRewardButton.onClick.AddListener(OnBatchRewardButtonClick);
         closeButton.onClick.AddListener(() => { Close(); });
+
+        toggleGroup = dayQuest.transform.parent.GetComponent<ToggleGroup>();
+        if (toggleGroup == null)
+        {
+            toggleGroup = dayQuest.transform.parent.gameObject.AddComponent<ToggleGroup>();
+        }
+        toggleGroup.allowSwitchOff = false;
+
+        // 토글들을 그룹에 등록
+        dayQuest.group = toggleGroup;
+        weekQuest.group = toggleGroup;
+
+        // 토글 이벤트 설정
+        dayQuest.onValueChanged.AddListener((isOn) => {
+            if (isOn)
+            {
+                currentQuestType = QuestResetType.Daily;
+                RefreshQuestList();
+            }
+        });
+
+        weekQuest.onValueChanged.AddListener((isOn) => {
+            if (isOn)
+            {
+                currentQuestType = QuestResetType.Weekly;
+                RefreshQuestList();
+            }
+        });
+
     }
 
     protected override void OpenProcedure()
     {
+
+
+        dayQuest.isOn = true;
+        currentQuestType = QuestResetType.Daily;
+
         RefreshQuestList();
         UpdateBatchRewardButton();
     }
@@ -37,7 +76,9 @@ public class UIQuest : UIBase
         questSlots.Clear();
 
         // 새로운 퀘스트 슬롯 생성
-        List<QuestBase> questList = QuestManager.Instance.GetCurrentQuests();
+        List<QuestBase> questList = QuestManager.Instance.GetQuestsByType(currentQuestType);
+
+
         foreach (var quest in questList)
         {
             UIQuestSlot slot = Instantiate(questSlotPrefab, questContent);
@@ -69,4 +110,8 @@ public class UIQuest : UIBase
 
         batchRewardButton.interactable = hasCompletedQuest;
     }
+
+
+
+
 }
