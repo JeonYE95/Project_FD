@@ -96,6 +96,11 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (!_unit.isLive)
+        {
+            return;
+        }
+
         //단순한 식 데미지 = 공격력 - 방어력
         //최소 데미지 1 구현
 
