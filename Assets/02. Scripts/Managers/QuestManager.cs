@@ -92,7 +92,11 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         // 저장된 데이터가 있고 완료된 퀘스트인지 확인
         if (GameManager.Instance.playerData.questData.ContainsKey(questData.ID))
         {
-            return !GameManager.Instance.playerData.questData[questData.ID].isCompleted;
+
+            var savedQuest = GameManager.Instance.playerData.questData[questData.ID];
+
+            // 퀘스트가 완료되고 보상도 받은 경우에만 false 반환
+            return !(savedQuest.isCompleted && savedQuest.hasReceivedReward);
         }
 
         return true;
@@ -106,9 +110,11 @@ public class QuestManager : SingletonDontDestory<QuestManager>
             questId = questId,
             progress = 0,
             isCompleted = false,
+            hasReceivedReward = false,
             nextResetTimeUTC = DateTime.UtcNow.ToString()
         };
         GameManager.Instance.playerData.questData.Add(questId, saveData);
+        GameManager.Instance.progressSave();
     }
 
     public QuestBase GetQuest(int questID)
@@ -137,7 +143,7 @@ public class QuestManager : SingletonDontDestory<QuestManager>
         QuestBase quest = GetQuest(questID);
         if (quest != null && quest.isCompleted)
         {
-
+            //퀘스트 보상 지급 
             GameManager.Instance.AddItemSave(quest.questData.rewardID, quest.questData.rewardCount);
 
 
@@ -145,7 +151,9 @@ public class QuestManager : SingletonDontDestory<QuestManager>
             if (GameManager.Instance.playerData.questData.ContainsKey(questID))
             {
                 GameManager.Instance.playerData.questData[questID].isCompleted = true;
+                GameManager.Instance.playerData.questData[questID].hasReceivedReward = true;
 
+                UpdateQuestClearQuest(0);
 
                 if (quest.questData.nextQuestID != 0)
                 {
@@ -166,8 +174,6 @@ public class QuestManager : SingletonDontDestory<QuestManager>
                 questDictionary.Remove(questID);
                 SaveQuestData(quest);
             }
-
-
 
         }
 
@@ -190,18 +196,21 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     // 개별 퀘스트 저장
     private void SaveQuestData(QuestBase quest)
     {
+        bool exists = GameManager.Instance.playerData.questData.TryGetValue(quest.questData.ID, out var existingData);
+
         QuestSaveData saveData = new QuestSaveData
         {
             questId = quest.questData.ID,
             progress = quest.GetProgress(),
             isCompleted = quest.isCompleted,
+            hasReceivedReward = exists ? existingData.hasReceivedReward : false,
             nextResetTimeUTC = quest.nextResetTimeUTC.ToString()
         };
 
 
         Debug.Log($"Saving Quest {quest.questData.ID} - Progress: {saveData.progress}, Completed: {saveData.isCompleted}");
 
-        if (GameManager.Instance.playerData.questData.ContainsKey(quest.questData.ID))
+        if (exists)
         {
             GameManager.Instance.playerData.questData[quest.questData.ID] = saveData;
         }

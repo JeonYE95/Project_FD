@@ -106,6 +106,14 @@ public class UIScrollRecycle : MonoBehaviour
             if (i >= questList.Count) break;
 
             UIQuestSlot slot = slotPool.Get();
+            slot.gameObject.SetActive(true);
+
+            // 슬롯 상태 초기화
+            if (slot.completeMark != null)
+            {
+                slot.completeMark.SetActive(false);
+            }
+
             slot.transform.localPosition = new Vector3(0, -i * slotHeight, 0);
             slot.SetQuestData(questList[i]);
             activeSlots.Add(slot);
