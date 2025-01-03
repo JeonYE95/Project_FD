@@ -46,6 +46,11 @@ public class ClassUpgrade : MonoBehaviour
         // 데이터 적용
         foreach (var unit in classUnits)
         {
+
+            //유닛 강화 정보 불러오기
+            int unitEnforceLevel = 0;
+            GameManager.Instance.playerData.UnitEnforce.TryGetValue(unit.ID, out unitEnforceLevel);
+
             unit.attack += classEnforceData.attack;
             unit.defense += classEnforceData.defense;
             unit.health += classEnforceData.health;
