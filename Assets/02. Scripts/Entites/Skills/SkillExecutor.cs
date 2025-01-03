@@ -59,10 +59,10 @@ public class SkillExecutor : MonoBehaviour
     {
         var targetVisualEffectTag = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID).targetEffectTag;
 
-        if (inGameSkillData.skillID == 15)
+        /*if (inGameSkillData.skillID == 15)
         {
             Debug.Log("");
-        }
+        }*/
 
         PlayVisualEffect(target, targetVisualEffectTag);
 
@@ -70,10 +70,7 @@ public class SkillExecutor : MonoBehaviour
         {
             //Debug.Log(targetVisualEffectTag.ToString());
         }
-        else
-        {
-            PlayVisualEffect(target, targetVisualEffectTag);
-        }*/
+        */
 
         switch (inGameSkillData.skillType)
         {
