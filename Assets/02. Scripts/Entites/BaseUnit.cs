@@ -121,9 +121,7 @@ public class BaseUnit : MonoBehaviour
         isLive = true;
         healthSystem.ResetHealth();
 
-        //평타와 스킬 쿨타임 초기화
-        actionHandler.ResetSkillCoolTime();
-        actionHandler.ResetAttackCoolTime();
+        ResetCoolTime();
 
         stateMachine?.ChangeState(stateMachine.WaitState);
 
@@ -161,6 +159,13 @@ public class BaseUnit : MonoBehaviour
         CurrentState = stateMachine?.GetState();
         ID = unitInfo.ID;
         Defense = unitInfo.Defense;
+    }
+
+    public void ResetCoolTime()
+    {
+        //평타와 스킬 쿨타임 초기화
+        actionHandler.ResetSkillCoolTime();
+        actionHandler.ResetAttackCoolTime();
     }
 
     public bool IsAttackReady()
