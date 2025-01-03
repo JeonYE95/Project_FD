@@ -41,9 +41,10 @@ public class UIHealthBar : UIBase
     {
         _healthSlider.maxValue = _healthSystem.MaxHP;
         _healthSlider.value = _healthSystem.currentHP;
+        _healthSystem.OnHealthChange += SetHealthBar;
     }
 
-    private void Update()
+    public void SetHealthBar()
     {
         if (_healthSlider != null)
         {

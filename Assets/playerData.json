@@ -1,54 +1,58 @@
 {
   "name": null,
   "level": 0,
-  "gold": 0,
+  "gold": 80200,
   "diamond": 0,
-  "energy": 9,
-  "items": {},
+  "energy": 3,
+  "items": {
+    "3003": 16004,
+    "3004": 806,
+    "3005": 8
+  },
   "UnitEnforce": {},
   "ClassEnforce": {},
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 1,
+      "progress": 4,
       "isCompleted": true,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4010": {
       "questId": 4010,
       "progress": 0,
       "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4020": {
       "questId": 4020,
       "progress": 0,
       "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4030": {
       "questId": 4030,
-      "progress": 0,
-      "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "progress": 1,
+      "isCompleted": true,
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4040": {
       "questId": 4040,
       "progress": 0,
       "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4050": {
       "questId": 4050,
       "progress": 0,
       "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     },
     "4061": {
       "questId": 4061,
-      "progress": 7,
-      "isCompleted": false,
-      "nextResetTimeUTC": "2025-01-02 오전 1:28:42"
+      "progress": 29,
+      "isCompleted": true,
+      "nextResetTimeUTC": "1/2/2025 4:23:17 AM"
     }
   },
   "ChallengeProgress": {}

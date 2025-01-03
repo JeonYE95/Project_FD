@@ -7,11 +7,15 @@ public class HealthSystem : MonoBehaviour
 {
     BaseUnit _unit;
 
+    private int maxHP;
+    public int currentHP;
+
+    public Action OnHealthChange;
+
     private GameObject _healthBar;
     private RectTransform _healthBarRectTransform;
 
-    private int maxHP;
-    public int currentHP;
+    
 
     //현재는 최대 HP가 바뀌면 현재 HP도 최대 HP로 설정
     //배틀 시 최대 체력이 바뀔리 없다는 가정
@@ -81,11 +85,13 @@ public class HealthSystem : MonoBehaviour
     public void ResetHealth()
     {
         currentHP = maxHP;
+        OnHealthChange?.Invoke();
     }
 
     public void TakeHealth(int heal)
     {
         currentHP = Mathf.Min(currentHP + heal, maxHP);
+        OnHealthChange?.Invoke();
     }
 
     public void TakeDamage(int damage)
@@ -107,5 +113,7 @@ public class HealthSystem : MonoBehaviour
             currentHP = 0;
             _unit.CallDieEvent();
         }
+
+        OnHealthChange?.Invoke();
     }
 }
