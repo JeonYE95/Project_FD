@@ -598,7 +598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6391176258394746291
@@ -1327,7 +1327,7 @@ GameObject:
   - component: {fileID: 3468476296087495626}
   - component: {fileID: 8799436388378712228}
   - component: {fileID: 4392627477768617229}
-  - component: {fileID: 3913009545552671867}
+  - component: {fileID: 7216051995286451499}
   m_Layer: 5
   m_Name: UIHeroes
   m_TagString: Untagged
@@ -1421,7 +1421,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3913009545552671867
+--- !u!114 &7216051995286451499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1430,12 +1430,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3421515128286507845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb9b48c266dc049aaa95a89f3368444b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db2886b0cada43a09625b583fcc7686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startBtn: {fileID: 0}
-  _settingBtn: {fileID: 0}
-  _unitStateBtn: {fileID: 0}
 --- !u!1 &3815870212630939313
 GameObject:
   m_ObjectHideFlags: 0

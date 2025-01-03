@@ -219,7 +219,7 @@ public class BaseUnit : MonoBehaviour
             return false;
         }
 
-        return Vector2.Distance(transform.position, targetUnit.transform.position) < unitInfo.Range + Defines.RANGEADJUST;
+        return Vector2.Distance(transform.position, targetUnit.transform.position) < (unitInfo.Range * 1.1f) + Defines.RANGEADJUST;
     }
 
     

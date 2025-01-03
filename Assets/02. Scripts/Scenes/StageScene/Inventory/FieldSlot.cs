@@ -12,6 +12,9 @@ public class FieldSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDro
 
     [SerializeField]
     private GameObject _character = null;
+
+    public bool isPlayerSlot = true;
+
     public GameObject Character => _character;
 
     // FieldSlot에 직렬화 필드 추가
