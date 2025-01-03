@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClassEnforceDataManaer : ClassEnforceData
+public class ClassEnforceDataManager : ClassEnforceData
 {
-    private static ClassEnforceDataManaer _instance;
-    public static ClassEnforceDataManaer Instance
+    private static ClassEnforceDataManager _instance;
+    public static ClassEnforceDataManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = new ClassEnforceDataManaer();
+                _instance = new ClassEnforceDataManager();
             }
             return _instance;
         }
@@ -20,14 +20,14 @@ public class ClassEnforceDataManaer : ClassEnforceData
 
 
 
-    private ClassEnforceDataManaer() { }
+    private ClassEnforceDataManager() { }
 
-    public List<ClassEnforceData> GetItemDatas()
+    public List<ClassEnforceData> GetClassDatas()
     {
         return GetList();
     }
 
-    public ClassEnforceData GetItemData(int id)
+    public ClassEnforceData GetClassData(int id)
     {
         if (ClassEnforceDataMap.TryGetValue(id, out var data))
         {
@@ -36,4 +36,8 @@ public class ClassEnforceDataManaer : ClassEnforceData
 
         return null;
     }
+
+
+
+
 }
