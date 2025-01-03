@@ -12,7 +12,9 @@ public class UnitMovement : MonoBehaviour
 
     Rigidbody2D _rigidbody2D;
     BaseUnit _myUnit;
+
     float _attackDistanceMutl;
+    float _targetRandomCircle = 0.5f;
 
     private void Awake()
     {
@@ -47,6 +49,10 @@ public class UnitMovement : MonoBehaviour
         Vector2 directionToTarget = (targetPosition - myPosition).normalized;
 
         Vector2 AdjustTargetPositon = targetPosition - (directionToTarget * attackRange * _attackDistanceMutl);
+
+        Vector2 randomOffset = Random.insideUnitCircle * _targetRandomCircle;
+
+        AdjustTargetPositon += randomOffset;
 
         return AdjustTargetPositon;
     }

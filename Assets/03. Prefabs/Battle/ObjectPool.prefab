@@ -65,3 +65,7 @@ MonoBehaviour:
     prefab: {fileID: 5043573985140183233, guid: 969801f3bb9953e4e838475e446be4db, type: 3}
     size: 15
     canExpand: 1
+  - tag: Earthquake
+    prefab: {fileID: 5043573985140183233, guid: 6ea4c19d986c9cb43af3a447cfee7f3d, type: 3}
+    size: 15
+    canExpand: 1

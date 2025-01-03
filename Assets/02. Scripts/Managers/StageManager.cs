@@ -3,6 +3,7 @@ using GSDatas;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 
 public class StageManager : Singleton<StageManager>
@@ -12,7 +13,7 @@ public class StageManager : Singleton<StageManager>
     private int _stageHealth = 3;
 
     [SerializeField]
-    private int _StageId;
+    private int _stageID;
 
     public int StageHealth
     {
@@ -20,9 +21,19 @@ public class StageManager : Singleton<StageManager>
         set { _stageHealth = value; }
     }
 
+    // private List<StageData> _currentStageData;
+    // 스테이지 정보 저장 
+
+    private List<StageData> _currentStageData;
+    public List<StageData> CurrentStageData
+    {
+        get { return _currentStageData; }
+        set { _currentStageData = value; }
+    }
+
 
     [Header("스테이지 내 재화 관리")]
-    private int _gold = 15;
+    private int _gold = 99999;
 
 
     public int Gold
@@ -44,7 +55,7 @@ public class StageManager : Singleton<StageManager>
     protected override void Awake()
     {
         base.Awake();
-        _StageId = GameManager.Instance.StageID;
+        _stageID = GameManager.Instance.StageID;
    
     }
 
@@ -79,21 +90,30 @@ public class StageManager : Singleton<StageManager>
 
     public void GameClear()
     {
+        // 보상 불러오기
+        _currentStageData = GetCurrentStageData();
+
         // 게임 클리어 시 UI 불러오기 - 보상 받음
         UIManager.Instance.OpenUI<UIStageClear>();
 
-
         // 보상 획득
-        GameManager.Instance.ClearReward(_StageId);
+        GameManager.Instance.ClearReward(_stageID);
 
         //스테이지 퀘스트 업데이트
-        QuestManager.Instance.UpdateStageQuests(_StageId);
+        QuestManager.Instance.UpdateStageQuests(_stageID);
 
         _stageHealth = 3;
 
         Debug.Log("스테이지 클리어");
 
     }
+
+    private List<StageData> GetCurrentStageData()
+    {
+        return StageData.GetList().Where(data => data.ID == _stageID).ToList();
+    }
+
+
 
 
  

@@ -28,8 +28,7 @@ public class PieceGacha : MonoBehaviour
 
             GameManager.Instance.AddItemSave(selectedUnit.ID, pieceAmount);
 
-            //뽑기 퀘스트 진행
-            QuestManager.Instance.UpdateGachaQuest(0);
+            TrackGachaResult(selectedUnit);
         }
 
     }
@@ -52,8 +51,34 @@ public class PieceGacha : MonoBehaviour
         }
     }
 
-    //private int GetPieceAmountByGrade(string grade)
-    //{
-    //    return _pieceAmount.ContainsKey(grade) ? _pieceAmount[grade] : 1;
-    //}
+    private Dictionary<string, int> gradeCount = new Dictionary<string, int>();
+    private int totalGachaCount = 0;
+
+    public void TrackGachaResult(GachaData selectedUnit)
+    {
+        if (selectedUnit != null)
+        {
+            totalGachaCount++;
+
+            // 등급별 카운트 증가
+            if (gradeCount.ContainsKey(selectedUnit.grade))
+            {
+                gradeCount[selectedUnit.grade]++;
+            }
+            else
+            {
+                gradeCount[selectedUnit.grade] = 1;
+            }
+        }
+    }
+
+    public void PrintGachaStats()
+    {
+        Debug.Log("[ 누적 가챠 결과 ]");
+        foreach (var grade in gradeCount)
+        {
+            float gradeProbability = (float)grade.Value / totalGachaCount * 100f;
+            Debug.Log($"등급: {grade.Key}, 뽑힌 횟수: {grade.Value}, 확률: {gradeProbability:F2}%");
+        }
+    }
 }
