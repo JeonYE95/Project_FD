@@ -1,12 +1,12 @@
 {
   "name": null,
   "level": 0,
-  "gold": 40200,
-  "diamond": 100,
-  "energy": 4,
+  "gold": 80200,
+  "diamond": 0,
+  "energy": 3,
   "items": {
-    "3003": 8004,
-    "3004": 406,
+    "3003": 16004,
+    "3004": 806,
     "3005": 8
   },
   "UnitEnforce": {},

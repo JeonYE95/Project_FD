@@ -34,6 +34,10 @@ MonoBehaviour:
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
+  - skillID: 11
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Earthquake
   - skillID: 15
     haveProjectile: 0
     casterEffectTag: 

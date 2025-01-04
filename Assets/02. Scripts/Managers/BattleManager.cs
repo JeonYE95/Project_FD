@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
@@ -44,6 +42,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
 
     //For Debug
     public bool noDamageMode = false;
+    Coroutine battleResultCoroutine;
 
     public bool IsBattleEnd
     {
@@ -74,8 +73,16 @@ public class BattleManager : SingletonDontDestory<BattleManager>
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            InventoryManager.Instance.AddAllUnits();
+            BattleSimulator();
         }
+    }
+
+    private static void BattleSimulator()
+    {
+        /*UIManager.Instance.Clear();
+        UIManager.Instance.OpenUI<UIInGame>();*/
+
+        InventoryManager.Instance.AddAllUnits();
     }
 
     public void BattleSettingAndStart()
@@ -92,16 +99,21 @@ public class BattleManager : SingletonDontDestory<BattleManager>
 
         _isBattleEnd = false;
 
+        if (battleResultCoroutine != null)
+        {
+            StopCoroutine(battleResultCoroutine);
+        }
+
         CheckBattleResult();
     }
 
     public void UnitDie(BaseUnit unit)
     {
-        if (unit is PlayerUnit)
+        if (unit.isPlayerUnit)
         {
             alivePlayerUnitsCount--;
         }
-        else if (unit is EnemyUnit)
+        else
         {
             aliveEnemyUnitsCount--;
 
@@ -116,17 +128,23 @@ public class BattleManager : SingletonDontDestory<BattleManager>
 
     private void CheckBattleResult()
     {
+        if (_isBattleEnd)
+        {
+            return;
+        }
+
         //끝나면 그상태로 결과창 띄우고 결과창 확인하고나면 리셋이 좋긴한데
         //그러면 또 어려워짐
-        if (aliveEnemyUnitsCount == 0)
+        if (aliveEnemyUnitsCount == 0 || CheckAllEnemyDie())
         {
             Debug.Log("플레이어 승리");
-            StartCoroutine(Victory());
+
+            battleResultCoroutine = StartCoroutine(Victory());
         }
         else if (alivePlayerUnitsCount == 0)
         {
             Debug.Log("플레이어 패배");
-            StartCoroutine(Lose());
+            battleResultCoroutine = StartCoroutine(Lose());
         }
 
         //aliveEnemyUnitsCount = 0;
@@ -263,6 +281,18 @@ public class BattleManager : SingletonDontDestory<BattleManager>
         SetAllUnits();
     }
 
+    private bool CheckAllEnemyDie()
+    {
+        foreach(BaseUnit unit in enemies)
+        {
+            if (unit.isLive)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public void ApplyBuff(BaseUnit target, string buffKey, float duration, Action applyAction, Action resetAction)
     {
@@ -287,7 +317,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
             StopCoroutine(existingBuff.Timer);  // 기존 코루틴 중단
             activeBuffs[target].Remove(buffKey); // 딕셔너리에서 제거
 
-            Debug.Log($"{target.gameObject.name} 기존 {buffKey} 버프 제거됨");
+            //Debug.Log($"{target.gameObject.name} 기존 {buffKey} 버프 제거됨");
         }
 
         // 새 버프 적용

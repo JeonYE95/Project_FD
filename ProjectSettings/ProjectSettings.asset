@@ -785,6 +785,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
+    Android: LEVELPLAY_DEPENDENCIES_INSTALLED
     Standalone: 
   additionalCompilerArguments: {}
   platformArchitecture: {}

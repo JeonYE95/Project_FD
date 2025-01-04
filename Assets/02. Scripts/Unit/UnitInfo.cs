@@ -10,6 +10,8 @@ public interface IUnitInfo
     float SkillCooltime { get; set; }
     float AttackCooltime { get; set; }
     string Name { get; set; }
+
+     //public void SetData();
 }
 
 
