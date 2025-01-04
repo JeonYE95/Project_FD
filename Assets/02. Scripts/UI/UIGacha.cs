@@ -11,6 +11,7 @@ public class UIGacha : UIBase
 
     [SerializeField] private Button _gachaBtn1;
     [SerializeField] private Button _gachaBtn10;
+    [SerializeField] private Button _backBtn;
 
     private PieceGacha pieceGacha = new PieceGacha();
 
@@ -19,7 +20,8 @@ public class UIGacha : UIBase
     {
         
         _gachaBtn1.onClick.AddListener(() => { pieceGacha.PlayPieceGacha(); } );
-        _gachaBtn1.onClick.AddListener(() => { pieceGacha.PlayPieceGacha(); } );
+        _gachaBtn10.onClick.AddListener(() => { pieceGacha.PlayPieceGacha10(); } );
+        _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIGacha>(); } );
     }
 
     // Update is called once per frame

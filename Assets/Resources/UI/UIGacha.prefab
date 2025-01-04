@@ -889,8 +889,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6c41a1faf2a4db4a44cba0355333ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _diamondTxt: {fileID: 2970132392240370847}
   _gachaBtn1: {fileID: 6597243127311762237}
   _gachaBtn10: {fileID: 2660350938822103166}
+  _backBtn: {fileID: 2405617165795451002}
 --- !u!1 &3422627450834423489
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,8 +1419,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 30}
-  m_SizeDelta: {x: 500, y: 500}
+  m_AnchoredPosition: {x: -310, y: -25}
+  m_SizeDelta: {x: 550, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4615171866423496289
 CanvasRenderer:
