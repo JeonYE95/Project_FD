@@ -9,7 +9,7 @@ public class UISelectStage : UIBase
     [SerializeField] private Button[] _stageBtn;
     [SerializeField] private Transform _stageSelectButtonParent;
 
-    [SerializeField] private Button _exitBtn;
+    [SerializeField] private Button _closeBtn;
 
     void Start()
     {
@@ -47,7 +47,7 @@ public class UISelectStage : UIBase
 
         }
 
-        _exitBtn.onClick.AddListener(() => { Close(); });
+        _closeBtn.onClick.AddListener(() => { Close(); });
     }
 
     private void LoadInGameScene()
