@@ -215,22 +215,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIGacha
       objectReference: {fileID: 0}
-    - target: {fileID: 3913009545552671867, guid: f63a026d26b434c01b699c2e2136be08, type: 3}
-      propertyPath: _startBtn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3913009545552671867, guid: f63a026d26b434c01b699c2e2136be08, type: 3}
-      propertyPath: _settingBtn
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7319682115015240931, guid: f63a026d26b434c01b699c2e2136be08, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7319682115015240931, guid: f63a026d26b434c01b699c2e2136be08, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
