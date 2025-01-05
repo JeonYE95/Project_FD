@@ -5,19 +5,24 @@ using System;
 
 public class PieceGacha : MonoBehaviour
 {
-    private int _gachaCost = 200;
-    private int _diamond = 10000;
+    private int _gacha1Cost = 200;
+    private int _gacha2Cost = 2000;
+    private int _diamond;
 
     public void PlayPieceGacha()
     {
-        if (_diamond < _gachaCost)
+        _diamond = GameManager.Instance.playerData.diamond;
+
+        if (_diamond < _gacha1Cost)
         {
             Debug.LogWarning( "다이아가 부족합니다" );
             return;
         }
 
-        _diamond -= _gachaCost;
-        Debug.Log($"다이아를 {_gachaCost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
+        _diamond -= _gacha1Cost;
+        GameManager.Instance.playerData.diamond = _diamond;
+
+        Debug.Log($"다이아를 {_gacha1Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
 
         GachaData selectedUnit = GachaDataManager.Instance.GetRandomData("Outgame");
 
@@ -35,15 +40,15 @@ public class PieceGacha : MonoBehaviour
 
     public void PlayPieceGacha10()
     {
-        int totalGachaCost = _gachaCost * 10;
-
-        if (_diamond < totalGachaCost)
+        _diamond = GameManager.Instance.playerData.diamond;
+        
+        if (_diamond < _gacha2Cost)
         {
             Debug.LogWarning("다이아가 부족합니다");
             return;
         }
 
-        Debug.Log($"다이아를 {totalGachaCost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
+        Debug.Log($"다이아를 {_gacha2Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
 
         for (int i = 0; i < 10; i++)
         {

@@ -75,6 +75,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         IsInitialized = true;  // 초기화 완료 표시
 
         StartCoroutine(RecoverEnergyRoutine());
+        playerData.diamond = 100;
     }
 
     //인 게임에서 변동 시 JSON 관리
