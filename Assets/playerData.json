@@ -2,11 +2,54 @@
   "name": null,
   "level": 0,
   "gold": 0,
-  "diamond": 0,
+  "diamond": 100,
   "energy": 10,
   "items": {},
   "UnitEnforce": {},
   "ClassEnforce": {},
-  "questData": {},
+  "questData": {
+    "4001": {
+      "questId": 4001,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4010": {
+      "questId": 4010,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4020": {
+      "questId": 4020,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4030": {
+      "questId": 4030,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4040": {
+      "questId": 4040,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4050": {
+      "questId": 4050,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    },
+    "4061": {
+      "questId": 4061,
+      "progress": 0,
+      "isCompleted": false,
+      "nextResetTimeUTC": "2025-01-05 오전 5:24:36"
+    }
+  },
   "ChallengeProgress": {}
 }
