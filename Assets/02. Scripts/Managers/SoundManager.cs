@@ -10,8 +10,8 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     private Dictionary<string, AudioClip> _bgmClip = new Dictionary<string, AudioClip>();   // BGM 클립
     private Dictionary<string, AudioClip> _sfxClip = new Dictionary<string, AudioClip>();   // SFX 클립
 
-    private float bgmVolume = 1f;
-    private float sfxVolume = 1f;
+    [SerializeField] private float bgmVolume = 1f;
+    [SerializeField] private float sfxVolume = 1f;
 
     protected override void Awake()
     {
