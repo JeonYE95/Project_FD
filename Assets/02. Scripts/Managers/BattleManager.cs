@@ -187,17 +187,13 @@ public class BattleManager : SingletonDontDestory<BattleManager>
             unit.gameObject.SetActive(false);
         }
 
+        //모든 버프 해제
+        ResetAllBuff();
+
         foreach (var unit in enemies)
         {
             unit.UnregisterFromBattleManager();
         }
-
-        //몬스터의 등록해제 타이밍이 문제
-        //몬스터는 걍 죽을때마다 지가 해제해
-        //ㄴㄴ 여기서 하는게 맞는데 구현만 분리해
-
-        //모든 버프 해제
-        ResetAllBuff();
 
         allUnits.RemoveAll(unit => enemies.Contains(unit));
         enemies.Clear();
