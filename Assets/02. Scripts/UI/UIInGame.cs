@@ -19,6 +19,7 @@ public class UIInGame : UIBase
     [SerializeField] private Image _mask3;
 
     [SerializeField] private GameObject _gradeBtnParent;
+    private Button[] _gradeButtons;
 
     private Canvas _canvas;
     private Camera _mainCamera;
@@ -46,14 +47,14 @@ public class UIInGame : UIBase
         WaveManager.Instance.OnClearWave += EnablePrepUI;
 
         // 등급 버튼 연결
-        Button[] gradeButtons = _gradeBtnParent.GetComponentsInChildren<Button>();
-        Button commonButton = gradeButtons[(int)Defines.UnitGrade.common];
-        Button rareButton = gradeButtons[(int)Defines.UnitGrade.rare];
-        Button uniqueButton = gradeButtons[(int)Defines.UnitGrade.Unique];
+        _gradeButtons = _gradeBtnParent.GetComponentsInChildren<Button>();
+        Button commonButton = _gradeButtons[(int)Defines.UnitGrade.common];
+        Button rareButton = _gradeButtons[(int)Defines.UnitGrade.rare];
+        Button uniqueButton = _gradeButtons[(int)Defines.UnitGrade.Unique];
 
-        commonButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.common));
-        rareButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.rare));
-        uniqueButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.Unique));
+        commonButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.common, commonButton));
+        rareButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.rare, rareButton));
+        uniqueButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.Unique, uniqueButton));
     }
 
     private void Update()
@@ -120,9 +121,16 @@ public class UIInGame : UIBase
         _maxSummonUnitNum.text = InventoryManager.Instance.MaxSummonUnitCount.ToString();
     }
 
-    private void OnGradeButtonClick(Defines.UnitGrade units)
+    private void OnGradeButtonClick(Defines.UnitGrade units, Button clickedButton)
     {
         InventoryManager.Instance.UpdateUnitGrade(units);
+
+        foreach (Button btn in _gradeButtons)
+        {
+            btn.GetComponent<Image>().color = btn.colors.normalColor;
+        }
+
+        clickedButton.GetComponent<Image>().color = new Color(255f / 255f, 210f / 255f, 0f);
     }
 
     
