@@ -72,9 +72,23 @@ public class UIQuest : UIBase
     // 리팩토링 예정
     private void RefreshQuestList()
     {
-        
+
         // 새로운 퀘스트 슬롯 생성
-        List<QuestBase> questList = QuestManager.Instance.GetQuestsByType(currentQuestType);
+        List<QuestBase> questList = QuestManager.Instance.GetQuestsByType(currentQuestType)
+       .Where(quest =>
+       {
+           // GameManager에서 퀘스트 데이터 확인
+           var questData = GameManager.Instance.playerData.questData[quest.questData.ID];
+
+           // 보상을 받지 않은 퀘스트는 모두 표시
+           if (!questData.hasReceivedReward)
+               return true;
+
+           // 보상을 받은 퀘스트 중 연계 퀘스트가 없는 것만 표시
+           return quest.questData.nextQuestID == 0;
+       })
+       .ToList();
+
         questScrollView.SetQuestList(questList);
         UpdateBatchRewardButton();
     }
