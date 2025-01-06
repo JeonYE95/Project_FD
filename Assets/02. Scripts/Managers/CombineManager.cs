@@ -50,7 +50,6 @@ public class CombineManager : Singleton<CombineManager>
         }
 
 
-
         if (isFieldUnit1 && isFieldUnit2)     // 둘 다 필드에 있는 경우
         {
             CombineFieldOnly(unit1ID, unit2ID, combineData);
@@ -67,6 +66,7 @@ public class CombineManager : Singleton<CombineManager>
         {
             CombineInvetoryOnly(unit1ID, unit2ID, combineData);
         }
+
     }
 
     private void CombineFieldAndInventory(int fieldUnitID, int InventoryUnitID, CombineData combineData)

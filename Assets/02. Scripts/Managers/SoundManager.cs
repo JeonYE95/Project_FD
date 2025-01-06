@@ -44,9 +44,15 @@ public class SoundManager : SingletonDontDestory<SoundManager>
         }
 
         // SFX 로드
-        foreach (var clip in Resources.LoadAll<AudioClip>("Audio/SFX"))
+        string[] sfxFolder = new string[] { "Audio/SFX/Combine", "Audio/SFX/IngameUI" };
+
+        foreach (string folder in sfxFolder)
         {
-            _sfxClip[clip.name] = clip;
+            foreach (var clip in Resources.LoadAll<AudioClip>(folder))
+            {
+                string key = $"{folder.Replace("Audio/SFX/", "")}/{clip.name}";
+                _sfxClip[key] = clip;
+            }
         }
     }
 
@@ -64,9 +70,9 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     }    
 
     // SFX 재생
-    public void PlaySFX(string clipName, float volume = 1f)
+    public void PlaySFX(string clipPath, float volume = 1f)
     {
-        if (_sfxClip.TryGetValue(clipName,out AudioClip clip))
+        if (_sfxClip.TryGetValue(clipPath, out AudioClip clip))
         {
             AudioSource sfxSource = GetSfxSource();
             sfxSource.volume = volume * sfxVolume;
