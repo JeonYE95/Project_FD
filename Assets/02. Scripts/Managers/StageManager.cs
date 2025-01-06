@@ -104,8 +104,8 @@ public class StageManager : Singleton<StageManager>
 
         _stageHealth = 3;
 
-        GameManager.Instance.playerData.StageClearData[_stageID] = StageClearState.Clear;
-        GameManager.Instance.playerData.StageClearData[_stageID + 1] = StageClearState.Unlock;
+        GameManager.Instance.playerData.StageClearData[_stageID] = Defines.StageClearState.Clear;
+        GameManager.Instance.playerData.StageClearData[_stageID + 1] = Defines.StageClearState.Unlock;
 
         Debug.Log("스테이지 클리어");
 
@@ -115,11 +115,4 @@ public class StageManager : Singleton<StageManager>
     {
         return StageData.GetList().Where(data => data.ID == _stageID).ToList();
     }
-}
-
-public enum StageClearState
-{
-    Clear = 1, 
-    Unlock = 2, 
-    Lock = 3
 }
