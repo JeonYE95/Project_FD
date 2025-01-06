@@ -72,6 +72,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         GetAllStatgeData();
         StageCount();
+        SoundManager.Instance.PlayBGM("MainBGM");
 
         IsInitialized = true;  // 초기화 완료 표시
 

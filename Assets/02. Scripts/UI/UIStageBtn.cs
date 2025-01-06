@@ -109,5 +109,6 @@ public class UIStageBtn : MonoBehaviour
 
         UIManager.Instance.Clear();
         SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
+        SoundManager.Instance.PlayBGM("BattleBGM");
     }
 }
