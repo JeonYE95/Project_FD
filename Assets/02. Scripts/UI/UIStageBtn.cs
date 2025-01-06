@@ -1,7 +1,5 @@
 using GSDatas;
 using TMPro;
-using UnityEditor.iOS;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
