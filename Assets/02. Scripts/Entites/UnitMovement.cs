@@ -14,7 +14,7 @@ public class UnitMovement : MonoBehaviour
     BaseUnit _myUnit;
 
     float _attackDistanceMutl;
-    float _targetRandomCircle = 0.5f;
+    float _targetRandomCircle = 1.0f;
 
     private void Awake()
     {

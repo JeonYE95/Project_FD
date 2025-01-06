@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ActionHandler : MonoBehaviour
 {
@@ -47,11 +48,6 @@ public class ActionHandler : MonoBehaviour
         //attackCoolTime = _myUnit.unitInfo.AttackCooltime;
     }
 
-    private void Update()
-    {
-        
-    }
-
     public bool IsAttackCoolTimeComplete()
     {
         return Time.time >= _lastAttackTime + attackCoolTime;
@@ -79,6 +75,8 @@ public class ActionHandler : MonoBehaviour
             //액션 애니메이션 재생
             _myUnit.PlayAttackAnimation();
 
+            SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID));
+
             //스킬 사용
             UseSkill();
             ResetSkillCoolTime();
@@ -89,6 +87,15 @@ public class ActionHandler : MonoBehaviour
             {
                 //액션 애니메이션 재생
                 _myUnit.PlayAttackAnimation();
+
+                if (_myUnit is PlayerUnit)
+                {
+                    SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID));
+                }
+                else if (_myUnit is EnemyUnit)
+                {
+                    SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8), 0.3f);
+                }
 
                 DoAttack();
                 //평타 공격
