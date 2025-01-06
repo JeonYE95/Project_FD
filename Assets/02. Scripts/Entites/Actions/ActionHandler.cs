@@ -13,6 +13,8 @@ public class ActionHandler : MonoBehaviour
 
     Vector3 firePointAdjust = new Vector3(0.15f, 0.35f, 0);
 
+    public bool isLifeSteal = false;
+
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
 
@@ -160,9 +162,16 @@ public class ActionHandler : MonoBehaviour
 
     private void PerformMeleeAttack()
     {
+        int damageDealt;
+
         if (_targetUnit.TryGetComponent(out HealthSystem healthSystem))
         {
-            healthSystem.TakeDamage(_myUnit.unitInfo.Attack);
+            damageDealt = healthSystem.TakeDamage(_myUnit.unitInfo.Attack);
+
+            if (isLifeSteal)
+            {
+                LifeSteal(damageDealt);
+            }
         }
     }
 
@@ -172,5 +181,8 @@ public class ActionHandler : MonoBehaviour
         Debug.Log($"{_myUnit.ID} 스킬 사용함");
     }
 
-    
+    public void LifeSteal(int damage)
+    {
+        _myUnit.healthSystem.TakeHealth((int)(damage * 0.3f));
+    }
 }
