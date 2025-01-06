@@ -37,11 +37,13 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     {
         questDataList = QuestDataManager.GetList();
 
+
         //새로운 퀘스트라면 초기 데이터 생성
         InitializeNewQuests();
 
         // 저장된 퀘스트 데이터 로드
         LoadQuestData();
+
 
         //퀘스트 리셋 체크
         ResetQuests(QuestResetType.Daily);
@@ -51,18 +53,17 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
     private void InitializeNewQuests()
     {
-        //대표 퀘스트 찾기 = 각 그룹에서 첫번째 ID 선택
-
-        var mainQuestIds = questDataList
-       .GroupBy(q => q.ID / 10)
-       .Select(g => g.Min(q => q.ID))
-       .ToList();
-
+        //대표 퀘스트 찾기 = 각 대표 그릅
+        var questGroups = questDataList
+            .GroupBy(q => q.ID / 10)
+            .Select(g => g.OrderBy(q => q.ID).First())  // 각 그룹에서 ID가 가장 작은 퀘스트
+            .Select(q => q.ID)                          // 퀘스트 ID만 선택 (4001, 4010...)
+            .ToList();
 
         foreach (QuestData questData in questDataList)
         {
 
-            if (ShouldAddQuest(questData, mainQuestIds))
+            if (ShouldAddQuest(questData, questGroups))
             {
                 QuestBase quest = CreateQuestCondition(questData);
                 questDictionary.Add(questData.ID, quest);
@@ -83,23 +84,17 @@ public class QuestManager : SingletonDontDestory<QuestManager>
 
     private bool ShouldAddQuest(QuestData questData, List<int> mainQuestIds)
     {
-        // 메인 퀘스트인지 확인
-        if (!mainQuestIds.Contains(questData.ID)) return false;
 
-        // 이미 딕셔너리에 있는지 확인
-        if (questDictionary.ContainsKey(questData.ID)) return false;
-
-        // 저장된 데이터가 있고 완료된 퀘스트인지 확인
-        if (GameManager.Instance.playerData.questData.ContainsKey(questData.ID))
+        // 저장된 퀘스트가 없는 경우 (첫 시작)
+        if (mainQuestIds.Contains(questData.ID))
         {
-
-            var savedQuest = GameManager.Instance.playerData.questData[questData.ID];
-
-            // 퀘스트가 완료되고 보상도 받은 경우에만 false 반환
-            return !(savedQuest.isCompleted && savedQuest.hasReceivedReward);
+            return true;  // 각 그룹의 첫 퀘스트는 무조건 추가
         }
 
-        return true;
+        // playerData.questData에 있고, 보상을 받지 않은 퀘스트만 추가
+        return GameManager.Instance.playerData.questData.ContainsKey(questData.ID) &&
+               !GameManager.Instance.playerData.questData[questData.ID].hasReceivedReward;
+
     }
 
 
