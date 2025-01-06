@@ -44,7 +44,7 @@ public class SoundManager : SingletonDontDestory<SoundManager>
         }
 
         // SFX 로드
-        string[] sfxFolder = new string[] { "Audio/SFX/Combine", "Audio/SFX/IngameUI" };
+        string[] sfxFolder = new string[] { "Audio/SFX/Combine", "Audio/SFX/IngameUI" , "Audio/SFX/Battle" };
 
         foreach (string folder in sfxFolder)
         {
