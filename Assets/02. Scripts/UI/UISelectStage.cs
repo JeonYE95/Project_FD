@@ -3,63 +3,63 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class UISelectStage : UIBase
 {
-    [SerializeField] private Button[] _stageBtn;
-    [SerializeField] private Transform _stageSelectButtonParent;
-
-    [SerializeField] private Button _exitBtn;
+    [SerializeField] private GameObject _stageBtnPrefab; 
+    [SerializeField] private RectTransform _stageBtnParent; 
+    [SerializeField] private Button _closeBtn; 
+    private UIStageBtn _uiStageBtn;
 
     void Start()
     {
+        _closeBtn.onClick.AddListener(() => { Close(); });
 
-        //스테이지 버튼 찾기
-        _stageBtn = _stageSelectButtonParent.GetComponentsInChildren<Button>();
 
-        //스테이지 순서에 맞는 ID 등록
-        for (int i = 0; i < _stageBtn.Length; i++)
-        {
-            int index = i;  
-            StageData stageId = GameManager.Instance.TotalStageID[index];
+ 
+            // UIStageBtn uiStageBtn = new UIStageBtn(stageData);
 
-            _stageBtn[i].onClick.AddListener(() =>
-            {
+            // // 버튼 텍스트 설정
+            // Text buttonText = newButton.GetComponentInChildren<Text>();
+            // if (buttonText != null)
+            // {
+            //     buttonText.text = $"Stage {index + 1}"; // 예: "Stage 1"
+            // }
 
-                GameManager.Instance.StageID = stageId.ID;
+            // 버튼 클릭 이벤트 설정
+            // newButton.onClick.AddListener(() =>
+            // {
+            //     GameManager.Instance.StageID = stageId.ID;
 
-                //해당 스테이지 입장 필요 에너지 충족 시 입장.
-                if (GameManager.Instance.EnterEnergy >= stageId.cost)
-                {
-             
-                    GameManager.Instance.EnterEnergy -= stageId.cost;
-
-                    QuestManager.Instance.UpdateConsumeQuests(3000, stageId.cost);
-                    LoadInGameScene();
-
-                }
-                else
-                {
-                    Debug.Log("입장 필요 에너지가 부족합니다.");
-                }
-
-            });
-
-        }
-
-        _exitBtn.onClick.AddListener(() => { Close(); });
+            //     // 입장 필요 에너지 확인
+            //     if (GameManager.Instance.EnterEnergy >= stageId.cost)
+            //     {
+            //         GameManager.Instance.EnterEnergy -= stageId.cost;
+            //         QuestManager.Instance.UpdateConsumeQuests(3000, stageId.cost);
+            //         LoadInGameScene();
+            //     }
+            //     else
+            //     {
+            //         Debug.Log("입장 필요 에너지가 부족합니다.");
+            //     }
+            // });
+        
     }
 
-    private void LoadInGameScene()
+    private void OnEnable() 
     {
-        SceneManager.sceneLoaded += (scene, mode) =>
+        // 스테이지 버튼 동적 생성
+        for (int i = 0; i < 5; i++)
         {
-            // 씬 로드 후 UI 오픈
-            if (SceneManager.GetActiveScene().buildIndex == 2)
-                UIManager.Instance.OpenUI<UIInGame>();
-        };
+            int index = i; 
+            StageData stageData = GameManager.Instance.TotalStageID[index];
+            int stageIndex = i + 1;
 
-        UIManager.Instance.Clear();
-        SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
+            // 버튼 생성
+            GameObject stageBtnObj = Instantiate(_stageBtnPrefab, _stageBtnParent);
+            stageBtnObj.name = $"StageBtn_{stageData.ID}";
+
+            _uiStageBtn = stageBtnObj.GetComponent<UIStageBtn>();
+            _uiStageBtn.SetStageData(stageData, stageIndex);
+        }
     }
 }
