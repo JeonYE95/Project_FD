@@ -367,6 +367,49 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
     }
 
+    private void UpdateClassEnforceData()
+    {
+        if (playerData.ClassEnforce != null)
+        {
+            foreach (var keyValuePair in playerData.ClassEnforce)
+            {
+                string classType = keyValuePair.Key;
+                int level = keyValuePair.Value;
+
+
+                List<UnitData> classUnits = UnitDataManager.Instance.GetClassUnits(classType);
+
+                if (classUnits == null || classUnits.Count == 0)
+                {
+                    Debug.LogWarning($"Class type {classType}에 해당하는 유닛이 없습니다.");
+                    continue;
+                }
+
+
+
+                for (int i = 1; i <= level; i++) // 레벨에 따른 유닛 스탯 반영
+                {
+                    ClassEnforceData enforceData = ClassEnforceDataManager.Instance.GetClassData(i);
+                    foreach (var unit in classUnits)
+                    {
+                        unit.attack += enforceData.attack;
+                        unit.defense += enforceData.defense;
+                        unit.health += enforceData.health;
+                    }
+                }
+
+
+                // 변경된 유닛 데이터 저장
+                foreach (var unit in classUnits)
+                {
+                    UnitDataManager.Instance.SaveUnitData(unit);
+                    Debug.Log($"Unit {unit.name} 클래스 동기화 완료 - 클래스: {classType}, 레벨: {level}, " +
+                             $"공격력: {unit.attack}, 방어력: {unit.defense}, 체력: {unit.health}");
+                }
+            }
+        }
+    }
+
     private void InitializeStageClearState()
     {
         for (int i = 101; i <= 105; i++)
