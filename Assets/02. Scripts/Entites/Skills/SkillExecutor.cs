@@ -125,6 +125,19 @@ public class SkillExecutor : MonoBehaviour
 
                 break;
 
+            case SkillEffect.LifeSteal:
+
+                Debug.Log("Stun");
+
+                BattleManager.Instance.ApplyBuff(
+                    target,
+                    inGameSkillData.skillEffect.ToString(),
+                    inGameSkillData.duration,
+                    () => SetLifeSteal(target, true),
+                    () => SetLifeSteal(target, false));
+
+                break;
+
             case SkillEffect.AttackBoost:
 
                 originPropertyValue = target.unitInfo.AttackCooltime;
@@ -228,6 +241,11 @@ public class SkillExecutor : MonoBehaviour
         {
             target.SetIdle();
         }
+    }
+
+    public void SetLifeSteal(BaseUnit target, bool value)
+    {
+        target.actionHandler.isLifeSteal = value;
     }
 
     public string GetSkillDescription()

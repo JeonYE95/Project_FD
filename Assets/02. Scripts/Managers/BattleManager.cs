@@ -238,6 +238,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
     {
         allUnits.Clear();
 
+
         foreach (BaseUnit unit in players)
         {
             //Debug.Log($"SetAllUnits - Players 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
@@ -248,6 +249,11 @@ public class BattleManager : SingletonDontDestory<BattleManager>
         {
             //Debug.Log($"SetAllUnits - Enemies 리스트에 유닛 추가: {unit.gameObject.name} (ID: {unit.unitInfo?.ID})");
             allUnits.Add(unit);
+        }
+
+        foreach(BaseUnit unit in allUnits)
+        {
+            unit.ResetCoolTime();
         }
     }
     
