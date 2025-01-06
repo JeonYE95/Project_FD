@@ -954,6 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &769338224003504084
@@ -1260,6 +1261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &824708143312143557
@@ -2169,6 +2171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &1199460219765623644
@@ -3118,6 +3121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &1965496795842096225
@@ -4587,6 +4591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &2575550804113270228
@@ -5027,7 +5032,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1998311330231894373}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5286,6 +5291,7 @@ MonoBehaviour:
   _mask1: {fileID: 5375116000988467047}
   _mask2: {fileID: 7520082390494805210}
   _mask3: {fileID: 4041166538163520217}
+  _gradeBtnParent: {fileID: 4969136052345634670}
 --- !u!1 &3124621622122010963
 GameObject:
   m_ObjectHideFlags: 0
@@ -5660,6 +5666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &3343787525183308767
@@ -6116,6 +6123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &3489906996862922552
@@ -6418,6 +6426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &3642379934157308765
@@ -7581,6 +7590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &4328927597682730113
@@ -7976,6 +7986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &4738247234240922796
@@ -8391,6 +8402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &5325182987526493804
@@ -8484,6 +8496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &5362811805570136073
@@ -10066,6 +10079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &6765316451132237338
@@ -10234,6 +10248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &6835468137265931989
@@ -10327,6 +10342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &6994930833592785490
@@ -10757,6 +10773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  isPlayerSlot: 1
   _slotIndex: 0
   _groupIndex: 0
 --- !u!1 &7215631286767522200
