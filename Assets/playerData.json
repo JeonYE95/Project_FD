@@ -1,65 +1,13 @@
 {
   "name": null,
   "level": 0,
-  "gold": 10000,
-  "diamond": 100,
-  "energy": 9,
-  "items": {
-    "3003": 2000,
-    "3004": 100
-  },
+  "gold": 0,
+  "diamond": 0,
+  "energy": 10,
+  "items": {},
   "UnitEnforce": {},
   "ClassEnforce": {},
-  "questData": {
-    "4001": {
-      "questId": 4001,
-      "progress": 1,
-      "isCompleted": true,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4010": {
-      "questId": 4010,
-      "progress": 0,
-      "isCompleted": false,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4020": {
-      "questId": 4020,
-      "progress": 0,
-      "isCompleted": false,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4030": {
-      "questId": 4030,
-      "progress": 1,
-      "isCompleted": true,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4040": {
-      "questId": 4040,
-      "progress": 0,
-      "isCompleted": false,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4050": {
-      "questId": 4050,
-      "progress": 0,
-      "isCompleted": false,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    },
-    "4061": {
-      "questId": 4061,
-      "progress": 22,
-      "isCompleted": true,
-      "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
-    }
-  },
+  "questData": {},
   "ChallengeProgress": {},
-  "StageClearData": {
-    "101": 2,
-    "102": 3,
-    "103": 3,
-    "104": 3,
-    "105": 3
-  }
+  "StageClearData": {}
 }

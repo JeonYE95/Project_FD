@@ -10,8 +10,8 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     private Dictionary<string, AudioClip> _bgmClip = new Dictionary<string, AudioClip>();   // BGM 클립
     private Dictionary<string, AudioClip> _sfxClip = new Dictionary<string, AudioClip>();   // SFX 클립
 
-    private float bgmVolume = 1f;
-    private float sfxVolume = 1f;
+    [SerializeField] private float bgmVolume = 1f;
+    [SerializeField] private float sfxVolume = 1f;
 
     protected override void Awake()
     {
@@ -44,7 +44,7 @@ public class SoundManager : SingletonDontDestory<SoundManager>
         }
 
         // SFX 로드
-        string[] sfxFolder = new string[] { "Audio/SFX/Combine", "Audio/SFX/IngameUI" };
+        string[] sfxFolder = new string[] { "Audio/SFX/Combine", "Audio/SFX/IngameUI" , "Audio/SFX/Battle" };
 
         foreach (string folder in sfxFolder)
         {
@@ -72,6 +72,11 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     // SFX 재생
     public void PlaySFX(string clipPath, float volume = 1f)
     {
+        if (clipPath.Contains("Battle") && volume == 1)
+        {
+            volume = Defines.BattleEffectSoundVolume;
+        }
+
         if (_sfxClip.TryGetValue(clipPath, out AudioClip clip))
         {
             AudioSource sfxSource = GetSfxSource();

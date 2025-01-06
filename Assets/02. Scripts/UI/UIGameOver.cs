@@ -26,5 +26,6 @@ public class UIGameOver : UIBase
         
         UIManager.Instance.Clear();
         SceneManager.LoadScene("MainScene");
+        SoundManager.Instance.PlayBGM("MainBGM");
     }
 }

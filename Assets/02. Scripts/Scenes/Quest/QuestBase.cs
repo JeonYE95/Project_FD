@@ -10,6 +10,7 @@ public class QuestSaveData
     public int questId;
     public int progress;
     public bool isCompleted;
+    public bool hasReceivedReward;
     public string nextResetTimeUTC; // DateTime을 string으로 저장
 }
 

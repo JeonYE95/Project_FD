@@ -1,7 +1,5 @@
 using GSDatas;
 using TMPro;
-using UnityEditor.iOS;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -111,5 +109,6 @@ public class UIStageBtn : MonoBehaviour
 
         UIManager.Instance.Clear();
         SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
+        SoundManager.Instance.PlayBGM("BattleBGM");
     }
 }

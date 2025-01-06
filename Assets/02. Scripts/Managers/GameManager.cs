@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 [System.Serializable]
@@ -71,6 +72,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         GetAllStatgeData();
         StageCount();
+        SoundManager.Instance.PlayBGM("MainBGM");
 
         IsInitialized = true;  // 초기화 완료 표시
 
@@ -109,13 +111,14 @@ public class GameManager : SingletonDontDestory<GameManager>
             playerData = Newtonsoft.Json.JsonConvert.DeserializeObject<PlayerData>(jsonData);
 
             UpdateUnitEnforceData();
+            UpdateClassEnforceData();
         }
         else
         {
             // 파일이 없을 때 초기값 설정
             playerData = new PlayerData();
-            playerData.energy = 10; 
-            SavePlayerDataToJson(); 
+            playerData.energy = 10;
+            SavePlayerDataToJson();
         }
     }
 
@@ -135,11 +138,11 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
 
         if (itemId == 3000)
-        { 
+        {
             playerData.energy += count;
             SavePlayerDataToJson();
             return;
-        
+
         }
 
         if (itemId == 3002)
@@ -290,7 +293,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         }
         else
         {
-            // 처음 강화하는 유닛이면 1부터 시작 
+            // 처음 강화하는 클래스이면 1부터 시작 
             playerData.ClassEnforce.Add(unitClass, 1);
         }
 
@@ -305,7 +308,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
-   
+
 
     //스테이지 수 파악
     public void StageCount()
@@ -360,6 +363,49 @@ public class GameManager : SingletonDontDestory<GameManager>
                 else
                 {
                     Debug.LogWarning($"Unit ID {unitId}에 해당하는 데이터가 없습니다.");
+                }
+            }
+        }
+    }
+
+    private void UpdateClassEnforceData()
+    {
+        if (playerData.ClassEnforce != null)
+        {
+            foreach (var keyValuePair in playerData.ClassEnforce)
+            {
+                string classType = keyValuePair.Key;
+                int level = keyValuePair.Value;
+
+
+                List<UnitData> classUnits = UnitDataManager.Instance.GetClassUnits(classType);
+
+                if (classUnits == null || classUnits.Count == 0)
+                {
+                    Debug.LogWarning($"Class type {classType}에 해당하는 유닛이 없습니다.");
+                    continue;
+                }
+
+
+
+                for (int i = 1; i <= level; i++) // 레벨에 따른 유닛 스탯 반영
+                {
+                    ClassEnforceData enforceData = ClassEnforceDataManager.Instance.GetClassData(i);
+                    foreach (var unit in classUnits)
+                    {
+                        unit.attack += enforceData.attack;
+                        unit.defense += enforceData.defense;
+                        unit.health += enforceData.health;
+                    }
+                }
+
+
+                // 변경된 유닛 데이터 저장
+                foreach (var unit in classUnits)
+                {
+                    UnitDataManager.Instance.SaveUnitData(unit);
+                    Debug.Log($"Unit {unit.name} 클래스 동기화 완료 - 클래스: {classType}, 레벨: {level}, " +
+                             $"공격력: {unit.attack}, 방어력: {unit.defense}, 체력: {unit.health}");
                 }
             }
         }

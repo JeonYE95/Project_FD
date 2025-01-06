@@ -49,6 +49,7 @@ public class CombineManager : Singleton<CombineManager>
             return;
         }
 
+        SoundManager.Instance.PlaySFX("Combine/CombineMale3");
 
         if (isFieldUnit1 && isFieldUnit2)     // 둘 다 필드에 있는 경우
         {

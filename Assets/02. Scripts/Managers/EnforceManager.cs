@@ -112,7 +112,7 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
     {
         // 현재 클래스 강화 단계에 맞는 강화 비용 찾기
         int currentEnforceClassLevel = GetCurrentClassEnforceLevel(baseUnitClass);
-        ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentEnforceClassLevel);
+        ClassEnforceData enforceData = ClassEnforceDataManager.Instance.GetClassData(currentEnforceClassLevel);
         
         // 필요 아이템 보유 여부 확인
         int requireCount = enforceData.requiredCost;
@@ -121,7 +121,7 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
         //아이템 보유량 체크
         if (GameManager.Instance.playerData.items.TryGetValue(3002, out int currentCount))
         {
-            //return currentCount >= requireCount;
+            return currentCount >= requireCount;
         }
 
 
@@ -141,7 +141,7 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
 
         int currentEnforceClassLevel = GetCurrentClassEnforceLevel(baseUnitClass);
 
-        ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentEnforceClassLevel);
+        ClassEnforceData enforceData = ClassEnforceDataManager.Instance.GetClassData(currentEnforceClassLevel);
         int requireCount = enforceData.requiredCost;
 
         //골드 소모
@@ -174,7 +174,7 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
 
         // 현재 강화 레벨로 강화된 유닛 ID 계산
         int currentLevel = GetCurrentClassEnforceLevel(baseData.classtype);
-         ClassEnforceData enforceData = ClassEnforceDataManaer.Instance.GetItemData(currentLevel);
+         ClassEnforceData enforceData = ClassEnforceDataManager.Instance.GetClassData(currentLevel);
 
         if (enforceData == null) return; 
 
@@ -191,9 +191,8 @@ public class EnforceManager : SingletonDontDestory<EnforceManager>
     }
 
 
- 
 
-    private void GetGradeUnitEnforceData(string grade)
+    public void GetGradeUnitEnforceData(string grade)
     {
         _currentGradeUnitEnforceData = UnitEnforceData.GetList().Where(data => data.grade == grade).ToList();
 

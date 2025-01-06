@@ -36,6 +36,7 @@ public class UIStageClear : UIBase
 
         UIManager.Instance.Clear();
         SceneManager.LoadScene("MainScene");
+        SoundManager.Instance.PlayBGM("MainBGM");
     }
 
     private void GetStageRewardData()
