@@ -1,17 +1,20 @@
 {
   "name": null,
   "level": 0,
-  "gold": 0,
+  "gold": 10000,
   "diamond": 100,
-  "energy": 10,
-  "items": {},
+  "energy": 9,
+  "items": {
+    "3003": 2000,
+    "3004": 100
+  },
   "UnitEnforce": {},
   "ClassEnforce": {},
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 1,
+      "isCompleted": true,
       "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
     },
     "4010": {
@@ -28,8 +31,8 @@
     },
     "4030": {
       "questId": 4030,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 1,
+      "isCompleted": true,
       "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
     },
     "4040": {
@@ -46,8 +49,8 @@
     },
     "4061": {
       "questId": 4061,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 22,
+      "isCompleted": true,
       "nextResetTimeUTC": "1/6/2025 10:56:06 AM"
     }
   },
