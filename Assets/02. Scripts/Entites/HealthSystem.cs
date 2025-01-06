@@ -88,18 +88,24 @@ public class HealthSystem : MonoBehaviour
         OnHealthChange?.Invoke();
     }
 
-    public void TakeHealth(int heal)
+    public int TakeHealth(int heal)
     {
+        int originHP = currentHP;
+
         currentHP = Mathf.Min(currentHP + heal, maxHP);
         OnHealthChange?.Invoke();
+
+        return currentHP - originHP;
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
         if (!_unit.isLive)
         {
-            return;
+            return 0;
         }
+
+        int originHP = currentHP;
 
         //단순한 식 데미지 = 공격력 - 방어력
         //최소 데미지 1 구현
@@ -120,5 +126,6 @@ public class HealthSystem : MonoBehaviour
         }
 
         OnHealthChange?.Invoke();
+        return originHP - currentHP;
     }
 }

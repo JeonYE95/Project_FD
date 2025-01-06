@@ -49,6 +49,8 @@ public class UnitAnimationController : MonoBehaviour
             return;
         }
 
+        //여기서는 진짜 몬스터 에너미 유닛은 다른 애니메이터기에 이 코드 유지
+        //isPlayer 안씀
         if (_myUnit is PlayerUnit)
         {
             animator.runtimeAnimatorController = animController; // RuntimeAnimatorController 설정
