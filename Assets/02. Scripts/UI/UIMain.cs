@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,10 @@ public class UIMain : UIBase
     [SerializeField] private Button _heroesBtn;
     [SerializeField] private Button _questBtn;
     [SerializeField] private Button _gachaBtn;
+    [SerializeField] private TMP_Text _curEnergyText;
+    [SerializeField] private TMP_Text _maxEnergyText;
+    [SerializeField] private TMP_Text _diamondTxt;
+
 
     private void Start()
     {
@@ -16,5 +21,13 @@ public class UIMain : UIBase
         _heroesBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIHeroes>(); });
         _questBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIQuest>(); });
         _gachaBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIGacha>(); });
+
+        _maxEnergyText.text = Defines.MAX_ENERGY.ToString();
+    }
+
+    private void Update() 
+    {
+        _curEnergyText.text = GameManager.Instance.playerData.energy.ToString();
+        _diamondTxt.text = GameManager.Instance.playerData.diamond.ToString();    
     }
 }

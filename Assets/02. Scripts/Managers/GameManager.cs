@@ -369,8 +369,10 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
         for (int i = 101; i <= 105; i++)
         {   
-            playerData.StageClearData.Add(i, StageClearState.Lock);
+            if (!playerData.StageClearData.ContainsKey(i))
+                playerData.StageClearData.Add(i, StageClearState.Lock); // 초기값 설정
         }
+        
         playerData.StageClearData[101] = StageClearState.Unlock;
     }
 }
