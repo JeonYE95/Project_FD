@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -20,6 +19,7 @@ public class PlayerData
     public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
+    public Dictionary<int, StageClearState> StageClearData = new Dictionary<int, StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -76,6 +76,8 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         StartCoroutine(RecoverEnergyRoutine());
         playerData.diamond = 100;
+
+        InitializeStageClearState();
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -361,5 +363,14 @@ public class GameManager : SingletonDontDestory<GameManager>
                 }
             }
         }
+    }
+
+    private void InitializeStageClearState()
+    {
+        for (int i = 101; i <= 105; i++)
+        {   
+            playerData.StageClearData.Add(i, StageClearState.Lock);
+        }
+        playerData.StageClearData[101] = StageClearState.Unlock;
     }
 }
