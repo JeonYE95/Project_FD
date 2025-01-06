@@ -72,6 +72,11 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     // SFX 재생
     public void PlaySFX(string clipPath, float volume = 1f)
     {
+        if (clipPath.Contains("Battle") && volume == 1)
+        {
+            volume = Defines.BattleEffectSoundVolume;
+        }
+
         if (_sfxClip.TryGetValue(clipPath, out AudioClip clip))
         {
             AudioSource sfxSource = GetSfxSource();
