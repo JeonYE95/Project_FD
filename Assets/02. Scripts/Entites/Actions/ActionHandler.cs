@@ -47,11 +47,6 @@ public class ActionHandler : MonoBehaviour
         //attackCoolTime = _myUnit.unitInfo.AttackCooltime;
     }
 
-    private void Update()
-    {
-        
-    }
-
     public bool IsAttackCoolTimeComplete()
     {
         return Time.time >= _lastAttackTime + attackCoolTime;
@@ -79,6 +74,8 @@ public class ActionHandler : MonoBehaviour
             //액션 애니메이션 재생
             _myUnit.PlayAttackAnimation();
 
+            SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID), 0.4f);
+
             //스킬 사용
             UseSkill();
             ResetSkillCoolTime();
@@ -89,6 +86,8 @@ public class ActionHandler : MonoBehaviour
             {
                 //액션 애니메이션 재생
                 _myUnit.PlayAttackAnimation();
+
+                SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID), 0.4f);
 
                 DoAttack();
                 //평타 공격
