@@ -16,7 +16,7 @@ public class UIStageClear : UIBase
     private Dictionary<int, int> _stageRewardData = new Dictionary<int, int>();
 
     private StageData _nextStageData;
-    private int _nextStageIndex;
+    private int _nextStageID;
 
     private void Start()
     {
@@ -29,13 +29,15 @@ public class UIStageClear : UIBase
 
     private void OnEnable() 
     {
-        _nextStageIndex = GameManager.Instance.StageID % 10;
-        _nextStageData = GameManager.Instance.TotalStageID[_nextStageIndex];
+        _nextStageID = GameManager.Instance.StageID + 1;
+        Debug.Log(_nextStageID);
+
+        _nextStageData = GameManager.Instance.TotalStageID.FirstOrDefault(stage => stage.ID == _nextStageID);
 
         // 다음 스테이지 이동 로직 연결(UIClose 포함)
         _nextStageBtn.onClick.AddListener(() => 
         {
-            GameManager.Instance.StageID += 1;
+            GameManager.Instance.StageID += _nextStageID;
 
             // 입장 필요 에너지 확인
             if (GameManager.Instance.EnterEnergy >= _nextStageData.cost)
