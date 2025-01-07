@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using GSDatas;
 using System.Linq;
-using Unity.VisualScripting;
-using static UnityEngine.UI.CanvasScaler;
 
 
 public class InventoryManager : Singleton<InventoryManager>
