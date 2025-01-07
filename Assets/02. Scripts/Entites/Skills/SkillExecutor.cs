@@ -57,7 +57,7 @@ public class SkillExecutor : MonoBehaviour
         }
         else if (_myUnit is EnemyUnit)
         {
-            SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8), Defines.BattleEffectSoundVolume);
+            SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8));
         }
 
         // 타겟에 스킬 효과 적용

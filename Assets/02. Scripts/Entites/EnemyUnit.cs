@@ -50,6 +50,6 @@ public class EnemyUnit : BaseUnit
     {
         animController.SetState(EnemyAnimData.DeathState);
 
-        SoundManager.Instance.PlaySFX("Battle/MonsterDie", Defines.BattleEffectSoundVolume);
+        SoundManager.Instance.PlaySFX("Battle/MonsterDie", Defines.BattleSoundEffectVolume);
     }
 }

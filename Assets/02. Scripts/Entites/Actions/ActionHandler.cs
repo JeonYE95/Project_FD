@@ -92,7 +92,7 @@ public class ActionHandler : MonoBehaviour
                 }
                 else if (_myUnit is EnemyUnit)
                 {
-                    SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8), Defines.BattleEffectSoundVolume);
+                    SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8));
                 }
 
                 DoAttack();

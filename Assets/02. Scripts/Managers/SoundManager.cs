@@ -80,7 +80,7 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     {
         if (clipPath.Contains("Battle") && volume == 1)
         {
-            volume = Defines.BattleEffectSoundVolume;
+            volume = Defines.BattleSoundEffectVolume;
         }
 
         if (_sfxClip.TryGetValue(clipPath, out AudioClip clip))

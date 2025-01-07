@@ -25,7 +25,7 @@ public static class Defines
     public const float ENERGY_RECOVERY_TIME = 180f; // 에너지 충전 시간 3분
 
     public static readonly float RANGEADJUST = 0.1f;
-    public static readonly float BattleEffectSoundVolume = 0.4f;
+    public static readonly float BattleSoundEffectVolume = 0.8f;
 
     public static readonly int BehindSortingOrder = 199;
     public static readonly int EnemySortingOrder = 200;
