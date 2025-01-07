@@ -5031,8 +5031,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 532781814711626972}
   m_HandleRect: {fileID: 1998311330231894373}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.50000006
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5288,6 +5288,7 @@ MonoBehaviour:
   _gold: {fileID: 399588523610868424}
   _currentSummonUnitNum: {fileID: 4720093257214290054}
   _maxSummonUnitNum: {fileID: 538099896998960038}
+  _stageNumText: {fileID: 939047725793307302}
   _mask1: {fileID: 5375116000988467047}
   _mask2: {fileID: 7520082390494805210}
   _mask3: {fileID: 4041166538163520217}

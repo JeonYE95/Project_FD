@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -17,7 +18,15 @@ public class PlayerData
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
-    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
+    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>()
+    {
+        {"Knight", 0},
+        {"Archer", 0},
+        {"Mage", 0},
+        {"Healer", 0},
+        {"Rogue", 0},
+        {"Warrior", 0}
+    }; // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
     public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
@@ -80,6 +89,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         playerData.diamond = 100;
 
         InitializeStageClearState();
+        // InitializeClassEnforceLevel();
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -294,7 +304,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         else
         {
             // 처음 강화하는 클래스이면 1부터 시작 
-            playerData.ClassEnforce.Add(unitClass, 1);
+            // playerData.ClassEnforce.Add(unitClass, 1);
         }
 
         SavePlayerDataToJson();
@@ -421,4 +431,15 @@ public class GameManager : SingletonDontDestory<GameManager>
         
         playerData.StageClearData[101] = Defines.StageClearState.Unlock;
     }
+
+    // private void InitializeClassEnforceLevel()
+    // {
+        
+    //     playerData.ClassEnforce.Add("Knight", 0);
+    //     playerData.ClassEnforce.Add("Archer", 0);
+    //     playerData.ClassEnforce.Add("Mage", 0);
+    //     playerData.ClassEnforce.Add("Healer", 0);
+    //     playerData.ClassEnforce.Add("Rogue", 0);
+    //     playerData.ClassEnforce.Add("Warrior", 0);
+    // }
 }

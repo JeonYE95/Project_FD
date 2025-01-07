@@ -29,7 +29,7 @@ public class ClassEnforceDataManager : ClassEnforceData
 
     public ClassEnforceData GetClassData(int id)
     {
-        if (ClassEnforceDataMap.TryGetValue(id, out var data))
+        if (ClassEnforceDataMap.TryGetValue(id, out var data))      // 여기에서 안불러와짐
         {
             return data;
         }

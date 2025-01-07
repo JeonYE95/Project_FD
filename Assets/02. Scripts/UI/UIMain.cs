@@ -9,6 +9,7 @@ public class UIMain : UIBase
     [SerializeField] private Button _heroesBtn;
     [SerializeField] private Button _questBtn;
     [SerializeField] private Button _gachaBtn;
+    [SerializeField] private Button _upgradeBtn;
     [SerializeField] private TMP_Text _curEnergyText;
     [SerializeField] private TMP_Text _maxEnergyText;
     [SerializeField] private TMP_Text _diamondTxt;
@@ -21,6 +22,8 @@ public class UIMain : UIBase
         _heroesBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIHeroes>(); });
         _questBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIQuest>(); });
         _gachaBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIGacha>(); });
+        _upgradeBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIClassUpgrade>(); });
+
 
         _maxEnergyText.text = Defines.MAX_ENERGY.ToString();
     }

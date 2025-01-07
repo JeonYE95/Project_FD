@@ -90,7 +90,7 @@ public class UnitDataManager : UnitData
         {
             GameManager.Instance.playerData.ClassEnforce.Add(unit.classtype, classLevel);
         }
-
+        
 
     }
 }

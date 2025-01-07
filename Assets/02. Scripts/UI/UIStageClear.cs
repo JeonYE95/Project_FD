@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GSDatas;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,13 +15,40 @@ public class UIStageClear : UIBase
     
     private Dictionary<int, int> _stageRewardData = new Dictionary<int, int>();
 
+    private StageData _nextStageData;
+    private int _nextStageIndex;
+
     private void Start()
     {
-        _nextStageBtn.onClick.AddListener(() => {  });     // 다음 스테이지 이동 로직 연결(UIClose 포함)
+
         _homeBtn.onClick.AddListener(() => { LoadMainScene(); });  
 
         GetStageRewardData();
         SetRewardUI();
+    }
+
+    private void OnEnable() 
+    {
+        _nextStageIndex = GameManager.Instance.StageID % 10;
+        _nextStageData = GameManager.Instance.TotalStageID[_nextStageIndex];
+
+        // 다음 스테이지 이동 로직 연결(UIClose 포함)
+        _nextStageBtn.onClick.AddListener(() => 
+        {
+            GameManager.Instance.StageID += 1;
+
+            // 입장 필요 에너지 확인
+            if (GameManager.Instance.EnterEnergy >= _nextStageData.cost)
+            {
+                GameManager.Instance.EnterEnergy -= _nextStageData.cost;
+                QuestManager.Instance.UpdateConsumeQuests(3000, _nextStageData.cost);
+                LoadInGameScene();
+            }
+            else
+            {
+                Debug.Log("입장 필요 에너지가 부족합니다.");
+            }
+        });
     }
 
     private void LoadMainScene()
@@ -84,5 +112,19 @@ public class UIStageClear : UIBase
             uiReward.Icon.sprite = Resources.Load<Sprite>($"Sprite/Reward/icon_{rewardName}");    
             uiReward.Value.text = count.ToString();  
         }
+    }
+
+    private void LoadInGameScene()
+    {
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            // 씬 로드 후 UI 오픈
+            if (SceneManager.GetActiveScene().buildIndex == 2)
+                UIManager.Instance.OpenUI<UIInGame>();
+        };
+
+        UIManager.Instance.Clear();
+        SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
+        SoundManager.Instance.PlayBGM("BattleBGM");
     }
 }

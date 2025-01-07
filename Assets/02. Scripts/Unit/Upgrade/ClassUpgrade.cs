@@ -32,7 +32,7 @@ public class ClassUpgrade : MonoBehaviour
         // 클래스 강화 에테르 확인
         ClassEnforceData classEnforceData = ClassEnforceDataManager.Instance.GetClassData(currentLevel);//클래스 레벨
 
-        if (classEnforceData == null) return;
+        if (classEnforceData == null) return;   // 여기에서 끊김
 
         int curEther = GameManager.Instance.GetItemCount(3004);
 

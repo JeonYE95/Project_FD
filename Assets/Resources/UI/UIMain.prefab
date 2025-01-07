@@ -2328,6 +2328,7 @@ MonoBehaviour:
   _heroesBtn: {fileID: 2153828386255434186}
   _questBtn: {fileID: 4259155821973608423}
   _gachaBtn: {fileID: 2445481129191337231}
+  _upgradeBtn: {fileID: 8910306114932020269}
   _curEnergyText: {fileID: 8621398120245305352}
   _maxEnergyText: {fileID: 8106959084259698102}
   _diamondTxt: {fileID: 2034044031673208265}

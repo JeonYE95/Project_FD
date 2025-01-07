@@ -13,6 +13,7 @@ public class UIInGame : UIBase
     [SerializeField] private TMP_Text _gold;
     [SerializeField] private TMP_Text _currentSummonUnitNum;
     [SerializeField] private TMP_Text _maxSummonUnitNum;
+    [SerializeField] private TMP_Text _stageNumText;
 
     [SerializeField] private Image _mask1;
     [SerializeField] private Image _mask2;
@@ -119,6 +120,11 @@ public class UIInGame : UIBase
     {
         _currentSummonUnitNum.text = InventoryManager.Instance.SummonUnitCount.ToString();
         _maxSummonUnitNum.text = InventoryManager.Instance.MaxSummonUnitCount.ToString();
+    }
+
+    private void SetStageNum()
+    {
+        _stageNumText.text = $"1-{GameManager.Instance.StageID}";
     }
 
     private void OnGradeButtonClick(Defines.UnitGrade units, Button clickedButton)
