@@ -20,7 +20,7 @@ public class PlayerData
     public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
-    public Dictionary<int, StageClearState> StageClearData = new Dictionary<int, StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
+    public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -415,8 +415,10 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
         for (int i = 101; i <= 105; i++)
         {   
-            playerData.StageClearData.Add(i, StageClearState.Lock);
+            if (!playerData.StageClearData.ContainsKey(i))
+                playerData.StageClearData.Add(i, Defines.StageClearState.Lock); // 초기값 설정
         }
-        playerData.StageClearData[101] = StageClearState.Unlock;
+        
+        playerData.StageClearData[101] = Defines.StageClearState.Unlock;
     }
 }

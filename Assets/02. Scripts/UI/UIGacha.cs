@@ -19,9 +19,9 @@ public class UIGacha : UIBase
     void Start()
     {
         
-        _gachaBtn1.onClick.AddListener(() => { pieceGacha.PlayPieceGacha(); } );
-        _gachaBtn10.onClick.AddListener(() => { pieceGacha.PlayPieceGacha10(); } );
-        _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIGacha>(); } );
+        _gachaBtn1.onClick.AddListener(() => { pieceGacha.PlayPieceGacha(); });
+        _gachaBtn10.onClick.AddListener(() => { pieceGacha.PlayPieceGacha10(); });
+        _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIGacha>(); });
     }
 
     // Update is called once per frame

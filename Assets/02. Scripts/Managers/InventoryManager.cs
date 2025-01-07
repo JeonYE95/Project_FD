@@ -17,7 +17,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
     [SerializeField] private FieldSlot _selectedSlot;
     [SerializeField] private UIUnitSlot _unitList;
-    [SerializeField] private BindingGradeButton _characterButton;
 
 
     //유닛 인벤토리에 가지고 있는지 확인
@@ -56,7 +55,6 @@ public class InventoryManager : Singleton<InventoryManager>
     public void Start()
     {
         _unitList = GetComponentInChildren<UIUnitSlot>();
-        _characterButton = GetComponentInChildren<BindingGradeButton>();
 
         // 웨이브 끝날 때마다 유닛 위치 초기화
         WaveManager.Instance.OnClearWave += UnitPosReset;

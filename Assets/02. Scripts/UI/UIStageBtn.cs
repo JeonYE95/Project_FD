@@ -80,13 +80,13 @@ public class UIStageBtn : MonoBehaviour
         {
             switch (GameManager.Instance.playerData.StageClearData[_stageID])
             {
-                case StageClearState.Clear:
+                case Defines.StageClearState.Clear:
                     ClearStage();
                     break;
-                case StageClearState.Unlock:
+                case Defines.StageClearState.Unlock:
                     UnlockStage();
                     break;
-                case StageClearState.Lock:
+                case Defines.StageClearState.Lock:
                     LockStage();
                     break;
             }

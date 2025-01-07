@@ -12,7 +12,12 @@ public static class Defines
         Legendary
     }
 
-
+    public enum StageClearState
+    {
+        Clear = 1, 
+        Unlock = 2, 
+        Lock = 3
+    }
 
     public const int CHARACTER_MAXQUANTITY = 99;
     public const int CHARACTER_INVENTORY_SIZE = 32;
