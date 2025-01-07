@@ -3485,11 +3485,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backBtn: {fileID: 271343938324957293}
-  _classBtnParent: {fileID: 1606584749375472474}
-  _targetClassUnitParent: {fileID: 872232716569053470}
+  _classBtnParent: {fileID: 2552762220182321123}
+  _targetClassUnitParent: {fileID: 7294824739119688853}
   _upgradeBtn: {fileID: 6980454904638030026}
   _currentEther: {fileID: 4333129151449503749}
   _requestEther: {fileID: 2707227575759542411}
+  _addedAttack: {fileID: 1043821885543738237}
+  _addedDefense: {fileID: 4789867064106912996}
+  _addedHealth: {fileID: 8685065008954344126}
 --- !u!1 &3442023371832606545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,6 +4309,9 @@ MonoBehaviour:
   _upgradeBtn: {fileID: 6980454904638030026}
   _currentEther: {fileID: 0}
   _requestEther: {fileID: 0}
+  _addedAttack: {fileID: 0}
+  _addedDefense: {fileID: 0}
+  _addedHealth: {fileID: 0}
 --- !u!1 &4453295861368133899
 GameObject:
   m_ObjectHideFlags: 0

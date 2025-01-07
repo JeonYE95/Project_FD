@@ -100,5 +100,37 @@
     "103": 3,
     "104": 3,
     "105": 3
+  },
+  "ClassAddedData": {
+    "Knight": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Archer": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Mage": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Healer": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Rogue": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Warrior": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    }
   }
 }

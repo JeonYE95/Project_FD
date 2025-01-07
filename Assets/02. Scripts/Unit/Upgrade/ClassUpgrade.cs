@@ -1,4 +1,5 @@
 using GSDatas;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,8 +47,7 @@ public class ClassUpgrade : MonoBehaviour
         // 데이터 적용
         foreach (var unit in classUnits)
         {
-
-            //유닛 강화 정보 불러오기
+            // 유닛 강화 정보 불러오기
             int unitEnforceLevel = 0;
             GameManager.Instance.playerData.UnitEnforce.TryGetValue(unit.ID, out unitEnforceLevel);
 
@@ -57,6 +57,10 @@ public class ClassUpgrade : MonoBehaviour
             UnitDataManager.Instance.SaveClassData(unit);
         }
 
+        // 클래스 스탯 증가량 저장
+        GameManager.Instance.playerData.ClassAddedData[classType].AddedAttackValue += classEnforceData.attack;
+        GameManager.Instance.playerData.ClassAddedData[classType].AddedDefenseValue += classEnforceData.defense;
+        GameManager.Instance.playerData.ClassAddedData[classType].AddedHealthValue += classEnforceData.health;
 
         //에테르 차감 및 저장
         GameManager.Instance.substractItemSave(3004, classEnforceData.requiredCost);
@@ -67,6 +71,10 @@ public class ClassUpgrade : MonoBehaviour
 
         Debug.Log($"클래스 타입:  {classType} , 현재 클래스 레벨:  {currentLevel + 1}");
     }
-
-
+}
+public class ClassAddedData
+{
+    public int AddedAttackValue = 0;
+    public int AddedDefenseValue = 0;
+    public int AddedHealthValue = 0;
 }

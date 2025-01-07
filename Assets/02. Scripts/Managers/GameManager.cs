@@ -18,18 +18,11 @@ public class PlayerData
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
-    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>()
-    {
-        {"Knight", 0},
-        {"Archer", 0},
-        {"Mage", 0},
-        {"Healer", 0},
-        {"Rogue", 0},
-        {"Warrior", 0}
-    }; // Key : 클래스 , value : 강화 수치
+    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
     public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
+    public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>();
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -87,9 +80,6 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         StartCoroutine(RecoverEnergyRoutine());
         playerData.diamond = 100;
-
-        InitializeStageClearState();
-        // InitializeClassEnforceLevel();
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -128,6 +118,9 @@ public class GameManager : SingletonDontDestory<GameManager>
             // 파일이 없을 때 초기값 설정
             playerData = new PlayerData();
             playerData.energy = 10;
+            InitializeStageClearState();
+            InitializeClassAddedData();
+            InitializeClassEnforceLevel();
             SavePlayerDataToJson();
         }
     }
@@ -432,14 +425,23 @@ public class GameManager : SingletonDontDestory<GameManager>
         playerData.StageClearData[101] = Defines.StageClearState.Unlock;
     }
 
-    // private void InitializeClassEnforceLevel()
-    // {
-        
-    //     playerData.ClassEnforce.Add("Knight", 0);
-    //     playerData.ClassEnforce.Add("Archer", 0);
-    //     playerData.ClassEnforce.Add("Mage", 0);
-    //     playerData.ClassEnforce.Add("Healer", 0);
-    //     playerData.ClassEnforce.Add("Rogue", 0);
-    //     playerData.ClassEnforce.Add("Warrior", 0);
-    // }
+    private void InitializeClassAddedData()
+    {
+        playerData.ClassAddedData.Add("Knight", new ClassAddedData());
+        playerData.ClassAddedData.Add("Archer", new ClassAddedData());
+        playerData.ClassAddedData.Add("Mage", new ClassAddedData());
+        playerData.ClassAddedData.Add("Healer", new ClassAddedData());
+        playerData.ClassAddedData.Add("Rogue", new ClassAddedData());
+        playerData.ClassAddedData.Add("Warrior", new ClassAddedData());
+    }
+
+    private void InitializeClassEnforceLevel()
+    {
+        playerData.ClassEnforce.Add("Knight", 0);
+        playerData.ClassEnforce.Add("Archer", 0);
+        playerData.ClassEnforce.Add("Mage", 0);
+        playerData.ClassEnforce.Add("Healer", 0);
+        playerData.ClassEnforce.Add("Rogue", 0);
+        playerData.ClassEnforce.Add("Warrior", 0);
+    }
 }
