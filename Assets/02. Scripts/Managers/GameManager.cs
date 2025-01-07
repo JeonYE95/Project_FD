@@ -22,7 +22,7 @@ public class PlayerData
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
     public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
-    public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>();
+    public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>();    // key: 클래스 타입, value: 클래스 업그레이드에 따른 스탯 증가량
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
