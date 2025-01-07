@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using GSDatas;
+using TMPro;
 
-public class UIStageEnter : MonoBehaviour
+public class UIStageEnter : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Button _closeBtn;
+    [SerializeField] private Button _enterStageBtn;
+    [SerializeField] private Button _sweepBtn;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private TextMeshProUGUI _stageName;
+    [SerializeField] private TextMeshProUGUI _stageGoal1;
+    [SerializeField] private TextMeshProUGUI _stageGoal2;
+    [SerializeField] private TextMeshProUGUI _stageGoal3;
+    
 }
