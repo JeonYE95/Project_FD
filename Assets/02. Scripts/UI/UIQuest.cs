@@ -69,7 +69,6 @@ public class UIQuest : UIBase
     }
 
 
-    // 리팩토링 예정
     private void RefreshQuestList()
     {
 
@@ -84,8 +83,12 @@ public class UIQuest : UIBase
            if (!questData.hasReceivedReward)
                return true;
 
-           // 보상을 받은 퀘스트 중 연계 퀘스트가 없는 것만 표시
-           return quest.questData.nextQuestID == 0;
+           // 연계 퀘스트가 없거나 마지막 퀘스트이면 계속 표시
+           if (quest.questData.nextQuestID == 0)
+               return true;
+
+           // 그 외의 경우(중간 퀘스트이고 보상을 받은 경우)는 숨김
+           return false;
        })
        .ToList();
 

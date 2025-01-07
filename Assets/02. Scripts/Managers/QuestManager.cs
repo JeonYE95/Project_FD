@@ -164,9 +164,10 @@ public class QuestManager : SingletonDontDestory<QuestManager>
                         CreateNewQuestSaveData(nextQuestData.ID);
 
                     }
+
+                    questDictionary.Remove(questID);
                 }
 
-                questDictionary.Remove(questID);
                 SaveQuestData(quest);
             }
 
