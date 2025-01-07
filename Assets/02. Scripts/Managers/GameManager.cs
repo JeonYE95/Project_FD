@@ -80,6 +80,8 @@ public class GameManager : SingletonDontDestory<GameManager>
         playerData.diamond = 100;
 
         InitializeStageClearState();
+
+        Application.targetFrameRate = 30;
     }
 
     //인 게임에서 변동 시 JSON 관리
