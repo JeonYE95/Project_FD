@@ -63,6 +63,7 @@ public class UIInGame : UIBase
         SetStageHealth();   // 게임 종료 시마다(성공 또는 실패 시 마다) 호출하는게 더 나으려나
         SetGold();
         SetUnitLimit();
+        SetStageNum();
     }
 
     private void UpdateTimerText(float remainingTime)
@@ -124,7 +125,7 @@ public class UIInGame : UIBase
 
     private void SetStageNum()
     {
-        _stageNumText.text = $"1-{GameManager.Instance.StageID}";
+        _stageNumText.text = $"1-{GameManager.Instance.StageID % 10}";
     }
 
     private void OnGradeButtonClick(Defines.UnitGrade units, Button clickedButton)
