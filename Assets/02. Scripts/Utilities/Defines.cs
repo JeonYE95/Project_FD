@@ -1,5 +1,6 @@
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public static class Defines
 {
@@ -17,6 +18,16 @@ public static class Defines
         Clear = 1, 
         Unlock = 2, 
         Lock = 3
+    }
+
+    public enum UnitClassType
+    {
+        Knight, 
+        Archer,
+        Mage,
+        Rogue,
+        Healer,
+        Warrior
     }
 
     public const int CHARACTER_MAXQUANTITY = 99;
