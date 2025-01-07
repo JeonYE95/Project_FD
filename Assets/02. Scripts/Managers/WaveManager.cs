@@ -114,6 +114,7 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         ClearWave();
+        SoundManager.Instance.PlaySFX("IngameUI/WaveClear");
 
     }
 
@@ -142,7 +143,6 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         StartWave();
-
     }
 
     private async void ClearWave()
@@ -201,6 +201,7 @@ public class WaveManager : Singleton<WaveManager>
         IsRunningWave = true;
         OnBattleStart?.Invoke(); // UI 비활성화 및 자동 유닛 소환
 
+
         //유닛 소환이 완료된 후 전투 시작
         StartCoroutine(StartBattleAfterSummon());
 
@@ -227,6 +228,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         isPreparing = true;
 
+        SoundManager.Instance.PlaySFX("IngameUI/GetWaveReward");
 
         // SpawnManager의 초기화가 완료될 때까지 대기
         while (!SpawnManager.Instance.SlotsInitialized)

@@ -104,6 +104,8 @@ public class StageManager : Singleton<StageManager>
 
         _stageHealth = 3;
 
+        SoundManager.Instance.PlaySFX("IngameUI/StageClear");
+
         GameManager.Instance.playerData.StageClearData[_stageID] = Defines.StageClearState.Clear;
         GameManager.Instance.playerData.StageClearData[_stageID + 1] = Defines.StageClearState.Unlock;
 
