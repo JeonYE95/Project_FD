@@ -14,13 +14,15 @@ public class UIInGame : UIBase
     [SerializeField] private TMP_Text _currentSummonUnitNum;
     [SerializeField] private TMP_Text _maxSummonUnitNum;
     [SerializeField] private TMP_Text _stageNumText;
-
+    
     [SerializeField] private Image _mask1;
     [SerializeField] private Image _mask2;
     [SerializeField] private Image _mask3;
 
     [SerializeField] private GameObject _gradeBtnParent;
     private Button[] _gradeButtons;
+
+    [SerializeField] private Button _settingBtn;
 
     private Canvas _canvas;
     private Camera _mainCamera;
@@ -34,7 +36,8 @@ public class UIInGame : UIBase
         _canvas.worldCamera = _mainCamera;
 
         _drawBtn.onClick.AddListener(() => { IngameGacha.Instance.PlayGacha(); });  
-        _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });  
+        _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });
+        _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIInGameSetting>(); });
 
         //WaveManager 버튼 연동
         _battleStartButton.onClick.AddListener(WaveManager.Instance.WaveStartNow);

@@ -970,7 +970,7 @@ GameObject:
   - component: {fileID: 5463319999623315428}
   - component: {fileID: 1851640927924391791}
   m_Layer: 5
-  m_Name: CombineInfoBtn
+  m_Name: SettingBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5031,8 +5031,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 532781814711626972}
   m_HandleRect: {fileID: 1998311330231894373}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.50000006
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5293,6 +5293,7 @@ MonoBehaviour:
   _mask2: {fileID: 7520082390494805210}
   _mask3: {fileID: 4041166538163520217}
   _gradeBtnParent: {fileID: 4969136052345634670}
+  _settingBtn: {fileID: 1851640927924391791}
 --- !u!1 &3124621622122010963
 GameObject:
   m_ObjectHideFlags: 0
