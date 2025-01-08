@@ -3,7 +3,7 @@
   "level": 0,
   "gold": 0,
   "diamond": 10000,
-  "energy": 10,
+  "energy": 7,
   "items": {
     "3004": 5000
   },
@@ -34,7 +34,7 @@
     "1112": 0
   },
   "ClassEnforce": {
-    "Knight": 1,
+    "Knight": 2,
     "Archer": 1,
     "Mage": 6,
     "Healer": 1,
@@ -44,8 +44,8 @@
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 3,
+      "isCompleted": true,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
@@ -93,7 +93,7 @@
     },
     "4071": {
       "questId": 4071,
-      "progress": 0,
+      "progress": 3,
       "isCompleted": false,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
@@ -144,9 +144,9 @@
   },
   "ClassAddedData": {
     "Knight": {
-      "AddedAttackValue": 0,
-      "AddedDefenseValue": 0,
-      "AddedHealthValue": 0
+      "AddedAttackValue": 1,
+      "AddedDefenseValue": 1,
+      "AddedHealthValue": 1
     },
     "Archer": {
       "AddedAttackValue": 0,
