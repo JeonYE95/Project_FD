@@ -17,11 +17,27 @@ public class PlayerData
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
-    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>(); // Key : 클래스 , value : 강화 수치
+    public Dictionary<string, int> ClassEnforce = new Dictionary<string, int>()
+    {
+        {"Knight", 0},
+        {"Archer", 0},
+        {"Mage", 0},
+        {"Healer", 0},
+        {"Rogue", 0},
+        {"Warrior", 0}
+    }; // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
     public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
     public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
-    public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>();    // key: 클래스 타입, value: 클래스 업그레이드에 따른 스탯 증가량
+    public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>()
+    {
+        {"Knight", new ClassAddedData()},
+        {"Archer", new ClassAddedData()},
+        {"Mage", new ClassAddedData()},
+        {"Healer", new ClassAddedData()},
+        {"Rogue", new ClassAddedData()},
+        {"Warrior", new ClassAddedData()}      
+    };    // key: 클래스 타입, value: 클래스 업그레이드에 따른 스탯 증가량
 }
 
 public class GameManager : SingletonDontDestory<GameManager>
@@ -114,6 +130,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     [ContextMenu("From Json Data")]
     void LoadPlayerDataFromJson()
     {
+        Debug.Log("함수실행");
         // 데이터를 불러올 경로 지정
         string path = GetJsonFilePath();
 
@@ -134,8 +151,8 @@ public class GameManager : SingletonDontDestory<GameManager>
             playerData = new PlayerData();
             playerData.energy = 10;
             InitializeStageClearState();
-            InitializeClassAddedData();
-            InitializeClassEnforceLevel();
+            // InitializeClassAddedData();
+            // InitializeClassEnforceLevel();
             SavePlayerDataToJson();
         }
     }
@@ -451,11 +468,14 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     private void InitializeClassEnforceLevel()
     {
-        playerData.ClassEnforce.Add("Knight", 0);
-        playerData.ClassEnforce.Add("Archer", 0);
-        playerData.ClassEnforce.Add("Mage", 0);
-        playerData.ClassEnforce.Add("Healer", 0);
-        playerData.ClassEnforce.Add("Rogue", 0);
-        playerData.ClassEnforce.Add("Warrior", 0);
+        playerData.ClassEnforce = new Dictionary<string, int>
+        {
+            {"Knight", 0},
+            {"Archer", 0},
+            {"Mage", 0},
+            {"Healer", 0},
+            {"Rogue", 0},
+            {"Warrior", 0}
+        };
     }
 }

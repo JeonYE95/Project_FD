@@ -56,6 +56,8 @@ public class UIInGame : UIBase
         commonButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.common, commonButton));
         rareButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.rare, rareButton));
         uniqueButton.onClick.AddListener(() => OnGradeButtonClick(Defines.UnitGrade.Unique, uniqueButton));
+
+        OnGradeButtonClick(Defines.UnitGrade.common, commonButton);
     }
 
     private void Update()

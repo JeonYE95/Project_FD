@@ -30,53 +30,18 @@ public class UIClassUpgrade : UIBase
 
     private string[] _classTypes = { "Knight", "Archer", "Mage", "Healer", "Rogue", "Warrior" };
 
-    [SerializeField] private Image _unit1;
-    [SerializeField] private Image _unit2;
-    [SerializeField] private Image _unit3;
-    [SerializeField] private Image _unit4;
-
-
-    void Awake()
-    {
-        // if (_targetClassUnitParent == null)
-        // {
-        //     _targetClassUnitParent = transform.Find("EnforceUnit")?.gameObject;
-        // }
-        // else
-        // {
-        //     Debug.Log($"_targetClassUnitParent is assigned: {_targetClassUnitParent.name}");
-        // }
-
-        // if (_classBtnParent == null)
-        // {
-        //     _classBtnParent = transform.Find("ClassBtn")?.gameObject;
-        // }
-        // else
-        // {
-        //     Debug.Log($"_classBtnParent is assigned: {_classBtnParent.name}");
-        // }
-    }
-
     void Start()
     {
-        // if (_targetClassUnitParent == null)
-        // {
-        //     Debug.LogError("_targetClassUnitParent is null. Ensure it's assigned or initialized.");
-        // }
-        // if (_classBtnParent == null)
-        // {
-        //     Debug.LogError("_classBtnParent is null. Ensure it's assigned or initialized.");
-        // }
-
-       //  _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
+        _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
         _targetClassUnitImage = _targetClassUnitParent.GetComponentsInChildren<Image>().Where((image, index) => index % 2 == 1).ToArray();
         _targetClassLevel = _classBtnParent.GetComponentsInChildren<TMP_Text>().Where((text, index) => index % 2 == 1).ToArray();
-        
 
         InitializeClassButtons();
 
         _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIClassUpgrade>(); });
         _upgradeBtn.onClick.AddListener(() => { _classUpgrade.UpgradeClass(_targetClass); LoadClassLevel(); });
+
+        OnClassButtonClick("Knight", _classButtons[0]);
     }
 
     // 클래스 버튼 초기화
@@ -87,16 +52,24 @@ public class UIClassUpgrade : UIBase
             if (i < _classTypes.Length)
             {
                 string classType = _classTypes[i];
-                _classButtons[i].onClick.AddListener(() => OnClassButtonClick(classType));
+                Button button = _classButtons[i];
+                _classButtons[i].onClick.AddListener(() => OnClassButtonClick(classType, button));
             }
         }
         LoadClassLevel();
     }
 
-    private void OnClassButtonClick(string classType)
+    private void OnClassButtonClick(string classType, Button clickedButton)
     {
         _targetClass = classType; 
         Debug.Log($"클래스 '{_targetClass}' 선택됨");
+
+        foreach (Button btn in _classButtons)
+        {
+            btn.GetComponent<Image>().color = btn.colors.normalColor;
+        }
+        clickedButton.GetComponent<Image>().color = new Color(120f / 255f, 120f / 255f, 120f / 255f);
+
         LoadClassUnit(_targetClass);
         LoadAddedClassValue(_targetClass);
         LoadEtherValue(_targetClass);

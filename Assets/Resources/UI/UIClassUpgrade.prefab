@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3493,10 +3493,6 @@ MonoBehaviour:
   _addedAttack: {fileID: 1043821885543738237}
   _addedDefense: {fileID: 4789867064106912996}
   _addedHealth: {fileID: 8685065008954344126}
-  _unit1: {fileID: 0}
-  _unit2: {fileID: 0}
-  _unit3: {fileID: 0}
-  _unit4: {fileID: 0}
 --- !u!1 &3442023371832606545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,7 +4225,6 @@ GameObject:
   - component: {fileID: 4862584485024359836}
   - component: {fileID: 2846459864157185695}
   - component: {fileID: 6335056445063738401}
-  - component: {fileID: 3000436739967209476}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4295,31 +4290,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3000436739967209476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4403498021581168024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0928ec61a2bb4bbabb1625de6c54892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _backBtn: {fileID: 0}
-  _classBtnParent: {fileID: 1606584749375472474}
-  _targetClassUnitParent: {fileID: 0}
-  _upgradeBtn: {fileID: 6980454904638030026}
-  _currentEther: {fileID: 0}
-  _requestEther: {fileID: 0}
-  _addedAttack: {fileID: 0}
-  _addedDefense: {fileID: 0}
-  _addedHealth: {fileID: 0}
-  _unit1: {fileID: 0}
-  _unit2: {fileID: 0}
-  _unit3: {fileID: 0}
-  _unit4: {fileID: 0}
 --- !u!1 &4453295861368133899
 GameObject:
   m_ObjectHideFlags: 0
