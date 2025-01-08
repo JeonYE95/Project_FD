@@ -44,7 +44,7 @@ public class ClassUpgrade : MonoBehaviour
         }
 
 
-        // 데이터 적용
+        // 유닛 데이터 적용
         foreach (var unit in classUnits)
         {
             // 유닛 강화 정보 불러오기
@@ -57,7 +57,10 @@ public class ClassUpgrade : MonoBehaviour
             UnitDataManager.Instance.SaveClassData(unit);
         }
 
-        // 클래스 스탯 증가량 저장
+        // 클래스 강화 레벨 적용
+        GameManager.Instance.playerData.ClassEnforce[classType] += 1;
+
+        // 클래스 스탯 증가량 적용
         GameManager.Instance.playerData.ClassAddedData[classType].AddedAttackValue += classEnforceData.attack;
         GameManager.Instance.playerData.ClassAddedData[classType].AddedDefenseValue += classEnforceData.defense;
         GameManager.Instance.playerData.ClassAddedData[classType].AddedHealthValue += classEnforceData.health;

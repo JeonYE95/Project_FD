@@ -96,6 +96,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         StartCoroutine(RecoverEnergyRoutine());
         playerData.diamond = 10000;
+        playerData.items[3004] = 5000;
 
         InitializeStageClearState();
 
