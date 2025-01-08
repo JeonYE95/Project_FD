@@ -39,7 +39,7 @@ public class UIHeroInfo : UIBase
 
         UnitUpgrade.UpgradeUnit(_unitData.ID);
         UpdateInfo(_unitData);
-        UIHeroes heroesUI = UIManager.Instance.GetUI<UIHeroes>();
+        UIHeroes heroesUI = UIManager.Instance.OpenUI<UIHeroes>();
         if (heroesUI != null)
         {
             heroesUI.UpdateUnitGrade(heroesUI._currentSelectedGrade);

@@ -24,7 +24,6 @@ public class UIMain : UIBase
         _gachaBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIGacha>(); });
         _upgradeBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIClassUpgrade>(); });
 
-
         _maxEnergyText.text = Defines.MAX_ENERGY.ToString();
     }
 

@@ -28,6 +28,7 @@ public class UISelectStage : UIBase
 
         _isGeneratedStageBtn = true;
     }
+
     void Start()
     {
         _closeBtn.onClick.AddListener(() => { Close(); });
@@ -40,15 +41,10 @@ public class UISelectStage : UIBase
         {
             Debug.Log("버튼 생성 안됨");
         }
-
-
-
-        
     }
 
     private void OnEnable() 
     {
-        // 스테이지 버튼 동적 생성
         for (int i = 0; i < 5; i++)
         {   
             int index = i; 
