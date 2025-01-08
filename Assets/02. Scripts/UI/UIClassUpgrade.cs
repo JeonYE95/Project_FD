@@ -30,44 +30,8 @@ public class UIClassUpgrade : UIBase
 
     private string[] _classTypes = { "Knight", "Archer", "Mage", "Healer", "Rogue", "Warrior" };
 
-    [SerializeField] private Image _unit1;
-    [SerializeField] private Image _unit2;
-    [SerializeField] private Image _unit3;
-    [SerializeField] private Image _unit4;
-
-
-    void Awake()
-    {
-        // if (_targetClassUnitParent == null)
-        // {
-        //     _targetClassUnitParent = transform.Find("EnforceUnit")?.gameObject;
-        // }
-        // else
-        // {
-        //     Debug.Log($"_targetClassUnitParent is assigned: {_targetClassUnitParent.name}");
-        // }
-
-        // if (_classBtnParent == null)
-        // {
-        //     _classBtnParent = transform.Find("ClassBtn")?.gameObject;
-        // }
-        // else
-        // {
-        //     Debug.Log($"_classBtnParent is assigned: {_classBtnParent.name}");
-        // }
-    }
-
     void Start()
     {
-        // if (_targetClassUnitParent == null)
-        // {
-        //     Debug.LogError("_targetClassUnitParent is null. Ensure it's assigned or initialized.");
-        // }
-        // if (_classBtnParent == null)
-        // {
-        //     Debug.LogError("_classBtnParent is null. Ensure it's assigned or initialized.");
-        // }
-
         _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
 
         _targetClassUnitImage = _targetClassUnitParent.GetComponentsInChildren<Image>().Where((image, index) => index % 2 == 1).ToArray();
@@ -78,6 +42,8 @@ public class UIClassUpgrade : UIBase
 
         _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIClassUpgrade>(); });
         _upgradeBtn.onClick.AddListener(() => { _classUpgrade.UpgradeClass(_targetClass); LoadClassLevel(); });
+
+        OnClassButtonClick("Knight");
     }
 
     // 클래스 버튼 초기화
