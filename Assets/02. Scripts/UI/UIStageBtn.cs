@@ -21,6 +21,8 @@ public class UIStageBtn : MonoBehaviour
         _stageIndex = stageIndex;
         _stageID = stageData.ID;
 
+        _stageBtn = GetComponent<Button>();
+
         SetStageState();
     }
 
@@ -28,8 +30,7 @@ public class UIStageBtn : MonoBehaviour
     {
         TMP_Text stageTxt = _stageTxt.GetComponent<TMP_Text>();
         Image lockImg = _lockImg.GetComponent<Image>();
-        _stageBtn = GetComponent<Button>();
-
+        
         stageTxt.text = $"1-{_stageIndex}";
 
         _stageBtn.onClick.AddListener(() => 
@@ -56,6 +57,7 @@ public class UIStageBtn : MonoBehaviour
         _clearFrame.SetActive(false);
         _lockImg.SetActive(false);
         _stageTxt.SetActive(true);
+        _stageBtn.interactable = true;
     }
 
     private void LockStage()
@@ -64,6 +66,7 @@ public class UIStageBtn : MonoBehaviour
         _clearFrame.SetActive(false);        
         _lockImg.SetActive(true);
         _stageTxt.SetActive(false);
+        _stageBtn.interactable = false;
     }
 
     private void ClearStage()
@@ -72,6 +75,7 @@ public class UIStageBtn : MonoBehaviour
         _clearFrame.SetActive(true);
         _lockImg.SetActive(false);
         _stageTxt.SetActive(true);
+        _stageBtn.interactable = true;
     }
 
     private void SetStageState()
