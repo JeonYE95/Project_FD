@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,7 +13,7 @@ public class PlayerData
     public string name;
     public int level;
     public int gold;
-    public int diamond;
+    public int diamond = 10000;
     public int energy;
     public Dictionary<int, int> items = new Dictionary<int, int>(); // key: 아이템 ID, value: 아이템 수
     public Dictionary<int, int> UnitEnforce = new Dictionary<int, int>(); // key : 유닛 ID, value : 강화 레벨
@@ -95,8 +94,6 @@ public class GameManager : SingletonDontDestory<GameManager>
         IsInitialized = true;  // 초기화 완료 표시
 
         StartCoroutine(RecoverEnergyRoutine());
-        playerData.diamond = 10000;
-        playerData.items[3004] = 5000;
 
         InitializeStageClearState();
 
@@ -164,7 +161,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     {
         // 데이터 리셋
         playerData = new PlayerData();
-        playerData.energy = 10;
+        playerData.energy = 100;
 
         SavePlayerDataToJson();
         Debug.Log("Reset Player Data Complete");
