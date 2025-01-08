@@ -10,7 +10,8 @@ using UnityEngine;
 public class WaveManager : Singleton<WaveManager>
 {
 
-    private Coroutine _prepareCoroutine;
+    public Coroutine _prepareCoroutine;
+    private Coroutine _timerCoroutine;  // 타이머용 코루틴
 
     private int _currentWave; // 현재 웨이브 
     private int _endWave; // 마지막 웨이브
@@ -218,7 +219,7 @@ public class WaveManager : Singleton<WaveManager>
 
         // 전투 시작과 함께 타이머 시작
         currentPreparationTime = waveCycleTime;
-        _prepareCoroutine = StartCoroutine(BattleTimer());
+        _timerCoroutine = StartCoroutine(RunTimer());
     }
 
 
@@ -241,33 +242,43 @@ public class WaveManager : Singleton<WaveManager>
 
         currentPreparationTime = preparationTime;
 
-        while (currentPreparationTime > 0)
-        {
-            OnPreparationTimeChanged?.Invoke(currentPreparationTime);
-            yield return new WaitForSeconds(1f);
-            currentPreparationTime--;
-        }
+        // 기존 타이머 코루틴이 있다면 정지
+        if (_timerCoroutine != null)
+            StopCoroutine(_timerCoroutine);
 
-        isPreparing = false;
-        Debug.Log("게임 시작");
-        StartWave();
+        // 새로운 타이머 시작
+        _timerCoroutine = StartCoroutine(RunTimer());
 
     }
 
 
-    private IEnumerator BattleTimer()
+   
+
+    private IEnumerator RunTimer()
     {
         while (currentPreparationTime > 0)
         {
-            OnPreparationTimeChanged?.Invoke(currentPreparationTime);
-            yield return new WaitForSeconds(1f);
-            currentPreparationTime--;
+            if (Time.timeScale != 0)
+            {
+                OnPreparationTimeChanged?.Invoke(currentPreparationTime);
+                currentPreparationTime--;
+            }
+            yield return new WaitForSecondsRealtime(1f);
         }
 
-        Debug.Log("타임 오버 / 패배");
-        BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
+        // 시간이 다 되었을 때의 처리
+        if (IsRunningWave)
+        {
+            Debug.Log("타임 오버 / 패배");
+            BattleManager.Instance.StartCoroutine(BattleManager.Instance.Lose());
+        }
+        else
+        {
+            isPreparing = false;
+            Debug.Log("게임 시작");
+            StartWave();
+        }
     }
-
 
     //최대 스테이지 및 웨이브 데이터 구하기
     private void GetAllWaveData(int stageID)
