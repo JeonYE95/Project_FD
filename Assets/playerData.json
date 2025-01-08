@@ -3,34 +3,9 @@
   "level": 0,
   "gold": 0,
   "diamond": 10000,
-  "energy": 9,
+  "energy": 100,
   "items": {},
-  "UnitEnforce": {
-    "1001": 0,
-    "1051": 0,
-    "1101": 0,
-    "1102": 0,
-    "1002": 0,
-    "1052": 0,
-    "1103": 0,
-    "1104": 0,
-    "1003": 0,
-    "1053": 0,
-    "1105": 0,
-    "1106": 0,
-    "1005": 0,
-    "1055": 0,
-    "1109": 0,
-    "1110": 0,
-    "1004": 0,
-    "1054": 0,
-    "1107": 0,
-    "1108": 0,
-    "1006": 0,
-    "1056": 0,
-    "1111": 0,
-    "1112": 0
-  },
+  "UnitEnforce": {},
   "ClassEnforce": {
     "Knight": 0,
     "Archer": 0,
@@ -39,65 +14,9 @@
     "Rogue": 0,
     "Warrior": 0
   },
-  "questData": {
-    "4001": {
-      "questId": 4001,
-      "progress": 1,
-      "isCompleted": true,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4010": {
-      "questId": 4010,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4020": {
-      "questId": 4020,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4030": {
-      "questId": 4030,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4040": {
-      "questId": 4040,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4050": {
-      "questId": 4050,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    },
-    "4061": {
-      "questId": 4061,
-      "progress": 1,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-08 오전 2:07:37"
-    }
-  },
+  "questData": {},
   "ChallengeProgress": {},
-  "StageClearData": {
-    "101": 2,
-    "102": 3,
-    "103": 3,
-    "104": 3,
-    "105": 3
-  },
+  "StageClearData": {},
   "ClassAddedData": {
     "Knight": {
       "AddedAttackValue": 0,
