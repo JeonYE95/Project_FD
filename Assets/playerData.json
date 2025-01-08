@@ -3,7 +3,7 @@
   "level": 0,
   "gold": 20500,
   "diamond": 10000,
-  "energy": 2,
+  "energy": 0,
   "items": {
     "3003": 4000,
     "3004": 200
@@ -45,7 +45,7 @@
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 10,
+      "progress": 12,
       "isCompleted": true,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
