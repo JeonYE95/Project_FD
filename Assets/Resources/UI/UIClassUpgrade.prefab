@@ -3493,6 +3493,10 @@ MonoBehaviour:
   _addedAttack: {fileID: 1043821885543738237}
   _addedDefense: {fileID: 4789867064106912996}
   _addedHealth: {fileID: 8685065008954344126}
+  _unit1: {fileID: 0}
+  _unit2: {fileID: 0}
+  _unit3: {fileID: 0}
+  _unit4: {fileID: 0}
 --- !u!1 &3442023371832606545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4312,6 +4316,10 @@ MonoBehaviour:
   _addedAttack: {fileID: 0}
   _addedDefense: {fileID: 0}
   _addedHealth: {fileID: 0}
+  _unit1: {fileID: 0}
+  _unit2: {fileID: 0}
+  _unit3: {fileID: 0}
+  _unit4: {fileID: 0}
 --- !u!1 &4453295861368133899
 GameObject:
   m_ObjectHideFlags: 0
