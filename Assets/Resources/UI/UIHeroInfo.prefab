@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -62.621353, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1897,6 +1897,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeBtn: {fileID: 6862593128195517934}
+  _levelUpBtn: {fileID: 6422824424421637291}
+  _heroName: {fileID: 2777188123910132279}
+  _heroIcon: {fileID: 7810998756694610819}
+  _levelUpbarSlider: {fileID: 4103225808340723577}
+  _currentPiece: {fileID: 3349175923203756989}
+  _needPiece: {fileID: 4477185159171142040}
+  _unitLevel: {fileID: 3944937686947520880}
+  _health: {fileID: 4082211211721142126}
+  _attack: {fileID: 3256879912086542854}
+  _defense: {fileID: 4215485763173644324}
+  _attackSpeed: {fileID: 8720586600564734800}
+  _attackRange: {fileID: 2700821992228349260}
+  _skillName: {fileID: 3428640252190644292}
+  _skillDescription: {fileID: 8906714302944543973}
 --- !u!1 &2638792769175651813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4266,10 +4280,10 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_fontSizeMin: 20
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4298,7 +4312,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -108.76352, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5181,8 +5195,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: dddddddddddddddddddddddd
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
-  m_sharedMaterial: {fileID: 5416806443266638455, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bbb04d6f9e7db9c42aca6e9d7fcd050e, type: 2}
+  m_sharedMaterial: {fileID: 1987784855911668349, guid: bbb04d6f9e7db9c42aca6e9d7fcd050e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

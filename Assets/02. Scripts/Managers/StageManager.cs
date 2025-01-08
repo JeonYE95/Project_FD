@@ -33,7 +33,7 @@ public class StageManager : Singleton<StageManager>
 
 
     [Header("스테이지 내 재화 관리")]
-    private int _gold = 99999;
+    private int _gold = 15;
 
 
     public int Gold
@@ -103,6 +103,8 @@ public class StageManager : Singleton<StageManager>
         QuestManager.Instance.UpdateStageQuests(_stageID);
 
         _stageHealth = 3;
+
+        SoundManager.Instance.PlaySFX("IngameUI/StageClear");
 
         GameManager.Instance.playerData.StageClearData[_stageID] = Defines.StageClearState.Clear;
         GameManager.Instance.playerData.StageClearData[_stageID + 1] = Defines.StageClearState.Unlock;

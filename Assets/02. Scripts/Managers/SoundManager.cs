@@ -10,8 +10,8 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     private Dictionary<string, AudioClip> _bgmClip = new Dictionary<string, AudioClip>();   // BGM 클립
     private Dictionary<string, AudioClip> _sfxClip = new Dictionary<string, AudioClip>();   // SFX 클립
 
-    [SerializeField] private float bgmVolume = 1f;
-    [SerializeField] private float sfxVolume = 1f;
+    [SerializeField] private float bgmVolume;
+    [SerializeField] private float sfxVolume;
 
     protected override void Awake()
     {
@@ -20,6 +20,12 @@ public class SoundManager : SingletonDontDestory<SoundManager>
 
         InitializeAudioSource();
         LoadAudioClips();
+
+        bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+        SetBGMVolume(bgmVolume);
+        SetSFXVolume(sfxVolume);
     }
 
     private void InitializeAudioSource()
@@ -74,7 +80,7 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     {
         if (clipPath.Contains("Battle") && volume == 1)
         {
-            volume = Defines.BattleEffectSoundVolume;
+            volume = Defines.BattleSoundEffectVolume;
         }
 
         if (_sfxClip.TryGetValue(clipPath, out AudioClip clip))
@@ -120,6 +126,9 @@ public class SoundManager : SingletonDontDestory<SoundManager>
     {
         bgmVolume = Mathf.Clamp01(volume);
         _bgmSource.volume = bgmVolume;
+
+        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
+        PlayerPrefs.Save();
     }
 
     // SFX 볼륨 설정
@@ -130,6 +139,9 @@ public class SoundManager : SingletonDontDestory<SoundManager>
         {
             source.volume = sfxVolume;
         }
+
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
+        PlayerPrefs.Save();
     }
 
     // 볼륨 가져오기

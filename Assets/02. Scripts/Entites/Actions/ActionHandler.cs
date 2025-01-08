@@ -24,7 +24,7 @@ public class ActionHandler : MonoBehaviour
 
     //스킬쿨타임 현재는 스킬데이터껄로 씀 2024.12.24
     public float skillCoolTime;
-    public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime?? 1f;
+    public float attackCoolTime => _myUnit.unitInfo?.AttackCooltime ?? 1f;
 
     private void Awake()
     {
@@ -75,8 +75,6 @@ public class ActionHandler : MonoBehaviour
             //액션 애니메이션 재생
             _myUnit.PlayAttackAnimation();
 
-            SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID));
-
             //스킬 사용
             UseSkill();
             ResetSkillCoolTime();
@@ -94,7 +92,7 @@ public class ActionHandler : MonoBehaviour
                 }
                 else if (_myUnit is EnemyUnit)
                 {
-                    SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8), 0.3f);
+                    SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8));
                 }
 
                 DoAttack();
@@ -137,34 +135,7 @@ public class ActionHandler : MonoBehaviour
     //원거리 투사체 공격
     private void PerformRangedAttack()
     {
-        //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식으로 
-        //동작하는 코드가 있기 때문에 불가
-        Vector3 firePoint = transform.position;
-        firePoint += firePointAdjust; // 발사 위치 조정
-
-        //GameObject attackProjectileGO;
-
-        GameObject attackProjectileGO = ObjectPool.Instance.SpawnFromPool(Defines.DefaultProejectileTag, firePoint);
-
-        var projectileScript = attackProjectileGO.GetComponent<DefaultProjectile>();
-        var projectileSpriteRenderer = attackProjectileGO.GetComponent<SpriteRenderer>();
-        var ProjectileData = BattleManager.Instance.GetProjectileSprite(_myUnit.unitInfo.ID);
-
-        projectileSpriteRenderer.sprite = ProjectileData.sprite;
-        projectileSpriteRenderer.color = ProjectileData.color;
-
-        Vector2 direction = (_targetUnit.transform.position - firePoint).normalized;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        attackProjectileGO.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        if (_myUnit.transform.position.x < _targetUnit.transform.position.x)
-        {
-            projectileSpriteRenderer.flipX = true;
-        }
-
-        projectileScript.SetProjectile(_targetUnit, direction, _myUnit.unitInfo.Attack);
+        CreateProjectile(_targetUnit);
     }
 
     private void PerformMeleeAttack()
@@ -191,5 +162,39 @@ public class ActionHandler : MonoBehaviour
     public void LifeSteal(int damage)
     {
         _myUnit.healthSystem.TakeHealth((int)(damage * 0.3f));
+    }
+
+    public GameObject CreateProjectile(BaseUnit targetUnit)
+    {
+        //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식(GetChild(0)으로 
+        //동작하는 코드가 있기 때문에 불가
+        Vector3 firePoint = transform.position;
+        firePoint += firePointAdjust; // 발사 위치 조정
+
+        //GameObject attackProjectileGO;
+
+        GameObject attackProjectileGO = ObjectPool.Instance.SpawnFromPool(Defines.DefaultProejectileTag, firePoint);
+
+        var projectileScript = attackProjectileGO.GetComponent<DefaultProjectile>();
+        var projectileSpriteRenderer = attackProjectileGO.GetComponent<SpriteRenderer>();
+        var ProjectileData = BattleManager.Instance.GetProjectileSprite(_myUnit.unitInfo.ID);
+
+        projectileSpriteRenderer.sprite = ProjectileData.sprite;
+        projectileSpriteRenderer.color = ProjectileData.color;
+
+        Vector2 direction = (targetUnit.transform.position - firePoint).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        attackProjectileGO.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        if (_myUnit.transform.position.x < targetUnit.transform.position.x)
+        {
+            projectileSpriteRenderer.flipX = true;
+        }
+
+        projectileScript.SetProjectile(targetUnit, direction, _myUnit.unitInfo.Attack);
+
+        return attackProjectileGO;
     }
 }

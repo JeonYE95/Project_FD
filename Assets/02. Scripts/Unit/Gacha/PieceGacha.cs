@@ -36,6 +36,7 @@ public class PieceGacha : MonoBehaviour
             TrackGachaResult(selectedUnit);
         }
 
+        QuestManager.Instance.UpdateGachaQuest(0);
     }
 
     public void PlayPieceGacha10()

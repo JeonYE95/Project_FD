@@ -79,7 +79,23 @@ public class GameManager : SingletonDontDestory<GameManager>
         IsInitialized = true;  // 초기화 완료 표시
 
         StartCoroutine(RecoverEnergyRoutine());
-        playerData.diamond = 100;
+        playerData.diamond = 10000;
+
+        InitializeStageClearState();
+
+        Application.targetFrameRate = 30;
+    }
+
+
+    private string GetJsonFilePath()
+    {
+#if UNITY_EDITOR
+        // 에디터에서는 Assets 폴더에 저장
+        return Path.Combine(Application.dataPath, "playerData.json");
+#else
+    // 빌드에서는 persistentDataPath 사용
+        return Path.Combine(Application.persistentDataPath, "playerData.json");
+#endif
     }
 
     //인 게임에서 변동 시 JSON 관리
@@ -90,7 +106,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         // JSON 생성
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(playerData, Newtonsoft.Json.Formatting.Indented);
         // 데이터 경로 지정
-        string path = Path.Combine(Application.dataPath, "playerData.json");
+        string path = GetJsonFilePath();
         // 파일 생성 및 저장
         File.WriteAllText(path, jsonData);
 
@@ -100,7 +116,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     void LoadPlayerDataFromJson()
     {
         // 데이터를 불러올 경로 지정
-        string path = Path.Combine(Application.dataPath, "playerData.json");
+        string path = GetJsonFilePath();
 
         if (File.Exists(path))
         {
@@ -388,7 +404,6 @@ public class GameManager : SingletonDontDestory<GameManager>
                     Debug.LogWarning($"Class type {classType}에 해당하는 유닛이 없습니다.");
                     continue;
                 }
-
 
 
                 for (int i = 1; i <= level; i++) // 레벨에 따른 유닛 스탯 반영

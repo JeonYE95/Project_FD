@@ -1,9 +1,9 @@
 using GSDatas;
 using UnityEngine;
 
-public class UnitUpgrade : MonoBehaviour
+public class UnitUpgrade
 {
-    public void UpgradeUnit(int unitId)
+    public static void UpgradeUnit(int unitId)
     {
         // 유닛 데이터 가져오기
         UnitData unit = UnitDataManager.Instance.GetUnitData(unitId);

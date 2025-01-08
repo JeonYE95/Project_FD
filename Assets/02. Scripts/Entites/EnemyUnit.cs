@@ -49,5 +49,7 @@ public class EnemyUnit : BaseUnit
     public override void PlayDeathAnimation()
     {
         animController.SetState(EnemyAnimData.DeathState);
+
+        SoundManager.Instance.PlaySFX("Battle/MonsterDie", Defines.BattleSoundEffectVolume);
     }
 }

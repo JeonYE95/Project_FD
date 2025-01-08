@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SkillExecutor : MonoBehaviour
 {
@@ -45,6 +46,19 @@ public class SkillExecutor : MonoBehaviour
             return;
         }
 
+        //스킬 효과음 출력
+        if (skillData.skillType == SkillType.Heal)
+        {
+            SoundManager.Instance.PlaySFX("Battle/Heal");
+        }
+        else if (_myUnit is PlayerUnit)
+        {
+            SoundManager.Instance.PlaySFX("Battle/" + UnitChecker.GetUnitType(_myUnit.unitInfo.ID));
+        }
+        else if (_myUnit is EnemyUnit)
+        {
+            SoundManager.Instance.PlaySFX("Battle/monster" + Random.Range(1, 8));
+        }
 
         // 타겟에 스킬 효과 적용
         foreach (var target in targets)
