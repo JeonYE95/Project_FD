@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Defines;
 
 public static class PlayerAnimData
 {
@@ -43,11 +44,33 @@ public class UnitAnimationController : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
 
+        //자식 오브젝트에 애니메이터 참조 불가한 경우
         if (animator == null)
         {
             Debug.LogWarning($"Animator가 {gameObject.name}에 연결되지 않았습니다.");
             return;
         }
+
+        /*var classtype = (_myUnit.unitInfo as UnitInfo)?.GetClass() ?? "None";
+
+        if (classtype == UnitClassType.Archer.ToString())
+        {
+            Debug.Log("부");
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/ArcherController");
+        }
+        else
+        {
+            //여기서는 진짜 몬스터 에너미 유닛은 다른 애니메이터기에 이 코드 유지
+            //isPlayer 안씀
+            if (_myUnit is PlayerUnit)
+            {
+                animator.runtimeAnimatorController = animController; // RuntimeAnimatorController 설정
+            }
+            else if (_myUnit is EnemyUnit)
+            {
+                animator.ResetTrigger(EnemyAnimData.Attack);
+            }
+        }*/
 
         //여기서는 진짜 몬스터 에너미 유닛은 다른 애니메이터기에 이 코드 유지
         //isPlayer 안씀
