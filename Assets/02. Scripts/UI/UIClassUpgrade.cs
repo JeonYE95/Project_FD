@@ -78,7 +78,7 @@ public class UIClassUpgrade : UIBase
     private void LoadEtherValue(string classType)
     {
         _currentEther.text = GameManager.Instance.GetItemCount(3004).ToString();    // 이것도 playerData에서 관리해야 하는 거 아닌지
-        _requestEther.text = ClassEnforceDataManager.Instance.GetClassData(GameManager.Instance.playerData.ClassEnforce[classType]).ToString(); // 안불러와짐
+        _requestEther.text = ClassEnforceDataManager.Instance.GetClassData(GameManager.Instance.playerData.ClassEnforce[classType]).requiredCost.ToString(); 
     }
 
     private void LoadClassLevel()
