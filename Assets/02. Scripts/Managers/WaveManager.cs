@@ -115,7 +115,7 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         ClearWave();
-        SoundManager.Instance.PlaySFX("IngameUI/WaveClear");
+        SoundManager.Instance.PlaySFX("IngameUI/WaveClear_3");
 
     }
 
