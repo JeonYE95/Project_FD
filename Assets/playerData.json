@@ -3,59 +3,59 @@
   "level": 0,
   "gold": 0,
   "diamond": 10000,
-  "energy": 9,
+  "energy": 10,
   "items": {},
   "UnitEnforce": {},
   "ClassEnforce": {},
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 1,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4010": {
       "questId": 4010,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4020": {
       "questId": 4020,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4030": {
       "questId": 4030,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4040": {
       "questId": 4040,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4050": {
       "questId": 4050,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     },
     "4061": {
       "questId": 4061,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-07 오전 10:42:40"
+      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
     }
   },
   "ChallengeProgress": {},
@@ -65,5 +65,37 @@
     "103": 3,
     "104": 3,
     "105": 3
+  },
+  "ClassAddedData": {
+    "Knight": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Archer": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Mage": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Healer": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Rogue": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    },
+    "Warrior": {
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
+    }
   }
 }

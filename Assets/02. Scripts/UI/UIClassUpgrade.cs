@@ -68,7 +68,8 @@ public class UIClassUpgrade : UIBase
         //     Debug.LogError("_classBtnParent is null. Ensure it's assigned or initialized.");
         // }
 
-       //  _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
+        _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
+
         _targetClassUnitImage = _targetClassUnitParent.GetComponentsInChildren<Image>().Where((image, index) => index % 2 == 1).ToArray();
         _targetClassLevel = _classBtnParent.GetComponentsInChildren<TMP_Text>().Where((text, index) => index % 2 == 1).ToArray();
         
