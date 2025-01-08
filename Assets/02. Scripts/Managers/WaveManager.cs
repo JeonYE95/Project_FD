@@ -137,10 +137,15 @@ public class WaveManager : Singleton<WaveManager>
     {
         if (_prepareCoroutine != null)
         {
-
             StopCoroutine(_prepareCoroutine);
             _prepareCoroutine = null;
+        }
 
+        // 기존 타이머도 정지
+        if (_timerCoroutine != null)
+        {
+            StopCoroutine(_timerCoroutine);
+            _timerCoroutine = null;
         }
 
         StartWave();
