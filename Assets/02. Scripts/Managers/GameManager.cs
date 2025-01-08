@@ -178,15 +178,19 @@ public class GameManager : SingletonDontDestory<GameManager>
             return;
 
         }
-
-        if (itemId == 3002)
+        else if (itemId == 3002)
         {
             playerData.gold += count;
             SavePlayerDataToJson();
             return;
 
         }
-
+        else if (itemId == 3003)
+        {
+            playerData.diamond += count;
+            SavePlayerDataToJson();
+            return;
+        }
 
 
         // 기존 아이템이 있는지 확인
@@ -335,7 +339,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
-    //퀘스트 및 도전과제 저장
+    //퀘스트 및 도전과제 및 스테이지 진행도 저장
     public void progressSave()
     {
         SavePlayerDataToJson();

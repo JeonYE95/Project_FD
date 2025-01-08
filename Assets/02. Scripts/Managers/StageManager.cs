@@ -112,6 +112,8 @@ public class StageManager : Singleton<StageManager>
 
         Debug.Log("스테이지 클리어");
 
+        //스테이지 진행도 저장
+        GameManager.Instance.progressSave();
     }
 
     private List<StageData> GetCurrentStageData()
