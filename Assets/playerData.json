@@ -1,12 +1,11 @@
 {
-  "name": "",
+  "name": null,
   "level": 0,
-  "gold": 20500,
+  "gold": 0,
   "diamond": 10000,
-  "energy": 2,
+  "energy": 10,
   "items": {
-    "3003": 4000,
-    "3004": 200
+    "3004": 3030
   },
   "UnitEnforce": {
     "1001": 0,
@@ -35,68 +34,110 @@
     "1112": 0
   },
   "ClassEnforce": {
-    "Knight": 0,
-    "Archer": 0,
-    "Mage": 0,
-    "Healer": 0,
-    "Rogue": 0,
-    "Warrior": 0
+    "Knight": 1,
+    "Archer": 1,
+    "Mage": 6,
+    "Healer": 1,
+    "Rogue": 4,
+    "Warrior": 4
   },
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 10,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4010": {
       "questId": 4010,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4020": {
       "questId": 4020,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4030": {
       "questId": 4030,
-      "progress": 2,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4040": {
       "questId": 4040,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4050": {
       "questId": 4050,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     },
     "4061": {
       "questId": 4061,
-      "progress": 49,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/8/2025 12:54:28 AM"
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4071": {
+      "questId": 4071,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4081": {
+      "questId": 4081,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4091": {
+      "questId": 4091,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4101": {
+      "questId": 4101,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4111": {
+      "questId": 4111,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
+    },
+    "4121": {
+      "questId": 4121,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "1/8/2025 2:24:58 AM"
     }
   },
   "ChallengeProgress": {},
   "StageClearData": {
     "101": 2,
-    "102": 2,
+    "102": 3,
     "103": 3,
     "104": 3,
     "105": 3
@@ -113,9 +154,9 @@
       "AddedHealthValue": 0
     },
     "Mage": {
-      "AddedAttackValue": 0,
-      "AddedDefenseValue": 0,
-      "AddedHealthValue": 0
+      "AddedAttackValue": 15,
+      "AddedDefenseValue": 15,
+      "AddedHealthValue": 15
     },
     "Healer": {
       "AddedAttackValue": 0,
@@ -123,14 +164,14 @@
       "AddedHealthValue": 0
     },
     "Rogue": {
-      "AddedAttackValue": 0,
-      "AddedDefenseValue": 0,
-      "AddedHealthValue": 0
+      "AddedAttackValue": 6,
+      "AddedDefenseValue": 6,
+      "AddedHealthValue": 6
     },
     "Warrior": {
-      "AddedAttackValue": 0,
-      "AddedDefenseValue": 0,
-      "AddedHealthValue": 0
+      "AddedAttackValue": 6,
+      "AddedDefenseValue": 6,
+      "AddedHealthValue": 6
     }
   }
 }

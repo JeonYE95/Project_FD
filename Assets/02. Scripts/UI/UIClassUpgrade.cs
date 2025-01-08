@@ -39,7 +39,7 @@ public class UIClassUpgrade : UIBase
         InitializeClassButtons();
 
         _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIClassUpgrade>(); });
-        _upgradeBtn.onClick.AddListener(() => { _classUpgrade.UpgradeClass(_targetClass); LoadClassLevel(); });
+        _upgradeBtn.onClick.AddListener(() => { OnUpgradeButtonClick(); });
 
         OnClassButtonClick("Knight", _classButtons[0]);
     }
@@ -73,6 +73,16 @@ public class UIClassUpgrade : UIBase
         LoadClassUnit(_targetClass);
         LoadAddedClassValue(_targetClass);
         LoadEtherValue(_targetClass);
+        LoadClassLevel();
+    }
+
+    private void OnUpgradeButtonClick()
+    {
+        _classUpgrade.UpgradeClass(_targetClass);
+        
+        LoadAddedClassValue(_targetClass);
+        LoadEtherValue(_targetClass);
+        LoadClassLevel();
     }
 
     private void LoadEtherValue(string classType)

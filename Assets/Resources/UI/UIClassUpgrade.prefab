@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8850104769324835139}
   - component: {fileID: 8895183831765190115}
   m_Layer: 0
-  m_Name: CurrentItem
+  m_Name: RequestItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2434,7 +2434,7 @@ GameObject:
   - component: {fileID: 5286343272089537600}
   - component: {fileID: 1660373076668265961}
   m_Layer: 0
-  m_Name: RequestItem
+  m_Name: CurrentItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3488,8 +3488,8 @@ MonoBehaviour:
   _classBtnParent: {fileID: 2552762220182321123}
   _targetClassUnitParent: {fileID: 7294824739119688853}
   _upgradeBtn: {fileID: 6980454904638030026}
-  _currentEther: {fileID: 4333129151449503749}
-  _requestEther: {fileID: 2707227575759542411}
+  _currentEther: {fileID: 2707227575759542411}
+  _requestEther: {fileID: 4333129151449503749}
   _addedAttack: {fileID: 1043821885543738237}
   _addedDefense: {fileID: 4789867064106912996}
   _addedHealth: {fileID: 8685065008954344126}
