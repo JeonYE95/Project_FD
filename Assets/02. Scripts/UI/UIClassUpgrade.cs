@@ -33,17 +33,15 @@ public class UIClassUpgrade : UIBase
     void Start()
     {
         _classButtons = _classBtnParent.GetComponentsInChildren<Button>();
-
         _targetClassUnitImage = _targetClassUnitParent.GetComponentsInChildren<Image>().Where((image, index) => index % 2 == 1).ToArray();
         _targetClassLevel = _classBtnParent.GetComponentsInChildren<TMP_Text>().Where((text, index) => index % 2 == 1).ToArray();
-        
 
         InitializeClassButtons();
 
         _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIClassUpgrade>(); });
         _upgradeBtn.onClick.AddListener(() => { _classUpgrade.UpgradeClass(_targetClass); LoadClassLevel(); });
 
-        OnClassButtonClick("Knight");
+        OnClassButtonClick("Knight", _classButtons[0]);
     }
 
     // 클래스 버튼 초기화
@@ -54,16 +52,24 @@ public class UIClassUpgrade : UIBase
             if (i < _classTypes.Length)
             {
                 string classType = _classTypes[i];
-                _classButtons[i].onClick.AddListener(() => OnClassButtonClick(classType));
+                Button button = _classButtons[i];
+                _classButtons[i].onClick.AddListener(() => OnClassButtonClick(classType, button));
             }
         }
         LoadClassLevel();
     }
 
-    private void OnClassButtonClick(string classType)
+    private void OnClassButtonClick(string classType, Button clickedButton)
     {
         _targetClass = classType; 
         Debug.Log($"클래스 '{_targetClass}' 선택됨");
+
+        foreach (Button btn in _classButtons)
+        {
+            btn.GetComponent<Image>().color = btn.colors.normalColor;
+        }
+        clickedButton.GetComponent<Image>().color = new Color(120f / 255f, 120f / 255f, 120f / 255f);
+
         LoadClassUnit(_targetClass);
         LoadAddedClassValue(_targetClass);
         LoadEtherValue(_targetClass);
