@@ -37,7 +37,7 @@ public class UIStageClear : UIBase
         // 다음 스테이지 이동 로직 연결(UIClose 포함)
         _nextStageBtn.onClick.AddListener(() => 
         {
-            GameManager.Instance.StageID += _nextStageID;
+            GameManager.Instance.StageID = _nextStageID;
 
             // 입장 필요 에너지 확인
             if (GameManager.Instance.EnterEnergy >= _nextStageData.cost)
