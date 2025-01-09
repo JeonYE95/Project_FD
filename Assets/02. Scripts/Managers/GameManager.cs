@@ -95,8 +95,6 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         StartCoroutine(RecoverEnergyRoutine());
 
-        InitializeStageClearState();
-
         Application.targetFrameRate = 30;
     }
 
@@ -339,7 +337,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     }
 
-    //퀘스트 및 도전과제 저장
+    //퀘스트 및 도전과제 및 스테이지 진행도 저장
     public void progressSave()
     {
         SavePlayerDataToJson();
