@@ -160,6 +160,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         // 데이터 리셋
         playerData = new PlayerData();
         playerData.energy = 100;
+        InitializeStageClearState();
 
         SavePlayerDataToJson();
         Debug.Log("Reset Player Data Complete");

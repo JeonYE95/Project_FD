@@ -16,7 +16,13 @@
   },
   "questData": {},
   "ChallengeProgress": {},
-  "StageClearData": {},
+  "StageClearData": {
+    "101": 2,
+    "102": 3,
+    "103": 3,
+    "104": 3,
+    "105": 3
+  },
   "ClassAddedData": {
     "Knight": {
       "AddedAttackValue": 0,
