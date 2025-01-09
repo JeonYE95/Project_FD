@@ -95,8 +95,6 @@ public class GameManager : SingletonDontDestory<GameManager>
 
         StartCoroutine(RecoverEnergyRoutine());
 
-        InitializeStageClearState();
-
         Application.targetFrameRate = 30;
     }
 
