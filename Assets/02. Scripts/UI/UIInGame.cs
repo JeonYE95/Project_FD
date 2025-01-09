@@ -35,6 +35,8 @@ public class UIInGame : UIBase
 
         _canvas.worldCamera = _mainCamera;
 
+        SetupUI();
+
         _drawBtn.onClick.AddListener(() => { IngameGacha.Instance.PlayGacha(); });  
         _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });
         _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIInGameSetting>(); });
@@ -145,5 +147,25 @@ public class UIInGame : UIBase
         clickedButton.GetComponent<Image>().color = new Color(255f / 255f, 210f / 255f, 0f);
     }
 
-    
+
+    void SetupUI()
+    {
+        // 화면 비율 계산
+        float screenRatio = (float)Screen.width / Screen.height;
+        float targetRatio = 16f / 9f;
+
+        if (screenRatio > targetRatio)
+        {
+            RectTransform spawnPointRect = _spawnPointUI.GetComponent<RectTransform>();
+            Vector3 localScale = spawnPointRect.localScale;
+
+            // 16:9 비율을 기준으로 현재 화면 비율에 따라 스케일 조정
+            float ratioDiff = screenRatio - targetRatio;
+            float scale = 1f - (ratioDiff * 1.2f);  // 1.2는 20:9에서 0.5가 되도록 하는 계수
+
+            localScale.y = scale;
+            spawnPointRect.localScale = localScale;
+        }
+    }
+
 }
