@@ -164,6 +164,17 @@ public class ActionHandler : MonoBehaviour
         _myUnit.healthSystem.TakeHealth((int)(damage * 0.3f));
     }
 
+    public GameObject CreateEffectProjectile(BaseUnit targetUnit, string effectTag)
+    {
+        GameObject projectile = CreateProjectile(targetUnit);
+
+        var DP = projectile.GetComponent<DefaultProjectile>();
+
+        DP.SetTargetTriggerEffect(effectTag);
+
+        return projectile;
+    }
+
     public GameObject CreateProjectile(BaseUnit targetUnit)
     {
         //프리팹에 빈오브젝트로 FirePoint 추가하고 싶으나 다른 사람 코드에서 첫번째 자식(GetChild(0)으로 

@@ -18,7 +18,7 @@ public static class SkillEffectPool
         }
     }
 
-    // Config 데이터 접근
+    /*// Config 데이터 접근
     public static SkillVisualEffectPoolConfigSO.SkillVisualEffectEntry GetSkillEffect(int skillID)
     {
         LoadConfig();
@@ -26,5 +26,5 @@ public static class SkillEffectPool
         if (skillEffectPoolConfig == null) return null;
 
         return skillEffectPoolConfig.skillEffects.Find(effect => effect.skillID == skillID);
-    }
+    }*/
 }

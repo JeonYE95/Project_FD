@@ -17,32 +17,72 @@ MonoBehaviour:
     haveProjectile: 0
     casterEffectTag: NoneEffect
     targetEffectTag: NoneEffect
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
   skillEffects:
   - skillID: 0
     haveProjectile: 0
     casterEffectTag: NoneEffect
     targetEffectTag: NoneEffect
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
   - skillID: 1
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 2
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Armor
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 3
+    haveProjectile: 1
+    casterEffectTag: 
+    targetEffectTag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 21300000, guid: 19e15567818b25e4280a587218c777dc, type: 3}
   - skillID: 4
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: SmallThunder
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 5
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: SwordImpact1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 0}
   - skillID: 6
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
-  - skillID: 11
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 7
     haveProjectile: 0
     casterEffectTag: 
+    targetEffectTag: Boost
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 11
+    haveProjectile: 1
+    casterEffectTag: 
     targetEffectTag: Earthquake
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 21300000, guid: 88ce4030940097340a35ba7facbd25be, type: 3}
   - skillID: 15
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: Freeze
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
   - skillID: 19
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
