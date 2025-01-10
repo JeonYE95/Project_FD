@@ -393,7 +393,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
     }
 
     // SkillEffectEntry를 가져오는 메서드
-    public SkillVisualEffectPoolConfigSO.SkillVisualEffectEntry GetSkillEffect(int skillID)
+    public SkillVisualEffectEntry GetSkillEffect(int skillID)
     {
         // SkillVisualEffectPoolConfigSO가 null인지 확인
         if (skillVisualEffectSO == null)
@@ -424,7 +424,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
 
 
     // ProjectileSprite 가져오는 메서드
-    public ProjectileSO.ProjectileData GetProjectileSprite(int unitID)
+    public ProjectileData GetProjectileSprite(int unitID)
     {
         if (unitProjectileSO.projectileDatas == null || unitProjectileSO.projectileDatas.Count == 0)
         {

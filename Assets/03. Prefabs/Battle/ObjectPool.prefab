@@ -69,3 +69,11 @@ MonoBehaviour:
     prefab: {fileID: 5043573985140183233, guid: 6ea4c19d986c9cb43af3a447cfee7f3d, type: 3}
     size: 15
     canExpand: 1
+  - tag: Armor
+    prefab: {fileID: 5043573985140183233, guid: 3ce0db9ae0624c14ca5e99bfd7ac06cb, type: 3}
+    size: 10
+    canExpand: 1
+  - tag: SwordImpact1
+    prefab: {fileID: 6263782476919498309, guid: 5a90d32eaa628f745be08b1f9752388b, type: 3}
+    size: 15
+    canExpand: 1

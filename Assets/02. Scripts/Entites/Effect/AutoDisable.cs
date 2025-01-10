@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoDisable : MonoBehaviour
 {
     [SerializeField] private float _disableTime = 1.0f;
-
+    
     private void OnEnable()
     {
         Invoke("SetActiveFalse", _disableTime);

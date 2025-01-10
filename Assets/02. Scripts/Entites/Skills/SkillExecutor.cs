@@ -71,14 +71,14 @@ public class SkillExecutor : MonoBehaviour
 
     private void ApplySkillType(BaseUnit caster, BaseUnit target)
     {
-        var targetVisualEffectTag = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID).targetEffectTag;
+        var visualEffect = BattleManager.Instance.GetSkillEffect(inGameSkillData.skillID);
 
         /*if (inGameSkillData.skillID == 15)
         {
             Debug.Log("");
         }*/
 
-        PlayVisualEffect(target, targetVisualEffectTag);
+        PlayVisualEffect(target, visualEffect.targetEffectTag);
 
         /*if (targetVisualEffectTag == "NoneEffect")
         {
@@ -90,13 +90,26 @@ public class SkillExecutor : MonoBehaviour
         {
             case SkillType.Damage:
 
-                if (inGameSkillData.skillEffect == SkillEffect.SkillValue) // 단순 스킬 데미지
+                if (visualEffect.haveProjectile)
                 {
-                    target.healthSystem.TakeDamage((int)inGameSkillData.value);
+                    GameObject projectile = _handler.CreateEffectProjectile(target, visualEffect.targetEffectTag);
+
+                    var projectileSprite = projectile.GetComponent<SpriteRenderer>();
+
+                    projectileSprite.sprite = visualEffect.projectileSprite;
+                    projectileSprite.color = visualEffect.color;
+
                 }
-                else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
+                else
                 {
-                    target.healthSystem.TakeDamage((int)(caster.unitInfo.Attack * (float)inGameSkillData.value));
+                    if (inGameSkillData.skillEffect == SkillEffect.SkillValue) // 단순 스킬 데미지
+                    {
+                        target.healthSystem.TakeDamage((int)inGameSkillData.value);
+                    }
+                    else if (inGameSkillData.skillEffect == SkillEffect.BasicAttackMultiplier) // 평타 데미지 기반 N배의 데미지
+                    {
+                        target.healthSystem.TakeDamage((int)(caster.unitInfo.Attack * (float)inGameSkillData.value));
+                    }
                 }
 
                 break;
