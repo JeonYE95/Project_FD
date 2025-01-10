@@ -51,24 +51,33 @@ public class ChallengeManager : Singleton<ChallengeManager>
     {
         if (!GameManager.Instance.playerData.ChallengeProgress.ContainsKey(challenge.Key))
         {
-            GameManager.Instance.playerData.ChallengeProgress.Add(challenge.Key, true);
-            GameManager.Instance.progressSave();
+
+            //클리어 했다면 몇번째인지도 넣어야 하네. 
+
+
         }
+        else
+        {
+
+
+
+
+        }
+
+        GameManager.Instance.progressSave();
     }
 
-    // 스테이지의 챌린지 완료 상태 가져오기
-    public List<bool> GetStageChallengeStatus(int stageID)
-    {
-        List<bool> results = new List<bool>();
-        if (_stageChallengeDic.TryGetValue(stageID, out var challenges))
-        {
-            foreach (challengeData challenge in challenges)
-            {
-                results.Add(GameManager.Instance.playerData.ChallengeProgress.ContainsKey(challenge.Key));
-            }
-        }
-        return results;
-    }
+
+}
+
+
+
+public class ChallengeClearData
+{
+
+    public int Challenge_1 = (int)Defines.StageChallengeClearState.None;
+    public int Challenge_2 = (int)Defines.StageChallengeClearState.None;
+    public int Challenge_3 = (int)Defines.StageChallengeClearState.None;
 
 
 }
