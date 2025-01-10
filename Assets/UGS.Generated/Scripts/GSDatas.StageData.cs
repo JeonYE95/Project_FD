@@ -62,6 +62,8 @@ namespace GSDatas
 		public System.Int32 RewardID;
 		public System.Int32 count;
 		public System.Int32 cost;
+		public System.Int32 ChapterID;
+		public System.Int32 StageID;
   
 
 #region fuctions
