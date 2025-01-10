@@ -62,7 +62,11 @@ public class DefaultProjectile : MonoBehaviour
             if (_haveEffect)
             {
                 GameObject visualEffect = ObjectPool.Instance.SpawnFromPool(_effectTag);
-                visualEffect.transform.position = healthSystem.transform.position;
+
+                if (visualEffect != null)
+                {
+                    visualEffect.transform.position = healthSystem.transform.position;
+                }
             }
 
             healthSystem.TakeDamage(damage);

@@ -17,7 +17,6 @@ public class SkillExecutor : MonoBehaviour
         _handler = GetComponent<ActionHandler>();
 
         UnitInfo unitstat = new UnitInfo();
-
     }
     
 
@@ -78,13 +77,10 @@ public class SkillExecutor : MonoBehaviour
             Debug.Log("");
         }*/
 
-        PlayVisualEffect(target, visualEffect.targetEffectTag);
-
-        /*if (targetVisualEffectTag == "NoneEffect")
+        if (!visualEffect.haveProjectile)
         {
-            //Debug.Log(targetVisualEffectTag.ToString());
+            PlayVisualEffect(target, visualEffect.targetEffectTag);
         }
-        */
 
         switch (inGameSkillData.skillType)
         {
@@ -92,7 +88,7 @@ public class SkillExecutor : MonoBehaviour
 
                 if (visualEffect.haveProjectile)
                 {
-                    GameObject projectile = _handler.CreateEffectProjectile(target, visualEffect.targetEffectTag);
+                    GameObject projectile = _handler.CreateEffectProjectile(target, visualEffect);
 
                     var projectileSprite = projectile.GetComponent<SpriteRenderer>();
 
@@ -141,8 +137,6 @@ public class SkillExecutor : MonoBehaviour
         {
             case SkillEffect.Stun:
 
-                Debug.Log("Stun");
-
                 BattleManager.Instance.ApplyBuff(
                     target,
                     inGameSkillData.skillEffect.ToString(),
@@ -153,8 +147,6 @@ public class SkillExecutor : MonoBehaviour
                 break;
 
             case SkillEffect.LifeSteal:
-
-                Debug.Log("Stun");
 
                 BattleManager.Instance.ApplyBuff(
                     target,

@@ -77,3 +77,11 @@ MonoBehaviour:
     prefab: {fileID: 6263782476919498309, guid: 5a90d32eaa628f745be08b1f9752388b, type: 3}
     size: 15
     canExpand: 1
+  - tag: Boost
+    prefab: {fileID: 4218190384258386958, guid: 17897e553fa0eea46a738d3759be2101, type: 3}
+    size: 15
+    canExpand: 1
+  - tag: Explode
+    prefab: {fileID: 8755955523026005142, guid: f958ee59bdb72684c939bfcc0423205d, type: 3}
+    size: 15
+    canExpand: 1

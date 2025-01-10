@@ -156,7 +156,7 @@ public class ActionHandler : MonoBehaviour
     private void UseSkill()
     {
         _skillExecutor.ExecuteSkill(_myUnit, _skillExecutor.inGameSkillData);
-        Debug.Log($"{_myUnit.ID} 스킬 사용함");
+        //Debug.Log($"{_myUnit.ID} 스킬 사용함");
     }
 
     public void LifeSteal(int damage)
@@ -164,13 +164,16 @@ public class ActionHandler : MonoBehaviour
         _myUnit.healthSystem.TakeHealth((int)(damage * 0.3f));
     }
 
-    public GameObject CreateEffectProjectile(BaseUnit targetUnit, string effectTag)
+    public GameObject CreateEffectProjectile(BaseUnit targetUnit, SkillVisualEffectEntry skilleffect)
     {
         GameObject projectile = CreateProjectile(targetUnit);
 
         var DP = projectile.GetComponent<DefaultProjectile>();
 
-        DP.SetTargetTriggerEffect(effectTag);
+        if (skilleffect.targetEffectTag != null)
+        {
+            DP.SetTargetTriggerEffect(skilleffect.targetEffectTag);
+        }
 
         return projectile;
     }
