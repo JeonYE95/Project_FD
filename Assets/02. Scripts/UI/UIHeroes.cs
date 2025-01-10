@@ -55,7 +55,7 @@ public class UIHeroes : UIBase
             btn.GetComponent<Image>().color = btn.colors.normalColor;
         }
 
-        clickedButton.GetComponent<Image>().color = new Color(255f / 255f, 210f / 255f, 0f);
+        clickedButton.GetComponent<Image>().color = new Color(80f / 255f, 80f / 255f, 90f / 255f);
     }
 
 
