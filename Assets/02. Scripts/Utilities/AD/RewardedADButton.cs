@@ -43,6 +43,7 @@ public class RewardedADButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     {
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
+        GameManager.Instance.playerData.energy += 5;
     }
 
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
