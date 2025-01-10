@@ -21,7 +21,7 @@ public class UISetting : UIBase
             _sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
 
-        _exitBtn.onClick.AddListener(() => { Close(); });
+        _exitBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UISetting>(); });
     }
 
     private void SetBGMVolume(float value)

@@ -3,7 +3,7 @@
   "level": 0,
   "gold": 10000,
   "diamond": 12500,
-  "energy": 94,
+  "energy": 93,
   "items": {
     "3004": 100
   },
@@ -44,7 +44,7 @@
   "questData": {
     "4001": {
       "questId": 4001,
-      "progress": 8,
+      "progress": 9,
       "isCompleted": true,
       "hasReceivedReward": true,
       "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
@@ -93,7 +93,7 @@
     },
     "4071": {
       "questId": 4071,
-      "progress": 8,
+      "progress": 9,
       "isCompleted": false,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
@@ -135,7 +135,7 @@
     },
     "4002": {
       "questId": 4002,
-      "progress": 6,
+      "progress": 7,
       "isCompleted": true,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/9/2025 10:16:49 AM"

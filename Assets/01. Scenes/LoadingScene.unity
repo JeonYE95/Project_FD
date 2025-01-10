@@ -452,8 +452,8 @@ MonoBehaviour:
     name: 
     level: 0
     gold: 0
-    diamond: 0
-    energy: 10
+    diamond: 10000
+    energy: 0
 --- !u!1 &1304385388
 GameObject:
   m_ObjectHideFlags: 0
