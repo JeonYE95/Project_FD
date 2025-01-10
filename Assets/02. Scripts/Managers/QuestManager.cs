@@ -81,7 +81,6 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     }
 
 
-
     private bool ShouldAddQuest(QuestData questData, List<int> mainQuestIds)
     {
 
@@ -96,8 +95,6 @@ public class QuestManager : SingletonDontDestory<QuestManager>
                !GameManager.Instance.playerData.questData[questData.ID].hasReceivedReward;
 
     }
-
-
     public void CreateNewQuestSaveData(int questId)
     {
         QuestSaveData saveData = new QuestSaveData
@@ -272,6 +269,8 @@ public class QuestManager : SingletonDontDestory<QuestManager>
                 return new GachaQuest(data);
             case "Quest":
                 return new QuestClearQuest(data);
+            case "Login":
+                return new LoginQuest(data);
             default:
                 throw new ArgumentException($"Unknown quest type: {data.questType}");
         }
@@ -307,6 +306,11 @@ public class QuestManager : SingletonDontDestory<QuestManager>
     public void UpdateQuestClearQuest(int itemId, int amount = 1)
     {
         UpdateQuestsByType<QuestClearQuest>(itemId, amount);
+    }
+
+    public void UpdateLoginQuests(int itemId, int amount = 1)
+    {
+        UpdateQuestsByType<LoginQuest>(itemId, amount);
     }
 
 
