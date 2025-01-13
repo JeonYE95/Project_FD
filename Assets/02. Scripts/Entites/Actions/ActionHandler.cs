@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -170,7 +171,7 @@ public class ActionHandler : MonoBehaviour
 
         var DP = projectile.GetComponent<DefaultProjectile>();
 
-        if (skilleffect.targetEffectTag != null)
+        if (skilleffect.targetEffectTag.Length > 0 )
         {
             DP.SetTargetTriggerEffect(skilleffect.targetEffectTag);
         }

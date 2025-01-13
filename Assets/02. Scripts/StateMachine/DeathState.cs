@@ -8,7 +8,7 @@ public class DeathState : BaseState
 
     public override void Enter()
     {
-        stateMachine.unit.UnitMovement.Stop();
+        stateMachine.unit.unitMovement.Stop();
         stateMachine.unit.PlayDeathAnimation();
     }
 
