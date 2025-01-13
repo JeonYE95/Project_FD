@@ -23,9 +23,8 @@ public class ConsumeQuestCondition : ITargetQuset
         if ( itemId == questData.requireConditionID)
         {
             currentCount += count;
-        }
+        }   
     }
-
 
     public int GetCurrentProgress()
     {

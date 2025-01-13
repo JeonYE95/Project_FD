@@ -102,6 +102,11 @@ public class StageManager : Singleton<StageManager>
         //스테이지 퀘스트 업데이트
         QuestManager.Instance.UpdateStageQuests(_stageID);
 
+        // 스테이지 도전 업데이트 
+        ChallengeManager.Instance.Initialize();
+        ChallengeManager.Instance.UpdateStageChallenge(_stageID);
+
+
         _stageHealth = 3;
 
         SoundManager.Instance.StopBGM();

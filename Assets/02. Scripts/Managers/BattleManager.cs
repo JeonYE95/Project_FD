@@ -23,7 +23,7 @@ public class BattleManager : Singleton<BattleManager>
     {
         get
         {
-            return _players;
+            return players;
         }
         set
         {

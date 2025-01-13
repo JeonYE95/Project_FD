@@ -20,12 +20,12 @@ public class ChallengeDataManager : challengeData
 
     private ChallengeDataManager() { }
 
-    public List<challengeData> GetItemDatas()
+    public List<challengeData> GetDatas()
     {
         return GetList();
     }
 
-    public challengeData GetItemData(int id)
+    public challengeData GetData(int id)
     {
         if (challengeDataMap.TryGetValue(id, out var data))
         {
