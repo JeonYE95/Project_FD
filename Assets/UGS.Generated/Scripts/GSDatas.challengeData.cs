@@ -59,6 +59,10 @@ namespace GSDatas
 		public System.Int32 Key;
 		public System.Int32 ID;
 		public System.String Description;
+		public System.String ChallengeType;
+		public System.String ClassType;
+		public System.String grade;
+		public System.Int32 requireCount;
   
 
 #region fuctions
