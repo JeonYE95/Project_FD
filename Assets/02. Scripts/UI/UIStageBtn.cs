@@ -36,18 +36,8 @@ public class UIStageBtn : MonoBehaviour
         _stageBtn.onClick.AddListener(() => 
         {
             GameManager.Instance.StageID = _stageData.ID;
-
-            // 입장 필요 에너지 확인
-            if (GameManager.Instance.EnterEnergy >= _stageData.cost)
-            {
-                GameManager.Instance.EnterEnergy -= _stageData.cost;
-                QuestManager.Instance.UpdateConsumeQuests(3000, _stageData.cost);
-                LoadInGameScene();
-            }
-            else
-            {
-                Debug.Log("입장 필요 에너지가 부족합니다.");
-            }
+            UIManager.Instance.OpenUI<UIStageEnter>();
+           
         });
     }
 
@@ -101,18 +91,5 @@ public class UIStageBtn : MonoBehaviour
         }
     }
 
-    
-    private void LoadInGameScene()
-    {
-        SceneManager.sceneLoaded += (scene, mode) =>
-        {
-            // 씬 로드 후 UI 오픈
-            if (SceneManager.GetActiveScene().buildIndex == 2)
-                UIManager.Instance.OpenUI<UIInGame>();
-        };
-
-        UIManager.Instance.Clear();
-        SceneManager.LoadScene("InGameBattleScene"); // 씬 로드
-        SoundManager.Instance.PlayBGM("BattleBGM");
-    }
+ 
 }
