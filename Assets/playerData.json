@@ -2,8 +2,8 @@
   "name": null,
   "level": 0,
   "gold": 10000,
-  "diamond": 12500,
-  "energy": 93,
+  "diamond": 13000,
+  "energy": 94,
   "items": {
     "3004": 100
   },
@@ -88,15 +88,15 @@
       "questId": 4061,
       "progress": 28,
       "isCompleted": true,
-      "hasReceivedReward": false,
+      "hasReceivedReward": true,
       "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4071": {
       "questId": 4071,
-      "progress": 9,
+      "progress": 8,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
+      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
     },
     "4081": {
       "questId": 4081,
@@ -107,10 +107,10 @@
     },
     "4091": {
       "questId": 4091,
-      "progress": 1,
+      "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
+      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
     },
     "4101": {
       "questId": 4101,
@@ -142,59 +142,59 @@
     },
     "4011": {
       "questId": 4011,
-      "progress": 1,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4021": {
       "questId": 4021,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4031": {
       "questId": 4031,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4041": {
       "questId": 4041,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4051": {
       "questId": 4051,
-      "progress": 0,
+      "progress": 1,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4131": {
       "questId": 4131,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4141": {
       "questId": 4141,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4151": {
       "questId": 4151,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     }
   },
   "ChallengeClearData": {},
