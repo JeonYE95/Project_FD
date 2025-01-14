@@ -138,15 +138,19 @@ public class CharacterSlot : Slot, IBeginDragHandler, IDragHandler, IEndDragHand
             // UICombineInfo를 활성화하고 클릭한 유닛의 ID 전달
             if (clickedUnit != null)
             {
-                if (clickedUnit.grade == "Rare")
+                if (clickedUnit.grade == "Common")
+                {
+                    UIManager.Instance.CloseUI<UICombineInfo_4>();
+                    UIManager.Instance.OpenUI<UICombineInfo>().OnUnitClicked(clickedUnit.ID);
+                }
+                else if (clickedUnit.grade == "Rare") 
                 {
                     UIManager.Instance.CloseUI<UICombineInfo>();
                     UIManager.Instance.OpenUI<UICombineInfo_4>().OnUnitClicked(clickedUnit.ID);
                 }
                 else
                 {
-                    UIManager.Instance.CloseUI<UICombineInfo_4>();
-                    UIManager.Instance.OpenUI<UICombineInfo>().OnUnitClicked(clickedUnit.ID);;
+                    Debug.Log("조합식 없음");
                 }
             }
             else
