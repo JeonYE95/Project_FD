@@ -86,10 +86,10 @@
     },
     "4061": {
       "questId": 4061,
-      "progress": 22,
+      "progress": 28,
       "isCompleted": true,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
+      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4071": {
       "questId": 4071,
@@ -131,7 +131,7 @@
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
+      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4002": {
       "questId": 4002,

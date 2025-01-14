@@ -17,7 +17,7 @@ public class BaseUnit : MonoBehaviour
     //Unit's Component
     public HealthSystem healthSystem;
     public ActionHandler actionHandler;
-    public UnitMovement UnitMovement;
+    public UnitMovement unitMovement;
     public UnitAnimationController animController;
 
     //공통된 이동속도
@@ -48,7 +48,7 @@ public class BaseUnit : MonoBehaviour
         //앞으로 이거 통합으로
         actionHandler = GetComponent<ActionHandler>();
 
-        UnitMovement = GetComponent<UnitMovement>();
+        unitMovement = GetComponent<UnitMovement>();
         animController = GetComponent<UnitAnimationController>();
     }
 
@@ -63,7 +63,7 @@ public class BaseUnit : MonoBehaviour
     {
         healthSystem.MaxHP = unitInfo.Health;
 
-        UnitMovement.moveSpeed = moveSpeed;
+        unitMovement.moveSpeed = moveSpeed;
 
         if (unitInfo.Range >= 4f)
         {

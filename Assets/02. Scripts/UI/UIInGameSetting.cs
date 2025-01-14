@@ -28,7 +28,7 @@ public class UIInGameSetting : UIBase
             _sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
 
-        _exitBtn.onClick.AddListener(() => { Close(); });
+        _exitBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIInGameSetting>(); });
         _homeBtn.onClick.AddListener(() => { LoadMainScene(); });
 
     }

@@ -44,6 +44,9 @@ MonoBehaviour:
   - unitID: 1105
     sprite: {fileID: 21300000, guid: 7a274b5ce24765f4b875db83d5f46dae, type: 3}
     color: {r: 0.25, g: 0.8102248, b: 1, a: 1}
+  - unitID: 1108
+    sprite: {fileID: 21300000, guid: 7a274b5ce24765f4b875db83d5f46dae, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - unitID: 1109
     sprite: {fileID: 21300000, guid: 7a274b5ce24765f4b875db83d5f46dae, type: 3}
     color: {r: 0.14729774, g: 0.9339623, b: 0.118948035, a: 1}

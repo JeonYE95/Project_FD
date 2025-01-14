@@ -1,14 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DefaultProjectile : MonoBehaviour
 {
+    bool _haveEffect;
+    string _effectTag;
+
     public float speed = 10f;
     public int damage = 10;
 
     private Vector2 direction;
     private BaseUnit targetUnit;
+
+    private Action <int>Boo;
 
     private void Start()
     {
@@ -20,6 +26,12 @@ public class DefaultProjectile : MonoBehaviour
         this.damage = damage;
         this.direction = direction;
         this.targetUnit = targetUnit;
+    }
+
+    public void SetTargetTriggerEffect(string effectTag)
+    {
+        _haveEffect = true;
+        _effectTag = effectTag;
     }
 
     // Update is called once per frame
@@ -47,6 +59,16 @@ public class DefaultProjectile : MonoBehaviour
 
         if (collision.TryGetComponent(out HealthSystem healthSystem))
         {
+            if (_haveEffect)
+            {
+                GameObject visualEffect = ObjectPool.Instance.SpawnFromPool(_effectTag);
+
+                if (visualEffect != null)
+                {
+                    visualEffect.transform.position = healthSystem.transform.position;
+                }
+            }
+
             healthSystem.TakeDamage(damage);
             DeActiveThis();
         }
@@ -55,6 +77,5 @@ public class DefaultProjectile : MonoBehaviour
     protected virtual void DeActiveThis()
     {
         ObjectPool.Instance.ReturnToPool(this.gameObject, Defines.DefaultProejectileTag);
-
     }
 }

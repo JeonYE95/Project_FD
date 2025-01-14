@@ -20,6 +20,12 @@ public static class Defines
         Lock = 3
     }
 
+    public enum StageChallengeClearState
+    {
+       Clear = 1,
+       None = 2
+    }
+
     public enum UnitClassType
     {
         Knight, 

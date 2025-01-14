@@ -53,6 +53,28 @@ public class UIQuestSlot : MonoBehaviour
         rewardAmountText.text = _currentQuest.questData.rewardCount.ToString();
         // 보상 아이콘은 RewardData에서 가져와서 설정
 
+        int rewardID = _currentQuest.questData.rewardID;
+        string rewardName;
+        switch (rewardID)
+        {
+            case 3002:
+                rewardName = "Gold";
+                break;
+
+            case 3003:
+                rewardName = "Diamond";
+                break;
+
+            case 3004:
+                rewardName = "Ether";
+                break;
+            default:
+                rewardName = "None";
+                break;
+        }
+
+        rewardIcon.sprite = Resources.Load<Sprite>($"Sprite/Reward/icon_{rewardName}"); ;
+
         rewardButton.interactable = _currentQuest.isCompleted;
     }
 

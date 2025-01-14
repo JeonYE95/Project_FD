@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class UISetting : UIBase
 {
     [SerializeField] private Button _exitBtn;
+    [SerializeField] private Button _quitBtn;
     [SerializeField] private Slider _bgmSlider;
     [SerializeField] private Slider _sfxSlider;
     
@@ -21,7 +22,8 @@ public class UISetting : UIBase
             _sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
 
-        _exitBtn.onClick.AddListener(() => { Close(); });
+        _exitBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UISetting>(); });
+        _quitBtn.onClick.AddListener(() => { GameManager.Instance.QuitGame(); });
     }
 
     private void SetBGMVolume(float value)

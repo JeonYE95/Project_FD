@@ -1,74 +1,145 @@
 using GSDatas;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChallengeManager : Singleton<ChallengeManager>
 {
-    private Dictionary<int, List<challengeData>> _stageChallengeDic = new Dictionary<int, List<challengeData>>();
+
+    private Dictionary<string, IChallengeStrategy> challengeStrategies;
+
+    private List<challengeData> _currentChallengeData;
+
+
+
     public void Initialize()
     {
-        // 스테이지별 도전과제 데이터 정리
-        List<challengeData> allChallenges = challengeData.GetList();
-        foreach (challengeData challenge in allChallenges)
+        challengeStrategies = new Dictionary<string, IChallengeStrategy>
         {
-            if (!_stageChallengeDic.ContainsKey(challenge.ID))
-            {
-                _stageChallengeDic[challenge.ID] = new List<challengeData>();
-            }
-            _stageChallengeDic[challenge.ID].Add(challenge);
-        }
+            { "Clear", new ClearChallenge() },
+            { "ClassInclude", new ClassIncludeChallenge() },
+            { "GradeInclude", new GradeIncludeChallenge()},
+        };
+
     }
 
     // 스테이지 클리어 시 호출
-    public void CheckStageChallenges(int stageID)
+    public void UpdateStageChallenge(int stageID)
     {
-        if (_stageChallengeDic.TryGetValue(stageID, out var challenges))
+        _currentChallengeData =  GetCurrentchallengeData(stageID);
+
+        foreach (var challenge in _currentChallengeData)
         {
-            foreach (var challenge in challenges)
+            if (challengeStrategies.TryGetValue(challenge.ChallengeType, out var strategy))
             {
-                // 챌린지 조건 체크 및 완료 처리
-                if (CheckChallengeCondition(challenge))
+                if (strategy.CheckCondition(challenge))
                 {
                     CompleteChallenege(challenge);
                 }
             }
+            else
+            {
+                Debug.LogWarning($"Unknown challenge type: {challenge.ChallengeType}");
+            }
         }
 
 
-
     }
 
-    private bool CheckChallengeCondition(challengeData challenge)
+    // 도전과제 상태 업데이트
+    public void UpdateChallengeState(int stageId, int challengeNumber, Defines.StageChallengeClearState state)
     {
-        // 여기에 각 챌린지 타입별 조건 체크 로직 구현
+        if (!GameManager.Instance.playerData.ChallengeClearData.ContainsKey(stageId))
+        {
+            GameManager.Instance.playerData.ChallengeClearData[stageId] = new ChallengeClearData();
+        }
 
+        var challengeData = GameManager.Instance.playerData.ChallengeClearData[stageId];
+        switch (challengeNumber)
+        {
+            case 1: challengeData.Challenge_1 = (int)state; break;
+            case 2: challengeData.Challenge_2 = (int)state; break;
+            case 3: challengeData.Challenge_3 = (int)state; break;
+        }
 
-        return false;
+        GameManager.Instance.progressSave(); 
     }
+
+    // 도전과제 상태 확인
+    public Defines.StageChallengeClearState GetChallengeState(int stageId, int challengeNumber)
+    {
+        var playerData = GameManager.Instance.playerData;
+        if (playerData.ChallengeClearData.TryGetValue(stageId, out var challengeData))
+        {
+            return challengeNumber switch
+            {
+                1 => (Defines.StageChallengeClearState)challengeData.Challenge_1,
+                2 => (Defines.StageChallengeClearState)challengeData.Challenge_2,
+                3 => (Defines.StageChallengeClearState)challengeData.Challenge_3,
+                _ => Defines.StageChallengeClearState.None
+            };
+        }
+        return Defines.StageChallengeClearState.None;
+    }
+
 
     private void CompleteChallenege(challengeData challenge)
     {
-        if (!GameManager.Instance.playerData.ChallengeProgress.ContainsKey(challenge.Key))
-        {
-            GameManager.Instance.playerData.ChallengeProgress.Add(challenge.Key, true);
-            GameManager.Instance.progressSave();
-        }
-    }
 
-    // 스테이지의 챌린지 완료 상태 가져오기
-    public List<bool> GetStageChallengeStatus(int stageID)
-    {
-        List<bool> results = new List<bool>();
-        if (_stageChallengeDic.TryGetValue(stageID, out var challenges))
+
+        int stageId = challenge.ID;  // 스테이지 ID
+        int challengeNumber = challenge.Key % 3;
+
+        // 해당 스테이지의 ChallengeClearData를 가져오거나 새로 생성
+        if (!GameManager.Instance.playerData.ChallengeClearData.ContainsKey(stageId))
         {
-            foreach (challengeData challenge in challenges)
+            GameManager.Instance.playerData.ChallengeClearData[stageId] = new ChallengeClearData();
+        }
+
+        var challengeData = GameManager.Instance.playerData.ChallengeClearData[stageId];
+
+        // 현재 도전과제의 상태 확인
+        int currentState = challengeNumber switch
+        {
+            1 => challengeData.Challenge_1,
+            2 => challengeData.Challenge_2,
+            3 => challengeData.Challenge_3,
+        };
+
+        if (currentState != (int)Defines.StageChallengeClearState.Clear)
+        {
+            // 도전과제 클리어 처리
+            switch (challengeNumber)
             {
-                results.Add(GameManager.Instance.playerData.ChallengeProgress.ContainsKey(challenge.Key));
+                case 1: challengeData.Challenge_1 = (int)Defines.StageChallengeClearState.Clear; break;
+                case 2: challengeData.Challenge_2 = (int)Defines.StageChallengeClearState.Clear; break;
+                case 0: challengeData.Challenge_3 = (int)Defines.StageChallengeClearState.Clear; break;
             }
+            Debug.Log($"스테이지 {stageId}의 도전과제 {challenge.Key}가 완료되었습니다.");
+
         }
-        return results;
+        else
+        {
+            Debug.Log($"스테이지 {stageId}의 도전과제 {challenge.Key}는 이미 완료되었습니다.");
+        }
+
     }
 
+
+    private List<challengeData> GetCurrentchallengeData(int _stageID)
+    {
+        return challengeData.GetList().Where(data => data.ID == _stageID).ToList();
+    }
+
+}
+
+
+
+public class ChallengeClearData
+{
+
+    public int Challenge_1 = (int)Defines.StageChallengeClearState.None;
+    public int Challenge_2 = (int)Defines.StageChallengeClearState.None;
+    public int Challenge_3 = (int)Defines.StageChallengeClearState.None;
 
 }

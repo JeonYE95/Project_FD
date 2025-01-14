@@ -27,7 +27,7 @@ public class PlayerData
         {"Warrior", 0}
     }; // Key : 클래스 , value : 강화 수치
     public Dictionary<int, QuestSaveData> questData = new Dictionary<int, QuestSaveData>(); // key : 퀘스트 ID, 데이터
-    public Dictionary<int, bool> ChallengeProgress = new Dictionary<int, bool>(); // key: 스테이지 도전과제, value: 클리어 여부
+    public Dictionary<int, ChallengeClearData> ChallengeClearData= new Dictionary<int, ChallengeClearData>(); // key: 스테이지 도전과제, value: 클리어 여부
     public Dictionary<int, Defines.StageClearState> StageClearData = new Dictionary<int, Defines.StageClearState>();  // key: 스테이지 ID, value: 클리어 여부
     public Dictionary<string, ClassAddedData> ClassAddedData = new Dictionary<string, ClassAddedData>()
     {
@@ -479,5 +479,14 @@ public class GameManager : SingletonDontDestory<GameManager>
             {"Rogue", 0},
             {"Warrior", 0}
         };
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                Application.Quit();
+        #endif
     }
 }
