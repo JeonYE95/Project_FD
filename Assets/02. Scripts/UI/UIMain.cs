@@ -8,6 +8,7 @@ public class UIMain : UIBase
     [SerializeField] private Button _settingBtn;
     [SerializeField] private Button _heroesBtn;
     [SerializeField] private Button _questBtn;
+    [SerializeField] private Button _unitGuideBtn;
     [SerializeField] private Button _gachaBtn;
     [SerializeField] private Button _upgradeBtn;
     [SerializeField] private TMP_Text _curEnergyText;
@@ -21,6 +22,7 @@ public class UIMain : UIBase
         _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UISetting>(); });
         _heroesBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIHeroes>(); });
         _questBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIQuest>(); });
+        _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIUnitGuide>();});
         _gachaBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIGacha>(); });
         _upgradeBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIClassUpgrade>(); });
 
