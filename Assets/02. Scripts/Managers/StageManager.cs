@@ -56,7 +56,12 @@ public class StageManager : Singleton<StageManager>
     {
         base.Awake();
         _stageID = GameManager.Instance.StageID;
-   
+
+        if (_stageID == 101 && GameManager.Instance.playerData.StageClearData[101] != Defines.StageClearState.Clear)
+            UIManager.Instance.OpenUI<UITutorial>();
+
+        
+       
     }
 
 
