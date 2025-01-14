@@ -21,7 +21,6 @@ Library: C:\Users\eunzs\3DProject_JYE\Project_FD\Temp\BurstOutput\tempburstlibs\
 --assembly-defines=Unity.Collections;
 --assembly-defines=Unity.2D.SpriteShape.Runtime;
 --assembly-defines=Unity.2D.PixelPerfect;
---assembly-defines=Unity.LevelPlay;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Services.Core.Analytics;
 --assembly-defines=Unity.Burst;

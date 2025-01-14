@@ -113,7 +113,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     //인 게임에서 변동 시 JSON 관리
 
     [ContextMenu("To Json Data")]
-    void SavePlayerDataToJson()
+    public void SavePlayerDataToJson()
     {
         // JSON 생성
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(playerData, Newtonsoft.Json.Formatting.Indented);
