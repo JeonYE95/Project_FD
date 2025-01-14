@@ -56,7 +56,12 @@ public class StageManager : Singleton<StageManager>
     {
         base.Awake();
         _stageID = GameManager.Instance.StageID;
-   
+
+        if (_stageID == 101 && GameManager.Instance.playerData.StageClearData[101] != Defines.StageClearState.Clear)
+            UIManager.Instance.OpenUI<UITutorial>();
+
+        
+       
     }
 
 
@@ -101,6 +106,11 @@ public class StageManager : Singleton<StageManager>
 
         //스테이지 퀘스트 업데이트
         QuestManager.Instance.UpdateStageQuests(_stageID);
+
+        // 스테이지 도전 업데이트 
+        ChallengeManager.Instance.Initialize();
+        ChallengeManager.Instance.UpdateStageChallenge(_stageID);
+
 
         _stageHealth = 3;
 

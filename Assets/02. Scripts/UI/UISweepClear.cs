@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GSDatas;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,27 +11,51 @@ public class UISweepClear : UIBase
  
     [SerializeField] private GameObject _uiRewardPrefab;
     [SerializeField] private RectTransform _rectTransform;
-    
-    private Dictionary<int, int> _stageRewardData = new Dictionary<int, int>();
 
+
+    private Dictionary<int, int> _stageRewardData = new Dictionary<int, int>();
+    private int _consumeEnergy = 1; // 기본값 1로 설정
+    private int _stageID;
+
+
+    private EventTrigger _eventTrigger;
+    private EventTrigger.Entry _clickEntry;
+
+    private List<StageData> _currentStageData;
+
+    public void SetStageData(List<StageData> stageData)
+    {
+        _currentStageData = stageData;
+    }
 
     private void Start()
     {
+        _eventTrigger = GetComponent<EventTrigger>();
+        _clickEntry = new EventTrigger.Entry();
+        _clickEntry.eventID = EventTriggerType.PointerClick;
+        _clickEntry.callback.AddListener((data) => { Close(); });
+        _eventTrigger.triggers.Add(_clickEntry);
 
         GetStageRewardData();
         SetRewardUI();
 
+
+
     }
 
-    private void OnEnable() 
+    public void SweepCount(int consumeEnergy)
     {
-        
+        _consumeEnergy = consumeEnergy;
+  
     }
+
 
    
     private void GetStageRewardData()
     {
-        _stageRewardData = StageManager.Instance.CurrentStageData.ToDictionary(data => data.RewardID, data => data.count);
+
+        _stageRewardData = _currentStageData.ToDictionary(data => data.RewardID, data => data.count);
+
     }
 
     private void SetRewardUI()
@@ -38,7 +63,7 @@ public class UISweepClear : UIBase
         foreach (var reward in _stageRewardData)
         {
             int rewardID = reward.Key; // RewardID
-            int count = reward.Value ; // 보상 수량 * 이전에 누른 개수
+            int count = reward.Value * _consumeEnergy; // 보상 수량 * UISweep창에서 누른 개수
             string rewardName, framecolor;
 
             GameObject rewardObject = Instantiate(_uiRewardPrefab, _rectTransform);

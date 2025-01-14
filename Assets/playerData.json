@@ -1,9 +1,9 @@
 {
   "name": null,
   "level": 0,
-  "gold": 20000,
-  "diamond": 14500,
-  "energy": 74,
+  "gold": 10000,
+  "diamond": 13000,
+  "energy": 94,
   "items": {
     "3004": 100
   },
@@ -34,7 +34,7 @@
     "1112": 0
   },
   "ClassEnforce": {
-    "Knight": 1,
+    "Knight": 0,
     "Archer": 0,
     "Mage": 0,
     "Healer": 0,
@@ -88,15 +88,15 @@
       "questId": 4061,
       "progress": 28,
       "isCompleted": true,
-      "hasReceivedReward": false,
+      "hasReceivedReward": true,
       "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4071": {
       "questId": 4071,
-      "progress": 1,
+      "progress": 8,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/19/2025 12:00:00 AM"
+      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
     },
     "4081": {
       "questId": 4081,
@@ -107,10 +107,10 @@
     },
     "4091": {
       "questId": 4091,
-      "progress": 1,
+      "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/19/2025 12:00:00 AM"
+      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
     },
     "4101": {
       "questId": 4101,
@@ -142,74 +142,74 @@
     },
     "4011": {
       "questId": 4011,
-      "progress": 1,
-      "isCompleted": true,
+      "progress": 0,
+      "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/20/2025 12:00:00 PM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4021": {
       "questId": 4021,
-      "progress": 3,
+      "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/13/2025 12:00:00 PM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4031": {
       "questId": 4031,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/10/2025 10:31:31 AM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4041": {
       "questId": 4041,
-      "progress": 1,
-      "isCompleted": true,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/13/2025 12:00:00 PM"
-    },
-    "4051": {
-      "questId": 4051,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/10/2025 10:31:31 AM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4051": {
+      "questId": 4051,
+      "progress": 1,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4131": {
       "questId": 4131,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/10/2025 10:31:31 AM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4141": {
       "questId": 4141,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/10/2025 10:31:31 AM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     },
     "4151": {
       "questId": 4151,
       "progress": 0,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/13/2025 12:00:00 PM"
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     }
   },
-  "ChallengeProgress": {},
+  "ChallengeClearData": {},
   "StageClearData": {
     "101": 1,
-    "102": 1,
-    "103": 2,
+    "102": 2,
+    "103": 3,
     "104": 3,
     "105": 3
   },
   "ClassAddedData": {
     "Knight": {
-      "AddedAttackValue": 1,
-      "AddedDefenseValue": 1,
-      "AddedHealthValue": 1
+      "AddedAttackValue": 0,
+      "AddedDefenseValue": 0,
+      "AddedHealthValue": 0
     },
     "Archer": {
       "AddedAttackValue": 0,

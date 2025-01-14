@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class MoveState : BaseState
 {
     public MoveState(StateMachine stateMachine) : base(stateMachine)
@@ -8,6 +10,9 @@ public class MoveState : BaseState
     public override void Enter()
     {
         stateMachine.unit.PlayMoveAnimation();
+
+        Vector2 randomOffset = Random.insideUnitCircle * stateMachine.unit.unitMovement.RandomCircleSize;
+        stateMachine.unit.unitMovement.SetRandomOffset(randomOffset);
     }
 
     public override void Update()
@@ -22,7 +27,7 @@ public class MoveState : BaseState
         //타겟이 정상적인 상태면 타겟한테 가라
         if (CheckTarget(stateMachine.unit.targetUnit))
         {
-            stateMachine.unit.UnitMovement.MoveToTarget();
+            stateMachine.unit.unitMovement.MoveToTarget();
         }
         else
         {
@@ -32,6 +37,6 @@ public class MoveState : BaseState
 
     public override void Exit()
     {
-        stateMachine.unit.UnitMovement.Stop();
+        stateMachine.unit.unitMovement.Stop();
     }
 }

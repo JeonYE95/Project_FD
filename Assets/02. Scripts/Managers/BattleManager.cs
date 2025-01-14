@@ -7,7 +7,7 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
-public class BattleManager : SingletonDontDestory<BattleManager>
+public class BattleManager : Singleton<BattleManager>
 {
     bool _isBattleEnd = false;
     readonly int BattleResultAndResetTime = 1;
@@ -23,7 +23,7 @@ public class BattleManager : SingletonDontDestory<BattleManager>
     {
         get
         {
-            return _players;
+            return players;
         }
         set
         {

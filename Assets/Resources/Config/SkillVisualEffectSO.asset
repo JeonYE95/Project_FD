@@ -74,15 +74,69 @@ MonoBehaviour:
     targetEffectTag: Earthquake
     color: {r: 1, g: 1, b: 1, a: 1}
     projectileSprite: {fileID: 21300000, guid: 88ce4030940097340a35ba7facbd25be, type: 3}
+  - skillID: 12
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Armor
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 13
+    haveProjectile: 1
+    casterEffectTag: 
+    targetEffectTag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 21300000, guid: 7da42b104e027ba4cb230dcc7b04b7a9, type: 3}
+  - skillID: 14
+    haveProjectile: 1
+    casterEffectTag: 
+    targetEffectTag: Explode
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 21300000, guid: cb32c4643c8e4ed4e9a1527fd6d8e6f8, type: 3}
   - skillID: 15
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: Freeze
+    color: {r: 1, g: 1, b: 1, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 16
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Confuse
     color: {r: 0, g: 0, b: 0, a: 0}
     projectileSprite: {fileID: 0}
+  - skillID: 17
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Boost
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 18
+    haveProjectile: 1
+    casterEffectTag: 
+    targetEffectTag: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    projectileSprite: {fileID: 21300000, guid: 8513e99568349854283aa80494e7c157, type: 3}
   - skillID: 19
     haveProjectile: 0
     casterEffectTag: 
     targetEffectTag: HealEffect
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 20
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Boost
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 21
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: Soul
+    color: {r: 0, g: 0, b: 0, a: 0}
+    projectileSprite: {fileID: 0}
+  - skillID: 22
+    haveProjectile: 0
+    casterEffectTag: 
+    targetEffectTag: RedSoul
     color: {r: 0, g: 0, b: 0, a: 0}
     projectileSprite: {fileID: 0}

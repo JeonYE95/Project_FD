@@ -13,8 +13,17 @@ public class UnitMovement : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     BaseUnit _myUnit;
 
-    float _attackDistanceMutl;
-    float _targetRandomCircle = 1.0f;
+    float _attackDistanceMuti;
+
+    private float randomCircleSize = 0.0f; // 랜덤 범위 조정 가능
+
+    private Vector2 _randomOffset; // 타겟 위치에 추가될 랜덤 오프셋
+
+    public float RandomCircleSize
+    {
+        get { return randomCircleSize; }
+        set { randomCircleSize = value; }
+    }
 
     private void Awake()
     {
@@ -22,6 +31,10 @@ public class UnitMovement : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    public void SetRandomOffset(Vector2 randomOffset)
+    {
+        _randomOffset = randomOffset;
+    }
 
     public void Stop()
     {
@@ -48,11 +61,9 @@ public class UnitMovement : MonoBehaviour
     {
         Vector2 directionToTarget = (targetPosition - myPosition).normalized;
 
-        Vector2 AdjustTargetPositon = targetPosition - (directionToTarget * attackRange * _attackDistanceMutl);
+        Vector2 AdjustTargetPositon = targetPosition - (directionToTarget * attackRange * _attackDistanceMuti);
 
-        Vector2 randomOffset = Random.insideUnitCircle * _targetRandomCircle;
-
-        AdjustTargetPositon += randomOffset;
+        AdjustTargetPositon += _randomOffset;
 
         return AdjustTargetPositon;
     }
