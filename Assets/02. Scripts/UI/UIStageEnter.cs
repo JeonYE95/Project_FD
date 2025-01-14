@@ -80,17 +80,17 @@ public class UIStageEnter : UIBase
         _stageGoal3.text = _currentChellengeData[2].Description;
 
         // 클리어 했다면 0,0,0,0 / 아직이라면 검정색
-        _clearmark1.color = new Color(255, 255, 255, 255);
-        _clearmark1.color = new Color(100, 100, 100, 255);
+        var challenge1State = ChallengeManager.Instance.GetChallengeState(_stageID, 1);
+        _clearmark1.color = challenge1State == Defines.StageChallengeClearState.Clear ? new Color(1.0f, 1.0f, 1.0f, 1.0f) : new Color(0.39f, 0.39f, 0.39f, 0.39f);
 
-        _clearmark2.color = new Color(255, 255, 255, 255);
-        _clearmark2.color = new Color(100, 100, 100, 255);
+        var challenge2State = ChallengeManager.Instance.GetChallengeState(_stageID, 2);
+        _clearmark2.color = challenge2State == Defines.StageChallengeClearState.Clear ? new Color(1.0f, 1.0f, 1.0f, 1.0f) : new Color(0.39f, 0.39f, 0.39f, 0.39f);
 
-        _clearmark3.color = new Color(255, 255, 255, 255);
-        _clearmark3.color = new Color(100, 100, 100, 255);
+        var challenge3State = ChallengeManager.Instance.GetChallengeState(_stageID, 3);
+        _clearmark3.color = challenge3State == Defines.StageChallengeClearState.Clear ? new Color(1.0f, 1.0f, 1.0f, 1.0f) : new Color(0.39f, 0.39f, 0.39f, 0.39f);
 
 
-        // 스테이지 진입 시 소비 비뵹 
+        // 스테이지 진입 시 소비 비용
         _enterStageCost.text = _currentStageData[0].cost.ToString();
     }
 
