@@ -3,7 +3,7 @@
   "level": 0,
   "gold": 10000,
   "diamond": 12500,
-  "energy": 94,
+  "energy": 93,
   "items": {
     "3004": 100
   },
@@ -93,10 +93,10 @@
     },
     "4071": {
       "questId": 4071,
-      "progress": 8,
+      "progress": 9,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
+      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4081": {
       "questId": 4081,
@@ -107,10 +107,10 @@
     },
     "4091": {
       "questId": 4091,
-      "progress": 0,
+      "progress": 1,
       "isCompleted": false,
       "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/9/2025 9:58:33 AM"
+      "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4101": {
       "questId": 4101,
@@ -142,8 +142,8 @@
     },
     "4011": {
       "questId": 4011,
-      "progress": 0,
-      "isCompleted": false,
+      "progress": 1,
+      "isCompleted": true,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "2025-01-14 오전 6:11:42"
     },

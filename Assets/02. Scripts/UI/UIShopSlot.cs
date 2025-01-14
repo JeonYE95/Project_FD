@@ -21,10 +21,10 @@ public class UIShopSlot : UIBase
         if (isFreeItem)
         {
             RewardData reward = RewardDataManager.Instance.GetUnitData(itemId);
-            //bool canBuy = UIShop.Instance.
+            bool canBuy = UIShop.Instance.CanGetFreeReward(itemId);
             _itemPrice.text = reward.name;
             //_itemIcon.sprite = 
-            //_itemPrice.text = canBuy ? "FREE" : "24시간 후 재구매 가능";
+            _itemPrice.text = canBuy ? "FREE" : "24시간 후 재구매 가능";
         }
         else
         {
@@ -34,5 +34,7 @@ public class UIShopSlot : UIBase
             var (price, quantity) = UIShop.Instance.GetUnitPieceData(unit.grade);
             _itemPrice.text = $"{price} G";
         }
+
+        // TODO : 구매창 오픈
     }
 }
