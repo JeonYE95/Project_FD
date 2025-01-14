@@ -63,13 +63,10 @@ public class HealthSystem : MonoBehaviour
 
         // UIHealthBar 컴포넌트 설정
         UIHealthBar healthBarScript = _healthBar.GetComponent<UIHealthBar>();
+
         if (healthBarScript != null)
         {
             healthBarScript.Initialize(this); // HealthSystem 연결
-        }
-        else
-        {
-            Debug.Log("스크립트연결해야함");
         }
 
         // HealthBar 위치 조정 
