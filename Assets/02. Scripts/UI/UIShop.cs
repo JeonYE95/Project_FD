@@ -14,9 +14,23 @@ public class UIShop : UIBase
     private int _curItemId;
     private bool _isFreeItem;
 
+    private const string shopResetKey = "ShopResetTime";
+    private const string freeEnergyKey = "FreeEnergy";
+    private const string freeDiamondKey = "FreeDiamond";
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void CheckDailyReset()
+    {
+        if (!PlayerPrefs.HasKey(shopResetKey))
+        {
+            PlayerPrefs.SetString(shopResetKey, System.DateTime.Now.ToString());
+            PlayerPrefs.Save();
+            return;
+        }
     }
 
     public void ShowPurchase(int itemID, bool freeItem)
