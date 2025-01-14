@@ -2,7 +2,7 @@
   "name": null,
   "level": 0,
   "gold": 10000,
-  "diamond": 12500,
+  "diamond": 13000,
   "energy": 94,
   "items": {
     "3004": 100
@@ -88,7 +88,7 @@
       "questId": 4061,
       "progress": 28,
       "isCompleted": true,
-      "hasReceivedReward": false,
+      "hasReceivedReward": true,
       "nextResetTimeUTC": "2025-01-09 오전 9:58:33"
     },
     "4071": {
@@ -139,9 +139,65 @@
       "isCompleted": true,
       "hasReceivedReward": false,
       "nextResetTimeUTC": "1/9/2025 10:16:49 AM"
+    },
+    "4011": {
+      "questId": 4011,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4021": {
+      "questId": 4021,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4031": {
+      "questId": 4031,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4041": {
+      "questId": 4041,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4051": {
+      "questId": 4051,
+      "progress": 1,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4131": {
+      "questId": 4131,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4141": {
+      "questId": 4141,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
+    },
+    "4151": {
+      "questId": 4151,
+      "progress": 0,
+      "isCompleted": false,
+      "hasReceivedReward": false,
+      "nextResetTimeUTC": "2025-01-14 오전 5:23:10"
     }
   },
-  "ChallengeProgress": {},
+  "ChallengeClearData": {},
   "StageClearData": {
     "101": 1,
     "102": 2,
