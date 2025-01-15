@@ -103,7 +103,10 @@ public class UIStageEnter : UIBase
 
         if (GameManager.Instance.playerData.StageClearData.ContainsKey(_stageID))
         {
-            _sweepBtn.interactable = GameManager.Instance.playerData.StageClearData[_stageID] == Defines.StageClearState.Clear;
+
+            isClear = GameManager.Instance.playerData.StageClearData[_stageID] == Defines.StageClearState.Clear;
+            _sweepBtn.interactable = isClear;
+
         }
         else
         {

@@ -1168,6 +1168,7 @@ MonoBehaviour:
   _enterStageBtn: {fileID: 8289768839041703344}
   _enterStageCost: {fileID: 6358555735360505070}
   _sweepBtn: {fileID: 5813715610550755750}
+  _sweepTxt: {fileID: 1256100147893911213}
   _stageNum: {fileID: 4322585486963960254}
   _stageName: {fileID: 3593545902466972549}
   _stageGoal1: {fileID: 6178807120391318336}
