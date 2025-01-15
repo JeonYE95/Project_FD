@@ -17,6 +17,9 @@ public class ActionHandler : MonoBehaviour
 
     public bool isLifeSteal = false;
 
+    GameObject _skillBar;
+    RectTransform _skillBarRectTransform;
+
     BaseUnit _myUnit;
     BaseUnit _targetUnit;
 
@@ -47,6 +50,37 @@ public class ActionHandler : MonoBehaviour
 
         //skillCoolTime = _myUnit.unitInfo.SkillCooltime;
         //attackCoolTime = _myUnit.unitInfo.AttackCooltime;
+
+        if (_haveSkill)
+        {
+            CreateSkillBar();
+        }
+    }
+
+    private void CreateSkillBar()
+    {
+        GameObject skillBarPrefab = Resources.Load<GameObject>("UI/UIUnitSkillBar");
+
+        if (skillBarPrefab == null)
+        {
+            Debug.Log("스킬바 못찾음");
+            return;
+        }
+
+        _skillBar = Instantiate(skillBarPrefab, transform);
+
+        UISkillCoolTimeBar skillBarScript = _skillBar.GetComponent<UISkillCoolTimeBar>();
+
+        if (skillBarScript != null)
+        {
+            skillBarScript.Initialize(this);
+        }
+
+        _skillBarRectTransform = _skillBar.GetComponent<RectTransform>();
+        _skillBarRectTransform.anchoredPosition = new Vector2(0, 1.31f);
+
+        //UI를 위한 쿨타임 기록
+        _lastAttackTime = Time.time;
     }
 
     public bool IsAttackCoolTimeComplete()
@@ -58,6 +92,26 @@ public class ActionHandler : MonoBehaviour
     {
         return Time.time >= _lastSkillTime + skillCoolTime;
     }
+
+    public float GetSkillCoolTimeMaxValue()
+    {
+        return skillCoolTime;
+    }
+
+    public float GetSkillCoolTimeValue()
+    {
+        if (BattleManager.Instance.isBattleRunning && _myUnit.isLive)
+        {
+            return Mathf.Clamp(Time.time - _lastSkillTime, 0, skillCoolTime);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+
+
     public bool ExecuteAction(BaseUnit targetUnit)
     {
         //스킬이 평타 대신 나가는 거라서 평타 쿨도 초기화

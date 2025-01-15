@@ -61,8 +61,18 @@ public class ObjectPool : Singleton<ObjectPool>
     {
         GameObject obj = Instantiate(prefab);
 
-        // prefab의 부모가 없으면 ObjectPool을 부모로 설정
-        if (prefab.transform.parent == null)
+        // UI 요소인 경우 Canvas를 부모로 설정
+        if (obj.GetComponent<RectTransform>() != null)
+        {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            if (canvas != null)
+            {
+                obj.transform.SetParent(canvas.transform);
+
+                obj.transform.localScale = Vector3.one;
+            }
+        }
+        else if (prefab.transform.parent == null)
         {
             obj.transform.SetParent(transform);
         }

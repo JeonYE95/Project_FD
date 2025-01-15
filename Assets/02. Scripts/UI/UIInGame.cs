@@ -38,7 +38,7 @@ public class UIInGame : UIBase
         SetupUI();
 
         _drawBtn.onClick.AddListener(() => { IngameGacha.Instance.PlayGacha(); });  
-        _unitGuideBtn.onClick.AddListener(() => { UIManager.Instance.GetUI<UIUnitGuide>(); });
+        _unitGuideBtn.onClick.AddListener(OpenUnitGuide);
         _settingBtn.onClick.AddListener(() => { UIManager.Instance.OpenUI<UIInGameSetting>(); });
 
         //WaveManager 버튼 연동
@@ -72,6 +72,15 @@ public class UIInGame : UIBase
         SetUnitLimit();
         SetStageNum();
     }
+
+
+    private void OpenUnitGuide()
+    {
+        var guide = UIManager.Instance.OpenUI<UIUnitGuide>();
+        guide.Initialize(true);
+    }
+
+
 
     private void UpdateTimerText(float remainingTime)
     {

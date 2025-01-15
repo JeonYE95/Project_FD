@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class BattleManager : Singleton<BattleManager>
 {
     bool _isBattleEnd = false;
+    public bool isBattleRunning = false;
     readonly int BattleResultAndResetTime = 1;
 
     private TargetingSystem targetingSystem;
@@ -98,6 +99,7 @@ public class BattleManager : Singleton<BattleManager>
         aliveEnemyUnitsCount = enemies.Count;
 
         _isBattleEnd = false;
+        isBattleRunning = true;
 
         if (battleResultCoroutine != null)
         {
@@ -159,6 +161,7 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         _isBattleEnd = true;
+        isBattleRunning = false;
 
         yield return _battleResultAndResetTimer;
         BattleEnd();
@@ -173,6 +176,7 @@ public class BattleManager : Singleton<BattleManager>
         }
 
         _isBattleEnd = true;
+        isBattleRunning = false;
 
         yield return _battleResultAndResetTimer;
         BattleEnd();

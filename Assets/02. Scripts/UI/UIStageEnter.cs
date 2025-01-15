@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class UIStageEnter : UIBase
 {
@@ -13,6 +14,7 @@ public class UIStageEnter : UIBase
     [SerializeField] private TextMeshProUGUI _enterStageCost;
 
     [SerializeField] private Button _sweepBtn;
+    [SerializeField] private TextMeshProUGUI _sweepTxt;
 
     [SerializeField] private TextMeshProUGUI _stageNum;
     [SerializeField] private TextMeshProUGUI _stageName;
@@ -59,7 +61,7 @@ public class UIStageEnter : UIBase
         _waveData = GetStageWaveData();
         _currentChellengeData = GetChallengeData();
         SetRewardUI();
-
+        SetSweepButtonState();
 
 
         //스테이지 이름, 번호
@@ -94,6 +96,26 @@ public class UIStageEnter : UIBase
         _enterStageCost.text = _currentStageData[0].cost.ToString();
     }
 
+    private void SetSweepButtonState()
+    {
+
+        bool isClear = false;
+
+        if (GameManager.Instance.playerData.StageClearData.ContainsKey(_stageID))
+        {
+
+            isClear = GameManager.Instance.playerData.StageClearData[_stageID] == Defines.StageClearState.Clear;
+            _sweepBtn.interactable = isClear;
+
+        }
+        else
+        {
+            _sweepBtn.interactable = false;
+        
+        }
+
+        _sweepTxt.color = isClear ? new Color(1f, 1f, 1f, 1f) :  new Color(150f / 255f, 150f / 255f, 150f / 255f, 1f);
+    }
 
     private void EnterCondition()
     {
