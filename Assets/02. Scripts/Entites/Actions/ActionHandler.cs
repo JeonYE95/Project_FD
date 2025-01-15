@@ -100,7 +100,7 @@ public class ActionHandler : MonoBehaviour
 
     public float GetSkillCoolTimeValue()
     {
-        if (_myUnit.isLive)
+        if (BattleManager.Instance.isBattleRunning && _myUnit.isLive)
         {
             return Mathf.Clamp(Time.time - _lastSkillTime, 0, skillCoolTime);
         }
@@ -108,7 +108,6 @@ public class ActionHandler : MonoBehaviour
         {
             return 0;
         }
-
     }
 
 
