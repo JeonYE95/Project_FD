@@ -75,8 +75,13 @@ public class UIUnitGuide : UIBase
 
     public void OnDisable()
     {
-        if(StageManager.Instance != null)
-        StageManager.Instance.ResumeGame();
+
+        if (_isInBattleScene == true)
+        {
+            if (StageManager.Instance != null)
+                StageManager.Instance.ResumeGame();
+
+        }
 
         _isInBattleScene = false;
     }
