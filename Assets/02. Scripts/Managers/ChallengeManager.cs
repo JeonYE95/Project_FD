@@ -103,7 +103,8 @@ public class ChallengeManager : Singleton<ChallengeManager>
         {
             1 => challengeData.Challenge_1,
             2 => challengeData.Challenge_2,
-            3 => challengeData.Challenge_3,
+            0 => challengeData.Challenge_3,
+
         };
 
         if (currentState != (int)Defines.StageChallengeClearState.Clear)
