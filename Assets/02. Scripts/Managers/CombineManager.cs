@@ -86,6 +86,15 @@ public class CombineManager : Singleton<CombineManager>
         else 
         {
             InventoryManager.Instance.AddCharacter(resultUnitInfo);
+
+            // 유닛 획득 알림 표시
+            GameObject slotObj = ObjectPool.Instance.SpawnFromPool("UnitGuideSlot");
+            if (slotObj != null)
+            {
+                UIUnitGuideSlot slot = slotObj.GetComponent<UIUnitGuideSlot>();
+                slot.UpdateInfo(resultUnitInfo);
+                slot.PlaySlideAnimation();
+            }
         }
     }
 
