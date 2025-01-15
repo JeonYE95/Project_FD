@@ -412,6 +412,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[10].tag
+      value: UnitGuideSlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[10].size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[10].prefab
+      value: 
+      objectReference: {fileID: 6520946337741823259, guid: f64e0d28f6f5d874d967acfbcbba71a4, type: 3}
+    - target: {fileID: 2109563397471252433, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
+      propertyPath: pools.Array.data[10].canExpand
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5106557631465554496, guid: 0bcf05ca649752a4d99a4964ee2d9135, type: 3}
       propertyPath: m_Name
       value: ObjectPool

@@ -442,11 +442,11 @@ RectTransform:
   - {fileID: 4172965072921624587}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 90}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -130}
+  m_SizeDelta: {x: 250, y: 100}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &3027374098364107619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +462,9 @@ MonoBehaviour:
   _heroIcon: {fileID: 6567142234385808459}
   _classIcon: {fileID: 8571392749787376071}
   _heroName: {fileID: 7170404607349099040}
+  showDuration: 1
+  stayDuration: 0.5
+  hideDuration: 1
 --- !u!222 &2620751637401669493
 CanvasRenderer:
   m_ObjectHideFlags: 0
