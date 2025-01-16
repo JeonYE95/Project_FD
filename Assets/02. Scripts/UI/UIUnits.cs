@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GSDatas;
-using TMPro;
 using System.Linq;
 
-public class UIHeroes : UIBase
+public class UIUnits : UIBase
 {
 
 
@@ -17,11 +16,10 @@ public class UIHeroes : UIBase
     [SerializeField] private GameObject _gradeBtnParent;
     [SerializeField] private Button[] _gradeButtons;
 
-    [SerializeField] private UIHeroSlot _unitList;
+    [SerializeField] private UIMainUnitSlot _unitList;
 
     //현재 켜져있는 인벤토리 등급 확인 
     public Defines.UnitGrade _currentSelectedGrade;
-
 
     List<UnitData> _allUnit;
 
@@ -29,7 +27,7 @@ public class UIHeroes : UIBase
     // Start is called before the first frame update
     void Start()
     {
-        _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIHeroes>(); });
+        _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIUnits>(); });
 
         _allUnit = UnitDataManager.Instance.GetUnitDatas();
 
@@ -111,10 +109,10 @@ public class UIHeroes : UIBase
         foreach (var unit in units)
         {
             GameObject go = Instantiate(_unitSlotPrefab, _content.transform);
-            UIHeroSlot heroSlot = go.GetComponent<UIHeroSlot>();
-            if (heroSlot != null)
+            UIMainUnitSlot unitSlot = go.GetComponent<UIMainUnitSlot>();
+            if (unitSlot != null)
             {
-                heroSlot.UpdateInfo(unit);
+                unitSlot.UpdateInfo(unit);
             }
         }
 

@@ -1892,7 +1892,7 @@ GameObject:
   - component: {fileID: 8795213170059965223}
   - component: {fileID: 2153828386255434186}
   m_Layer: 5
-  m_Name: HeroesBtn
+  m_Name: UnitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2326,8 +2326,8 @@ RectTransform:
   - {fileID: 6216348990207556960}
   - {fileID: 2975443741164240873}
   - {fileID: 2903966431770749019}
-  - {fileID: 2273735560710192150}
   - {fileID: 5661594699841239817}
+  - {fileID: 2273735560710192150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2412,7 +2412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startBtn: {fileID: 3125198786760559217}
   _settingBtn: {fileID: 8572388887470538951}
-  _heroesBtn: {fileID: 2153828386255434186}
+  _unitBtn: {fileID: 2153828386255434186}
   _questBtn: {fileID: 4259155821973608423}
   _unitGuideBtn: {fileID: 5506220858467588880}
   _gachaBtn: {fileID: 2445481129191337231}
@@ -3743,7 +3743,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HEROES
+  m_text: UNITS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27f54c9130c9748c9be53df11fa03382, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 27f54c9130c9748c9be53df11fa03382, type: 2}

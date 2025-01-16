@@ -1,14 +1,13 @@
 using UnityEngine.UI;
 using UnityEngine;
-using System.Collections.Generic;
 using GSDatas;
 using TMPro;
 
-public class UIHeroSlot : UIBase
+public class UIMainUnitSlot : UIBase
 {
-    [SerializeField] private Button _heroInfoBtn;
-    [SerializeField] private TextMeshProUGUI _heroName;
-    [SerializeField] private Image _heroIcon;
+    [SerializeField] private Button _unitInfoBtn;
+    [SerializeField] private TextMeshProUGUI _unitName;
+    [SerializeField] private Image _unitIcon;
     [SerializeField] private Slider _levelUpbarSlider;
     [SerializeField] private TextMeshProUGUI _currentPiece;
     [SerializeField] private TextMeshProUGUI _needPiece;
@@ -22,17 +21,17 @@ public class UIHeroSlot : UIBase
     // Start is called before the first frame update
     void Start()
     {
-        _heroInfoBtn = GetComponent<Button>();
-        _heroInfoBtn.onClick.AddListener(OnHeroInfoButtonClick);
+        _unitInfoBtn = GetComponent<Button>();
+        _unitInfoBtn.onClick.AddListener(OnHeroInfoButtonClick);
     }
 
 
     private void OnHeroInfoButtonClick()
     {
-        UIHeroInfo heroInfo = UIManager.Instance.OpenUI<UIHeroInfo>();
-        if (heroInfo != null && _unitData != null)
+        UIUnitInfo unitInfo = UIManager.Instance.OpenUI<UIUnitInfo>();
+        if (unitInfo != null && _unitData != null)
         {
-            heroInfo.UpdateInfo(_unitData);
+            unitInfo.UpdateInfo(_unitData);
         }
     }
 
@@ -41,13 +40,13 @@ public class UIHeroSlot : UIBase
 
         _unitData = unitData;
 
-        if (_heroName != null)
-            _heroName.text = unitData.name;
+        if (_unitName != null)
+            _unitName.text = unitData.name;
 
-        if (_heroIcon != null)
+        if (_unitIcon != null)
         {
             Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{unitData.grade}/{unitData.name}");
-            _heroIcon.sprite = sprite;
+            _unitIcon.sprite = sprite;
         }
 
         if (_unitLevel != null)

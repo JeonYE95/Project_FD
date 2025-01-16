@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 3343632219645219393}
   - component: {fileID: 299899765971465644}
   m_Layer: 5
-  m_Name: HeroName
+  m_Name: UnitName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 6150647552773021225}
   - component: {fileID: 7374440307892811063}
   m_Layer: 5
-  m_Name: HeroSkill
+  m_Name: UnitSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1358,7 +1358,7 @@ GameObject:
   - component: {fileID: 2130617916890283515}
   - component: {fileID: 2022465595222361091}
   m_Layer: 5
-  m_Name: HeroData
+  m_Name: UnitData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1537,7 +1537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3567696835659631464}
   m_Layer: 5
-  m_Name: HeroLevel
+  m_Name: UnitLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1713,7 +1713,7 @@ GameObject:
   - component: {fileID: 5904434560627348394}
   - component: {fileID: 6165658376007744362}
   m_Layer: 5
-  m_Name: UIHeroInfo
+  m_Name: UIUnitInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1822,8 +1822,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _closeBtn: {fileID: 6862593128195517934}
   _levelUpBtn: {fileID: 6422824424421637291}
-  _heroName: {fileID: 2777188123910132279}
-  _heroIcon: {fileID: 7810998756694610819}
+  _unitName: {fileID: 2777188123910132279}
+  _unitIcon: {fileID: 7810998756694610819}
   _levelUpbarSlider: {fileID: 4103225808340723577}
   _currentPiece: {fileID: 3349175923203756989}
   _needPiece: {fileID: 4477185159171142040}
@@ -2229,7 +2229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30, y: -30}
+  m_AnchoredPosition: {x: -20, y: -20}
   m_SizeDelta: {x: 40, y: 43}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7731007505430273106
@@ -3685,7 +3685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6493412109158448833}
   m_Layer: 5
-  m_Name: HeroImg
+  m_Name: UnitImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3938,7 +3938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4279679379703713419
 RectTransform:
   m_ObjectHideFlags: 0

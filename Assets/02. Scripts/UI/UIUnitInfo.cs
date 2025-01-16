@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GSDatas;
 using TMPro;
 
-public class UIHeroInfo : UIBase
+public class UIUnitInfo : UIBase
 {
     [SerializeField] private Button _closeBtn;
     [SerializeField] private Button _levelUpBtn;
-    [SerializeField] private TextMeshProUGUI _heroName;
-    [SerializeField] private Image _heroIcon;
+    [SerializeField] private TextMeshProUGUI _unitName;
+    [SerializeField] private Image _unitIcon;
     [SerializeField] private Slider _levelUpbarSlider;
     [SerializeField] private TextMeshProUGUI _currentPiece;
     [SerializeField] private TextMeshProUGUI _needPiece;
@@ -27,7 +25,7 @@ public class UIHeroInfo : UIBase
 
     void Start()
     {
-        _closeBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIHeroInfo>(); } );
+        _closeBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIUnitInfo>(); } );
 
         //유닛 강화 등록
         _levelUpBtn.onClick.AddListener(Upgrade);
@@ -39,10 +37,10 @@ public class UIHeroInfo : UIBase
 
         UnitUpgrade.UpgradeUnit(_unitData.ID);
         UpdateInfo(_unitData);
-        UIHeroes heroesUI = UIManager.Instance.OpenUI<UIHeroes>();
-        if (heroesUI != null)
+        UIUnits unitsUI = UIManager.Instance.OpenUI<UIUnits>();
+        if (unitsUI != null)
         {
-            heroesUI.UpdateUnitGrade(heroesUI._currentSelectedGrade);
+            unitsUI.UpdateUnitGrade(unitsUI._currentSelectedGrade);
         }
     }
 
@@ -52,13 +50,13 @@ public class UIHeroInfo : UIBase
 
         _unitData = unitData;
 
-        if (_heroName != null)
-            _heroName.text = unitData.name;
+        if (_unitName != null)
+            _unitName.text = unitData.name;
 
-        if (_heroIcon != null)
+        if (_unitIcon != null)
         {
             Sprite sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{unitData.grade}/{unitData.name}");
-            _heroIcon.sprite = sprite;
+            _unitIcon.sprite = sprite;
         }
 
         if (_unitLevel != null)

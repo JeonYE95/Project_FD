@@ -1000,7 +1000,7 @@ GameObject:
   - component: {fileID: 5736279580844329612}
   - component: {fileID: 9164486742440678313}
   m_Layer: 5
-  m_Name: UIHeroSlot
+  m_Name: UIMainUnitSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1042,9 +1042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95d1e492c5cbca4c9325680b57b6496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroInfoBtn: {fileID: 0}
-  _heroName: {fileID: 8017167179869040813}
-  _heroIcon: {fileID: 8132882533659337062}
+  _unitInfoBtn: {fileID: 0}
+  _unitName: {fileID: 8017167179869040813}
+  _unitIcon: {fileID: 8132882533659337062}
   _levelUpbarSlider: {fileID: 3073348834265134460}
   _currentPiece: {fileID: 2692410238956548957}
   _needPiece: {fileID: 6008749425517655222}
@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 4244623674477859186}
   - component: {fileID: 8132882533659337062}
   m_Layer: 5
-  m_Name: image
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
