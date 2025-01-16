@@ -9,13 +9,26 @@ public class PieceGacha : MonoBehaviour
     private int _gacha2Cost = 2000;
     private int _diamond;
 
+    private string _result;
+    public string Result
+    {
+        get { return _result; }
+    }
+    
+    private GachaData _selectedUnit;
+    public GachaData SelectedUnit
+    {
+        get { return _selectedUnit; }
+    }
+
+
     public void PlayPieceGacha()
     {
         _diamond = GameManager.Instance.playerData.diamond;
 
         if (_diamond < _gacha1Cost)
         {
-            Debug.LogWarning( "다이아가 부족합니다" );
+            _result = "다이아가 부족합니다";
             return;
         }
 
@@ -24,16 +37,16 @@ public class PieceGacha : MonoBehaviour
 
         Debug.Log($"다이아를 {_gacha1Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
 
-        GachaData selectedUnit = GachaDataManager.Instance.GetRandomData("Outgame");
+        _selectedUnit = GachaDataManager.Instance.GetRandomData("Outgame");
 
-        if (selectedUnit != null)
+        if (_selectedUnit != null)
         {
-            int pieceAmount = selectedUnit.pieceamount;
-            Debug.Log($"뽑힌 유닛: {selectedUnit.name}, 등급: {selectedUnit.grade}, 조각 수: {pieceAmount}");
+            int pieceAmount = _selectedUnit.pieceamount;
+            _result = $"{_selectedUnit.grade} 등급의 {_selectedUnit.name} 유닛 조각 {pieceAmount}개를 획득했습니다.";
 
-            GameManager.Instance.AddItemSave(selectedUnit.ID, pieceAmount);
+            GameManager.Instance.AddItemSave(_selectedUnit.ID, pieceAmount);
 
-            TrackGachaResult(selectedUnit);
+            TrackGachaResult(_selectedUnit);
         }
 
         QuestManager.Instance.UpdateGachaQuest(0);
@@ -45,7 +58,7 @@ public class PieceGacha : MonoBehaviour
         
         if (_diamond < _gacha2Cost)
         {
-            Debug.LogWarning("다이아가 부족합니다");
+            _result = "다이아가 부족합니다";
             return;
         }
 

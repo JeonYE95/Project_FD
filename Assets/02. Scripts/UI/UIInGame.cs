@@ -76,7 +76,7 @@ public class UIInGame : UIBase
 
     private void OpenUnitGuide()
     {
-        var guide = UIManager.Instance.GetUI<UIUnitGuide>();
+        var guide = UIManager.Instance.OpenUI<UIUnitGuide>();
         guide.Initialize(true);
     }
 
