@@ -211,29 +211,6 @@ public class BattleManager : Singleton<BattleManager>
             //unit.animController.ResetAnim();
         }
     }
-
-    private void TestSpawn()
-    {
-        for (int i = 0; i < 1; i++)
-        {
-            var PlayerUnitList = UnitDataManager.GetList();
-
-            //int randomNumber = PlayerUnitList[Random.Range(0, PlayerUnitList.Count)].ID;
-            int randomNumber = Random.Range(1001, 1006);
-
-            GameObject obj = UnitManager.Instance.CreatePlayerUnit(randomNumber);
-            obj.transform.position = new Vector2(-5, 0);
-
-            var EnemyUnitList = EnemyDataManager.GetList();
-
-            randomNumber = EnemyUnitList[Random.Range(0, EnemyUnitList.Count)].ID;
-
-            GameObject obj2 = EnemyManager.Instance.CreateEnemy(randomNumber);
-            obj2.GetComponent<EnemyUnit>().RegisterToBattleManager();
-            obj2.transform.position = new Vector2(5, 0);
-        }
-    }
-
     public void SetAllUnits()
     {
         allUnits.Clear();
