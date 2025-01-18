@@ -51,6 +51,12 @@ public class TargetingSystem
                     .ToList();
                 break;
 
+            //힐 스킬 사용시 자기자신이 리스트에서 사라지는 이유 박제
+            /*case TargetGroup.Ally:
+                candidates = (standardUnit.isPlayerUnit ? players : enemies);
+                candidates.Remove(standardUnit);
+                break;*/
+
             case TargetGroup.AllAlly:
                 candidates = (standardUnit.isPlayerUnit ? players : enemies).ToList();
                 break;
