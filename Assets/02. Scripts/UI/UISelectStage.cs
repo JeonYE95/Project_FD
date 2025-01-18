@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using GSDatas;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UISelectStage : UIBase
