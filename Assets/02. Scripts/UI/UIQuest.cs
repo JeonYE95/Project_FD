@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 
 public class UIQuest : UIBase

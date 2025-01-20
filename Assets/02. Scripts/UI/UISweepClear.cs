@@ -3,8 +3,6 @@ using System.Linq;
 using GSDatas;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UISweepClear : UIBase
 {
