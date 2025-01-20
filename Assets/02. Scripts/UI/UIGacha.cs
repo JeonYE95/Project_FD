@@ -1,4 +1,4 @@
-using DG.Tweening;
+using GSDatas;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,16 +15,26 @@ public class UIGacha : UIBase
     [SerializeField] private Image _gachaResult;
     [SerializeField] private TMP_Text _resultText;
 
-    private float _fadeInDuration = 0.5f;
-    private float _displayDuration = 2f; 
-    private float _fadeOutDuration = 0.5f; 
-
     private PieceGacha pieceGacha = new PieceGacha();
+    private int _gachaCount;
+
+    private GachaData[] _gachaData1 = new GachaData[1];
+    private GachaData[] _gachaData10 = new GachaData[10];
 
     void Start()
     {
-        _gachaBtn1.onClick.AddListener(() => { pieceGacha.PlayPieceGacha(); ShowResult(pieceGacha.Result); });
-        _gachaBtn10.onClick.AddListener(() => { pieceGacha.PlayPieceGacha10(); });
+        _gachaBtn1.onClick.AddListener(() => 
+        { 
+            _gachaCount = 1;
+            _gachaData1[0] = pieceGacha.PlayPieceGacha(); 
+            ShowResult(); 
+        });
+        _gachaBtn10.onClick.AddListener(() => 
+        { 
+            _gachaCount = 10;
+            _gachaData10 = pieceGacha.PlayPieceGacha10(); 
+            ShowResult(); 
+        });
         _backBtn.onClick.AddListener(() => { UIManager.Instance.CloseUI<UIGacha>(); });
     }
 
@@ -33,32 +43,23 @@ public class UIGacha : UIBase
         _diamondTxt.text = GameManager.Instance.playerData.diamond.ToString();
     }
 
-    public void ShowResult(string resultMessage)
-    {
-        if (_gachaResult != null && _resultText != null)
+    public void ShowResult()
+    {   
+        // 다이아가 부족한 경우
+        if (!pieceGacha.IsEnoughDiamonds)
         {
-            // 이미지와 텍스트 초기 상태 설정
-            Color imageColor = _gachaResult.color;
-            imageColor.a = 0f;
-            _gachaResult.color = imageColor;
-
-            _resultText.text = resultMessage; 
-            Color textColor = _resultText.color;
-            textColor.a = 0f;
-            _resultText.color = textColor;
-
-            Sequence fadeSequence = DOTween.Sequence();
-
-            fadeSequence.Append(_gachaResult.DOFade(1f, _fadeInDuration))
-                        .Join(_resultText.DOFade(1f, _fadeInDuration)) 
-                        .AppendInterval(_displayDuration) 
-                        .Append(_gachaResult.DOFade(0f, _fadeOutDuration)) 
-                        .Join(_resultText.DOFade(0f, _fadeOutDuration)); 
-
-            fadeSequence.Play();
+            UIManager.Instance.OpenUI<UIPopupMessage>().ShowMessage("다이아가 부족합니다.");
         }
+        // 다이아가 충분한 경우
+        else
+        {
+            UIGachaResult uIGachaResult= UIManager.Instance.OpenUI<UIGachaResult>();
 
-        _unitImg.sprite = Resources.Load<Sprite>($"Sprite/Unit/WholeBody/{pieceGacha.SelectedUnit.grade}/{pieceGacha.SelectedUnit.name}");
+            if (_gachaCount == 1)
+                uIGachaResult.ShowGachaResult(_gachaData1);
+            else if (_gachaCount == 10)
+                uIGachaResult.ShowGachaResult(_gachaData10);
+        }
     }
 
     private void OnEnable() 

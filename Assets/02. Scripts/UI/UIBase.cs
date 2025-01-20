@@ -12,9 +12,9 @@ public class UIBase : MonoBehaviour
 
     public void Close()
     {
+        CloseProcedure();
         gameObject.SetActive(false);
         IsOpen = false;
-        CloseProcedure();
     }
 
     protected virtual void OpenProcedure()

@@ -21,53 +21,65 @@ public class PieceGacha : MonoBehaviour
         get { return _selectedUnit; }
     }
 
+    public bool IsEnoughDiamonds;
+    
+    private GachaData[] _gachaResult10 = new GachaData[10];
 
-    public void PlayPieceGacha()
+
+    public GachaData PlayPieceGacha()
     {
         _diamond = GameManager.Instance.playerData.diamond;
 
         if (_diamond < _gacha1Cost)
         {
+            IsEnoughDiamonds = false;
             _result = "다이아가 부족합니다";
-            return;
         }
-
-        _diamond -= _gacha1Cost;
-        GameManager.Instance.playerData.diamond = _diamond;
-
-        Debug.Log($"다이아를 {_gacha1Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
-
-        _selectedUnit = GachaDataManager.Instance.GetRandomData("Outgame");
-
-        if (_selectedUnit != null)
+        else
         {
-            int pieceAmount = _selectedUnit.pieceamount;
-            _result = $"{_selectedUnit.grade} 등급의 {_selectedUnit.name} 유닛 조각 {pieceAmount}개를 획득했습니다.";
+            IsEnoughDiamonds = true;
+            _diamond -= _gacha1Cost;
+            GameManager.Instance.playerData.diamond = _diamond;
 
-            GameManager.Instance.AddItemSave(_selectedUnit.ID, pieceAmount);
+            Debug.Log($"다이아를 {_gacha1Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
 
-            TrackGachaResult(_selectedUnit);
+            _selectedUnit = GachaDataManager.Instance.GetRandomData("Outgame");
+
+            if (_selectedUnit != null)
+            {
+                int pieceAmount = _selectedUnit.pieceamount;
+                _result = $"{_selectedUnit.grade} 등급의 {_selectedUnit.name} 유닛 조각 {pieceAmount}개를 획득했습니다.";
+
+                GameManager.Instance.AddItemSave(_selectedUnit.ID, pieceAmount);
+
+                TrackGachaResult(_selectedUnit);
+            }
+
+            QuestManager.Instance.UpdateGachaQuest(0);
         }
-
-        QuestManager.Instance.UpdateGachaQuest(0);
+        
+        return _selectedUnit;
     }
 
-    public void PlayPieceGacha10()
+    public GachaData[] PlayPieceGacha10()
     {
         _diamond = GameManager.Instance.playerData.diamond;
         
         if (_diamond < _gacha2Cost)
         {
+            IsEnoughDiamonds = false;
             _result = "다이아가 부족합니다";
-            return;
         }
-
-        Debug.Log($"다이아를 {_gacha2Cost}만큼 사용했습니다. 남은 다이아 : {_diamond}");
-
-        for (int i = 0; i < 10; i++)
+        else
         {
-            PlayPieceGacha();
+            IsEnoughDiamonds = true;
+            for (int i = 0; i < 10; i++)
+            {
+                _gachaResult10[i] = PlayPieceGacha();
+            }
         }
+
+        return _gachaResult10;
     }
 
     private Dictionary<string, int> gradeCount = new Dictionary<string, int>();

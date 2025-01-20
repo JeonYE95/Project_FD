@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GSDatas;
-using UnityEngine.Rendering;
 
 public class UIUnitGuide : UIBase
 {
