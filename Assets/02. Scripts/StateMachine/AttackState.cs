@@ -24,26 +24,6 @@ public class AttackState : BaseState
                 return;
             }
         }
-            /*if (stateMachine.unit.IsSkillReady())
-            {
-                if (!CheckTarget(stateMachine.unit.targetUnit))
-                {
-                    // 스킬 사용 (거리 무관)
-                    stateMachine.unit.UseSkill();
-                    return;
-                }
-            }
-
-            // 스킬이 준비되지 않았다면 평타 공격
-            if (!CheckTargetInRange(stateMachine.unit.targetUnit))
-            {
-                // 타겟이 유효하지 않다면 이동 상태로 전환
-                stateMachine.ChangeState(stateMachine.MoveState);
-                return;
-            }
-
-            // 타겟이 유효하면 평타 공격
-            stateMachine.unit.PerformAttack();*/
     }
 
     public override void Exit()

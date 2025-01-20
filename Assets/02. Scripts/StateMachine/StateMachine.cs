@@ -17,7 +17,6 @@ public class StateMachine
     public MoveState MoveState { get; }
     public WaitState WaitState { get; }
     public DeathState DeathState { get; }
-    public SkillState SkillState { get; }
     public AttackState AttackState { get; }
 
     public StateMachine(BaseUnit unit)
@@ -29,7 +28,6 @@ public class StateMachine
         MoveState = new MoveState(this);
         WaitState = new WaitState(this);
         DeathState = new DeathState(this);
-        SkillState = new SkillState(this);
         AttackState = new AttackState(this);
     }
 
