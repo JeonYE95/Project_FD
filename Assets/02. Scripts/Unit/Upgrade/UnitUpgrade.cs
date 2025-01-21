@@ -1,7 +1,7 @@
 using GSDatas;
 using UnityEngine;
 
-public class UnitUpgrade
+public class UnitUpgrade : MonoBehaviour
 {
     public static void UpgradeUnit(int unitId)
     {

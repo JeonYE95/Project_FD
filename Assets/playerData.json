@@ -2,50 +2,10 @@
   "name": null,
   "level": 0,
   "gold": 0,
-  "diamond": 400,
+  "diamond": 10000,
   "energy": 100,
-  "items": {
-    "1004": 40,
-    "1051": 35,
-    "1056": 10,
-    "1001": 70,
-    "1005": 80,
-    "1002": 20,
-    "1055": 15,
-    "1052": 20,
-    "1054": 10,
-    "1053": 20,
-    "1102": 3,
-    "1006": 20,
-    "1104": 3,
-    "1003": 10
-  },
-  "UnitEnforce": {
-    "1001": 0,
-    "1051": 0,
-    "1101": 0,
-    "1102": 0,
-    "1002": 0,
-    "1052": 0,
-    "1103": 0,
-    "1104": 0,
-    "1003": 0,
-    "1053": 0,
-    "1105": 0,
-    "1106": 0,
-    "1005": 0,
-    "1055": 0,
-    "1109": 0,
-    "1110": 0,
-    "1004": 0,
-    "1054": 0,
-    "1107": 0,
-    "1108": 0,
-    "1006": 0,
-    "1056": 0,
-    "1111": 0,
-    "1112": 0
-  },
+  "items": {},
+  "UnitEnforce": {},
   "ClassEnforce": {
     "Knight": 0,
     "Archer": 0,
@@ -54,113 +14,7 @@
     "Rogue": 0,
     "Warrior": 0
   },
-  "questData": {
-    "4001": {
-      "questId": 4001,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4011": {
-      "questId": 4011,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4021": {
-      "questId": 4021,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4031": {
-      "questId": 4031,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4041": {
-      "questId": 4041,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4051": {
-      "questId": 4051,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4061": {
-      "questId": 4061,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4071": {
-      "questId": 4071,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4081": {
-      "questId": 4081,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4091": {
-      "questId": 4091,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4111": {
-      "questId": 4111,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4121": {
-      "questId": 4121,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4131": {
-      "questId": 4131,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4141": {
-      "questId": 4141,
-      "progress": 48,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    },
-    "4151": {
-      "questId": 4151,
-      "progress": 0,
-      "isCompleted": false,
-      "hasReceivedReward": false,
-      "nextResetTimeUTC": "1/17/2025 12:43:37 PM"
-    }
-  },
+  "questData": {},
   "ChallengeClearData": {},
   "StageClearData": {
     "101": 2,
