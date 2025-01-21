@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 public class BattleManager : Singleton<BattleManager>
 {
     bool _isBattleEnd = false;
-    public bool isBattleRunning = false;
+
+    //배틀 중인지 확인가능한 변수 추가
+    public bool isBattleRunning = false; 
     readonly int BattleResultAndResetTime = 1;
 
     private TargetingSystem targetingSystem;

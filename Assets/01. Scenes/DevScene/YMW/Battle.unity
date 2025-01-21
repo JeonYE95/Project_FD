@@ -11555,12 +11555,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e2997734a1ac14c99fd57cdaf9892d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleRunning: 0
   players: []
   enemies: []
   unitProjectileSO: {fileID: 0}
   skillVisualEffectSO: {fileID: 0}
-  alivePlayerUnitsCount: 0
-  aliveEnemyUnitsCount: 0
+  alivePlayerUnitsCount: 5
+  aliveEnemyUnitsCount: 4
   noDamageMode: 1
 --- !u!4 &1702835421
 Transform:
