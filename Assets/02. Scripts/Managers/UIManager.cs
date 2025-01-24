@@ -40,7 +40,6 @@ public class UIManager : SingletonDontDestory<UIManager>
         return uiObj;
     }
 
-    // UI 일괄처리 시 유용
     public T OpenUI<T>() where T : UIBase
     {
         var ui = GetUI<T>();
