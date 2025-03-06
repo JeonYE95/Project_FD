@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitState : BaseState
+public class StopState : BaseState
 {
-    public WaitState(StateMachine stateMachine) : base(stateMachine)
+    public StopState(StateMachine stateMachine) : base(stateMachine)
     {
     }
 

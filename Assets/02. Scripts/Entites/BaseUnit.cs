@@ -123,7 +123,7 @@ public class BaseUnit : MonoBehaviour
 
         ResetCoolTime();
 
-        stateMachine?.ChangeState(stateMachine.WaitState);
+        stateMachine?.ChangeState(stateMachine.StopState);
 
         //GetComponentInChildren<CharacterAnimation>().
         //ResetTransformRecursive(transform);
@@ -193,7 +193,7 @@ public class BaseUnit : MonoBehaviour
     
     public void SetStun()
     {
-        stateMachine.ChangeState(stateMachine.WaitState);
+        stateMachine.ChangeState(stateMachine.StopState);
     }
 
     public void SetIdle()
